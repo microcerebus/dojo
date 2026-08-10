@@ -1,12 +1,22 @@
 /**
- * A ~50 line external store on top of `useSyncExternalStore`. Progress is
- * persisted to localStorage on every write, which is what makes state survive a
- * reload (and, with the service worker, a fully offline session).
+ * A small external store on top of `useSyncExternalStore`.
+ *
+ * Progress is persisted to localStorage on every write, which is what makes
+ * state survive a reload, a restart, and a fully offline session.
+ *
+ * Two deliberate choices:
+ *
+ * - **localStorage, not the Cache API.** Progress must be untouched when the
+ *   user clears cached assets or the service worker drops a stale precache.
+ *   Keeping it in a different storage bucket from the app shell is what makes
+ *   "clear the cache" and "erase my progress" separate actions.
+ * - **Merged, not overwritten.** See `mergeProgress`.
  */
 import { useCallback, useSyncExternalStore } from 'react';
 import {
   PROGRESS_STORAGE_KEY,
   emptyProgress,
+  mergeProgress,
   parseProgress,
   type ProgressState,
 } from './progress';
@@ -52,21 +62,19 @@ export const progressStore = {
   },
 
   /**
-   * Read, merge, write - never write this tab's in-memory blob blindly.
+   * Apply a transition and merge the result into whatever is on disk *now*.
    *
-   * The whole progress object lives under one key, so a write built from a
-   * stale snapshot silently discards everything another context has saved
-   * since. That is not hypothetical: the installed PWA and a browser tab on
-   * the same device share this storage, and the `storage` event that would
-   * have synced us can arrive late or not at all if the other context was
-   * suspended. Applying the transition to freshly-read state means concurrent
-   * writers only conflict when they touch the same field.
+   * The transition runs against a fresh read so it never operates on a stale
+   * snapshot, and the result is merged rather than written over the top, so it
+   * does not matter whether another context wrote in between. Two tabs ticking
+   * different drills both keep their tick, in either order.
    */
   update(transition: (current: ProgressState) => ProgressState): void {
-    commit(transition(readFromStorage()));
+    const next = transition(readFromStorage());
+    commit(mergeProgress(readFromStorage(), next));
   },
 
-  /** Test helper: drop everything, including what is on disk. */
+  /** Wipe everything, in memory and on disk. This is the only lossy path. */
   reset(): void {
     state = emptyProgress();
     serialized = JSON.stringify(state);
@@ -85,9 +93,38 @@ export const progressStore = {
 };
 
 if (typeof window !== 'undefined') {
+  // Cross-tab sync. `storage` fires in every *other* same-origin context when
+  // one of them writes, so a second tab picks changes up live. `key === null`
+  // means storage was cleared wholesale, which also has to be reflected.
   window.addEventListener('storage', (event) => {
-    if (event.key === PROGRESS_STORAGE_KEY) progressStore.refresh();
+    if (event.key === PROGRESS_STORAGE_KEY || event.key === null) progressStore.refresh();
   });
+
+  // A background tab can miss events while frozen, so re-read on the way back.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') progressStore.refresh();
+  });
+  window.addEventListener('focus', () => progressStore.refresh());
+}
+
+/**
+ * Ask the browser to make this origin's storage persistent.
+ *
+ * Without it, localStorage sits in the "best-effort" bucket and can be evicted
+ * under storage pressure along with the caches. With it granted, the data
+ * survives until the user deletes it - which is the promise the app makes
+ * about progress. Chrome grants it silently for installed apps; Safari grants
+ * it on user engagement. Failure is not an error: everything still works, the
+ * data is just evictable.
+ */
+export async function requestPersistentStorage(): Promise<'persisted' | 'denied' | 'unsupported'> {
+  if (typeof navigator === 'undefined' || !navigator.storage?.persist) return 'unsupported';
+  try {
+    if (await navigator.storage.persisted?.()) return 'persisted';
+    return (await navigator.storage.persist()) ? 'persisted' : 'denied';
+  } catch {
+    return 'unsupported';
+  }
 }
 
 export function useProgressState(): ProgressState {

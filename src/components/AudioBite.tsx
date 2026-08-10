@@ -3,6 +3,7 @@ import {
   audioReducer,
   formatTime,
   initialAudioState,
+  type AudioCommand,
   type AudioEvent,
   type AudioState,
 } from './audioMachine';
@@ -40,21 +41,37 @@ export function AudioBite({
   const script = narrationScript(moduleId, sectionId);
 
   const [state, setState] = useState<AudioState>(initialAudioState);
+  /**
+   * The authoritative state for transitions.
+   *
+   * Several events can arrive before React re-renders - a second tap, or the
+   * element reporting `playing` right after a pause - and each one has to see
+   * the previous one's result. Deriving anything from the render-captured
+   * `state` would make those later events act on a stale status. `state`
+   * exists only so the component renders.
+   */
+  const stateRef = useRef<AudioState>(state);
+
+  /** Advance the machine and hand back the command that transition produced. */
+  const applyEvent = useCallback((event: AudioEvent): AudioCommand => {
+    const { state: next, command } = audioReducer(stateRef.current, event);
+    stateRef.current = next;
+    setState(next);
+    return command;
+  }, []);
 
   /**
    * Every event - the user's tap and the element's own notifications - goes
-   * through here, so a command the machine emits is always carried out.
+   * through here. The reducer is the single source of truth: it decides the
+   * state and the command together, and this only executes what it is given.
    *
-   * Commands run synchronously in the handler rather than from an effect,
+   * Execution is synchronous in the handler rather than deferred to an effect,
    * because iOS Safari only honours `play()` while it is still inside the
-   * tap's task. The command is decided from this render's state (which is what
-   * a DOM handler observes) while the state itself advances functionally, so
-   * a burst of `timeupdate` events cannot drop an update.
+   * tap's task.
    */
   const dispatch = useCallback(
     (event: AudioEvent) => {
-      const { command } = audioReducer(state, event);
-      setState((current) => audioReducer(current, event).state);
+      const command = applyEvent(event);
       if (!command) return;
       const element = audioRef.current;
       if (!element) return;
@@ -63,11 +80,9 @@ export function AudioBite({
         return;
       }
       if (command === 'replay') element.currentTime = 0;
-      void element
-        .play()
-        .catch(() => setState((current) => audioReducer(current, { type: 'error' }).state));
+      void element.play().catch(() => applyEvent({ type: 'error' }));
     },
-    [state],
+    [applyEvent],
   );
 
   const onPress = useCallback(() => dispatch({ type: 'press' }), [dispatch]);

@@ -142,6 +142,55 @@ export function moduleCompletion(
   };
 }
 
+/* ------------------------------------------------------------------ merge */
+
+/** The better of two attempts; ties go to the later one. */
+function betterQuiz(a: QuizResult | null, b: QuizResult | null): QuizResult | null {
+  if (!a) return b;
+  if (!b) return a;
+  if (a.correct !== b.correct) return a.correct > b.correct ? a : b;
+  return a.at >= b.at ? a : b;
+}
+
+export function mergeModuleProgress(
+  stored: ModuleProgress,
+  next: ModuleProgress,
+): ModuleProgress {
+  return {
+    // Sections are read-only-once in practice: the app never un-marks one, so
+    // union is exactly right and can never lose a read.
+    readSections: [...new Set([...stored.readSections, ...next.readSections])],
+
+    // "Best" is monotone by definition, so take the higher score and the later
+    // timestamp on a tie.
+    quizBest: betterQuiz(stored.quizBest, next.quizBest),
+
+    // Entry-wise. `next` was derived from a read of this same document, so
+    // where it has an opinion it is the newer one - including an explicit
+    // `false` from un-ticking a drill. Slugs only `stored` knows about were
+    // written by another context after our read, so they survive untouched.
+    drills: { ...stored.drills, ...next.drills },
+  };
+}
+
+/**
+ * Merge two whole documents entry by entry.
+ *
+ * Progress is stored under a single key, so any write is a whole-document
+ * write and would otherwise be last-writer-wins for everything. Merging per
+ * entry makes concurrent writers conflict-free by construction: two contexts
+ * touching different drills, sections or modules both keep their work,
+ * regardless of how their reads and writes interleave.
+ */
+export function mergeProgress(stored: ProgressState, next: ProgressState): ProgressState {
+  const modules: Record<string, ModuleProgress> = { ...stored.modules };
+  for (const [id, nextModule] of Object.entries(next.modules)) {
+    const storedModule = stored.modules[id];
+    modules[id] = storedModule ? mergeModuleProgress(storedModule, nextModule) : nextModule;
+  }
+  return { version: 1, modules };
+}
+
 /** Narrow an unknown parsed value back to `ProgressState`, dropping junk. */
 export function parseProgress(raw: unknown): ProgressState {
   if (typeof raw !== 'object' || raw === null) return emptyProgress();

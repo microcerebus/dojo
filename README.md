@@ -107,6 +107,36 @@ greek because the Big O lesson needs Ω and Θ. The type scale is a notch smalle
 would use, since monospace glyphs are wider. Licensed under the SIL Open Font License 1.1; the licence
 ships with the fonts.
 
+## Where your progress lives
+
+Progress - sections read, quiz scores, drill checkboxes - is stored on the device in `localStorage`
+under a single key, `dojo.progress.v1`. Nothing is sent anywhere.
+
+**Across tabs on desktop.** Every write is merged into whatever is on disk at that moment rather than
+overwriting it, and each tab listens for the `storage` event, so two open tabs stay in sync live and
+neither can clobber the other. The merge is per entry: two tabs ticking different drills both keep
+their tick, in either order. Tabs also re-read on focus, since a frozen background tab can miss an
+event.
+
+**Separate from the cache.** Progress is deliberately *not* in the service worker's caches. Clearing
+cached assets, or the service worker dropping a stale precache on update, cannot touch it - "free up
+space" and "erase my progress" are different actions. There is a test for this, and it holds in the
+browser: deleting every Cache Storage entry leaves progress fully intact.
+
+**Persistence.** On load the app calls `navigator.storage.persist()`, which asks the browser to move
+this origin into a persistent storage bucket that is exempt from eviction under storage pressure.
+Browsers decide whether to grant it - Chrome does so for installed or frequently-used apps, Safari on
+user engagement - and a refusal changes nothing about how the app works, only how long the data is
+guaranteed to last.
+
+**The honest iOS boundary.** Add dojo to the home screen and its data lives in that installed app's
+own storage: it survives reloads, app restarts, OS restarts and offline use, and is not subject to
+the 7-day cap Safari applies to ordinary websites. It goes away when you delete the app, or clear
+website data for it in Settings. Beyond that the OS has the last word - iOS can evict data from apps
+under severe storage pressure, and no web API can override that. So: your progress persists until you
+clear it, with the operating system as the one exception nobody on the web can promise around. If you
+are mid-sprint and short on disk, that is the thing to watch.
+
 ## Offline and mobile
 
 The app is an installable PWA. After one online visit the service worker has precached the shell, all

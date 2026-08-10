@@ -31,6 +31,14 @@ shell, the manifest, the icons, the fonts or any narration MP3.
   the `base: './'` promise that the build runs from any subdirectory.
 - **The UI is monospace.** `--font` and `--mono` are the same stack. When adding UI, remember
   monospace glyphs are ~25% wider than a sans equivalent: check 390px before assuming a label fits.
+- **Progress writes merge, never overwrite.** `progressStore.update` applies the transition to a
+  fresh read and then merges the result into storage per entry (`mergeProgress`). The whole document
+  lives under one key, so a plain write is last-writer-wins for everything and loses concurrent work
+  from another tab. Sections union, quiz scores take the best, drills are entry-wise with `next`
+  winning so un-ticking still works. Do not "simplify" this back to a set union - that silently makes
+  un-checking a drill impossible.
+- **Progress must stay out of the Cache API.** It lives in localStorage precisely so clearing cached
+  assets cannot erase it. There is a test asserting the store never calls `caches`.
 - **Dates must use local time, not UTC.** `src/data/sprint.ts` exports `localIsoDate` for this;
   `toISOString().slice(0,10)` reports yesterday for early-morning local times east of UTC.
 - **`vite-node` runs the TS scripts** (`scripts/gen-coverage.ts`). Plain `node` cannot resolve this
