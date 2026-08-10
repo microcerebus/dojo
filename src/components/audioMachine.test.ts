@@ -121,6 +121,19 @@ describe('audio player state machine', () => {
     expect(state.duration).toBe(0);
   });
 
+  it('clamps a stale position when metadata for a new, shorter track arrives', () => {
+    // Simulates a track change that, for whatever reason, did not reset state
+    // first: the old position must not survive past the new duration.
+    const midway = stateAfter(initialAudioState(), {
+      type: 'loadedmetadata',
+      duration: 90,
+    });
+    const stale = { ...midway, position: 80 };
+    const nextTrack = send(stale, { type: 'loadedmetadata', duration: 30 });
+    expect(nextTrack.state.duration).toBe(30);
+    expect(nextTrack.state.position).toBe(30);
+  });
+
   it('replays from the start after ending', () => {
     const ended = stateAfter(
       initialAudioState(),

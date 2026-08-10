@@ -98,14 +98,16 @@ export function audioReducer(
     case 'timeupdate':
       return { state: { ...state, position: event.position }, command: null };
 
-    case 'loadedmetadata':
+    case 'loadedmetadata': {
+      const duration = Number.isFinite(event.duration) ? event.duration : 0;
+      // Defensive: a new source reporting metadata should never leave the
+      // previous track's position stranded above its own duration - e.g. if
+      // the component did not (or could not) reset state first.
       return {
-        state: {
-          ...state,
-          duration: Number.isFinite(event.duration) ? event.duration : 0,
-        },
+        state: { ...state, duration, position: Math.min(state.position, duration) },
         command: null,
       };
+    }
 
     case 'ended':
       return { state: { ...state, status: 'ended', position: state.duration }, command: null };

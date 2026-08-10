@@ -101,6 +101,20 @@ export function AudioBite({
     if (element) element.playbackRate = state.rate;
   }, [state.rate]);
 
+  // The component is reused across tracks (ModulePage swaps moduleId/sectionId
+  // on the same AudioBite instance rather than remounting it), so without this
+  // the reducer's position/duration would carry over from the previous track
+  // and a skip could jump relative to stale state. Skipped on the mounting
+  // render - there is no previous track to reset away from yet.
+  const isMounted = useRef(false);
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    dispatch({ type: 'reset' });
+  }, [moduleId, sectionId, dispatch]);
+
   const onPress = useCallback(() => dispatch({ type: 'press' }), [dispatch]);
   const onSkipBack = useCallback(
     () => dispatch({ type: 'skip', delta: -SKIP_SECONDS }),

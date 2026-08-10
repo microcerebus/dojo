@@ -215,4 +215,29 @@ describe('AudioBite', () => {
     expect(play).not.toHaveBeenCalled();
     expect(labelOf(button)).toMatch(/^Play audio recap/);
   });
+
+  it('resets position and duration on a track change, so a skip does not jump from stale state', () => {
+    // ModulePage swaps moduleId/sectionId on the same AudioBite instance when
+    // navigating sections rather than remounting it, so the reducer has to be
+    // told explicitly that the track changed.
+    const { rerender } = render(
+      <AudioBite moduleId="big-o" sectionId="space" title="Space complexity" />,
+    );
+    const audio = document.querySelector('audio') as HTMLAudioElement;
+    withDuration(audio, 90);
+    Object.defineProperty(audio, 'currentTime', { value: 80, writable: true, configurable: true });
+    act(() => audio.dispatchEvent(new Event('timeupdate')));
+
+    rerender(<AudioBite moduleId="big-o" sectionId="amortised-time" title="Amortised time" />);
+
+    const forwardButton = screen.getByRole('button', { name: /forward 10 seconds/i });
+    // The new track has not reported its own metadata yet - duration is
+    // unknown again, so skipping is disabled rather than jumping from 80s.
+    expect(forwardButton).toBeDisabled();
+
+    withDuration(audio, 20);
+    expect(forwardButton).not.toBeDisabled();
+    act(() => forwardButton.click());
+    expect(audio.currentTime).toBe(10);
+  });
 });
