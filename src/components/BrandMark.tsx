@@ -7,7 +7,7 @@ export function BrandMark() {
   return (
     <svg
       className="header__mark"
-      viewBox="0 0 24 24"
+      viewBox="0.7 1 22.6 21"
       aria-hidden="true"
       focusable="false"
     >
