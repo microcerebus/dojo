@@ -1,0 +1,7 @@
+Testing a function is the easiest of the four shapes because the scope is small, but do not skip the conversation. Ask what should happen on illegal input before you decide it for yourself.
+
+Four categories of input. Normal cases, including any typical input the implementation might treat differently, like an odd length array for something that partitions. Extremes: empty, one element, very large. Illegal input: null, or negative where negative makes no sense. And strange but legal input: already sorted, reverse sorted, all identical.
+
+Then define the expected result for each, which is not always just the output. If a sort returns a new array, assert that the original was left untouched. Only then write the assertions.
+
+There is one trap worth naming. A broken specification looks exactly like a broken implementation from the outside. Asked to test a chess method that returns whether a piece can move to a coordinate, notice that its signature cannot distinguish off the board from not allowed. Ask what it should do for a negative coordinate before writing anything, because tests written against a guess only test the guess.

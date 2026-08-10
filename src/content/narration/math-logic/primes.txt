@@ -1,0 +1,7 @@
+Every positive integer is a product of primes, and that one fact answers most number theory questions you will be asked.
+
+Write two numbers as exponents over all the primes and everything falls out. One divides the other exactly when every prime appears at least as often. Take the smaller exponent of each prime and you have the greatest common divisor. Take the larger and you have the least common multiple. That is also why the product of the two equals the product of the original numbers.
+
+For primality, checking divisors up to the square root of n is not an approximation, it is complete. Divisors come in pairs: if a divides n, so does n over a, and one of that pair is always at or below the square root. So if nothing up to the square root divides n, nothing above it can either.
+
+That gives you order root n for a single number. When you need every prime below a bound, switch shape and use the sieve: cross off multiples of each prime in turn, start crossing at p squared rather than two p, and stop once p passes the square root of the maximum.

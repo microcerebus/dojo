@@ -1,0 +1,5 @@
+Feed a plain binary search tree sorted data and it degenerates into a linked list, with every operation dropping to linear time. Self-balancing trees prevent that by reshaping themselves as you insert and delete, and they are the reason a sorted map can promise log n.
+
+An AVL tree stores each node's balance factor, the left height minus the right height, and insists it stay between minus one and plus one. An insert can push a node to plus or minus two, which gets repaired on the way back up the recursion. There are four shapes. Left-left and right-right take a single rotation. Left-right and right-left take two: one to convert them into an easy case, then the easy fix. Crucially, a rotation only re-parents three links and never disturbs the in-order sequence, which is why it is always a legal move.
+
+Red-black trees balance less strictly and rebalance more cheaply. No red node may have a red child, and every path from a node to its leaves holds the same number of black nodes. Put those two together and the longest path can never exceed twice the shortest, which is all that log n needs. That is why most standard libraries choose them.

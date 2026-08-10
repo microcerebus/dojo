@@ -217,6 +217,8 @@ describe('modules', () => {
 describe('complete modules', () => {
   const complete = MODULES.filter((courseModule) => courseModule.status === 'complete');
 
+  // Modules are finished in waves, so this asserts a floor rather than an exact
+  // set - a new complete module must not silently un-finish an earlier one.
   it('includes the weeks 1-2 modules', () => {
     const finished = new Set(complete.map((courseModule) => courseModule.id));
     for (const id of [

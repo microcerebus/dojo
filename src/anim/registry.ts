@@ -16,6 +16,9 @@ import { cCppAnimations } from '../content/modules/c-cpp/animations';
 import { javaAnimations } from '../content/modules/java/animations';
 import { databasesAnimations } from '../content/modules/databases/animations';
 import { threadsLocksAnimations } from '../content/modules/threads-locks/animations';
+import { mathLogicAnimations } from '../content/modules/math-logic/animations';
+import { advancedTopicsAnimations } from '../content/modules/advanced-topics/animations';
+import { testingAnimations } from '../content/modules/testing/animations';
 
 export const ALL_ANIMATIONS: AnimationSpec[] = [
   ...bigOAnimations,
@@ -31,6 +34,9 @@ export const ALL_ANIMATIONS: AnimationSpec[] = [
   ...javaAnimations,
   ...databasesAnimations,
   ...threadsLocksAnimations,
+  ...mathLogicAnimations,
+  ...advancedTopicsAnimations,
+  ...testingAnimations,
 ];
 
 const byId = new Map(ALL_ANIMATIONS.map((spec) => [spec.id, spec]));

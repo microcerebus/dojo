@@ -1,0 +1,7 @@
+Searching for a pattern of length s inside a text of length b, the brute force compares up to s characters at every position. Rabin-Karp replaces almost all of those character comparisons with a single integer comparison.
+
+The observation is one-directional. Equal strings always hash to the same value, so a hash mismatch lets you skip a position without inspecting a character. Unequal strings can still collide, so a hash match has to be verified character by character. Skipping is free; matching is not.
+
+The part that makes it fast is that the hash of the next window is computed from the current one. Remove the outgoing character's contribution, shift, add the incoming one. Constant time per position.
+
+One warning: simply summing character codes rolls beautifully and collides constantly, because a sum ignores order, so every anagram of the pattern is a false positive. Use a positional hash, treating the window as a base-128 number, taken modulo a large prime. Expected time is order s plus b. The worst case, when everything collides, is order s times b.

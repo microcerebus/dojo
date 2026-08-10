@@ -1,0 +1,7 @@
+Two rules generate all the probability you need in an interview.
+
+The probability of A and B is the probability of B given A, times the probability of A. When the events are independent, that simplifies to just multiplying them. The probability of A or B is the probability of A plus the probability of B, minus the overlap, because otherwise you double count it. When the events are mutually exclusive there is no overlap, so you just add.
+
+Independence and mutual exclusivity get confused constantly, and they are opposites. Mutually exclusive means one happening rules the other out, which is maximum dependence. Independent means one tells you nothing about the other. Two events with non-zero probability can never be both.
+
+One habit worth building: when the direct count is messy, count the complement. Three ants on a triangle walking in random directions collide unless all three go the same way round. That is two outcomes out of eight, so the chance of a collision is three quarters. Enumerating collisions directly is fiddly. Enumerating the misses takes a second.

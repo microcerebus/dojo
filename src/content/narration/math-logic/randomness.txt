@@ -1,0 +1,7 @@
+The last family of questions asks you to build one random process out of another, and every one of them has the same trap: a procedure that looks even and is not. You cannot see it by staring. You have to count outcomes.
+
+Building a fair seven-sided die from a fair five-sided one is the standard example. No fixed number of calls can work, because each result would need probability one seventh, and seven never divides a power of five. So you use a loop. Combine two calls into a range of twenty five equally likely values, throw away the four that hang over the edge of a multiple of seven, and take the remaining twenty one modulo seven. Discarding uniformly chosen outcomes leaves the survivors uniform. That is the entire justification.
+
+Shuffling is the other example. Fisher and Yates walk the array and, at each position, swap with a random index drawn from the unfinished part including the current position. That gives exactly n factorial outcomes. The obvious version, swapping with any index in the whole array, gives n to the n paths, and n factorial does not divide that, so some orderings are more likely than others. It looks identical and it is wrong.
+
+For any sampling answer, say the probability out loud. If you cannot state why each outcome is equally likely, it probably is not.

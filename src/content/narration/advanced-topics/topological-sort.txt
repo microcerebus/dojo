@@ -1,0 +1,7 @@
+A topological sort lists the nodes of a directed graph so that every edge points forwards. Build order, course prerequisites, task scheduling, spreadsheet recalculation: all the same question. It exists exactly when the graph is directed and has no cycles.
+
+The algorithm is one idea repeated. Count how many edges point into each node. Anything with an indegree of zero has no prerequisites left, so emit it and delete its outgoing edges, decrementing the indegree of everything it pointed at. Whenever a node drops to zero, it joins the queue. Repeat until the queue is empty.
+
+Why must a zero-indegree node exist? Pick any node and walk edges backwards. Either you stop, and you have found one, or you revisit a node, which means there is a cycle. So in an acyclic graph the queue can never run dry while work remains, and if it does run dry early, the leftovers are the cycle. That is your cycle detector, free of charge.
+
+There is a second version using depth-first search: push each node when it finishes and read the stack backwards. Both are order V plus E.

@@ -1,0 +1,7 @@
+MapReduce turns up in system design answers as the standard way to process more data than one machine can hold. You write two functions and the framework does everything else.
+
+The system splits the data across machines. Your Map function reads a record and emits key value pairs. The system shuffles, routing every pair with the same key to the same machine. Your Reduce function receives one key and all its values and combines them. Word count is the canonical example: Map emits each word with a count of one, Reduce sums the counts.
+
+There is one trap worth internalising. Reduce output can be fed back into Reduce. Sums survive that. Averages do not: averaging eighty, which came from two readings, with fifty, which came from one, gives sixty-five instead of seventy. Emit the average together with its count and combine with weights.
+
+The real design decision is the key, because the key determines what can be aggregated together and how evenly the work spreads. Work backwards. Decide what Reduce needs to see, then write the Map that hands it exactly that.

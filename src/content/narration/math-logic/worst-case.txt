@@ -1,0 +1,5 @@
+A lot of puzzles ask you to minimise the worst number of steps, and there is one technique that cracks most of them: balance the worst case.
+
+If one branch of your first decision is much cheaper than another, you are paying for an imbalance you can trade away. Nine balls, one heavier, two weighings. Splitting four against four with one aside identifies the odd ball in a single weighing but needs three in the worst case for the rest. That gap between one and three is the signal. Penalise the cheap branch: split into three groups of three instead, and every case takes exactly two.
+
+The egg drop problem is the same move at larger scale. Two eggs, a hundred floors. Dropping every ten floors costs ten drops if the egg breaks early and nineteen if it breaks late. Balance it: every extra drop of the first egg has to buy back one drop of the second, so shrink the interval by one each time. Start at fourteen, then thirteen more, then twelve, and every branch costs fourteen. Solve X times X plus one over two, greater than or equal to a hundred, and round up. Rounding down leaves nine floors uncovered, so check the boundary rather than assuming.
