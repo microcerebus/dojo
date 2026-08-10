@@ -14,7 +14,8 @@
     "check": "pnpm run lint && pnpm run typecheck && pnpm run test",
     "gen:audio": "node scripts/gen-audio.mjs",
     "gen:coverage": "vite-node scripts/gen-coverage.ts",
-    "gen:icons": "node scripts/gen-icons.mjs"
+    "gen:icons": "node scripts/gen-icons.mjs",
+    "gen:fonts": "node scripts/gen-fonts.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.3",

@@ -57,7 +57,26 @@ export function checkPrecache({ precached, distFiles }) {
     );
   }
 
-  return { problems, audioCount: audioInDist.length, precachedCount: precached.size };
+  // The app ships its own typeface rather than loading one from a CDN, so the
+  // woff2 files have to be precached too - otherwise the first offline visit
+  // silently falls back to a system font.
+  const fontsInDist = distFiles.filter((file) => file.endsWith('.woff2'));
+  if (fontsInDist.length === 0) {
+    problems.push('no woff2 fonts were emitted into dist - JetBrains Mono is missing');
+  }
+  const missingFonts = fontsInDist.filter((file) => !precached.has(file.split('\\').join('/')));
+  if (missingFonts.length > 0) {
+    problems.push(
+      `${missingFonts.length} font file(s) are not precached, starting with ${missingFonts[0]}`,
+    );
+  }
+
+  return {
+    problems,
+    audioCount: audioInDist.length,
+    fontCount: fontsInDist.length,
+    precachedCount: precached.size,
+  };
 }
 
 function main() {
@@ -72,7 +91,10 @@ function main() {
 
   const precached = readPrecachedUrls(readFileSync(SW, 'utf8'));
   const distFiles = walk(DIST).map((file) => file.split('\\').join('/'));
-  const { problems, audioCount, precachedCount } = checkPrecache({ precached, distFiles });
+  const { problems, audioCount, fontCount, precachedCount } = checkPrecache({
+    precached,
+    distFiles,
+  });
 
   if (problems.length > 0) {
     console.error('Service worker precache check failed:');
@@ -82,7 +104,7 @@ function main() {
 
   console.log(
     `Precache OK: ${precachedCount} entries, including ${audioCount} narration clips, ` +
-      'the app shell, the manifest and the icons.',
+      `${fontCount} font files, the app shell, the manifest and the icons.`,
   );
 }
 

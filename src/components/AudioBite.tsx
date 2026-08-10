@@ -104,10 +104,11 @@ export function AudioBite({
       </button>
 
       <div className="bite__body">
+        {/* Just "Audio recap": the section title sits directly above this
+            player, and repeating it wrapped the label onto four lines. The
+            button's accessible name still carries the title. */}
         <p className="bite__label">
-          {state.status === 'error'
-            ? 'Audio unavailable - tap to retry'
-            : `Audio recap · ${title}`}
+          {state.status === 'error' ? 'Audio unavailable - tap to retry' : 'Audio recap'}
         </p>
         <div className="bite__track" aria-hidden="true">
           <div className="bite__fill" style={{ transform: `scaleX(${progress})` }} />

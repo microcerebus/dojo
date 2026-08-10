@@ -35,6 +35,7 @@ static server, including a subdirectory, with no rewrite rules.
 | Blind 75 | all 75, each assigned to exactly one module's drill list |
 | Animations | 18 step-through visualisations |
 | Audio | 30 narrated recaps, generated with edge-tts and committed |
+| Typeface | JetBrains Mono, self-hosted as woff2 in the repo |
 
 See [COVERAGE.md](./COVERAGE.md) for the full map - it is generated from the content data, so it
 cannot drift.
@@ -58,8 +59,9 @@ src/
   data/                   189 questions, problem catalogue, sprint schedule
   lib/                    progress state and the localStorage-backed store
   pages/                  curriculum, module, sprint, coverage
+  assets/fonts/           JetBrains Mono woff2, vendored and committed
 public/audio/<id>/*.mp3   generated narration, committed
-scripts/                  audio, icons, COVERAGE.md, precache verification
+scripts/                  audio, fonts, icons, COVERAGE.md, precache verification
 ```
 
 ## Adding or finishing a module
@@ -90,11 +92,26 @@ pnpm gen:audio big-o       # one module
 Voice: `en-US-AvaMultilingualNeural` via [edge-tts](https://github.com/rany2/edge-tts). The script
 finds `edge-tts` on `PATH`, then falls back to `uvx edge-tts` and `python3 -m edge_tts`.
 
+## Typography
+
+The whole app - UI and code alike - is set in [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono),
+self-hosted from `src/assets/fonts/`. Nothing is fetched from a CDN: a remote font cannot be precached,
+so it would silently fall back to a system face on the first offline visit.
+
+```bash
+pnpm gen:fonts   # re-vendor the woff2 files after bumping the upstream package
+```
+
+One variable font (100-800 weight axis) covers every weight, in latin, latin-ext and greek subsets -
+greek because the Big O lesson needs Ω and Θ. The type scale is a notch smaller than a sans stack
+would use, since monospace glyphs are wider. Licensed under the SIL Open Font License 1.1; the licence
+ships with the fonts.
+
 ## Offline and mobile
 
 The app is an installable PWA. After one online visit the service worker has precached the shell, all
-content and every narration clip, so lessons, animations, quizzes, audio and the coverage map all work
-with the network off. `pnpm build` fails if the precache stops covering any of that.
+content, the fonts and every narration clip, so lessons, animations, quizzes, audio and the coverage
+map all work with the network off. `pnpm build` fails if the precache stops covering any of that.
 
 The layout is mobile-first and designed against a 390x844 iPhone: safe-area insets are respected,
 touch targets are at least 44px, animations step by tap or swipe as well as by arrow key, and audio

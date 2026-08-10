@@ -10,7 +10,7 @@ versus outlined.
 
 `pnpm check` (lint + typecheck + tests) is the gate. `pnpm build` also runs
 `scripts/verify-precache.mjs`, which fails the build if the service worker stops precaching the app
-shell, the manifest, the icons or any narration MP3.
+shell, the manifest, the icons, the fonts or any narration MP3.
 
 ## Sharp edges
 
@@ -24,6 +24,13 @@ shell, the manifest, the icons or any narration MP3.
   `src/content/narration/**/*.txt` by `pnpm gen:audio` (edge-tts, voice
   `en-US-AvaMultilingualNeural`). Regenerating needs network access; the committed files mean the app
   works offline without it. Keep clips in the 30-90 second range.
+- **Fonts are self-hosted and committed.** JetBrains Mono lives in `src/assets/fonts/`, vendored by
+  `pnpm gen:fonts`. Never load a webfont from a CDN - it cannot be precached, so the first offline
+  visit would silently fall back to a system face. They sit under `src/` rather than `public/` so
+  Vite hashes them and rewrites the URLs; a `public/` path would have to be absolute and would break
+  the `base: './'` promise that the build runs from any subdirectory.
+- **The UI is monospace.** `--font` and `--mono` are the same stack. When adding UI, remember
+  monospace glyphs are ~25% wider than a sans equivalent: check 390px before assuming a label fits.
 - **Dates must use local time, not UTC.** `src/data/sprint.ts` exports `localIsoDate` for this;
   `toISOString().slice(0,10)` reports yesterday for early-morning local times east of UTC.
 - **`vite-node` runs the TS scripts** (`scripts/gen-coverage.ts`). Plain `node` cannot resolve this
@@ -44,6 +51,10 @@ shell, the manifest, the icons or any narration MP3.
   `anim/stepper`, `lib/progress`) so it is testable without rendering.
 
 ## Mobile and iOS constraints
+
+The app is dark-only: `color-scheme: dark` plus explicit Catppuccin Mocha tokens, with no
+`prefers-color-scheme` branches. A light-OS device therefore gets the same Mocha rendering. If a light
+theme is ever wanted, Catppuccin Latte would drop into the `--ctp-*` block in `src/styles/global.css`.
 
 iPhone is the primary surface. Layouts are mobile-first, verified at 390x844, and the page must never
 scroll horizontally (wide tables scroll inside their own `.tablewrap`). Touch targets are >= 44px

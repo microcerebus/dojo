@@ -11,7 +11,8 @@ precacheAndRoute([
   {"revision":"e","url":"icons/icon-192.png"},
   {"revision":"f","url":"icons/icon-512.png"},
   {"revision":"g","url":"icons/apple-touch-icon.png"},
-  {"revision":"h","url":"audio/big-o/space.mp3"}
+  {"revision":"h","url":"audio/big-o/space.mp3"},
+  {"revision":null,"url":"assets/jetbrains-mono-latin-wght-normal-abc123.woff2"}
 ]);
 `;
 
@@ -25,6 +26,7 @@ const DIST = [
   'icons/icon-512.png',
   'icons/apple-touch-icon.png',
   'audio/big-o/space.mp3',
+  'assets/jetbrains-mono-latin-wght-normal-abc123.woff2',
 ];
 
 describe('readPrecachedUrls', () => {
@@ -32,7 +34,7 @@ describe('readPrecachedUrls', () => {
     const urls = readPrecachedUrls(SW_SAMPLE);
     expect(urls.has('index.html')).toBe(true);
     expect(urls.has('audio/big-o/space.mp3')).toBe(true);
-    expect(urls.size).toBe(8);
+    expect(urls.size).toBe(9);
   });
 
   it('returns an empty set for a service worker with no manifest', () => {
@@ -41,10 +43,28 @@ describe('readPrecachedUrls', () => {
 });
 
 describe('checkPrecache', () => {
-  it('passes when the shell, manifest, icons and audio are all precached', () => {
+  it('passes when the shell, manifest, icons, audio and fonts are all precached', () => {
     const result = checkPrecache({ precached: readPrecachedUrls(SW_SAMPLE), distFiles: DIST });
     expect(result.problems).toEqual([]);
     expect(result.audioCount).toBe(1);
+    expect(result.fontCount).toBe(1);
+  });
+
+  it('fails when a font is emitted but not precached', () => {
+    const result = checkPrecache({
+      precached: readPrecachedUrls(SW_SAMPLE),
+      distFiles: [...DIST, 'assets/jetbrains-mono-greek-wght-italic-def456.woff2'],
+    });
+    expect(result.problems.join(' ')).toMatch(/font file\(s\) are not precached/);
+    expect(result.problems.join(' ')).toMatch(/greek-wght-italic/);
+  });
+
+  it('fails when no font reached dist at all, since the app self-hosts its typeface', () => {
+    const result = checkPrecache({
+      precached: readPrecachedUrls(SW_SAMPLE),
+      distFiles: DIST.filter((file) => !file.endsWith('.woff2')),
+    });
+    expect(result.problems.join(' ')).toMatch(/no woff2 fonts/);
   });
 
   it('fails when an MP3 is emitted but not precached', () => {
