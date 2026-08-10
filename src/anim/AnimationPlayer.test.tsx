@@ -103,4 +103,21 @@ describe('every registered animation', () => {
     }
     expect(getAnimation('does-not-exist')).toBeUndefined();
   });
+
+  it('writes captions as plain text, because they do not go through RichText', () => {
+    // `AnimationPlayer` renders captions and details straight into the DOM, so
+    // lesson-style `**bold**` / `*italic*` / `` `code` `` markup would show up
+    // literally on screen.
+    const offenders: string[] = [];
+    for (const animation of ALL_ANIMATIONS) {
+      for (let index = 0; index < animation.length; index++) {
+        for (const text of [animation.caption(index), animation.detail?.(index) ?? '']) {
+          if (/\*\*[^*]+\*\*|(^|\s)\*\S[^*]*\*|`[^`]+`/.test(text)) {
+            offenders.push(`${animation.id} step ${index}: ${text.slice(0, 60)}`);
+          }
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
 });

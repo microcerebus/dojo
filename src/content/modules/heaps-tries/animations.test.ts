@@ -16,9 +16,9 @@ const parseCompared = (detail: string) => {
   return match ? [match[1], match[2]] : null;
 };
 
-/** `... Swap with the *smaller* child (4) - ...` -> '4' */
+/** `... Swap with the smaller child (4) - ...` -> '4' */
 const parseWinner = (caption: string) => {
-  const match = /smaller\* child \(([^)]+)\)/.exec(caption);
+  const match = /smaller child \(([^)]+)\)/.exec(caption);
   return match ? match[1] : null;
 };
 

@@ -14,7 +14,7 @@ import { fromFrames, type AnimationSpec } from '../../../anim/types';
 /* 1. Merge sort: the merge is where all the work happens.                   */
 /* ------------------------------------------------------------------------ */
 
-interface MergeFrame {
+export interface MergeFrame {
   array: number[];
   helper: (number | null)[];
   range: [number, number] | null;
@@ -26,7 +26,7 @@ interface MergeFrame {
   detail: string;
 }
 
-const mergeFrames: MergeFrame[] = (() => {
+export const mergeFrames: MergeFrame[] = (() => {
   const array = [5, 2, 8, 1];
   const helper: (number | null)[] = array.map(() => null);
   const frames: MergeFrame[] = [];
@@ -86,7 +86,7 @@ const mergeFrames: MergeFrame[] = (() => {
       else r++;
       write++;
       snapshot(
-        `Compare the two fronts and write the smaller one back. Taking the left one on a tie is what makes merge sort **stable** - equal elements keep their original order.`,
+        `Compare the two fronts and write the smaller one back. Taking the left one on a tie is what makes merge sort stable - equal elements keep their original order.`,
         `wrote ${value} at index ${write - 1}`,
         [low, high],
         l <= mid ? l : null,
@@ -185,7 +185,7 @@ export const mergeSort: AnimationSpec = fromFrames(
 /* 2. Quicksort: partitioning around a pivot, and the pivot that ruins it.   */
 /* ------------------------------------------------------------------------ */
 
-interface PartitionFrame {
+export interface PartitionFrame {
   array: number[];
   left: number;
   right: number;
@@ -196,7 +196,7 @@ interface PartitionFrame {
   detail: string;
 }
 
-const partitionFrames: PartitionFrame[] = (() => {
+export const partitionFrames: PartitionFrame[] = (() => {
   const array = [7, 2, 5, 9, 1, 8];
   const frames: PartitionFrame[] = [];
   let left = 0;
@@ -310,7 +310,7 @@ export const quickPartition: AnimationSpec = fromFrames(
 /* 3. Binary search on a rotated array.                                      */
 /* ------------------------------------------------------------------------ */
 
-interface RotatedFrame {
+export interface RotatedFrame {
   lo: number;
   hi: number;
   mid: number | null;
@@ -321,10 +321,10 @@ interface RotatedFrame {
   detail: string;
 }
 
-const ROTATED = [15, 16, 19, 20, 25, 1, 3, 4, 5];
-const TARGET = 20;
+export const ROTATED = [15, 16, 19, 20, 25, 1, 3, 4, 5];
+export const TARGET = 20;
 
-const rotatedFrames: RotatedFrame[] = (() => {
+export const rotatedFrames: RotatedFrame[] = (() => {
   const frames: RotatedFrame[] = [];
   let lo = 0;
   let hi = ROTATED.length - 1;
@@ -352,7 +352,7 @@ const rotatedFrames: RotatedFrame[] = (() => {
         leftSorted: null,
         found: true,
         steps,
-        caption: `Found ${TARGET} at index ${mid}, after ${steps} probes into a 9-element array. The rotation costs one extra comparison per step, not an extra factor of anything.`,
+        caption: `Found ${TARGET} at index ${mid}, after ${steps} probes into a ${ROTATED.length}-element array. The rotation costs one extra comparison per step, not an extra factor of anything.`,
         detail: 'O(log n) with distinct values',
       });
       break;
@@ -459,15 +459,15 @@ export const rotatedSearch: AnimationSpec = fromFrames(
 /* 4. Row- and column-sorted matrix: eliminate a line per step.              */
 /* ------------------------------------------------------------------------ */
 
-const GRID = [
+export const GRID = [
   [15, 20, 40, 85],
   [20, 35, 80, 95],
   [30, 55, 95, 105],
   [40, 80, 100, 120],
 ];
-const NEEDLE = 55;
+export const NEEDLE = 55;
 
-interface GridFrame {
+export interface GridFrame {
   row: number;
   col: number;
   killedRows: number[];
@@ -478,7 +478,7 @@ interface GridFrame {
   detail: string;
 }
 
-const gridFrames: GridFrame[] = (() => {
+export const gridFrames: GridFrame[] = (() => {
   const frames: GridFrame[] = [];
   let row = 0;
   let col = GRID[0].length - 1;

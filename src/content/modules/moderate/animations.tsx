@@ -14,9 +14,9 @@ import { fromFrames, type AnimationSpec } from '../../../anim/types';
 /* 1. Kadane: one pass, and one decision per element.                        */
 /* ------------------------------------------------------------------------ */
 
-const SERIES = [2, -8, 3, -2, 4, -10];
+export const SERIES = [2, -8, 3, -2, 4, -10];
 
-interface KadaneFrame {
+export interface KadaneFrame {
   at: number;
   running: number;
   best: number;
@@ -26,7 +26,7 @@ interface KadaneFrame {
   detail: string;
 }
 
-const kadaneFrames: KadaneFrame[] = (() => {
+export const kadaneFrames: KadaneFrame[] = (() => {
   const frames: KadaneFrame[] = [
     {
       at: -1,
@@ -131,9 +131,9 @@ export const kadane: AnimationSpec = fromFrames(
 /* 2. Sweep line: count events, not units of time.                           */
 /* ------------------------------------------------------------------------ */
 
-const FIRST_YEAR = 1900;
-const YEARS = 9;
-const PEOPLE = [
+export const FIRST_YEAR = 1900;
+export const YEARS = 9;
+export const PEOPLE = [
   { birth: 1900, death: 1903 },
   { birth: 1901, death: 1905 },
   { birth: 1902, death: 1904 },
@@ -141,7 +141,7 @@ const PEOPLE = [
   { birth: 1903, death: 1907 },
 ];
 
-interface SweepFrame {
+export interface SweepFrame {
   deltas: number[];
   running: (number | null)[];
   at: number;
@@ -151,7 +151,7 @@ interface SweepFrame {
   detail: string;
 }
 
-const sweepFrames: SweepFrame[] = (() => {
+export const sweepFrames: SweepFrame[] = (() => {
   const deltas = new Array<number>(YEARS + 1).fill(0);
   for (const person of PEOPLE) {
     deltas[person.birth - FIRST_YEAR] += 1;
@@ -252,11 +252,11 @@ export const sweepLine: AnimationSpec = fromFrames(
 /* 3. An LRU cache: a map for lookup, a list for recency.                    */
 /* ------------------------------------------------------------------------ */
 
-const CAPACITY = 3;
+export const CAPACITY = 3;
 
 type CacheOp = { kind: 'put'; key: string } | { kind: 'get'; key: string };
 
-const CACHE_OPS: CacheOp[] = [
+export const CACHE_OPS: CacheOp[] = [
   { kind: 'put', key: 'a' },
   { kind: 'put', key: 'b' },
   { kind: 'put', key: 'c' },
@@ -265,7 +265,7 @@ const CACHE_OPS: CacheOp[] = [
   { kind: 'get', key: 'b' },
 ];
 
-interface CacheFrame {
+export interface CacheFrame {
   order: string[];
   touched: string | null;
   evicted: string | null;
@@ -274,7 +274,7 @@ interface CacheFrame {
   detail: string;
 }
 
-const cacheFrames: CacheFrame[] = (() => {
+export const cacheFrames: CacheFrame[] = (() => {
   const order: string[] = []; // most recent first
   const frames: CacheFrame[] = [
     {

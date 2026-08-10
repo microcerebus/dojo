@@ -15,9 +15,9 @@ import { fromFrames, type AnimationSpec } from '../../../anim/types';
 /* 1. Trapping rain water with two pointers.                                 */
 /* ------------------------------------------------------------------------ */
 
-const HEIGHTS = [4, 2, 0, 3, 2, 5];
+export const HEIGHTS = [4, 2, 0, 3, 2, 5];
 
-interface WaterFrame {
+export interface WaterFrame {
   water: number[];
   left: number;
   right: number;
@@ -28,7 +28,7 @@ interface WaterFrame {
   detail: string;
 }
 
-const waterFrames: WaterFrame[] = (() => {
+export const waterFrames: WaterFrame[] = (() => {
   const water = HEIGHTS.map(() => 0);
   const frames: WaterFrame[] = [];
   let left = 0;
@@ -71,7 +71,7 @@ const waterFrames: WaterFrame[] = (() => {
   }
 
   snapshot(
-    `${total} units of water, in one pass with two pointers and four numbers of state. The insight that makes it work: the *shorter* end is always safe to resolve, because the taller end guarantees a wall on the other side.`,
+    `${total} units of water, in one pass with two pointers and four numbers of state. The insight that makes it work: the shorter end is always safe to resolve, because the taller end guarantees a wall on the other side.`,
     'O(n) time, O(1) space · the two-array version is the one to describe first, then improve',
   );
   return frames;
@@ -138,23 +138,23 @@ export const trappingWater: AnimationSpec = fromFrames(
 /* 2. Union-find, and what path compression actually does.                   */
 /* ------------------------------------------------------------------------ */
 
-const NAMES = ['John', 'Jon', 'Johnny', 'Chris', 'Kris', 'Topher'];
-const FREQ = [15, 12, 6, 13, 4, 19];
-const PAIRS: [number, number][] = [
+export const NAMES = ['John', 'Jon', 'Johnny', 'Chris', 'Kris', 'Topher'];
+export const FREQ = [15, 12, 6, 13, 4, 19];
+export const PAIRS: [number, number][] = [
   [1, 0],
   [0, 2],
   [3, 4],
   [3, 5],
 ];
 
-interface UnionFrame {
+export interface UnionFrame {
   parent: number[];
   touched: number[];
   caption: string;
   detail: string;
 }
 
-const unionFrames: UnionFrame[] = (() => {
+export const unionFrames: UnionFrame[] = (() => {
   const parent = NAMES.map((_, i) => i);
   const frames: UnionFrame[] = [];
 
@@ -265,14 +265,14 @@ export const unionFind: AnimationSpec = fromFrames(
 /* 3. Bidirectional BFS: two frontiers, half the depth each.                 */
 /* ------------------------------------------------------------------------ */
 
-const WORDS = ['DAMP', 'LAMP', 'RAMP', 'LAMB', 'LIMP', 'LIME', 'MIME', 'LIKE', 'MIKE'];
-const START = 'DAMP';
-const GOAL = 'LIKE';
+export const WORDS = ['DAMP', 'LAMP', 'RAMP', 'LAMB', 'LIMP', 'LIME', 'MIME', 'LIKE', 'MIKE'];
+export const START = 'DAMP';
+export const GOAL = 'LIKE';
 
 const oneApart = (a: string, b: string) =>
   a.length === b.length && a.split('').filter((ch, i) => ch !== b[i]).length === 1;
 
-interface LadderFrame {
+export interface LadderFrame {
   fromStart: Set<string>;
   fromGoal: Set<string>;
   frontierStart: Set<string>;
@@ -283,7 +283,7 @@ interface LadderFrame {
   detail: string;
 }
 
-const ladderFrames: LadderFrame[] = (() => {
+export const ladderFrames: LadderFrame[] = (() => {
   const frames: LadderFrame[] = [];
   const fromStart = new Set([START]);
   const fromGoal = new Set([GOAL]);

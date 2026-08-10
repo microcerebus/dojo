@@ -30,9 +30,9 @@ interface CallNode {
   children: CallNode[];
 }
 
-const ROOT_N = 4;
+export const ROOT_N = 4;
 
-const callTree: CallNode = (() => {
+export const callTree: CallNode = (() => {
   let nextSlot = 0;
   const build = (n: number, depth: number, id: string, parentSlot?: number): CallNode => {
     const children: CallNode[] = [];
@@ -53,7 +53,7 @@ const callTree: CallNode = (() => {
   return build(ROOT_N, 0, 'r');
 })();
 
-const allCalls: CallNode[] = (() => {
+export const allCalls: CallNode[] = (() => {
   const out: CallNode[] = [];
   const walk = (node: CallNode) => {
     out.push(node);
@@ -66,7 +66,7 @@ const allCalls: CallNode[] = (() => {
 const TREE_SLOTS = allCalls.filter((node) => node.children.length === 0).length;
 const TREE_DEPTH = Math.max(...allCalls.map((node) => node.depth)) + 1;
 
-interface TreeFrame {
+export interface TreeFrame {
   states: Record<string, CellState>;
   calls: number;
   saved: number;
@@ -74,7 +74,7 @@ interface TreeFrame {
   detail: string;
 }
 
-const treeFrames: TreeFrame[] = (() => {
+export const treeFrames: TreeFrame[] = (() => {
   const frames: TreeFrame[] = [];
   const states: Record<string, CellState> = {};
   let calls = 0;
@@ -186,10 +186,10 @@ export const memoTree: AnimationSpec = fromFrames(
 /* 2. A DP table filling in, one cell at a time.                             */
 /* ------------------------------------------------------------------------ */
 
-const COLS = 'ACE';
-const ROWS = 'ABE';
+export const COLS = 'ACE';
+export const ROWS = 'ABE';
 
-interface TableFrame {
+export interface TableFrame {
   values: (number | null)[][];
   current: [number, number] | null;
   deps: [number, number][];
@@ -197,7 +197,7 @@ interface TableFrame {
   detail: string;
 }
 
-const tableFrames: TableFrame[] = (() => {
+export const tableFrames: TableFrame[] = (() => {
   const rows = ROWS.length;
   const cols = COLS.length;
   const values: (number | null)[][] = Array.from({ length: rows + 1 }, () =>
@@ -209,8 +209,7 @@ const tableFrames: TableFrame[] = (() => {
     values: values.map((row) => [...row]),
     current: null,
     deps: [],
-    caption:
-      'Longest common subsequence of "ACE" and "ABE". The table entry at (i, j) is the answer for the first i characters of one string and the first j of the other - so the answer to the whole problem is the bottom-right cell.',
+    caption: `Longest common subsequence of "${COLS}" and "${ROWS}". The table entry at (i, j) is the answer for the first i characters of one string and the first j of the other - so the answer to the whole problem is the bottom-right cell.`,
     detail: 'the table is the memo, written down in the order it can be filled',
   });
 
@@ -251,11 +250,28 @@ const tableFrames: TableFrame[] = (() => {
     }
   }
 
+  // Walk the finished table backwards so the subsequence in the caption is the
+  // one this table actually encodes, rather than a value typed in by hand.
+  let r = rows;
+  let c = cols;
+  let subsequence = '';
+  while (r > 0 && c > 0) {
+    if (ROWS[r - 1] === COLS[c - 1]) {
+      subsequence = ROWS[r - 1] + subsequence;
+      r--;
+      c--;
+    } else if ((values[r - 1][c] as number) >= (values[r][c - 1] as number)) {
+      r--;
+    } else {
+      c--;
+    }
+  }
+
   frames.push({
     values: values.map((row) => [...row]),
     current: [rows, cols],
     deps: [],
-    caption: `The bottom-right cell is the answer: ${values[rows][cols]}, for "AE". Every cell reads only the row above and the cell to its left, so one row of storage is enough - that is the rolling-array optimisation, O(n) space instead of O(mn).`,
+    caption: `The bottom-right cell is the answer: ${values[rows][cols]}, for "${subsequence}". Every cell reads only the row above and the cell to its left, so one row of storage is enough - that is the rolling-array optimisation, O(n) space instead of O(mn).`,
     detail: 'O(mn) time either way · keep the full table only if you must reconstruct the subsequence',
   });
   return frames;
@@ -310,9 +326,9 @@ export const dpTable: AnimationSpec = fromFrames(
 /* 3. Backtracking on n-queens: choose, detect, unchoose.                    */
 /* ------------------------------------------------------------------------ */
 
-const BOARD = 4;
+export const BOARD = 4;
 
-interface QueenFrame {
+export interface QueenFrame {
   placed: number[];
   row: number;
   rejected: number[];
@@ -323,7 +339,7 @@ interface QueenFrame {
   detail: string;
 }
 
-const queenFrames: QueenFrame[] = (() => {
+export const queenFrames: QueenFrame[] = (() => {
   const frames: QueenFrame[] = [];
   const placed: number[] = [];
   let attempts = 0;
@@ -474,20 +490,19 @@ export const nQueens: AnimationSpec = fromFrames(
 /* 4. Every subset, by counting in binary.                                   */
 /* ------------------------------------------------------------------------ */
 
-const SET = ['a', 'b', 'c'];
+export const SET = ['a', 'b', 'c'];
 
-interface SubsetFrame {
+export interface SubsetFrame {
   mask: number;
   caption: string;
   detail: string;
 }
 
-const subsetFrames: SubsetFrame[] = (() => {
+export const subsetFrames: SubsetFrame[] = (() => {
   const frames: SubsetFrame[] = [
     {
       mask: -1,
-      caption:
-        'Every subset of a 3-element set is a yes/no answer for each element - which is exactly a 3-bit number. So there are 2³ subsets, and counting from 0 to 7 enumerates all of them, once each.',
+      caption: `Every subset of a ${SET.length}-element set is a yes/no answer for each element - which is exactly a ${SET.length}-bit number. So there are ${1 << SET.length} subsets, and counting from 0 to ${(1 << SET.length) - 1} enumerates all of them, once each.`,
       detail: 'no recursion, no duplicates, no bookkeeping',
     },
   ];
@@ -497,7 +512,7 @@ const subsetFrames: SubsetFrame[] = (() => {
       mask,
       caption:
         mask === 0
-          ? 'Mask 000: no bits set, so the empty set. Forgetting that the empty set is a subset is the classic off-by-one here.'
+          ? `Mask ${(0).toString(2).padStart(SET.length, '0')}: no bits set, so the empty set. Forgetting that the empty set is a subset is the classic off-by-one here.`
           : `Mask ${mask.toString(2).padStart(SET.length, '0')}: read bit i to decide whether element i is in. That gives {${chosen.join(', ')}}.`,
       detail: `${mask + 1} of ${1 << SET.length} subsets`,
     });
