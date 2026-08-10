@@ -1,0 +1,7 @@
+To build a queue from two stacks: everything you enqueue goes onto the in stack, and everything you dequeue comes off the out stack. When out is empty, pour the whole of in into it. The order flips, so the oldest item ends up on top.
+
+The critical rule is to pour only when out is empty. Pouring eagerly on every operation is both slower and actually wrong, because it re-reverses items that were already in the right order.
+
+The complexity argument is the same one as array doubling. Every element is pushed and popped at most twice in its whole lifetime, so any sequence of n operations costs linear work. That is constant amortised, even though one individual dequeue can be linear.
+
+Three more composites appear in this chapter. Three stacks in one array, either with a fixed split or letting them grow into each other. A stack of stacks that rolls over at capacity, where pop at an index forces you to choose between leaving holes and rolling elements back. And two queues sharing a timestamp so you can serve the oldest overall or the oldest of one type.

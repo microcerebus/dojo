@@ -1,0 +1,9 @@
+You almost never need to compute a logarithm. You need to recognise two shapes.
+
+First: if something halves each step, it is logarithmic. Binary search, descending a balanced tree, dividing by ten to walk the digits of a number. The base of the log does not matter, because different bases differ by a constant factor.
+
+Second: if a recursive call branches, the cost is roughly branches to the power of depth. Two calls per level and depth n gives you two to the n.
+
+But apply that carefully, because depth is not always n. Summing every node of a balanced search tree branches twice per call, so it looks exponential. The depth is log n, and two to the power of log n is exactly n. The answer is linear, which you could also have got by noticing the code touches every node once.
+
+Always derive it twice: once from the recursion shape, once from what the code means. If they disagree, you have made an error.

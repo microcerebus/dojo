@@ -1,0 +1,565 @@
+/* ==========================================================================
+   dojo design tokens + shell.
+   Mobile-first: the base rules target a 390px phone, and `min-width` queries
+   add the roomier desktop layout on top.
+   ========================================================================== */
+
+:root {
+  --bg: #0b0e13;
+  --bg-elev: #131820;
+  --bg-elev-2: #1a212c;
+  --bg-inset: #0e131a;
+  --border: #232c3a;
+  --border-strong: #33415a;
+
+  --text: #e7edf7;
+  --text-dim: #9fadc2;
+  --text-faint: #6b7a91;
+
+  --accent: #7dd3fc;
+  --accent-ink: #0b1b26;
+  --accent-2: #f9a8d4;
+  --good: #86efac;
+  --warn: #fcd34d;
+  --bad: #fca5a5;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --tap: 44px; /* iOS minimum comfortable touch target */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  --header-h: 52px;
+  --tabbar-h: 58px;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+ol,
+ul,
+dl,
+dd {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* Nothing in this app is ever allowed to scroll sideways. */
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* Kills the iOS 300ms tap delay and double-tap-to-zoom on controls. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ shell */
+
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: calc(var(--header-h) + var(--safe-top));
+  padding: var(--safe-top) calc(var(--space-4) + var(--safe-right)) 0
+    calc(var(--space-4) + var(--safe-left));
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header__brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.header__mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  border-top-color: transparent;
+  transform: rotate(-45deg);
+}
+
+.header__spacer {
+  flex: 1;
+}
+
+.header__nav {
+  display: none;
+}
+
+.header__meta {
+  font-size: 12px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-5) calc(var(--space-4) + var(--safe-right)) calc(
+      var(--tabbar-h) + var(--safe-bottom) + var(--space-6)
+    )
+    calc(var(--space-4) + var(--safe-left));
+  min-width: 0;
+}
+
+/* Bottom tab bar: the primary navigation on a phone, where the thumb is. */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  padding: 0 var(--safe-right) var(--safe-bottom) var(--safe-left);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-top: 1px solid var(--border);
+}
+
+.tabbar__link {
+  flex: 1;
+  min-height: var(--tabbar-h);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  text-decoration: none;
+}
+
+.tabbar__link.is-active {
+  color: var(--accent);
+}
+
+.tabbar__icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+@media (min-width: 860px) {
+  .tabbar {
+    display: none;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: var(--space-1);
+  }
+
+  .header__nav a {
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    padding: 0 var(--space-3);
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--text-dim);
+    text-decoration: none;
+  }
+
+  .header__nav a.is-active {
+    background: var(--bg-elev-2);
+    color: var(--text);
+  }
+
+  .main {
+    padding-bottom: var(--space-7);
+  }
+}
+
+/* ------------------------------------------------------------- typography */
+
+h1,
+.h1 {
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 660;
+}
+
+h2,
+.h2 {
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  font-weight: 640;
+}
+
+h3 {
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 620;
+}
+
+.lede {
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+
+.prose p + p {
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 860px) {
+  h1,
+  .h1 {
+    font-size: 32px;
+  }
+  h2,
+  .h2 {
+    font-size: 23px;
+  }
+}
+
+/* ---------------------------------------------------------------- pieces */
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+.stack-4 > * + * {
+  margin-top: var(--space-4);
+}
+.stack-5 > * + * {
+  margin-top: var(--space-5);
+}
+.stack-6 > * + * {
+  margin-top: var(--space-6);
+}
+
+.pagehead {
+  margin-bottom: var(--space-5);
+}
+
+.pagehead p {
+  margin-top: var(--space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border-strong);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.chip--accent {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.chip--good {
+  border-color: color-mix(in srgb, var(--good) 45%, transparent);
+  color: var(--good);
+  background: color-mix(in srgb, var(--good) 10%, transparent);
+}
+
+.chip--warn {
+  border-color: color-mix(in srgb, var(--warn) 40%, transparent);
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 8%, transparent);
+}
+
+.chip--bad {
+  border-color: color-mix(in srgb, var(--bad) 40%, transparent);
+  color: var(--bad);
+  background: color-mix(in srgb, var(--bad) 8%, transparent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev-2);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 560;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn--ghost {
+  background: transparent;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* progress ring ---------------------------------------------------------- */
+
+.ring {
+  --ring-size: 44px;
+  position: relative;
+  width: var(--ring-size);
+  height: var(--ring-size);
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(
+    var(--accent) calc(var(--ring-value) * 1turn),
+    var(--bg-elev-2) 0
+  );
+}
+
+.ring::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--bg-elev);
+}
+
+.ring__label {
+  position: relative;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  font-weight: 640;
+}
+
+.ring.is-complete {
+  background: conic-gradient(var(--good) 1turn, var(--good) 0);
+}
+
+.ring.is-complete .ring__label {
+  color: var(--good);
+}
+
+/* tabs ------------------------------------------------------------------- */
+
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  padding: 3px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.tabs__tab {
+  flex: 1;
+  min-height: 38px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 560;
+  color: var(--text-dim);
+}
+
+.tabs__tab.is-active {
+  background: var(--bg-elev-2);
+  color: var(--text);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* table ------------------------------------------------------------------ */
+
+.tablewrap {
+  /* Wide tables scroll inside their own box - never the page. */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 9px var(--space-3);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  background: var(--bg-elev);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+
+pre {
+  margin: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.55;
+}

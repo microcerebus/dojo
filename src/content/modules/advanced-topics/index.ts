@@ -1,0 +1,48 @@
+import type { CourseModule } from '../../types';
+
+export const advancedTopics: CourseModule = {
+  id: 'advanced-topics',
+  title: 'Advanced Topics',
+  track: 'techniques',
+  status: 'outline',
+  source: 'Part XI',
+  summary:
+    'The reference survey: topological sort, Dijkstra, rolling hashes, self-balancing trees and MapReduce. For recognition, not mastery.',
+  estimatedMinutes: 70,
+  concepts: [
+    'Useful arithmetic identities: sum of 1..n, sum of powers of two, geometric series, and the log identities',
+    'Why the sum of the leaves dominates a binary tree (about half the nodes are at the bottom level)',
+    'Topological sort by repeatedly removing zero-indegree nodes',
+    'Topological sort via DFS post-order, and why the reversed finish order works',
+    'Detecting a cycle during either method, and reporting it rather than looping',
+    "Dijkstra's algorithm: greedy shortest paths with non-negative weights",
+    'Dijkstra with a priority queue: O((V + E) log V), and why negative weights break it',
+    'Hash collision resolution: separate chaining vs open addressing (linear probing, quadratic probing, double hashing)',
+    'Load factor, resizing, and clustering in open addressing',
+    'Rabin-Karp: rolling hashes for substring search, with verification on a hash match',
+    'Why Rabin-Karp is O(n + m) expected and O(nm) worst case',
+    'AVL trees: balance factors and the four rotation cases',
+    'Red-black trees: the colour invariants, recolouring, and when a rotation is forced',
+    'Why self-balancing matters: it is what keeps map and set operations O(log n)',
+    'MapReduce: the map, shuffle/group and reduce stages',
+    'Designing a MapReduce job: what the key is, and why that choice decides everything',
+  ],
+  plannedAnimations: [
+    'Topological sort draining a zero-indegree queue, with indegrees decrementing',
+    "Dijkstra relaxing edges, with the priority queue and the settled set side by side",
+    'A rolling hash sliding along a string: one character out, one in, one multiply',
+    'An AVL rotation: the imbalance appearing, then the four cases resolving it',
+    'MapReduce: records mapped to key/value pairs, shuffled into groups, then reduced',
+  ],
+  sections: [],
+  quiz: [],
+  drills: [
+    { slug: 'course-schedule-ii', note: 'CTCI 4.7 - topological sort producing the actual order.' },
+    { slug: 'network-delay-time', note: 'Dijkstra, straight.' },
+    { slug: 'cheapest-flights-within-k-stops', note: 'Where plain Dijkstra needs modifying - a good stress test.' },
+    { slug: 'path-with-maximum-probability', note: 'Dijkstra with a different relaxation rule.' },
+    { slug: 'longest-duplicate-substring', note: 'Binary search on length plus Rabin-Karp.' },
+    { slug: 'redundant-connection', note: 'Union-find as the other way to think about connectivity.' },
+    { slug: 'design-hashmap', note: 'Implement chaining yourself, then think about open addressing.' },
+  ],
+};

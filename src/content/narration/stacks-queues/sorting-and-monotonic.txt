@@ -1,0 +1,7 @@
+To sort a stack with only one extra stack, hold an invariant: the helper stack is always sorted. Pop an element into a temporary variable, move elements back from the helper until it fits, then push it. That is quadratic time and linear space, and if you need smallest on top instead, pour it across once more.
+
+The same maintain-an-invariant idea powers the monotonic stack, which is what most stack questions on LeetCode actually test.
+
+To find, for each element, the next larger element to its right: push indices onto a stack, and whenever a bigger value arrives, pop every index smaller than it, because those have just found their answer. Each index is pushed once and popped once, so despite the inner loop it is linear. Recognising that shape is worth more than any single problem.
+
+Expression evaluation is the other classic. To handle precedence without parentheses, push numbers, but when you see a multiply or divide, pop the last number, apply immediately, and push the result. Sum the stack at the end.

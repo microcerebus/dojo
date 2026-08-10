@@ -1,0 +1,7 @@
+Most failed interviews are not knowledge failures. They are process failures: coding before the algorithm was settled, or optimising something that was never the bottleneck.
+
+The fix is a loop you run every single time, until it is boring. Listen and clarify. Draw an example. State a brute force. Optimise. Walk through it. Implement. Test.
+
+Roughly half the interview should be over before you write a line of code. Whiteboard coding is slow and editing it is slower, so the cheapest place to fix a design is out loud, before anything is written down.
+
+And remember you are being assessed continuously, not on a final answer. How you narrow ambiguity, whether you can name your own complexity, whether you take a hint gracefully. All of it counts, and all of it is invisible unless you think out loud.

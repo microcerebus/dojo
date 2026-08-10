@@ -1,0 +1,9 @@
+A list whose tail points back into itself never terminates. A hash set of visited nodes detects that in linear time and linear space. Floyd's algorithm does it in constant space, and the second half is what interviews actually care about.
+
+Phase one. Move slow one node and fast two nodes per step. If fast reaches null, there is no cycle. On a circular track a faster runner always laps a slower one, so if there is a cycle they must collide.
+
+But they collide somewhere inside the loop, not at its start. That is the part people get wrong.
+
+Phase two. Move one pointer back to the head, leave the other at the collision, and advance both one step at a time. They meet exactly at the first node of the loop.
+
+Why does that work? If there are k nodes before the loop, the collision happens k nodes into the loop. So the distance from the head to the entry equals the distance from the collision to the entry, and two pointers at the same speed close both gaps together.

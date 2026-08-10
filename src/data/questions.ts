@@ -1,0 +1,1217 @@
+/**
+ * All 189 numbered questions from the book, indexed for the Coverage Map.
+ *
+ * `moduleId` answers "which dojo module teaches the technique this question
+ * needs". For chapters 1-15 that is almost always the chapter's own module. For
+ * the mixed-review chapters (16 Moderate, 17 Hard) the book deliberately hides
+ * the technique, so each question points at the module that teaches its tool -
+ * which is exactly the signal you want when a problem stumps you.
+ *
+ * `leetcode` is the closest widely-available equivalent, or `null` for
+ * book-only questions (design discussions, language trivia, puzzles).
+ */
+
+export interface BookQuestion {
+  id: string;
+  title: string;
+  /** Book chapter label, e.g. "Chapter 1. Arrays and Strings". */
+  chapter: string;
+  /** Module that teaches the technique this question needs. */
+  moduleId: string;
+  gist: string;
+  leetcode: { slug: string; title: string } | null;
+}
+
+const q = (
+  id: string,
+  title: string,
+  chapter: string,
+  moduleId: string,
+  gist: string,
+  lc: [slug: string, title: string] | null,
+): BookQuestion => ({
+  id,
+  title,
+  chapter,
+  moduleId,
+  gist,
+  leetcode: lc ? { slug: lc[0], title: lc[1] } : null,
+});
+
+const C1 = 'Chapter 1. Arrays and Strings';
+const C2 = 'Chapter 2. Linked Lists';
+const C3 = 'Chapter 3. Stacks and Queues';
+const C4 = 'Chapter 4. Trees and Graphs';
+const C5 = 'Chapter 5. Bit Manipulation';
+const C6 = 'Chapter 6. Math and Logic Puzzles';
+const C7 = 'Chapter 7. Object-Oriented Design';
+const C8 = 'Chapter 8. Recursion and Dynamic Programming';
+const C9 = 'Chapter 9. System Design and Scalability';
+const C10 = 'Chapter 10. Sorting and Searching';
+const C11 = 'Chapter 11. Testing';
+const C12 = 'Chapter 12. C and C++';
+const C13 = 'Chapter 13. Java';
+const C14 = 'Chapter 14. Databases';
+const C15 = 'Chapter 15. Threads and Locks';
+const C16 = 'Chapter 16. Moderate';
+const C17 = 'Chapter 17. Hard';
+
+export const BOOK_QUESTIONS: BookQuestion[] = [
+  // ---------------------------------------------------- Chapter 1
+  q('1.1', 'Is Unique', C1, 'arrays-strings', 'Decide whether a string repeats any character.', [
+    'contains-duplicate',
+    'Contains Duplicate',
+  ]),
+  q(
+    '1.2',
+    'Check Permutation',
+    C1,
+    'arrays-strings',
+    'Decide whether two strings use exactly the same multiset of characters.',
+    ['valid-anagram', 'Valid Anagram'],
+  ),
+  q(
+    '1.3',
+    'URLify',
+    C1,
+    'arrays-strings',
+    'Rewrite spaces as %20 inside a buffer that already has room, working backwards.',
+    null,
+  ),
+  q(
+    '1.4',
+    'Palindrome Permutation',
+    C1,
+    'arrays-strings',
+    'Decide whether the letters can be rearranged into a palindrome (at most one odd count).',
+    ['palindrome-permutation', 'Palindrome Permutation'],
+  ),
+  q(
+    '1.5',
+    'One Away',
+    C1,
+    'arrays-strings',
+    'Decide whether two strings are at most one insert, delete or replace apart.',
+    ['one-edit-distance', 'One Edit Distance'],
+  ),
+  q(
+    '1.6',
+    'String Compression',
+    C1,
+    'arrays-strings',
+    'Run-length encode, returning the original when the encoding is not shorter.',
+    ['string-compression', 'String Compression'],
+  ),
+  q('1.7', 'Rotate Matrix', C1, 'arrays-strings', 'Rotate an NxN matrix 90 degrees in place.', [
+    'rotate-image',
+    'Rotate Image',
+  ]),
+  q(
+    '1.8',
+    'Zero Matrix',
+    C1,
+    'arrays-strings',
+    'Zero out every row and column that contains a zero, without cascading.',
+    ['set-matrix-zeroes', 'Set Matrix Zeroes'],
+  ),
+  q(
+    '1.9',
+    'String Rotation',
+    C1,
+    'arrays-strings',
+    'Detect a rotation using a single substring check on the doubled string.',
+    ['rotate-string', 'Rotate String'],
+  ),
+
+  // ---------------------------------------------------- Chapter 2
+  q(
+    '2.1',
+    'Remove Dups',
+    C2,
+    'linked-lists',
+    'Delete duplicate values from an unsorted list, with and without a buffer.',
+    ['remove-duplicates-from-sorted-list', 'Remove Duplicates from Sorted List'],
+  ),
+  q(
+    '2.2',
+    'Return Kth to Last',
+    C2,
+    'linked-lists',
+    'Find the kth-from-last node with an offset runner.',
+    ['remove-nth-node-from-end-of-list', 'Remove Nth Node From End of List'],
+  ),
+  q(
+    '2.3',
+    'Delete Middle Node',
+    C2,
+    'linked-lists',
+    'Delete a node given only that node, by copying the successor forward.',
+    ['delete-node-in-a-linked-list', 'Delete Node in a Linked List'],
+  ),
+  q(
+    '2.4',
+    'Partition',
+    C2,
+    'linked-lists',
+    'Split nodes around a pivot value using two growing sublists.',
+    ['partition-list', 'Partition List'],
+  ),
+  q(
+    '2.5',
+    'Sum Lists',
+    C2,
+    'linked-lists',
+    'Add two digit lists with carry, in both reverse and forward digit order.',
+    ['add-two-numbers', 'Add Two Numbers'],
+  ),
+  q('2.6', 'Palindrome', C2, 'linked-lists', 'Decide whether a list reads the same backwards.', [
+    'palindrome-linked-list',
+    'Palindrome Linked List',
+  ]),
+  q(
+    '2.7',
+    'Intersection',
+    C2,
+    'linked-lists',
+    'Find the node where two lists merge, by reference not value.',
+    ['intersection-of-two-linked-lists', 'Intersection of Two Linked Lists'],
+  ),
+  q(
+    '2.8',
+    'Loop Detection',
+    C2,
+    'linked-lists',
+    'Detect a cycle and return the node where the loop starts.',
+    ['linked-list-cycle-ii', 'Linked List Cycle II'],
+  ),
+
+  // ---------------------------------------------------- Chapter 3
+  q(
+    '3.1',
+    'Three in One',
+    C3,
+    'stacks-queues',
+    'Pack three stacks into one array, fixed-split or flexible.',
+    null,
+  ),
+  q('3.2', 'Stack Min', C3, 'stacks-queues', 'Add a constant-time min query to a stack.', [
+    'min-stack',
+    'Min Stack',
+  ]),
+  q(
+    '3.3',
+    'Stack of Plates',
+    C3,
+    'stacks-queues',
+    'Roll over into a new substack at capacity, and support popAt(index).',
+    ['dinner-plate-stacks', 'Dinner Plate Stacks'],
+  ),
+  q(
+    '3.4',
+    'Queue via Stacks',
+    C3,
+    'stacks-queues',
+    'Get FIFO from two LIFO stacks with amortised transfers.',
+    ['implement-queue-using-stacks', 'Implement Queue using Stacks'],
+  ),
+  q('3.5', 'Sort Stack', C3, 'stacks-queues', 'Sort a stack using only one extra stack.', null),
+  q(
+    '3.6',
+    'Animal Shelter',
+    C3,
+    'stacks-queues',
+    'Serve oldest-first overall or per species using timestamps and two queues.',
+    null,
+  ),
+
+  // ---------------------------------------------------- Chapter 4
+  q(
+    '4.1',
+    'Route Between Nodes',
+    C4,
+    'trees-graphs',
+    'Decide reachability in a directed graph with BFS or DFS.',
+    ['find-if-path-exists-in-graph', 'Find if Path Exists in Graph'],
+  ),
+  q(
+    '4.2',
+    'Minimal Tree',
+    C4,
+    'trees-graphs',
+    'Build a minimum-height BST by repeatedly taking the middle element.',
+    ['convert-sorted-array-to-binary-search-tree', 'Convert Sorted Array to BST'],
+  ),
+  q('4.3', 'List of Depths', C4, 'trees-graphs', 'Produce one list of nodes per tree level.', [
+    'binary-tree-level-order-traversal',
+    'Binary Tree Level Order Traversal',
+  ]),
+  q(
+    '4.4',
+    'Check Balanced',
+    C4,
+    'trees-graphs',
+    'Check every subtree height difference is at most one, in a single pass.',
+    ['balanced-binary-tree', 'Balanced Binary Tree'],
+  ),
+  q(
+    '4.5',
+    'Validate BST',
+    C4,
+    'trees-graphs',
+    'Validate BST ordering globally with min/max bounds, not just local comparisons.',
+    ['validate-binary-search-tree', 'Validate Binary Search Tree'],
+  ),
+  q(
+    '4.6',
+    'Successor',
+    C4,
+    'trees-graphs',
+    'Find the in-order successor when nodes carry parent pointers.',
+    ['inorder-successor-in-bst', 'Inorder Successor in BST'],
+  ),
+  q(
+    '4.7',
+    'Build Order',
+    C4,
+    'trees-graphs',
+    'Topologically sort projects with dependencies, or report a cycle.',
+    ['course-schedule-ii', 'Course Schedule II'],
+  ),
+  q(
+    '4.8',
+    'First Common Ancestor',
+    C4,
+    'trees-graphs',
+    'Find the lowest common ancestor in a binary tree, with and without parent links.',
+    ['lowest-common-ancestor-of-a-binary-tree', 'Lowest Common Ancestor of a Binary Tree'],
+  ),
+  q(
+    '4.9',
+    'BST Sequences',
+    C4,
+    'trees-graphs',
+    'Enumerate all insertion orders that would build a given BST by weaving subtree orders.',
+    null,
+  ),
+  q(
+    '4.10',
+    'Check Subtree',
+    C4,
+    'trees-graphs',
+    'Decide whether one tree appears identically inside another.',
+    ['subtree-of-another-tree', 'Subtree of Another Tree'],
+  ),
+  q(
+    '4.11',
+    'Random Node',
+    C4,
+    'trees-graphs',
+    'Return a uniformly random node from a mutable tree using subtree sizes.',
+    null,
+  ),
+  q(
+    '4.12',
+    'Paths with Sum',
+    C4,
+    'trees-graphs',
+    'Count downward paths summing to a target using running prefix sums.',
+    ['path-sum-iii', 'Path Sum III'],
+  ),
+
+  // ---------------------------------------------------- Chapter 5
+  q(
+    '5.1',
+    'Insertion',
+    C5,
+    'bit-manipulation',
+    'Splice one integer into a bit range of another by clearing then OR-ing.',
+    null,
+  ),
+  q(
+    '5.2',
+    'Binary to String',
+    C5,
+    'bit-manipulation',
+    'Print a fraction in binary or report that 32 characters are not enough.',
+    null,
+  ),
+  q(
+    '5.3',
+    'Flip Bit to Win',
+    C5,
+    'bit-manipulation',
+    'Find the longest run of ones obtainable by flipping a single zero.',
+    ['max-consecutive-ones-iii', 'Max Consecutive Ones III'],
+  ),
+  q(
+    '5.4',
+    'Next Number',
+    C5,
+    'bit-manipulation',
+    'Find the next larger and next smaller integers with the same bit count.',
+    null,
+  ),
+  q(
+    '5.5',
+    'Debugger',
+    C5,
+    'bit-manipulation',
+    'Explain that n & (n-1) == 0 tests for a power of two.',
+    ['power-of-two', 'Power of Two'],
+  ),
+  q('5.6', 'Conversion', C5, 'bit-manipulation', 'Count differing bits with XOR and popcount.', [
+    'hamming-distance',
+    'Hamming Distance',
+  ]),
+  q(
+    '5.7',
+    'Pairwise Swap',
+    C5,
+    'bit-manipulation',
+    'Swap odd and even bits with two masks and a shift each way.',
+    null,
+  ),
+  q(
+    '5.8',
+    'Draw Line',
+    C5,
+    'bit-manipulation',
+    'Draw a horizontal line into a byte-packed monochrome screen buffer.',
+    null,
+  ),
+
+  // ---------------------------------------------------- Chapter 6
+  q(
+    '6.1',
+    'The Heavy Pill',
+    C6,
+    'math-logic',
+    'Identify the heavy bottle with one weighing by taking a different count from each.',
+    null,
+  ),
+  q(
+    '6.2',
+    'Basketball',
+    C6,
+    'math-logic',
+    'Compare one-shot and best-of-three games as a function of shooting probability.',
+    null,
+  ),
+  q(
+    '6.3',
+    'Dominos',
+    C6,
+    'math-logic',
+    'Use a colouring invariant to prove the mutilated board cannot be tiled.',
+    null,
+  ),
+  q(
+    '6.4',
+    'Ants on a Triangle',
+    C6,
+    'math-logic',
+    'Compute collision probability via the complement of the two all-same-direction cases.',
+    null,
+  ),
+  q('6.5', 'Jugs of Water', C6, 'math-logic', 'Measure four quarts with five- and three-quart jugs.', [
+    'water-and-jug-problem',
+    'Water and Jug Problem',
+  ]),
+  q(
+    '6.6',
+    'Blue-Eyed Island',
+    C6,
+    'math-logic',
+    'Induct on common knowledge to get the synchronised departure day.',
+    null,
+  ),
+  q(
+    '6.7',
+    'The Apocalypse',
+    C6,
+    'math-logic',
+    'Show a stop-after-a-girl policy still yields a roughly even gender ratio.',
+    null,
+  ),
+  q('6.8', 'The Egg Drop Problem', C6, 'math-logic', 'Minimise worst-case drops with two eggs.', [
+    'super-egg-drop',
+    'Super Egg Drop',
+  ]),
+  q(
+    '6.9',
+    '100 Lockers',
+    C6,
+    'math-logic',
+    'Only perfect squares stay open, because only they have an odd divisor count.',
+    ['bulb-switcher', 'Bulb Switcher'],
+  ),
+  q('6.10', 'Poison', C6, 'math-logic', 'Encode bottle indices in binary across ten test strips.', [
+    'poor-pigs',
+    'Poor Pigs',
+  ]),
+
+  // ---------------------------------------------------- Chapter 7
+  q('7.1', 'Deck of Cards', C7, 'ood', 'Model a generic deck, then specialise it for blackjack.', null),
+  q('7.2', 'Call Center', C7, 'ood', 'Escalate a call through respondent, manager, director.', null),
+  q('7.3', 'Jukebox', C7, 'ood', 'Model playlists, selection, payment and playback.', null),
+  q(
+    '7.4',
+    'Parking Lot',
+    C7,
+    'ood',
+    'Model levels, spot sizes and multi-spot vehicles with a clean allocation rule.',
+    ['design-parking-system', 'Design Parking System'],
+  ),
+  q('7.5', 'Online Book Reader', C7, 'ood', 'Model users, library, and the active reading session.', null),
+  q('7.6', 'Jigsaw', C7, 'ood', 'Model edge shapes so fitting pieces is a local predicate.', null),
+  q('7.7', 'Chat Server', C7, 'ood', 'Model users, presence, conversations and delivery.', null),
+  q('7.8', 'Othello', C7, 'ood', 'Model the board, colour flipping and move legality.', null),
+  q(
+    '7.9',
+    'Circular Array',
+    C7,
+    'ood',
+    'Wrap an array with a rotation offset and a correct iterator.',
+    ['design-circular-deque', 'Design Circular Deque'],
+  ),
+  q('7.10', 'Minesweeper', C7, 'ood', 'Model the grid, adjacency counts and cascading reveals.', [
+    'minesweeper',
+    'Minesweeper',
+  ]),
+  q(
+    '7.11',
+    'File System',
+    C7,
+    'ood',
+    'Model files and directories as a composite hierarchy.',
+    ['design-in-memory-file-system', 'Design In-Memory File System'],
+  ),
+  q('7.12', 'Hash Table', C7, 'ood', 'Implement a hash table with separate chaining.', [
+    'design-hashmap',
+    'Design HashMap',
+  ]),
+
+  // ---------------------------------------------------- Chapter 8
+  q('8.1', 'Triple Step', C8, 'recursion-dp', 'Count stair climbings with 1, 2 or 3 step hops.', [
+    'climbing-stairs',
+    'Climbing Stairs',
+  ]),
+  q('8.2', 'Robot in a Grid', C8, 'recursion-dp', 'Find a path through a grid with blocked cells.', [
+    'unique-paths-ii',
+    'Unique Paths II',
+  ]),
+  q(
+    '8.3',
+    'Magic Index',
+    C8,
+    'recursion-dp',
+    'Find an index equal to its value, with a binary-search variant for duplicates.',
+    ['fixed-point', 'Fixed Point'],
+  ),
+  q('8.4', 'Power Set', C8, 'recursion-dp', 'Generate all subsets, recursively or by bit masks.', [
+    'subsets',
+    'Subsets',
+  ]),
+  q(
+    '8.5',
+    'Recursive Multiply',
+    C8,
+    'recursion-dp',
+    'Multiply using shifts and additions by halving one operand.',
+    null,
+  ),
+  q('8.6', 'Towers of Hanoi', C8, 'recursion-dp', 'Move n disks using the classic recursive plan.', null),
+  q(
+    '8.7',
+    'Permutations without Dups',
+    C8,
+    'recursion-dp',
+    'Generate all orderings of distinct characters.',
+    ['permutations', 'Permutations'],
+  ),
+  q(
+    '8.8',
+    'Permutations with Dups',
+    C8,
+    'recursion-dp',
+    'Generate distinct orderings by branching on counts instead of positions.',
+    ['permutations-ii', 'Permutations II'],
+  ),
+  q(
+    '8.9',
+    'Parens',
+    C8,
+    'recursion-dp',
+    'Generate valid parenthesis strings by tracking remaining open and close slots.',
+    ['generate-parentheses', 'Generate Parentheses'],
+  ),
+  q('8.10', 'Paint Fill', C8, 'recursion-dp', 'Flood fill a connected region of equal colour.', [
+    'flood-fill',
+    'Flood Fill',
+  ]),
+  q('8.11', 'Coins', C8, 'recursion-dp', 'Count combinations of coins making an amount.', [
+    'coin-change-ii',
+    'Coin Change II',
+  ]),
+  q('8.12', 'Eight Queens', C8, 'recursion-dp', 'Place queens row by row with backtracking.', [
+    'n-queens',
+    'N-Queens',
+  ]),
+  q(
+    '8.13',
+    'Stack of Boxes',
+    C8,
+    'recursion-dp',
+    'Maximise stack height under strictly-smaller-in-every-dimension constraints.',
+    ['russian-doll-envelopes', 'Russian Doll Envelopes'],
+  ),
+  q(
+    '8.14',
+    'Boolean Evaluation',
+    C8,
+    'recursion-dp',
+    'Count parenthesisations evaluating to a target by splitting at each operator.',
+    ['different-ways-to-add-parentheses', 'Different Ways to Add Parentheses'],
+  ),
+
+  // ---------------------------------------------------- Chapter 9
+  q(
+    '9.1',
+    'Stock Data',
+    C9,
+    'system-design',
+    'Choose a delivery format and refresh model for client stock data.',
+    null,
+  ),
+  q(
+    '9.2',
+    'Social Network',
+    C9,
+    'system-design',
+    'Shard a huge friend graph and do BFS across machines.',
+    null,
+  ),
+  q('9.3', 'Web Crawler', C9, 'system-design', 'Avoid cycles and duplicate work while crawling.', [
+    'web-crawler-multithreaded',
+    'Web Crawler Multithreaded',
+  ]),
+  q(
+    '9.4',
+    'Duplicate URLs',
+    C9,
+    'system-design',
+    'Detect duplicates among ten billion URLs by hashing and sharding.',
+    null,
+  ),
+  q('9.5', 'Cache', C9, 'system-design', 'Design a distributed query cache with sensible eviction.', [
+    'lru-cache',
+    'LRU Cache',
+  ]),
+  q(
+    '9.6',
+    'Sales Rank',
+    C9,
+    'system-design',
+    'Maintain approximate best-seller ranks overall and per category.',
+    null,
+  ),
+  q(
+    '9.7',
+    'Personal Financial Manager',
+    C9,
+    'system-design',
+    'Ingest bank data and categorise transactions asynchronously at scale.',
+    null,
+  ),
+  q('9.8', 'Pastebin', C9, 'system-design', 'Store documents behind short random keys.', [
+    'encode-and-decode-tinyurl',
+    'Encode and Decode TinyURL',
+  ]),
+
+  // ---------------------------------------------------- Chapter 10
+  q(
+    '10.1',
+    'Sorted Merge',
+    C10,
+    'sorting-searching',
+    'Merge two sorted arrays in place by filling from the back.',
+    ['merge-sorted-array', 'Merge Sorted Array'],
+  ),
+  q('10.2', 'Group Anagrams', C10, 'sorting-searching', 'Cluster anagrams by a canonical key.', [
+    'group-anagrams',
+    'Group Anagrams',
+  ]),
+  q(
+    '10.3',
+    'Search in Rotated Array',
+    C10,
+    'sorting-searching',
+    'Binary search a rotated array by finding which half is sorted.',
+    ['search-in-rotated-sorted-array-ii', 'Search in Rotated Sorted Array II'],
+  ),
+  q(
+    '10.4',
+    'Sorted Search, No Size',
+    C10,
+    'sorting-searching',
+    'Find the length by exponential probing, then binary search.',
+    null,
+  ),
+  q(
+    '10.5',
+    'Sparse Search',
+    C10,
+    'sorting-searching',
+    'Binary search around empty strings by walking to the nearest non-empty entry.',
+    null,
+  ),
+  q(
+    '10.6',
+    'Sort Big File',
+    C10,
+    'sorting-searching',
+    'External merge sort: sort chunks that fit in memory, then merge.',
+    null,
+  ),
+  q(
+    '10.7',
+    'Missing Int',
+    C10,
+    'sorting-searching',
+    'Find a missing integer with a bit vector, or two passes under a tighter memory bound.',
+    ['first-missing-positive', 'First Missing Positive'],
+  ),
+  q(
+    '10.8',
+    'Find Duplicates',
+    C10,
+    'sorting-searching',
+    'Report duplicates in 4 KB using a bit vector over a bounded range.',
+    ['find-the-duplicate-number', 'Find the Duplicate Number'],
+  ),
+  q(
+    '10.9',
+    'Sorted Matrix Search',
+    C10,
+    'sorting-searching',
+    'Eliminate a row or column per step from a corner of a sorted matrix.',
+    ['search-a-2d-matrix-ii', 'Search a 2D Matrix II'],
+  ),
+  q(
+    '10.10',
+    'Rank from Stream',
+    C10,
+    'sorting-searching',
+    'Track ranks online with a BST augmented by left-subtree sizes.',
+    ['count-of-smaller-numbers-after-self', 'Count of Smaller Numbers After Self'],
+  ),
+  q(
+    '10.11',
+    'Peaks and Valleys',
+    C10,
+    'sorting-searching',
+    'Alternate highs and lows by swapping each element with its larger neighbour.',
+    ['wiggle-sort', 'Wiggle Sort'],
+  ),
+
+  // ---------------------------------------------------- Chapter 11
+  q('11.1', 'Mistake', C11, 'testing', 'Spot the off-by-one/precedence bug in a sampling loop.', null),
+  q(
+    '11.2',
+    'Random Crashes',
+    C11,
+    'testing',
+    'Diagnose a crash that only appears after many runs: state, environment, timing.',
+    null,
+  ),
+  q(
+    '11.3',
+    'Chess Test',
+    C11,
+    'testing',
+    'Test a move-legality method when the contract itself is suspect.',
+    null,
+  ),
+  q('11.4', 'No Test Tools', C11, 'testing', 'Design a manual load test for a web page.', null),
+  q(
+    '11.5',
+    'Test a Pen',
+    C11,
+    'testing',
+    'Clarify who and what the pen is for, then test use, abuse and environment.',
+    null,
+  ),
+  q(
+    '11.6',
+    'Test an ATM',
+    C11,
+    'testing',
+    'Test an ATM as part of a distributed banking system, including concurrency and failure.',
+    null,
+  ),
+
+  // ---------------------------------------------------- Chapter 12
+  q('12.1', 'Last K Lines', C12, 'c-cpp', 'Print a file tail with a circular buffer in one pass.', null),
+  q('12.2', 'Reverse String', C12, 'c-cpp', 'Reverse a null-terminated C string in place.', [
+    'reverse-string',
+    'Reverse String',
+  ]),
+  q(
+    '12.3',
+    'Hash Table vs. STL Map',
+    C12,
+    'c-cpp',
+    'Compare hashing with an ordered balanced-tree map.',
+    null,
+  ),
+  q('12.4', 'Virtual Functions', C12, 'c-cpp', 'Explain virtual dispatch and vtables.', null),
+  q(
+    '12.5',
+    'Shallow vs. Deep Copy',
+    C12,
+    'c-cpp',
+    'Explain pointer copying versus owned-data copying.',
+    null,
+  ),
+  q('12.6', 'Volatile', C12, 'c-cpp', 'Explain what volatile does and does not guarantee.', null),
+  q(
+    '12.7',
+    'Virtual Base Class',
+    C12,
+    'c-cpp',
+    'Explain why a polymorphic base needs a virtual destructor.',
+    null,
+  ),
+  q(
+    '12.8',
+    'Copy Node',
+    C12,
+    'c-cpp',
+    'Deep-copy a structure whose nodes hold an arbitrary extra pointer.',
+    ['copy-list-with-random-pointer', 'Copy List with Random Pointer'],
+  ),
+  q('12.9', 'Smart Pointer', C12, 'c-cpp', 'Implement reference-counted ownership.', null),
+  q('12.10', 'Malloc', C12, 'c-cpp', 'Implement aligned allocation and a matching free.', null),
+  q('12.11', '2D Alloc', C12, 'c-cpp', 'Allocate a 2D array in one contiguous block.', null),
+
+  // ---------------------------------------------------- Chapter 13
+  q(
+    '13.1',
+    'Private Constructor',
+    C13,
+    'java',
+    'Explain what a private constructor means for subclassing.',
+    null,
+  ),
+  q('13.2', 'Return from Finally', C13, 'java', 'Explain whether finally runs after a return.', null),
+  q('13.3', 'Final, etc.', C13, 'java', 'Distinguish final, finally and finalize.', null),
+  q(
+    '13.4',
+    'Generics vs. Templates',
+    C13,
+    'java',
+    'Compare type erasure with compile-time instantiation.',
+    null,
+  ),
+  q(
+    '13.5',
+    'TreeMap, HashMap, LinkedHashMap',
+    C13,
+    'java',
+    'Compare ordering, complexity and when each map is the right default.',
+    null,
+  ),
+  q('13.6', 'Object Reflection', C13, 'java', 'Explain reflection and its legitimate uses.', null),
+  q('13.7', 'Lambda Expressions', C13, 'java', 'Group and filter with streams and lambdas.', null),
+  q('13.8', 'Lambda Random', C13, 'java', 'Produce a random subset with a stream filter.', null),
+
+  // ---------------------------------------------------- Chapter 14
+  q(
+    '14.1',
+    'Multiple Apartments',
+    C14,
+    'databases',
+    'Find tenants renting more than one apartment with GROUP BY / HAVING.',
+    ['duplicate-emails', 'Duplicate Emails'],
+  ),
+  q(
+    '14.2',
+    'Open Requests',
+    C14,
+    'databases',
+    'Count open requests per building with a join and aggregate.',
+    ['combine-two-tables', 'Combine Two Tables'],
+  ),
+  q('14.3', 'Close All Requests', C14, 'databases', 'Bulk-update requests for one building.', [
+    'swap-salary',
+    'Swap Salary',
+  ]),
+  q('14.4', 'Joins', C14, 'databases', 'Explain inner, outer and cross joins and their outputs.', null),
+  q(
+    '14.5',
+    'Denormalization',
+    C14,
+    'databases',
+    'Weigh duplicated data and write cost against read speed.',
+    null,
+  ),
+  q(
+    '14.6',
+    'Entity-Relationship Diagram',
+    C14,
+    'databases',
+    'Model companies, people and employment, including many-to-many.',
+    null,
+  ),
+  q(
+    '14.7',
+    'Design Grade Database',
+    C14,
+    'databases',
+    'Model students, courses and grades and support rank queries.',
+    null,
+  ),
+
+  // ---------------------------------------------------- Chapter 15
+  q(
+    '15.1',
+    'Thread vs. Process',
+    C15,
+    'threads-locks',
+    'Compare isolation, shared memory and communication cost.',
+    null,
+  ),
+  q('15.2', 'Context Switch', C15, 'threads-locks', 'Design a measurement of switching overhead.', null),
+  q(
+    '15.3',
+    'Dining Philosophers',
+    C15,
+    'threads-locks',
+    'Avoid deadlock via ordering, or by limiting concurrent diners.',
+    ['the-dining-philosophers', 'The Dining Philosophers'],
+  ),
+  q(
+    '15.4',
+    'Deadlock-Free Class',
+    C15,
+    'threads-locks',
+    'Grant locks only in a declared order, checking the wait graph for cycles.',
+    null,
+  ),
+  q('15.5', 'Call In Order', C15, 'threads-locks', 'Force three methods to run in order.', [
+    'print-in-order',
+    'Print in Order',
+  ]),
+  q(
+    '15.6',
+    'Synchronized Methods',
+    C15,
+    'threads-locks',
+    'Explain which calls can and cannot run concurrently on one instance.',
+    null,
+  ),
+  q('15.7', 'FizzBuzz', C15, 'threads-locks', 'Interleave four threads to print FizzBuzz in order.', [
+    'fizz-buzz-multithreaded',
+    'Fizz Buzz Multithreaded',
+  ]),
+
+  // ---------------------------------------------------- Chapter 16
+  q('16.1', 'Number Swapper', C16, 'bit-manipulation', 'Swap two numbers with XOR, no temporary.', null),
+  q(
+    '16.2',
+    'Word Frequencies',
+    C16,
+    'arrays-strings',
+    'Answer one query with a scan; answer many by precomputing a frequency map.',
+    ['top-k-frequent-words', 'Top K Frequent Words'],
+  ),
+  q(
+    '16.3',
+    'Intersection',
+    C16,
+    'math-logic',
+    'Intersect two segments, handling parallel and collinear cases.',
+    null,
+  ),
+  q('16.4', 'Tic Tac Win', C16, 'moderate', 'Detect a winner, and discuss one-off versus repeated calls.', [
+    'valid-tic-tac-toe-state',
+    'Valid Tic-Tac-Toe State',
+  ]),
+  q(
+    '16.5',
+    'Factorial Zeros',
+    C16,
+    'math-logic',
+    'Count trailing zeros by counting factors of five.',
+    ['factorial-trailing-zeroes', 'Factorial Trailing Zeroes'],
+  ),
+  q(
+    '16.6',
+    'Smallest Difference',
+    C16,
+    'sorting-searching',
+    'Sort both arrays, then walk two pointers to the closest pair.',
+    ['minimum-absolute-difference', 'Minimum Absolute Difference'],
+  ),
+  q(
+    '16.7',
+    'Number Max',
+    C16,
+    'bit-manipulation',
+    'Pick the larger value using the sign bit instead of a comparison.',
+    null,
+  ),
+  q('16.8', 'English Int', C16, 'moderate', 'Convert an integer into English words, chunk by chunk.', [
+    'integer-to-english-words',
+    'Integer to English Words',
+  ]),
+  q(
+    '16.9',
+    'Operations',
+    C16,
+    'bit-manipulation',
+    'Build subtract, multiply and divide from addition alone.',
+    ['divide-two-integers', 'Divide Two Integers'],
+  ),
+  q(
+    '16.10',
+    'Living People',
+    C16,
+    'sorting-searching',
+    'Sweep birth/death deltas instead of counting each person each year.',
+    ['maximum-population-year', 'Maximum Population Year'],
+  ),
+  q(
+    '16.11',
+    'Diving Board',
+    C16,
+    'recursion-dp',
+    'Enumerate lengths by counting how many short planks are used.',
+    null,
+  ),
+  q('16.12', 'XML Encoding', C16, 'moderate', 'Serialise a tree of elements with integer tag codes.', null),
+  q('16.13', 'Bisect Squares', C16, 'math-logic', 'The line through both centres bisects both squares.', null),
+  q('16.14', 'Best Line', C16, 'moderate', 'Hash lines by slope and intercept to find the most popular.', [
+    'max-points-on-a-line',
+    'Max Points on a Line',
+  ]),
+  q('16.15', 'Master Mind', C16, 'moderate', 'Count exact hits first, then colour-only hits from the rest.', [
+    'bulls-and-cows',
+    'Bulls and Cows',
+  ]),
+  q(
+    '16.16',
+    'Sub Sort',
+    C16,
+    'arrays-strings',
+    'Find the minimal window whose sorting sorts everything, using running max/min.',
+    ['shortest-unsorted-continuous-subarray', 'Shortest Unsorted Continuous Subarray'],
+  ),
+  q('16.17', 'Contiguous Sequence', C16, 'recursion-dp', 'Maximum subarray sum via Kadane.', [
+    'maximum-subarray',
+    'Maximum Subarray',
+  ]),
+  q('16.18', 'Pattern Matching', C16, 'moderate', 'Try every split of the value between the a and b parts.', [
+    'word-pattern',
+    'Word Pattern',
+  ]),
+  q('16.19', 'Pond Sizes', C16, 'trees-graphs', 'Flood fill eight-directionally and record region sizes.', [
+    'max-area-of-island',
+    'Max Area of Island',
+  ]),
+  q('16.20', 'T9', C16, 'heaps-tries', 'Map digit sequences to words with a precomputed dictionary index.', [
+    'letter-combinations-of-a-phone-number',
+    'Letter Combinations of a Phone Number',
+  ]),
+  q(
+    '16.21',
+    'Sum Swap',
+    C16,
+    'arrays-strings',
+    'The swapped pair must differ by exactly half the sum difference.',
+    ['fair-candy-swap', 'Fair Candy Swap'],
+  ),
+  q("16.22", "Langton's Ant", C16, 'moderate', 'Simulate on a growable board and print the visited region.', null),
+  q(
+    '16.23',
+    'Rand7 from Rand5',
+    C16,
+    'math-logic',
+    'Build a uniform range from repeated calls and reject out-of-range draws.',
+    ['implement-rand10-using-rand7', 'Implement Rand10() Using Rand7()'],
+  ),
+  q('16.24', 'Pairs with Sum', C16, 'arrays-strings', 'Find target-sum pairs with a hash map or two pointers.', [
+    'two-sum',
+    'Two Sum',
+  ]),
+  q('16.25', 'LRU Cache', C16, 'linked-lists', 'Hash map for lookup plus a doubly linked list for recency.', [
+    'lru-cache',
+    'LRU Cache',
+  ]),
+  q(
+    '16.26',
+    'Calculator',
+    C16,
+    'stacks-queues',
+    'Evaluate with precedence by deferring additions until the term is complete.',
+    ['basic-calculator-ii', 'Basic Calculator II'],
+  ),
+
+  // ---------------------------------------------------- Chapter 17
+  q('17.1', 'Add Without Plus', C17, 'bit-manipulation', 'Add with XOR for sum and AND-shift for carry.', [
+    'sum-of-two-integers',
+    'Sum of Two Integers',
+  ]),
+  q('17.2', 'Shuffle', C17, 'math-logic', 'Fisher-Yates: swap each position with a random earlier-or-self.', [
+    'shuffle-an-array',
+    'Shuffle an Array',
+  ]),
+  q('17.3', 'Random Set', C17, 'math-logic', 'Reservoir-style sampling of m elements with equal probability.', [
+    'linked-list-random-node',
+    'Linked List Random Node',
+  ]),
+  q(
+    '17.4',
+    'Missing Number',
+    C17,
+    'bit-manipulation',
+    'Recover the missing value one bit position at a time by parity counting.',
+    ['missing-number', 'Missing Number'],
+  ),
+  q(
+    '17.5',
+    'Letters and Numbers',
+    C17,
+    'arrays-strings',
+    'Longest balanced span via prefix differences stored in a hash map.',
+    ['contiguous-array', 'Contiguous Array'],
+  ),
+  q('17.6', 'Count of 2s', C17, 'math-logic', 'Count digit occurrences position by position, not by scanning.', [
+    'number-of-digit-one',
+    'Number of Digit One',
+  ]),
+  q(
+    '17.7',
+    'Baby Names',
+    C17,
+    'trees-graphs',
+    'Merge synonym-connected names as graph components and sum frequencies.',
+    ['accounts-merge', 'Accounts Merge'],
+  ),
+  q('17.8', 'Circus Tower', C17, 'recursion-dp', 'Sort by one dimension, then longest increasing subsequence on the other.', [
+    'russian-doll-envelopes',
+    'Russian Doll Envelopes',
+  ]),
+  q('17.9', 'Kth Multiple', C17, 'heaps-tries', 'Generate multiples of 3, 5 and 7 in order with a heap or queues.', [
+    'ugly-number-ii',
+    'Ugly Number II',
+  ]),
+  q(
+    '17.10',
+    'Majority Element',
+    C17,
+    'arrays-strings',
+    'Boyer-Moore voting, then a verification pass.',
+    ['majority-element', 'Majority Element'],
+  ),
+  q(
+    '17.11',
+    'Word Distance',
+    C17,
+    'arrays-strings',
+    'One pass for a single query; a position index when queries repeat.',
+    ['shortest-word-distance-ii', 'Shortest Word Distance II'],
+  ),
+  q('17.12', 'BiNode', C17, 'trees-graphs', 'Convert a BST into a sorted doubly linked list in place.', [
+    'convert-binary-search-tree-to-sorted-doubly-linked-list',
+    'Convert BST to Sorted Doubly Linked List',
+  ]),
+  q(
+    '17.13',
+    'Re-Space',
+    C17,
+    'recursion-dp',
+    'Re-insert spaces minimising unrecognised characters, with memoised suffix costs.',
+    ['word-break', 'Word Break'],
+  ),
+  q('17.14', 'Smallest K', C17, 'heaps-tries', 'Max-heap of size k, or quickselect for linear expected time.', [
+    'kth-largest-element-in-an-array',
+    'Kth Largest Element in an Array',
+  ]),
+  q('17.15', 'Longest Word', C17, 'heaps-tries', 'Build words from other words with a trie plus memoised splitting.', [
+    'concatenated-words',
+    'Concatenated Words',
+  ]),
+  q('17.16', 'The Masseuse', C17, 'recursion-dp', 'Maximise non-adjacent bookings - house robber in disguise.', [
+    'house-robber',
+    'House Robber',
+  ]),
+  q('17.17', 'Multi Search', C17, 'heaps-tries', 'Search one text for many patterns using a trie of the patterns.', [
+    'stream-of-characters',
+    'Stream of Characters',
+  ]),
+  q(
+    '17.18',
+    'Shortest Supersequence',
+    C17,
+    'arrays-strings',
+    'Smallest window containing every required value.',
+    ['minimum-window-substring', 'Minimum Window Substring'],
+  ),
+  q(
+    '17.19',
+    'Missing Two',
+    C17,
+    'math-logic',
+    'Recover two missing values from the sum and the sum of squares.',
+    ['set-mismatch', 'Set Mismatch'],
+  ),
+  q('17.20', 'Continuous Median', C17, 'heaps-tries', 'Two heaps kept balanced around the median.', [
+    'find-median-from-data-stream',
+    'Find Median from Data Stream',
+  ]),
+  q(
+    '17.21',
+    'Volume of Histogram',
+    C17,
+    'arrays-strings',
+    'Water above each bar is bounded by the tallest bar on each side.',
+    ['trapping-rain-water', 'Trapping Rain Water'],
+  ),
+  q('17.22', 'Word Transformer', C17, 'trees-graphs', 'BFS over one-letter-apart words, ideally bidirectional.', [
+    'word-ladder',
+    'Word Ladder',
+  ]),
+  q(
+    '17.23',
+    'Max Black Square',
+    C17,
+    'recursion-dp',
+    'Precompute runs of black to the right and below, then test squares largest first.',
+    ['largest-1-bordered-square', 'Largest 1-Bordered Square'],
+  ),
+  q(
+    '17.24',
+    'Max Submatrix',
+    C17,
+    'recursion-dp',
+    'Fix a row pair, collapse columns, then run Kadane.',
+    ['max-sum-of-rectangle-no-larger-than-k', 'Max Sum of Rectangle No Larger Than K'],
+  ),
+  q(
+    '17.25',
+    'Word Rectangle',
+    C17,
+    'heaps-tries',
+    'Backtrack row by row, pruning with a trie of valid column prefixes.',
+    null,
+  ),
+  q(
+    '17.26',
+    'Sparse Similarity',
+    C17,
+    'hard',
+    'Invert the documents by element so only genuinely overlapping pairs are compared.',
+    null,
+  ),
+];

@@ -1,0 +1,7 @@
+A stack is last in, first out, like a stack of plates. A queue is first in, first out, like a line at a counter. Same container, different end, and that is the entire difference.
+
+Neither offers indexing. In exchange, adds and removes are constant with no shifting. A stack is easy on an array, because push and pop at the end are already the fast operations. A queue on a linked list needs both a first and a last pointer, and keeping those two consistent is where queue implementations break. Adding to an empty queue must set both; removing the last item must clear both.
+
+In JavaScript, an array is a fine stack but a bad queue, because shift is linear and a loop over a large queue silently becomes quadratic. Keep a head index instead.
+
+And they matter well beyond this chapter. A stack is the call stack, so any recursion can be rewritten iteratively with an explicit one. And breadth first search is defined by its queue.

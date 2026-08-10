@@ -1,0 +1,47 @@
+import type { CourseModule } from '../../types';
+
+export const hard: CourseModule = {
+  id: 'hard',
+  title: 'Hard Mixed Review',
+  track: 'techniques',
+  status: 'outline',
+  source: 'Chapter 17',
+  summary:
+    'Twenty-six problems that combine two or three techniques. The goal is to derive and defend, not to recall.',
+  estimatedMinutes: 150,
+  concepts: [
+    'Composing techniques: a trie inside a backtracking search, a heap inside a stream',
+    'Bitwise arithmetic and recursive bit reconstruction',
+    'Fisher-Yates shuffling and reservoir/random-subset sampling',
+    'Prefix-difference maps for balanced-span and equal-count problems',
+    'Minimal covering windows across multiple sequences',
+    'Union-find and connected components for equivalence classes',
+    'Longest increasing subsequence and its two-dimensional variants',
+    'Heaps, quickselect and streaming order statistics',
+    'Tries for multi-pattern search and prefix pruning',
+    'Bidirectional BFS and reconstructing the path once the frontiers meet',
+    'Histogram water trapping and maximal-submatrix reasoning',
+    'Geometric preprocessing to make a brute force affordable',
+    'Sparse inverted indexes and pairwise accumulation instead of all-pairs comparison',
+    'Backtracking with prefix pruning for combinatorial construction',
+    'Defending correctness and complexity under pressure when the answer is not standard',
+  ],
+  plannedAnimations: [
+    'Trapping rain water: the two-pointer version, with each bar bounded by the two running maxima',
+    'Bidirectional BFS with two frontiers expanding towards each other',
+    'Union-find with path compression flattening a tree as it goes',
+    'An inverted index turning an all-pairs comparison into a per-element accumulation',
+  ],
+  sections: [],
+  quiz: [],
+  drills: [
+    { slug: 'trapping-rain-water', note: 'CTCI 17.21 - do the two-pointer version, not just the DP one.' },
+    { slug: 'maximal-rectangle', note: 'Histogram per row, then largest rectangle.' },
+    { slug: 'sliding-window-maximum', note: 'A monotonic deque - the window pattern taken further.' },
+    { slug: 'majority-element-ii', note: 'CTCI 17.10 generalised - Boyer-Moore with two candidates.' },
+    { slug: 'contiguous-array', note: 'CTCI 17.5 - prefix differences in a hash map.' },
+    { slug: 'shortest-word-distance-ii', note: 'CTCI 17.11 - preprocess positions. Premium.' },
+    { slug: 'redundant-connection', note: 'Union-find, and the cycle it detects.' },
+    { slug: 'word-ladder', note: 'CTCI 17.22 - then do it bidirectionally.' },
+  ],
+};

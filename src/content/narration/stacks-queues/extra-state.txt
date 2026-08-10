@@ -1,0 +1,9 @@
+The signature question of this chapter: add a minimum operation to a stack, with push, pop and min all constant time.
+
+Scanning on demand is linear. A single minimum variable looks right until you pop the minimum, and then there is nothing to fall back to.
+
+The fix is a parallel stack that records what the minimum was at the moment each element was pushed. Push both together, pop both together, and the answer is always sitting on top of the min stack.
+
+The generalisable idea is the one to take away. When a query would need a scan, ask what you could have recorded on the way in. Trading linear space for constant queries is the move, and it reappears in caches, prefix sums and augmented trees.
+
+Two space optimisations are worth naming. Store value and minimum-so-far as pairs in one stack. Or only push onto the min stack when a strictly smaller value arrives. That second one is the answer to, can you use less space.

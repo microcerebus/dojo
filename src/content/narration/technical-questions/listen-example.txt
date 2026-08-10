@@ -1,0 +1,7 @@
+Interviewers rarely include a detail by accident. Every constraint is a load-bearing hint.
+
+If they say the array is sorted, that means binary search or two pointers. If they say this runs repeatedly on a server, that means precompute or cache. If they say the values are between zero and thirty two thousand, that means a bit vector fits in memory. If they say you only have ten megabytes, that is the real constraint and the whole problem is about it.
+
+The classic failure is hearing the constraint and then forgetting it ten minutes later. So when you are stuck, the first question is always: have I used everything I was given?
+
+Then draw an example on the board, not in your head. A good example is specific, with real values. It is big enough to show a pattern, because most people draw one about half the size it should be. And it is not accidentally a special case. A perfectly balanced tree, or an array that happens to be sorted, will hide your bug rather than reveal it.

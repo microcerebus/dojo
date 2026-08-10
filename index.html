@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover is what lets env(safe-area-inset-*) return real values on iOS -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0b0e13" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="description"
+      content="dojo - an interactive course for the Cracking the Coding Interview curriculum: animated lessons, audio bites, quizzes and a Blind 75 drill plan."
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Retained alongside the standard name: older iOS only honours this one. -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="dojo" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+    <title>dojo</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

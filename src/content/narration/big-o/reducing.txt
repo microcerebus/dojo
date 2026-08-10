@@ -1,0 +1,9 @@
+Three rules turn a count of work into an answer.
+
+One: drop constants. Two n is just n. Two separate loops over the same array is still linear. Counting instructions precisely would mean counting assembly, and the compiler would ruin your arithmetic anyway.
+
+Two: drop non-dominant terms. n squared plus n is n squared. n plus log n is n. But keep a sum when the terms are genuinely independent: a plus b cannot be reduced unless you know how a and b relate.
+
+Three: add sequential work, multiply nested work. Do this, then that, adds. Do this for each of those, multiplies.
+
+And the mistake that costs the most marks: two nested loops over two different arrays is a times b, not n squared. Two independent inputs need two variable names. If you ever find yourself using n for two different quantities in the same derivation, stop and rename them.

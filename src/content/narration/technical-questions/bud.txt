@@ -1,0 +1,9 @@
+BUD stands for bottlenecks, unnecessary work, and duplicated work. It is the workhorse of optimisation.
+
+A bottleneck is the step that dominates the runtime. That is either a one-off expensive phase, like a sort in front of a linear scan, or a cheap-looking operation repeated n times, like a linear search inside a loop. Optimising anything else is wasted effort.
+
+Unnecessary work is work whose result you already know or could compute directly. If three of your four nested loops determine the fourth value, do not search for it, calculate it.
+
+Duplicated work is the same computation performed over and over. Hoist it out and precompute it once, usually into a hash map.
+
+The key habit: BUD is a loop, not a single pass. After each improvement, run it again on the new algorithm. The bottleneck moves. A sort that was irrelevant next to quadratic work becomes the very next thing to remove.
