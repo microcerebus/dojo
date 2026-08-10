@@ -208,37 +208,27 @@
 }
 
 .sectionrail {
-  /* On a phone the rail is a horizontally scrollable strip; the page itself
-     still never scrolls sideways. */
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  margin: 0 calc(-1 * var(--space-4));
-  padding: 0 var(--space-4);
-}
-
-.sectionrail::-webkit-scrollbar {
-  display: none;
+  /* On a phone the rail wraps as a pill grid so every section title stays
+     fully readable - no clipped text and no horizontal scroll to discover. */
 }
 
 .sectionrail ol {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-2);
-  width: max-content;
 }
 
 .sectionrail__item {
   display: flex;
   align-items: center;
   gap: 6px;
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 var(--space-3);
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--bg-elev);
   color: var(--text-dim);
   font-size: 13px;
-  white-space: nowrap;
 }
 
 .sectionrail__num {
@@ -275,9 +265,6 @@
     top: calc(var(--header-h) + var(--safe-top) + var(--space-4));
     width: 210px;
     flex: none;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
   }
 
   .sectionrail ol {
