@@ -2,9 +2,10 @@
 /**
  * Generates the PWA icon set into `public/icons/`.
  *
- * Deliberately dependency-free: it rasterises a tiny analytic design (an enso
- * ring on a dark rounded square) and writes the PNGs with a ~60 line encoder.
- * Pulling in a raster library to draw two circles would not be simpler.
+ * Deliberately dependency-free: it rasterises a tiny analytic design (a
+ * torii gate on a dark rounded square) and writes the PNGs with a ~60 line
+ * encoder. Pulling in a raster library to draw a handful of bars would not
+ * be simpler.
  *
  *   node scripts/gen-icons.mjs
  */
@@ -71,6 +72,13 @@ function mix(dst, src, alpha) {
   for (let i = 0; i < 3; i++) dst[i] = dst[i] * (1 - alpha) + src[i] * alpha;
 }
 
+/** Signed distance to a rounded box centred at (cx, cy) with half-extents (hw, hh). */
+function roundedBoxDist(px, py, cx, cy, hw, hh, r) {
+  const qx = Math.abs(px - cx) - (hw - r);
+  const qy = Math.abs(py - cy) - (hh - r);
+  return Math.min(Math.max(qx, qy), 0) + Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) - r;
+}
+
 /**
  * @param {number} size    pixel size
  * @param {boolean} maskable when true the art shrinks into the safe zone and
@@ -83,8 +91,26 @@ function drawIcon(size, maskable) {
   // Maskable icons must keep their art inside the middle 80%.
   const art = maskable ? size * 0.62 : size * 0.78;
   const radius = maskable ? size / 2 : size * 0.22; // rounded-square corner radius
-  const ringOuter = art / 2;
-  const ringWidth = size * (maskable ? 0.075 : 0.09);
+  const half = art / 2;
+
+  // Torii gate, built from three bars: a wide top lintel (kasagi), a
+  // narrower crossbeam beneath it (nuki), and two vertical pillars that run
+  // from the crossbeam down to the base. Proportions favour bold, blocky
+  // geometry so the silhouette still reads at a 32px favicon.
+  const kasagiHalfW = half * 0.98;
+  const kasagiHalfH = art * 0.075;
+  const kasagiCenterY = -half * 0.8;
+
+  const nukiHalfW = half * 0.8;
+  const nukiHalfH = art * 0.055;
+  const nukiCenterY = -half * 0.5;
+
+  const legHalfW = art * 0.07;
+  const legInsetX = half * 0.55;
+  const legTopY = nukiCenterY - nukiHalfH * 0.3;
+  const legBottomY = half * 0.85;
+  const legHalfH = (legBottomY - legTopY) / 2;
+  const legCenterY = (legTopY + legBottomY) / 2;
 
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
@@ -111,28 +137,26 @@ function drawIcon(size, maskable) {
         alpha = bgA;
       }
 
-      // Enso ring, open towards the top right.
-      const dx = px - c;
-      const dy = py - c;
-      const dist = Math.hypot(dx, dy);
-      const ringDist = Math.abs(dist - (ringOuter - ringWidth / 2)) - ringWidth / 2;
-      let ringA = cover(ringDist, aa);
-      // Carve the opening: angle measured from +x axis, gap around -45deg (up-right).
-      const angle = Math.atan2(-dy, dx);
-      const gapCentre = Math.PI / 4;
-      let delta = Math.abs(angle - gapCentre);
-      if (delta > Math.PI) delta = 2 * Math.PI - delta;
-      const gapHalf = 0.42;
-      // Feather the gap edges so the stroke ends look brushed, not chopped.
-      ringA *= clamp01((delta - gapHalf) / 0.18);
-      if (ringA > 0) mix(rgb, RING, ringA);
+      // Torii gate: pillars and lintel in the ring colour, crossbeam in the
+      // dot colour so the mark keeps the original two-tone accent.
+      const lx = px - c;
+      const ly = py - c;
 
-      // Accent dot sitting inside the opening.
-      const dotR = size * (maskable ? 0.055 : 0.065);
-      const dotCx = c + Math.cos(gapCentre) * (ringOuter - ringWidth / 2);
-      const dotCy = c - Math.sin(gapCentre) * (ringOuter - ringWidth / 2);
-      const dotA = cover(Math.hypot(px - dotCx, py - dotCy) - dotR, aa);
-      if (dotA > 0) mix(rgb, DOT, dotA);
+      const legRadius = legHalfW * 0.4;
+      const legDistL = roundedBoxDist(lx, ly, -legInsetX, legCenterY, legHalfW, legHalfH, legRadius);
+      const legDistR = roundedBoxDist(lx, ly, legInsetX, legCenterY, legHalfW, legHalfH, legRadius);
+      const legA = cover(Math.min(legDistL, legDistR), aa);
+      if (legA > 0) mix(rgb, RING, legA);
+
+      const kasagiRadius = kasagiHalfH * 0.5;
+      const kasagiDist = roundedBoxDist(lx, ly, 0, kasagiCenterY, kasagiHalfW, kasagiHalfH, kasagiRadius);
+      const kasagiA = cover(kasagiDist, aa);
+      if (kasagiA > 0) mix(rgb, RING, kasagiA);
+
+      const nukiRadius = nukiHalfH * 0.5;
+      const nukiDist = roundedBoxDist(lx, ly, 0, nukiCenterY, nukiHalfW, nukiHalfH, nukiRadius);
+      const nukiA = cover(nukiDist, aa);
+      if (nukiA > 0) mix(rgb, DOT, nukiA);
 
       const i = (y * size + x) * 4;
       rgba[i] = Math.round(rgb[0]);

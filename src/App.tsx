@@ -1,4 +1,5 @@
 import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrandMark } from './components/BrandMark';
 import { HomePage } from './pages/HomePage';
 import { ModulePage } from './pages/ModulePage';
 import { SprintPage } from './pages/SprintPage';
@@ -22,7 +23,7 @@ export function App() {
       <div className="app">
         <header className="header">
           <NavLink to="/" className="header__brand">
-            <span className="header__mark" aria-hidden="true" />
+            <BrandMark />
             dojo
           </NavLink>
           <span className="header__spacer" />
