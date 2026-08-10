@@ -67,9 +67,17 @@ export function audioReducer(
       // Only trust this if we asked for playback. An element event arriving
       // while we are idle must not move the UI into a playing state - that is
       // the invariant that keeps the player honest under iOS autoplay rules.
-      return state.status === 'loading' || state.status === 'playing' || state.status === 'paused'
-        ? { state: { ...state, status: 'playing' }, command: null }
-        : { state, command: null };
+      if (state.status === 'loading' || state.status === 'playing') {
+        return { state: { ...state, status: 'playing' }, command: null };
+      }
+      // Paused is the racy one: pausing while still loading leaves an in-flight
+      // `play()` that can resolve afterwards and report that it started. The
+      // user asked for pause, so hold the state and tell the element again
+      // rather than flipping the UI back to playing behind their back.
+      if (state.status === 'paused') {
+        return { state, command: 'pause' };
+      }
+      return { state, command: null };
 
     case 'waiting':
       return state.status === 'playing'

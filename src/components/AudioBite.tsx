@@ -41,28 +41,36 @@ export function AudioBite({
 
   const [state, setState] = useState<AudioState>(initialAudioState);
 
-  /** Events coming *from* the element only move the state machine. */
-  const send = useCallback((event: AudioEvent) => {
-    setState((current) => audioReducer(current, event).state);
-  }, []);
-
   /**
-   * The press handler also drives the element, and does so synchronously:
-   * iOS Safari only honours `play()` while it is still inside the tap's task,
-   * so this cannot be deferred to an effect.
+   * Every event - the user's tap and the element's own notifications - goes
+   * through here, so a command the machine emits is always carried out.
+   *
+   * Commands run synchronously in the handler rather than from an effect,
+   * because iOS Safari only honours `play()` while it is still inside the
+   * tap's task. The command is decided from this render's state (which is what
+   * a DOM handler observes) while the state itself advances functionally, so
+   * a burst of `timeupdate` events cannot drop an update.
    */
-  const onPress = useCallback(() => {
-    const { state: next, command } = audioReducer(state, { type: 'press' });
-    setState(next);
-    const element = audioRef.current;
-    if (!element || !command) return;
-    if (command === 'pause') {
-      element.pause();
-      return;
-    }
-    if (command === 'replay') element.currentTime = 0;
-    void element.play().catch(() => send({ type: 'error' }));
-  }, [state, send]);
+  const dispatch = useCallback(
+    (event: AudioEvent) => {
+      const { command } = audioReducer(state, event);
+      setState((current) => audioReducer(current, event).state);
+      if (!command) return;
+      const element = audioRef.current;
+      if (!element) return;
+      if (command === 'pause') {
+        element.pause();
+        return;
+      }
+      if (command === 'replay') element.currentTime = 0;
+      void element
+        .play()
+        .catch(() => setState((current) => audioReducer(current, { type: 'error' }).state));
+    },
+    [state],
+  );
+
+  const onPress = useCallback(() => dispatch({ type: 'press' }), [dispatch]);
 
   const isBusy = state.status === 'loading';
   const isPlaying = state.status === 'playing' || isBusy;
@@ -74,16 +82,16 @@ export function AudioBite({
         ref={audioRef}
         preload="metadata"
         src={audioSrc(moduleId, sectionId)}
-        onPlaying={() => send({ type: 'playing' })}
-        onWaiting={() => send({ type: 'waiting' })}
+        onPlaying={() => dispatch({ type: 'playing' })}
+        onWaiting={() => dispatch({ type: 'waiting' })}
         onTimeUpdate={(event) =>
-          send({ type: 'timeupdate', position: event.currentTarget.currentTime })
+          dispatch({ type: 'timeupdate', position: event.currentTarget.currentTime })
         }
         onLoadedMetadata={(event) =>
-          send({ type: 'loadedmetadata', duration: event.currentTarget.duration })
+          dispatch({ type: 'loadedmetadata', duration: event.currentTarget.duration })
         }
-        onEnded={() => send({ type: 'ended' })}
-        onError={() => send({ type: 'error' })}
+        onEnded={() => dispatch({ type: 'ended' })}
+        onError={() => dispatch({ type: 'error' })}
       />
 
       <button

@@ -25,7 +25,23 @@ function readFromStorage(): ProgressState {
 }
 
 let state: ProgressState = readFromStorage();
+/** Serialised form of `state`, so change detection is exact and cheap. */
+let serialized = JSON.stringify(state);
 const listeners = new Set<Listener>();
+
+/** Adopt `next` as the current state, persisting and notifying if it differs. */
+function commit(next: ProgressState): void {
+  const nextSerialized = JSON.stringify(next);
+  if (nextSerialized === serialized) return;
+  state = next;
+  serialized = nextSerialized;
+  try {
+    localStorage.setItem(PROGRESS_STORAGE_KEY, nextSerialized);
+  } catch {
+    // Persisting is best-effort; the in-memory state still updates.
+  }
+  for (const listener of listeners) listener();
+}
 
 export const progressStore = {
   getSnapshot: (): ProgressState => state,
@@ -35,21 +51,25 @@ export const progressStore = {
     return () => listeners.delete(listener);
   },
 
+  /**
+   * Read, merge, write - never write this tab's in-memory blob blindly.
+   *
+   * The whole progress object lives under one key, so a write built from a
+   * stale snapshot silently discards everything another context has saved
+   * since. That is not hypothetical: the installed PWA and a browser tab on
+   * the same device share this storage, and the `storage` event that would
+   * have synced us can arrive late or not at all if the other context was
+   * suspended. Applying the transition to freshly-read state means concurrent
+   * writers only conflict when they touch the same field.
+   */
   update(transition: (current: ProgressState) => ProgressState): void {
-    const next = transition(state);
-    if (next === state) return;
-    state = next;
-    try {
-      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      // Persisting is best-effort; the in-memory state still updates.
-    }
-    for (const listener of listeners) listener();
+    commit(transition(readFromStorage()));
   },
 
   /** Test helper: drop everything, including what is on disk. */
   reset(): void {
     state = emptyProgress();
+    serialized = JSON.stringify(state);
     try {
       localStorage.removeItem(PROGRESS_STORAGE_KEY);
     } catch {
@@ -60,8 +80,7 @@ export const progressStore = {
 
   /** Re-read from disk; used by the cross-tab `storage` listener. */
   refresh(): void {
-    state = readFromStorage();
-    for (const listener of listeners) listener();
+    commit(readFromStorage());
   },
 };
 

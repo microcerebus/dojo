@@ -164,6 +164,79 @@ describe('persistence across a reload', () => {
     expect(notifications).toBe(2);
   });
 
+  it('does not clobber another tab that wrote while this one was stale', () => {
+    // This tab does some work and holds the resulting snapshot.
+    progressStore.update((state) => toggleDrill(state, 'arrays-strings', 'two-sum'));
+    const staleSnapshot = progressStore.getSnapshot();
+
+    // Another context - the installed PWA next to a browser tab - writes
+    // directly to the same key. No `storage` event reaches us, so our
+    // in-memory snapshot is now behind what is on disk.
+    const onDiskNow = parseProgress(
+      JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY) as string),
+    );
+    localStorage.setItem(
+      PROGRESS_STORAGE_KEY,
+      JSON.stringify(toggleDrill(onDiskNow, 'linked-lists', 'reverse-linked-list')),
+    );
+    expect(progressStore.getSnapshot()).toBe(staleSnapshot);
+
+    // Now this tab writes again. Building the write from our stale snapshot
+    // would drop the other tab's drill entirely.
+    progressStore.update((state) => toggleDrill(state, 'stacks-queues', 'valid-parentheses'));
+
+    const merged = parseProgress(
+      JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY) as string),
+    );
+    expect(moduleProgress(merged, 'arrays-strings').drills['two-sum']).toBe(true);
+    expect(moduleProgress(merged, 'linked-lists').drills['reverse-linked-list']).toBe(true);
+    expect(moduleProgress(merged, 'stacks-queues').drills['valid-parentheses']).toBe(true);
+    // And the in-memory snapshot reflects the merge, not just our own write.
+    expect(
+      moduleProgress(progressStore.getSnapshot(), 'linked-lists').drills[
+        'reverse-linked-list'
+      ],
+    ).toBe(true);
+  });
+
+  it("picks up another tab's changes even when the transition is a no-op", () => {
+    progressStore.update((state) => toggleDrill(state, 'big-o', 'sqrtx'));
+
+    const other = toggleDrill(
+      parseProgress(JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY) as string)),
+      'big-o',
+      'fibonacci-number',
+    );
+    localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(other));
+
+    let notifications = 0;
+    const unsubscribe = progressStore.subscribe(() => {
+      notifications += 1;
+    });
+    // Marking an already-read section is a no-op transition, but the read
+    // still has to adopt what the other tab wrote.
+    progressStore.update((state) => setSectionRead(state, 'big-o', 'space', false));
+    unsubscribe();
+
+    expect(notifications).toBe(1);
+    expect(moduleProgress(progressStore.getSnapshot(), 'big-o').drills['fibonacci-number']).toBe(
+      true,
+    );
+  });
+
+  it('does not notify when genuinely nothing changed anywhere', () => {
+    progressStore.update((state) => toggleDrill(state, 'big-o', 'sqrtx'));
+
+    let notifications = 0;
+    const unsubscribe = progressStore.subscribe(() => {
+      notifications += 1;
+    });
+    progressStore.update((state) => setSectionRead(state, 'big-o', 'space', false));
+    unsubscribe();
+
+    expect(notifications).toBe(0);
+  });
+
   it('survives corrupt storage without throwing', () => {
     localStorage.setItem(PROGRESS_STORAGE_KEY, '{ this is not json');
     expect(() => progressStore.refresh()).not.toThrow();

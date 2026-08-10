@@ -62,6 +62,38 @@ describe('audio player state machine', () => {
     expect(paused.command).toBe('pause');
   });
 
+  it('holds the pause when a delayed playing event lands after pausing mid-load', () => {
+    // Tap to play, then tap again before the element has started. The first
+    // `play()` is still in flight and can resolve afterwards.
+    const loading = send(initialAudioState(), { type: 'press' }).state;
+    const paused = send(loading, { type: 'press' });
+    expect(paused.state.status).toBe('paused');
+
+    const stray = send(paused.state, { type: 'playing' });
+    // The UI must not flip back to playing behind the user's back...
+    expect(stray.state.status).toBe('paused');
+    // ...and the element is told again, since it evidently did start.
+    expect(stray.command).toBe('pause');
+  });
+
+  it('keeps holding the pause if the element reports playing more than once', () => {
+    const paused = send(
+      send(initialAudioState(), { type: 'press' }).state,
+      { type: 'press' },
+    ).state;
+    const first = send(paused, { type: 'playing' });
+    const second = send(first.state, { type: 'playing' });
+    expect(second.state.status).toBe('paused');
+    expect(second.command).toBe('pause');
+  });
+
+  it('still reaches playing normally when the pause never happened', () => {
+    const loading = send(initialAudioState(), { type: 'press' }).state;
+    const playing = send(loading, { type: 'playing' });
+    expect(playing.state.status).toBe('playing');
+    expect(playing.command).toBeNull();
+  });
+
   it('goes back to loading when the stream stalls', () => {
     const playing = stateAfter(initialAudioState(), { type: 'press' }, { type: 'playing' });
     expect(send(playing, { type: 'waiting' }).state.status).toBe('loading');
