@@ -3,6 +3,48 @@
   "rate": "-4%",
   "clips": [
     {
+      "moduleId": "advanced-topics",
+      "sectionId": "balanced-trees",
+      "path": "audio/advanced-topics/balanced-trees.mp3",
+      "bytes": 454320
+    },
+    {
+      "moduleId": "advanced-topics",
+      "sectionId": "dijkstra",
+      "path": "audio/advanced-topics/dijkstra.mp3",
+      "bytes": 432000
+    },
+    {
+      "moduleId": "advanced-topics",
+      "sectionId": "hash-collisions",
+      "path": "audio/advanced-topics/hash-collisions.mp3",
+      "bytes": 455616
+    },
+    {
+      "moduleId": "advanced-topics",
+      "sectionId": "mapreduce",
+      "path": "audio/advanced-topics/mapreduce.mp3",
+      "bytes": 436320
+    },
+    {
+      "moduleId": "advanced-topics",
+      "sectionId": "rabin-karp",
+      "path": "audio/advanced-topics/rabin-karp.mp3",
+      "bytes": 434880
+    },
+    {
+      "moduleId": "advanced-topics",
+      "sectionId": "topological-sort",
+      "path": "audio/advanced-topics/topological-sort.mp3",
+      "bytes": 436032
+    },
+    {
+      "moduleId": "advanced-topics",
+      "sectionId": "why-this-module",
+      "path": "audio/advanced-topics/why-this-module.mp3",
+      "bytes": 404496
+    },
+    {
       "moduleId": "arrays-strings",
       "sectionId": "arrays",
       "path": "audio/arrays-strings/arrays.mp3",
@@ -43,6 +85,66 @@
       "sectionId": "two-pointers",
       "path": "audio/arrays-strings/two-pointers.mp3",
       "bytes": 393840
+    },
+    {
+      "moduleId": "before-the-interview",
+      "sectionId": "experience",
+      "path": "audio/before-the-interview/experience.mp3",
+      "bytes": 406368
+    },
+    {
+      "moduleId": "before-the-interview",
+      "sectionId": "resume",
+      "path": "audio/before-the-interview/resume.mp3",
+      "bytes": 458496
+    },
+    {
+      "moduleId": "before-the-interview",
+      "sectionId": "the-plan",
+      "path": "audio/before-the-interview/the-plan.mp3",
+      "bytes": 417456
+    },
+    {
+      "moduleId": "behavioral",
+      "sectionId": "answering",
+      "path": "audio/behavioral/answering.mp3",
+      "bytes": 425088
+    },
+    {
+      "moduleId": "behavioral",
+      "sectionId": "tell-me-about-yourself",
+      "path": "audio/behavioral/tell-me-about-yourself.mp3",
+      "bytes": 411120
+    },
+    {
+      "moduleId": "behavioral",
+      "sectionId": "the-grid",
+      "path": "audio/behavioral/the-grid.mp3",
+      "bytes": 411408
+    },
+    {
+      "moduleId": "behavioral",
+      "sectionId": "your-questions",
+      "path": "audio/behavioral/your-questions.mp3",
+      "bytes": 432432
+    },
+    {
+      "moduleId": "behind-the-scenes",
+      "sectionId": "the-loop",
+      "path": "audio/behind-the-scenes/the-loop.mp3",
+      "bytes": 401616
+    },
+    {
+      "moduleId": "behind-the-scenes",
+      "sectionId": "variations",
+      "path": "audio/behind-the-scenes/variations.mp3",
+      "bytes": 410112
+    },
+    {
+      "moduleId": "behind-the-scenes",
+      "sectionId": "what-to-do",
+      "path": "audio/behind-the-scenes/what-to-do.mp3",
+      "bytes": 386784
     },
     {
       "moduleId": "big-o",
@@ -159,6 +261,24 @@
       "bytes": 400032
     },
     {
+      "moduleId": "interview-process",
+      "sectionId": "in-the-room",
+      "path": "audio/interview-process/in-the-room.mp3",
+      "bytes": 461664
+    },
+    {
+      "moduleId": "interview-process",
+      "sectionId": "practise-properly",
+      "path": "audio/interview-process/practise-properly.mp3",
+      "bytes": 435744
+    },
+    {
+      "moduleId": "interview-process",
+      "sectionId": "what-is-measured",
+      "path": "audio/interview-process/what-is-measured.mp3",
+      "bytes": 453024
+    },
+    {
       "moduleId": "java",
       "sectionId": "generics-collections",
       "path": "audio/java/generics-collections.mp3",
@@ -213,6 +333,72 @@
       "bytes": 342144
     },
     {
+      "moduleId": "math-logic",
+      "sectionId": "approach",
+      "path": "audio/math-logic/approach.mp3",
+      "bytes": 401616
+    },
+    {
+      "moduleId": "math-logic",
+      "sectionId": "information",
+      "path": "audio/math-logic/information.mp3",
+      "bytes": 474624
+    },
+    {
+      "moduleId": "math-logic",
+      "sectionId": "invariants",
+      "path": "audio/math-logic/invariants.mp3",
+      "bytes": 424368
+    },
+    {
+      "moduleId": "math-logic",
+      "sectionId": "primes",
+      "path": "audio/math-logic/primes.mp3",
+      "bytes": 415440
+    },
+    {
+      "moduleId": "math-logic",
+      "sectionId": "probability",
+      "path": "audio/math-logic/probability.mp3",
+      "bytes": 414720
+    },
+    {
+      "moduleId": "math-logic",
+      "sectionId": "randomness",
+      "path": "audio/math-logic/randomness.mp3",
+      "bytes": 520560
+    },
+    {
+      "moduleId": "math-logic",
+      "sectionId": "worst-case",
+      "path": "audio/math-logic/worst-case.mp3",
+      "bytes": 452736
+    },
+    {
+      "moduleId": "offer-and-beyond",
+      "sectionId": "evaluating",
+      "path": "audio/offer-and-beyond/evaluating.mp3",
+      "bytes": 431136
+    },
+    {
+      "moduleId": "offer-and-beyond",
+      "sectionId": "negotiating",
+      "path": "audio/offer-and-beyond/negotiating.mp3",
+      "bytes": 450720
+    },
+    {
+      "moduleId": "offer-and-beyond",
+      "sectionId": "offers-and-rejection",
+      "path": "audio/offer-and-beyond/offers-and-rejection.mp3",
+      "bytes": 422640
+    },
+    {
+      "moduleId": "offer-and-beyond",
+      "sectionId": "on-the-job",
+      "path": "audio/offer-and-beyond/on-the-job.mp3",
+      "bytes": 396432
+    },
+    {
       "moduleId": "ood",
       "sectionId": "patterns",
       "path": "audio/ood/patterns.mp3",
@@ -241,6 +427,30 @@
       "sectionId": "worked",
       "path": "audio/ood/worked.mp3",
       "bytes": 456624
+    },
+    {
+      "moduleId": "special-situations",
+      "sectionId": "acquisitions",
+      "path": "audio/special-situations/acquisitions.mp3",
+      "bytes": 428256
+    },
+    {
+      "moduleId": "special-situations",
+      "sectionId": "by-role",
+      "path": "audio/special-situations/by-role.mp3",
+      "bytes": 442656
+    },
+    {
+      "moduleId": "special-situations",
+      "sectionId": "experienced",
+      "path": "audio/special-situations/experienced.mp3",
+      "bytes": 439056
+    },
+    {
+      "moduleId": "special-situations",
+      "sectionId": "for-interviewers",
+      "path": "audio/special-situations/for-interviewers.mp3",
+      "bytes": 442944
     },
     {
       "moduleId": "stacks-queues",
@@ -294,7 +504,7 @@
       "moduleId": "system-design",
       "sectionId": "the-data",
       "path": "audio/system-design/the-data.mp3",
-      "bytes": 479232
+      "bytes": 478368
     },
     {
       "moduleId": "technical-questions",
@@ -339,6 +549,36 @@
       "bytes": 322704
     },
     {
+      "moduleId": "testing",
+      "sectionId": "function",
+      "path": "audio/testing/function.mp3",
+      "bytes": 446544
+    },
+    {
+      "moduleId": "testing",
+      "sectionId": "real-world-object",
+      "path": "audio/testing/real-world-object.mp3",
+      "bytes": 442080
+    },
+    {
+      "moduleId": "testing",
+      "sectionId": "software-system",
+      "path": "audio/testing/software-system.mp3",
+      "bytes": 453600
+    },
+    {
+      "moduleId": "testing",
+      "sectionId": "troubleshooting",
+      "path": "audio/testing/troubleshooting.mp3",
+      "bytes": 497664
+    },
+    {
+      "moduleId": "testing",
+      "sectionId": "what-is-assessed",
+      "path": "audio/testing/what-is-assessed.mp3",
+      "bytes": 418608
+    },
+    {
       "moduleId": "threads-locks",
       "sectionId": "coordination",
       "path": "audio/threads-locks/coordination.mp3",
@@ -360,13 +600,13 @@
       "moduleId": "threads-locks",
       "sectionId": "threads-and-races",
       "path": "audio/threads-locks/threads-and-races.mp3",
-      "bytes": 490464
+      "bytes": 488016
     },
     {
       "moduleId": "trees-graphs",
       "sectionId": "bst-work",
       "path": "audio/trees-graphs/bst-work.mp3",
-      "bytes": 416304
+      "bytes": 413280
     },
     {
       "moduleId": "trees-graphs",
@@ -384,7 +624,7 @@
       "moduleId": "trees-graphs",
       "sectionId": "graph-shapes",
       "path": "audio/trees-graphs/graph-shapes.mp3",
-      "bytes": 410256
+      "bytes": 410832
     },
     {
       "moduleId": "trees-graphs",
@@ -396,7 +636,7 @@
       "moduleId": "trees-graphs",
       "sectionId": "tree-recursion",
       "path": "audio/trees-graphs/tree-recursion.mp3",
-      "bytes": 440208
+      "bytes": 438336
     },
     {
       "moduleId": "trees-graphs",
