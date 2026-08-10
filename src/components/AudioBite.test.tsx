@@ -11,6 +11,7 @@ let play: ReturnType<typeof vi.fn>;
 let pause: ReturnType<typeof vi.fn>;
 
 beforeEach(() => {
+  localStorage.clear();
   play = vi.fn(() => Promise.resolve());
   pause = vi.fn();
   vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(
@@ -26,11 +27,20 @@ afterEach(() => {
 const setup = () => {
   render(<AudioBite moduleId="big-o" sectionId="space" title="Space complexity" />);
   const button = screen.getByRole('button', { name: /audio/i });
+  const rateButton = screen.getByRole('button', { name: /playback speed/i });
+  const backButton = screen.getByRole('button', { name: /back 10 seconds/i });
+  const forwardButton = screen.getByRole('button', { name: /forward 10 seconds/i });
   const audio = document.querySelector('audio') as HTMLAudioElement;
-  return { button, audio };
+  return { button, rateButton, backButton, forwardButton, audio };
 };
 
 const labelOf = (element: HTMLElement) => element.getAttribute('aria-label') ?? '';
+
+/** jsdom's <audio> has no real media stack, so duration has to be forced on. */
+const withDuration = (audio: HTMLAudioElement, duration: number) => {
+  Object.defineProperty(audio, 'duration', { value: duration, configurable: true });
+  act(() => audio.dispatchEvent(new Event('loadedmetadata')));
+};
 
 describe('AudioBite', () => {
   it('starts idle and only plays when tapped', () => {
@@ -138,5 +148,71 @@ describe('AudioBite', () => {
     const toggle = screen.getByRole('button', { name: 'Text' });
     act(() => toggle.click());
     expect(screen.getByRole('button', { name: 'Hide text' })).toBeInTheDocument();
+  });
+
+  it('defaults to 2x on a fresh visit', () => {
+    const { rateButton, audio } = setup();
+    expect(rateButton).toHaveTextContent('2x');
+    expect(audio.playbackRate).toBe(2);
+  });
+
+  it('cycles 1x -> 1.25x -> 1.5x -> 2x -> 1x on tap and remembers the choice', () => {
+    const { rateButton, audio } = setup();
+    expect(rateButton).toHaveTextContent('2x');
+
+    act(() => rateButton.click());
+    expect(rateButton).toHaveTextContent('1x');
+    expect(audio.playbackRate).toBe(1);
+
+    act(() => rateButton.click());
+    expect(rateButton).toHaveTextContent('1.25x');
+
+    act(() => rateButton.click());
+    expect(rateButton).toHaveTextContent('1.5x');
+
+    act(() => rateButton.click());
+    expect(rateButton).toHaveTextContent('2x');
+
+    expect(localStorage.getItem('dojo:audio-rate')).toBe('2');
+  });
+
+  it('starts a fresh player at the last chosen rate, not the 2x default', () => {
+    localStorage.setItem('dojo:audio-rate', '1.5');
+    const { rateButton, audio } = setup();
+    expect(rateButton).toHaveTextContent('1.5x');
+    expect(audio.playbackRate).toBe(1.5);
+  });
+
+  it('disables skip buttons until duration is known', () => {
+    const { backButton, forwardButton } = setup();
+    expect(backButton).toBeDisabled();
+    expect(forwardButton).toBeDisabled();
+  });
+
+  it('skips forward and back once duration is known, clamped to the track', () => {
+    const { forwardButton, backButton, audio } = setup();
+    withDuration(audio, 30);
+    expect(forwardButton).not.toBeDisabled();
+
+    act(() => forwardButton.click());
+    expect(audio.currentTime).toBe(10);
+
+    act(() => backButton.click());
+    expect(audio.currentTime).toBe(0);
+  });
+
+  it('seeks without resuming playback when paused', () => {
+    const { button, forwardButton, audio } = setup();
+    withDuration(audio, 30);
+
+    act(() => button.click()); // play
+    act(() => audio.dispatchEvent(new Event('playing')));
+    act(() => button.click()); // pause
+    play.mockClear();
+
+    act(() => forwardButton.click());
+    expect(audio.currentTime).toBe(10);
+    expect(play).not.toHaveBeenCalled();
+    expect(labelOf(button)).toMatch(/^Play audio recap/);
   });
 });

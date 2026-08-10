@@ -20,6 +20,8 @@ export interface AudioState {
   /** seconds */
   position: number;
   duration: number;
+  /** playback rate, e.g. 1, 1.25, 1.5, 2 */
+  rate: number;
 }
 
 export type AudioEvent =
@@ -30,16 +32,25 @@ export type AudioEvent =
   | { type: 'loadedmetadata'; duration: number }
   | { type: 'ended' }
   | { type: 'error' }
-  | { type: 'reset' };
+  | { type: 'reset' }
+  | { type: 'skip'; delta: number } // seconds, positive or negative
+  | { type: 'setRate'; rate: number };
 
-export const initialAudioState = (): AudioState => ({
+export const initialAudioState = (rate = 1): AudioState => ({
   status: 'idle',
   position: 0,
   duration: 0,
+  rate,
 });
 
 /** What the component should ask the <audio> element to do after a transition. */
-export type AudioCommand = 'play' | 'pause' | 'replay' | null;
+export type AudioCommand =
+  | 'play'
+  | 'pause'
+  | 'replay'
+  | { type: 'seek'; position: number }
+  | { type: 'rate'; rate: number }
+  | null;
 
 export function audioReducer(
   state: AudioState,
@@ -103,7 +114,22 @@ export function audioReducer(
       return { state: { ...state, status: 'error' }, command: null };
 
     case 'reset':
-      return { state: initialAudioState(), command: 'pause' };
+      return { state: initialAudioState(state.rate), command: 'pause' };
+
+    case 'skip': {
+      // Duration unknown yet: nothing to clamp against, so no-op rather than
+      // guess. Position is otherwise clamped to the playable range regardless
+      // of status - seeking while paused must not resume playback.
+      if (state.duration <= 0) return { state, command: null };
+      const position = Math.min(Math.max(state.position + event.delta, 0), state.duration);
+      if (position === state.position) return { state, command: null };
+      return { state: { ...state, position }, command: { type: 'seek', position } };
+    }
+
+    case 'setRate': {
+      if (event.rate === state.rate) return { state, command: null };
+      return { state: { ...state, rate: event.rate }, command: { type: 'rate', rate: event.rate } };
+    }
 
     default:
       return { state, command: null };
