@@ -15,9 +15,10 @@ import { fileURLToPath } from 'node:url';
 
 const OUT_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'icons');
 
-const BG = [0x0b, 0x0e, 0x13];
-const RING = [0x7d, 0xd3, 0xfc];
-const DOT = [0xf9, 0xa8, 0xd4];
+// Catppuccin Mocha: base, blue, pink.
+const BG = [0x1e, 0x1e, 0x2e];
+const RING = [0x89, 0xb4, 0xfa];
+const DOT = [0xf5, 0xc2, 0xe7];
 
 /** CRC-32, table built once. */
 const CRC_TABLE = Array.from({ length: 256 }, (_, n) => {

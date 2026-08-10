@@ -644,7 +644,7 @@
 
 .quiz__option.is-right .quiz__optionMark {
   background: var(--good);
-  color: #06240f;
+  color: var(--ctp-crust);
 }
 
 .quiz__option.is-wrong {
@@ -654,7 +654,7 @@
 
 .quiz__option.is-wrong .quiz__optionMark {
   background: var(--bad);
-  color: #2a0a0a;
+  color: var(--ctp-crust);
 }
 
 .quiz__option.is-dim {

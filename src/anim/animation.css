@@ -195,32 +195,32 @@
 .is-active {
   border-color: var(--accent);
   background: color-mix(in srgb, var(--accent) 18%, var(--bg-elev));
-  color: #eaf7ff;
+  color: var(--ctp-lavender);
   transform: translateY(-2px);
 }
 
 .is-compare {
   border-color: var(--accent-2);
   background: color-mix(in srgb, var(--accent-2) 16%, var(--bg-elev));
-  color: #ffeaf6;
+  color: var(--accent-2);
 }
 
 .is-done {
   border-color: color-mix(in srgb, var(--good) 55%, transparent);
   background: color-mix(in srgb, var(--good) 14%, var(--bg-elev));
-  color: #e6ffe9;
+  color: var(--good);
 }
 
 .is-bad {
   border-color: color-mix(in srgb, var(--bad) 55%, transparent);
   background: color-mix(in srgb, var(--bad) 14%, var(--bg-elev));
-  color: #ffecec;
+  color: var(--bad);
 }
 
 .is-target {
   border-color: var(--warn);
   background: color-mix(in srgb, var(--warn) 16%, var(--bg-elev));
-  color: #fff6dc;
+  color: var(--warn);
 }
 
 .is-muted {

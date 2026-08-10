@@ -5,23 +5,43 @@
    ========================================================================== */
 
 :root {
-  --bg: #0b0e13;
-  --bg-elev: #131820;
-  --bg-elev-2: #1a212c;
-  --bg-inset: #0e131a;
-  --border: #232c3a;
-  --border-strong: #33415a;
+  /* Catppuccin Mocha. https://catppuccin.com/palette
+     Named palette entries first, then the semantic tokens the app uses, so a
+     future re-theme is a matter of swapping the block above. */
+  --ctp-crust: #11111b;
+  --ctp-mantle: #181825;
+  --ctp-base: #1e1e2e;
+  --ctp-surface0: #313244;
+  --ctp-surface1: #45475a;
+  --ctp-surface2: #585b70;
+  --ctp-overlay1: #7f849c;
+  --ctp-subtext0: #a6adc8;
+  --ctp-text: #cdd6f4;
+  --ctp-blue: #89b4fa;
+  --ctp-lavender: #b4befe;
+  --ctp-pink: #f5c2e7;
+  --ctp-mauve: #cba6f7;
+  --ctp-green: #a6e3a1;
+  --ctp-yellow: #f9e2af;
+  --ctp-red: #f38ba8;
 
-  --text: #e7edf7;
-  --text-dim: #9fadc2;
-  --text-faint: #6b7a91;
+  --bg: var(--ctp-mantle);
+  --bg-elev: var(--ctp-base);
+  --bg-elev-2: var(--ctp-surface0);
+  --bg-inset: var(--ctp-crust);
+  --border: var(--ctp-surface0);
+  --border-strong: var(--ctp-surface1);
 
-  --accent: #7dd3fc;
-  --accent-ink: #0b1b26;
-  --accent-2: #f9a8d4;
-  --good: #86efac;
-  --warn: #fcd34d;
-  --bad: #fca5a5;
+  --text: var(--ctp-text);
+  --text-dim: var(--ctp-subtext0);
+  --text-faint: var(--ctp-overlay1);
+
+  --accent: var(--ctp-blue);
+  --accent-ink: var(--ctp-crust);
+  --accent-2: var(--ctp-pink);
+  --good: var(--ctp-green);
+  --warn: var(--ctp-yellow);
+  --bad: var(--ctp-red);
 
   --radius: 14px;
   --radius-sm: 9px;

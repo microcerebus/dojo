@@ -17,8 +17,8 @@ export default defineConfig({
         short_name: 'dojo',
         description:
           'Animated lessons, audio bites, quizzes and a Blind 75 drill plan for the Cracking the Coding Interview curriculum.',
-        theme_color: '#0b0e13',
-        background_color: '#0b0e13',
+        theme_color: '#1e1e2e',
+        background_color: '#1e1e2e',
         display: 'standalone',
         orientation: 'portrait',
         start_url: './',
