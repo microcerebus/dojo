@@ -36,6 +36,10 @@ shell, the manifest, the icons, the fonts or any narration MP3.
   the `base: './'` promise that the build runs from any subdirectory.
 - **The UI is monospace.** `--font` and `--mono` are the same stack. When adding UI, remember
   monospace glyphs are ~25% wider than a sans equivalent: check 390px before assuming a label fits.
+- **Animation text is not markdown.** Lesson blocks go through `RichText`, but an animation's
+  `title`/`blurb`/`caption`/`detail` render literally, so `**bold**` and backticks appear on screen.
+  A test in `coverage.test.ts` enforces this. Same family of mistake: `Cells` is a fixed square
+  sized for one value - anything with a word-length label wants `Chips`.
 - **Progress writes merge, never overwrite.** `progressStore.update` applies the transition to a
   fresh read and then merges the result into storage per entry (`mergeProgress`). The whole document
   lives under one key, so a plain write is last-writer-wins for everything and loses concurrent work
