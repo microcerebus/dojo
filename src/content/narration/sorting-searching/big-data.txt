@@ -1,0 +1,9 @@
+A run of questions in this chapter is really about memory rather than sorting. The giveaway is a stated limit: twenty gigabytes of data, one gigabyte of memory, ten megabytes, four kilobytes.
+
+External merge sort handles the first. Read as much of the file as fits, sort it in memory, write it back out as a sorted chunk, and repeat until the whole file is a set of sorted chunks. Then merge the chunks, holding only a small buffer from each one in memory. That merge is exactly the merge step of merge sort with k inputs instead of two, and a heap of the k current heads picks the next value.
+
+Bit vectors are the other lever. One bit per possible value instead of one byte or one object is a thirty two fold saving.
+
+Do the arithmetic out loud, because that is what is being graded. Four billion possible integers is two to the thirty two bits, which is five hundred and twelve megabytes. That fits in a gigabyte, so one pass sets bits and a scan finds a zero. It does not fit in ten megabytes, so you make a first pass counting how many values fall in each block. The pigeonhole principle guarantees some block is short of full, and now you only have to represent that one block exactly.
+
+Narrow the range, then be precise. That shape shows up far beyond this chapter.

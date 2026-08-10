@@ -1,0 +1,7 @@
+Backtracking is recursion that mutates shared state on the way down and restores it on the way back up. Three steps: choose, recurse, unchoose. Commit to one option and record it, solve the smaller problem that remains, then undo the change exactly so the next option starts clean.
+
+Subsets have two formulations worth knowing. Recursively, each element is either in or out. By counting, every n bit number is a membership vector, so counting from zero to two to the n minus one enumerates all of them exactly once, with no recursion at all. Both are two to the n times n, and that is optimal, because the output itself is that big.
+
+Permutations are the same template with a used array. And the duplicate case has a principle worth generalising: do not generate everything and filter, because that is exponentially wasteful. Build a count map, and at each step loop over the distinct remaining characters. Every branch then produces a genuinely different prefix, so no duplicate can ever be created.
+
+That make the duplicate impossible idea shows up everywhere. A start index stops combination sum from producing the same multiset in different orders. Marking a visited cell stops a grid word search from walking back over itself, and restoring the marker on the way out is exactly what makes it backtracking rather than a one shot search.

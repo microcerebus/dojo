@@ -1,0 +1,9 @@
+The last group of problems name no technique at all, because the technique is choosing a structure, and often two of them wired together.
+
+An LRU cache is the model. A hash map gives constant lookup and no ordering. A linked list gives ordering and linear lookup. Store the node in the map rather than the value, and both operations become constant. The list has to be doubly linked, because unlinking a node in constant time needs its predecessor.
+
+Expression evaluation with precedence and no parentheses is the other one. Tokenise first, and keep parsing separate from evaluation, because merging them is where the bugs live. Push each number onto a stack. On a multiply or divide, pop the top, apply it immediately with the next number, and push the result, because high precedence operators never wait. On a plus or minus, push the next number with its sign applied, because low precedence operators are simply deferred. At the end, sum the stack.
+
+And say what you are not handling. Parentheses, unary minus, whitespace, division by zero. Naming the excluded cases is worth as much as handling them.
+
+Spelling an integer in English is the same skill with no algorithm at all. English repeats every three digits, so write one helper for numbers below a thousand and apply it per chunk.

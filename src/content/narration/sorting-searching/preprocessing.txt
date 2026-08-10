@@ -1,0 +1,11 @@
+The most useful thing about sorting in interviews is not the algorithms. It is that an n log n sort is nearly free compared to a quadratic scan, and that after sorting, one linear pass is usually enough.
+
+Closest pair across two arrays: sort both, then walk with one pointer each, always advancing the one at the smaller value.
+
+Intervals: sort by start and sweep, because overlapping intervals become adjacent. But if the question is how many can I keep without overlap, sort by end instead, because the greedy choice is the earliest finisher.
+
+Sweep line and delta counting: for which year had the most people alive, do not simulate every year of every life. Record plus one at each birth and minus one after each death, then take a running total.
+
+Sometimes a full sort is more than you need. To rearrange an array into alternating peaks and valleys, walk it and at every other position swap with whichever neighbour is larger. Each local fix cannot break the pair before it, so one linear pass is enough.
+
+And sometimes the work is online rather than batch. To answer how many values so far are at most x, keep a search tree where every node also stores the size of its left subtree. Storing one extra number per node is a general move: it makes a structure answer new questions at no asymptotic cost.

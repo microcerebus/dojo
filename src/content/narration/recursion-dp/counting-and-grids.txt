@@ -1,0 +1,7 @@
+Watch the verb in the question. List all the ways forces you to build every answer, so the runtime is at least the size of the output. Count the ways does not, and collapsing enumeration into arithmetic is usually the entire optimisation.
+
+Paths across a grid moving only right and down is the plainest example. The paths to a cell are the paths to the cell above plus the paths to the cell on the left, with one along the top row and the left column. Exponential as a bare recursion, quadratic with a table, linear space with a rolling row. With obstacles, a blocked cell simply contributes zero.
+
+Balanced parentheses is worth a moment too. Track how many opens and closes remain. Add an open whenever any are left, and add a close only while closes outnumber opens. That builds only valid strings, so nothing needs filtering afterwards.
+
+Flood fill is the other grid recursion. From a cell, if a neighbour still has the original colour, paint it and recurse. Two details decide whether it works. Compare against the original colour, not the new one. And return immediately if the new colour equals the old one, or it never terminates. Sizing every region is the same fill started from every unvisited cell. And do ask whether connectivity is four directional or eight.

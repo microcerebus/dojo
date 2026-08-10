@@ -25,10 +25,15 @@ shell, the manifest, the icons, the fonts or any narration MP3.
   `en-US-AvaMultilingualNeural`). Regenerating needs network access; the committed files mean the app
   works offline without it. Keep clips in the 30-90 second range - that is roughly 150-200 words at
   this voice and rate, so a narration script that restates the whole section will overshoot. The clip
-  is a recap; the lesson blocks carry the detail. Around 400 KB per MP3 is the sanity check.
-  Sharp edge: `pnpm gen:audio <module>` rewrites `public/audio/manifest.json` from *only* the modules
-  named, silently dropping every other clip from it. Always finish with a bare `pnpm gen:audio` (it
-  regenerates nothing that is up to date) and check the manifest diff is additive before committing.
+  is a recap; the lesson blocks carry the detail. Around 400-550 KB per MP3 is the sanity check, and
+  `afinfo public/audio/<m>/<s>.mp3` gives the exact duration - when one runs long, trim the script.
+  Two manifest traps: `pnpm gen:audio <module>` rewrites `public/audio/manifest.json` from *only* the
+  modules named, silently dropping every other clip; and staleness is decided by mtime, so a fresh
+  checkout re-synthesises everything. Restore the modules you did not touch with `git checkout`,
+  finish with a bare `pnpm gen:audio`, and check the manifest diff is additive before committing.
+- **`vite preview` is served through the service worker.** After a rebuild the browser keeps handing
+  back the precached old bundle. Unregister the worker and clear the Cache API before screenshotting,
+  or you will verify the previous build without noticing.
 - **Fonts are self-hosted and committed.** JetBrains Mono lives in `src/assets/fonts/`, vendored by
   `pnpm gen:fonts`. Never load a webfont from a CDN - it cannot be precached, so the first offline
   visit would silently fall back to a system face. They sit under `src/` rather than `public/` so

@@ -1,0 +1,9 @@
+Most of this chapter's search questions take binary search and break one of its assumptions. The pattern each time is to find a weaker property that is still enough to throw away half the data.
+
+A rotated array. Comparing the target to the midpoint no longer tells you which side to keep. But at least one half is always still in sorted order. Work out which by comparing the low value against the middle value, range check the target against that half, and keep or discard it.
+
+Now add duplicates. If the low, middle and high values are all equal, you genuinely cannot tell which half is sorted, and the only correct move is to shrink one end by one. That makes the worst case linear. Say that out loud rather than claiming logarithmic.
+
+A structure with no size method, which returns a sentinel past the end. Probe index one, two, four, eight, doubling until you overshoot, then binary search between the last good index and the first bad one. Doubling is logarithmic, so the whole thing stays logarithmic.
+
+Sorted data with empty gaps. Comparison against an empty entry means nothing, so from the midpoint, walk outwards to the nearest non empty entry and compare there. Usually still logarithmic, but a long run of empties degrades it to linear, and that degradation is the point of the question.

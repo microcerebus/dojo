@@ -183,6 +183,48 @@
       "bytes": 375840
     },
     {
+      "moduleId": "bit-manipulation",
+      "sectionId": "arithmetic",
+      "path": "audio/bit-manipulation/arithmetic.mp3",
+      "bytes": 523008
+    },
+    {
+      "moduleId": "bit-manipulation",
+      "sectionId": "bit-vectors",
+      "path": "audio/bit-manipulation/bit-vectors.mp3",
+      "bytes": 520848
+    },
+    {
+      "moduleId": "bit-manipulation",
+      "sectionId": "by-hand",
+      "path": "audio/bit-manipulation/by-hand.mp3",
+      "bytes": 358560
+    },
+    {
+      "moduleId": "bit-manipulation",
+      "sectionId": "identities",
+      "path": "audio/bit-manipulation/identities.mp3",
+      "bytes": 454176
+    },
+    {
+      "moduleId": "bit-manipulation",
+      "sectionId": "masks",
+      "path": "audio/bit-manipulation/masks.mp3",
+      "bytes": 470160
+    },
+    {
+      "moduleId": "bit-manipulation",
+      "sectionId": "tricks",
+      "path": "audio/bit-manipulation/tricks.mp3",
+      "bytes": 510192
+    },
+    {
+      "moduleId": "bit-manipulation",
+      "sectionId": "twos-complement",
+      "path": "audio/bit-manipulation/twos-complement.mp3",
+      "bytes": 500976
+    },
+    {
       "moduleId": "c-cpp",
       "sectionId": "classes",
       "path": "audio/c-cpp/classes.mp3",
@@ -229,6 +271,42 @@
       "sectionId": "schema",
       "path": "audio/databases/schema.mp3",
       "bytes": 461232
+    },
+    {
+      "moduleId": "hard",
+      "sectionId": "bits-and-randomness",
+      "path": "audio/hard/bits-and-randomness.mp3",
+      "bytes": 496656
+    },
+    {
+      "moduleId": "hard",
+      "sectionId": "composing",
+      "path": "audio/hard/composing.mp3",
+      "bytes": 525024
+    },
+    {
+      "moduleId": "hard",
+      "sectionId": "order-statistics",
+      "path": "audio/hard/order-statistics.mp3",
+      "bytes": 507744
+    },
+    {
+      "moduleId": "hard",
+      "sectionId": "prefix-and-window",
+      "path": "audio/hard/prefix-and-window.mp3",
+      "bytes": 505440
+    },
+    {
+      "moduleId": "hard",
+      "sectionId": "preprocess-then-dp",
+      "path": "audio/hard/preprocess-then-dp.mp3",
+      "bytes": 540720
+    },
+    {
+      "moduleId": "hard",
+      "sectionId": "tries-and-graphs",
+      "path": "audio/hard/tries-and-graphs.mp3",
+      "bytes": 519120
     },
     {
       "moduleId": "heaps-tries",
@@ -375,6 +453,42 @@
       "bytes": 452736
     },
     {
+      "moduleId": "moderate",
+      "sectionId": "arithmetic",
+      "path": "audio/moderate/arithmetic.mp3",
+      "bytes": 531504
+    },
+    {
+      "moduleId": "moderate",
+      "sectionId": "counting",
+      "path": "audio/moderate/counting.mp3",
+      "bytes": 532368
+    },
+    {
+      "moduleId": "moderate",
+      "sectionId": "geometry-simulation",
+      "path": "audio/moderate/geometry-simulation.mp3",
+      "bytes": 515232
+    },
+    {
+      "moduleId": "moderate",
+      "sectionId": "recognition",
+      "path": "audio/moderate/recognition.mp3",
+      "bytes": 504576
+    },
+    {
+      "moduleId": "moderate",
+      "sectionId": "scans",
+      "path": "audio/moderate/scans.mp3",
+      "bytes": 497808
+    },
+    {
+      "moduleId": "moderate",
+      "sectionId": "structures",
+      "path": "audio/moderate/structures.mp3",
+      "bytes": 522864
+    },
+    {
       "moduleId": "offer-and-beyond",
       "sectionId": "evaluating",
       "path": "audio/offer-and-beyond/evaluating.mp3",
@@ -427,6 +541,96 @@
       "sectionId": "worked",
       "path": "audio/ood/worked.mp3",
       "bytes": 456624
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "backtracking",
+      "path": "audio/recursion-dp/backtracking.mp3",
+      "bytes": 537120
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "base-and-stack",
+      "path": "audio/recursion-dp/base-and-stack.mp3",
+      "bytes": 461520
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "counting-and-grids",
+      "path": "audio/recursion-dp/counting-and-grids.mp3",
+      "bytes": 515232
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "memoisation",
+      "path": "audio/recursion-dp/memoisation.mp3",
+      "bytes": 484992
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "pruning",
+      "path": "audio/recursion-dp/pruning.mp3",
+      "bytes": 455040
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "spotting",
+      "path": "audio/recursion-dp/spotting.mp3",
+      "bytes": 501552
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "substructure",
+      "path": "audio/recursion-dp/substructure.mp3",
+      "bytes": 537552
+    },
+    {
+      "moduleId": "recursion-dp",
+      "sectionId": "tabulation",
+      "path": "audio/recursion-dp/tabulation.mp3",
+      "bytes": 482544
+    },
+    {
+      "moduleId": "sorting-searching",
+      "sectionId": "big-data",
+      "path": "audio/sorting-searching/big-data.mp3",
+      "bytes": 487872
+    },
+    {
+      "moduleId": "sorting-searching",
+      "sectionId": "binary-search",
+      "path": "audio/sorting-searching/binary-search.mp3",
+      "bytes": 541152
+    },
+    {
+      "moduleId": "sorting-searching",
+      "sectionId": "comparing",
+      "path": "audio/sorting-searching/comparing.mp3",
+      "bytes": 514224
+    },
+    {
+      "moduleId": "sorting-searching",
+      "sectionId": "matrix-search",
+      "path": "audio/sorting-searching/matrix-search.mp3",
+      "bytes": 486720
+    },
+    {
+      "moduleId": "sorting-searching",
+      "sectionId": "modified-search",
+      "path": "audio/sorting-searching/modified-search.mp3",
+      "bytes": 517248
+    },
+    {
+      "moduleId": "sorting-searching",
+      "sectionId": "preprocessing",
+      "path": "audio/sorting-searching/preprocessing.mp3",
+      "bytes": 520848
+    },
+    {
+      "moduleId": "sorting-searching",
+      "sectionId": "the-sorts",
+      "path": "audio/sorting-searching/the-sorts.mp3",
+      "bytes": 487872
     },
     {
       "moduleId": "special-situations",

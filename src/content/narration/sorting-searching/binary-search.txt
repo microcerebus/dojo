@@ -1,0 +1,9 @@
+Compare the target to the midpoint, discard the half it cannot be in, repeat. The concept takes one sentence. The implementation takes three attempts, because every boundary decision has to be consistent with every other one.
+
+Pick one template and never deviate. With an inclusive high bound, set high to length minus one and loop while low is less than or equal to high. With an exclusive bound, set high to length and loop while low is strictly less. Mixing the two is the single most common binary search bug.
+
+Always move at least one index past the midpoint. Assigning low equals mid, with a floored midpoint, is an infinite loop on a two element window.
+
+Compute the midpoint as low plus half the difference, rather than low plus high over two, so it cannot overflow. And to find the first occurrence rather than any occurrence, do not stop on a match: record it and keep searching left. Record and search right for the last one.
+
+The deepest point is this. Binary search does not actually require a sorted array. It requires a monotone predicate: some yes or no test that is false, false, false, then true, true, true across the range. Find a peak, find the smallest capacity that fits a schedule, find the partition point in median of two arrays. All of those qualify. Ask what your yes or no test is, and whether it is monotone.

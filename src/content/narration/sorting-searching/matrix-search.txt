@@ -1,0 +1,9 @@
+A matrix whose rows and columns are each sorted is not a sorted list. The value below a cell and the value to its right are incomparable, so you cannot binary search the whole thing as one sequence.
+
+Binary searching every row works, and costs m log n. Starting from a corner is better.
+
+The top right cell is the largest in its row and the smallest in its column. So if it is too big, nothing in that entire column can be the answer, and you step left. If it is too small, nothing left in that row can be the answer, and you step down. One comparison, one whole line eliminated, and never any ambiguity. That gives m plus n time and constant space. The bottom left corner works identically. The other two corners do not, and being able to say why is the real question.
+
+There is also a divide and conquer version that binary searches the diagonal and discards two of the four quadrants. It is elegant, harder to code correctly, and no faster in practice. Mention it, then write the corner walk.
+
+And do clarify which matrix you have been given. If every row is sorted and each row starts after the previous one ends, the matrix is one sorted list folded up, and a single binary search over all the cells works.

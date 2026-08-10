@@ -1,0 +1,13 @@
+The workhorse of this chapter is the hash map, used as a counter or as an index. It converts search for it again into look it up.
+
+Word frequencies in a book. One query is a scan. Repeated queries is a map built once, and then every query is constant. Ask about case, punctuation and hyphenation, because that is half the question.
+
+Pairs summing to a target. A map of complements is linear time and linear space. Sorting and converging two pointers is n log n time and constant space. Both need a stated rule for duplicates.
+
+Smallest difference across two arrays. Sort both, then walk one pointer per array, always advancing the one at the smaller value, because that is the only move that can improve the difference.
+
+One swap to equalise two array sums. Do the algebra first. Swapping x out of A for y out of B moves x minus y across, so you need x minus y to equal half the difference of the sums. If that difference is odd, no swap exists at all.
+
+Scoring a Mastermind guess. Count exact position matches first and remove them, then count colour only matches from what is left. One pass double counts, and that is the bug being fished for.
+
+And index by the question, not by the source. A keypad lookup is instant if you precompute a map from digit string to words.

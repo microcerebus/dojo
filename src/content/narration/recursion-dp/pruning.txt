@@ -1,0 +1,13 @@
+Backtracking is only affordable because most branches die early. The cost of a search is the number of nodes you actually visit, so every check that kills a branch before recursing removes an entire subtree, not one call.
+
+Four levers, in rough order of value.
+
+Encode constraints into the shape of the search. In n queens, placing exactly one queen per row makes row conflicts unrepresentable rather than merely detected. That is the cheapest pruning there is, because the invalid branches are never generated.
+
+Test before you recurse, not at the leaf. Checking validity only when the board is full means you have already paid for the whole branch.
+
+Track constraint state incrementally. Keeping sets of occupied columns and diagonals makes each test constant time instead of a scan over everything placed so far.
+
+And bail out on a bound. If the best possible completion of this branch is already worse than an answer you have, stop.
+
+One note on how you state the complexity. Pruned searches rarely have a tidy closed form. Saying it is factorial in the worst case but far less in practice, because most branches die within a few rows, is a better answer than inventing a bound.

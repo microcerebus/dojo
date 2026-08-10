@@ -1,0 +1,7 @@
+Dynamic programming is not a separate technique. It is a plain recursion, plus the observation that the same subproblem is being solved over and over. So write the recursion first, draw the call tree, and look for identical nodes.
+
+The reason the saving is so large is that a cache hit does not remove one call. It removes an entire subtree. If there are only n distinct arguments, then the memoised tree collapses into a spine of depth n where each node has one extra child, and an exponential algorithm becomes linear.
+
+The design decision that actually matters is the state key: exactly which values identify a subproblem. Too narrow and you return wrong answers out of stale cache entries. Too wide and nothing ever repeats, so the memo does nothing but cost memory.
+
+For climbing stairs, the remaining height is the whole state. For word break, it is the start index, because the answer depends only on the suffix. For counting coin combinations, you need the amount and the coin index, and this one is a trap: drop the index and you count one plus two and two plus one as different answers. Counting permutations deliberately drops it. The two recurrences look nearly identical, so decide which question you are answering before you write it.

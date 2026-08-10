@@ -1,0 +1,7 @@
+Every earlier chapter told you the technique before it told you the problem. This one deliberately does not, and that is the whole exercise, because real interviews do not come with a heading either.
+
+When a problem has no obvious home, run a fixed checklist rather than staring at it. Repeated counting queries means precompute a frequency map. A ban on comparisons or temporaries means bit tricks and algebra. Largest or smallest contiguous something means a running scan. Most things at the same time means a sweep line over start and end events. All pairs that sum to something means a hash map of complements, or sort and converge. Connected region means flood fill. Constant time per operation on something ordered means two structures wired together. And uniformly at random means rejection sampling, with a uniformity argument.
+
+The single most valuable clarifying question in this chapter is how often will this be called. Counting a word in a book is a linear scan if it happens once, and a preprocessed map if it repeats. Detecting a tic tac toe winner is eight checks if it is one off, and incrementally maintained counters if you are validating every move.
+
+And always state a brute force with its cost first. A correct quadratic answer in thirty seconds buys you the rest of the interview to improve it.

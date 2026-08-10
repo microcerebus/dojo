@@ -1,0 +1,9 @@
+Computers store signed integers in two's complement. A non-negative number is just itself. A negative number is stored as the complement of its absolute value, with the top bit set to mark it negative.
+
+The rule to remember is mechanical: to negate, invert every bit and add one. Applying it twice gets you back where you started.
+
+Why this representation? Because adding a number to its own negation carries off the top of the word and leaves zero. Subtraction becomes addition, and the hardware needs one adder instead of two. It also explains the asymmetry, that there is one more negative value than positive.
+
+The sign bit is also why there are two right shifts. The arithmetic shift copies the sign bit into the vacated positions, so a negative number stays negative and keeps halving. The logical shift feeds in zeros, so a negative number turns into a large positive one. Shift minus one right forty times: arithmetically you still have minus one, logically you have zero.
+
+In JavaScript, every bitwise operator coerces to a thirty-two bit signed integer. One shifted left by thirty-one is negative, and anything wider silently wraps. Use the unsigned shift by zero to read a result as unsigned, and BigInt when you truly need more width.

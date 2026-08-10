@@ -1,0 +1,11 @@
+The other half of this chapter is not arithmetic at all. It is using integers as compact arrays of booleans.
+
+A fixed alphabet fits in a single integer. Are all twenty-six letters distinct? Test with AND, set with OR, and you are done in constant space with no data structure at all.
+
+A subset is also just a number. Count from zero to two to the n minus one, read the bits of the counter as a membership vector, and you have enumerated every subset exactly once, with no recursion.
+
+At scale the same idea handles memory limits. Four billion possible integers need four billion bits, which is about half a gigabyte. That fits in one gigabyte and does not fit in ten megabytes. Under ten megabytes you make one pass counting how many values fall in each block, find a block whose count is short of full, and then rescan only that block with a bit vector.
+
+Byte packed images are the same addressing in disguise. Pixel x of a row lives in byte x shifted right by three, at bit seven minus x AND seven. Dividing and modding by eight is exactly a shift and a mask.
+
+And the pattern for drawing into one: handle the ragged ends with masks, and the aligned middle with whole byte writes. The case that breaks it is both ends landing in the same byte, because then there is no middle and the two masks must be combined.

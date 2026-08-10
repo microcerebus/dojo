@@ -1,0 +1,9 @@
+Several questions here restrict what you are allowed to touch, and the answer is to work at the level of bits or digits instead.
+
+Adding with no arithmetic operators: XOR is the column sum with carries discarded, AND shifted left by one is the carry, and you loop until the carry dies.
+
+Finding a missing value when you can only fetch one bit at a time is the elegant one. Look at the least significant bit of every number. Among zero through n, exactly one of even and odd should be more numerous, so whichever count comes up short tells you the missing number's low bit. Keep only the numbers matching that bit and recurse on the next bit up. Each round halves the data, so the total is linear.
+
+Missing two values from one through N needs two equations, not one. Use the sum and the sum of squares, or partition the numbers on a bit where the overall XOR differs from what it should be, which is guaranteed to split the two apart.
+
+And Fisher Yates. Walk from the end and swap each position with a random index from zero up to and including itself. That gives exactly n factorial equally likely paths, one per permutation. Swapping over the whole array instead gives n to the n paths onto n factorial outcomes, and those do not divide evenly, so some orderings become more likely.
