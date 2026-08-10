@@ -17,7 +17,7 @@ import { fromFrames, type AnimationSpec } from '../../../anim/types';
 /** Slot positions for a 7-node complete binary tree, by array index. */
 const HEAP_SLOTS = [3.5, 1.5, 5.5, 0.5, 2.5, 4.5, 6.5];
 
-interface HeapFrame {
+export interface HeapFrame {
   heap: number[];
   /** array indices being swapped or looked at */
   focus: number[];
@@ -28,7 +28,8 @@ interface HeapFrame {
   detail: string;
 }
 
-const heapFrames: HeapFrame[] = (() => {
+/** Exported so the frame contents can be asserted without rendering. */
+export const heapFrames: HeapFrame[] = (() => {
   const frames: HeapFrame[] = [];
   const heap = [4, 50, 7, 55, 90, 87];
 
@@ -103,6 +104,11 @@ const heapFrames: HeapFrame[] = (() => {
     if (smallest === j) break;
     const moved = heap[j];
     const winner = heap[smallest];
+    // Read the children *before* the swap - afterwards one of those slots holds
+    // the value that just sank, and the detail line would name a comparison
+    // that never happened.
+    const leftValue = left < heap.length ? heap[left] : null;
+    const rightValue = right < heap.length ? heap[right] : null;
     [heap[j], heap[smallest]] = [heap[smallest], heap[j]];
     frames.push({
       heap: [...heap],
@@ -110,7 +116,7 @@ const heapFrames: HeapFrame[] = (() => {
       cursor: smallest,
       phase: 'extract',
       caption: `${moved} is bigger than its children, so it sinks. Swap with the *smaller* child (${winner}) - swapping with the larger one would just break the property in the other direction.`,
-      detail: `compared ${left < heap.length ? heap[left] : '—'} and ${right < heap.length ? heap[right] : '—'}`,
+      detail: `compared ${leftValue ?? '—'} and ${rightValue ?? '—'}`,
     });
     j = smallest;
   }
