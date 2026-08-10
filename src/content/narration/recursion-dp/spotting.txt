@@ -1,0 +1,7 @@
+A problem is a candidate for recursion when the answer can be assembled out of answers to smaller versions of itself. The wording usually gives it away: compute the nth something, list the first n, compute all, or count the ways to.
+
+Be honest about that instinct though. The book says it is right about half the time, which is valuable but not decisive. Plenty of problems that feel recursive turn out to be greedy or two pointer problems in disguise.
+
+Once you suspect recursion, there are three standard ways to find the split. Bottom up: solve it for one element, then work out how to extend a solution for k elements into one for k plus one. Top down: ask how the problem for n decomposes, and watch carefully for overlap between the cases, because that overlap is what dynamic programming exploits. And half and half: split the data in two, solve both halves, and combine. Binary search and merge sort are the archetypes.
+
+Towers of Hanoi is the model. To move n disks from the first tower to the last, move the top n minus one out of the way, move the bottom disk across, then move the n minus one back on top. You never reason about the whole tower. That leap of faith, trusting the smaller call and writing only the work that turns its answer into yours, is what the whole technique runs on.

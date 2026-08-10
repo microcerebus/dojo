@@ -1,0 +1,11 @@
+The harder problems in this chapter hide the recurrence behind one preparatory move. Three moves cover most of them.
+
+Sort first, then recurse on one dimension. Stacking boxes that must be strictly smaller in width, height and depth looks like an exponential enumeration. Sort by one dimension so that constraint is automatically satisfied, and what is left is a longest increasing subsequence on the others.
+
+Split at every operator. To count the parenthesisations of a boolean expression that evaluate to a target, try each operator as the last one applied, recurse on the left and right spans, and combine the true and false counts. Memoise on the span together with the target, because the same span gets asked about for both.
+
+And halve the input. Multiplying without the multiply operator is the smaller operand halved, recursed on, doubled, plus the other operand when it was odd. Logarithmic instead of linear.
+
+A magic index, an index whose value equals itself, is the purest half and half. In a sorted array of distinct values, if the middle value is below its index then no earlier index can work, so binary search applies directly.
+
+And when the recurrence will not come, tabulate the smallest inputs by hand. Seeing one, two, four, seven makes the pattern obvious in a way that staring at the general case never does.

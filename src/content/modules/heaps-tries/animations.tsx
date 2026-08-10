@@ -115,7 +115,7 @@ export const heapFrames: HeapFrame[] = (() => {
       focus: [j, left, right].filter((k) => k < heap.length),
       cursor: smallest,
       phase: 'extract',
-      caption: `${moved} is bigger than its children, so it sinks. Swap with the *smaller* child (${winner}) - swapping with the larger one would just break the property in the other direction.`,
+      caption: `${moved} is bigger than its children, so it sinks. Swap with the smaller child (${winner}) - swapping with the larger one would just break the property in the other direction.`,
       detail: `compared ${leftValue ?? '—'} and ${rightValue ?? '—'}`,
     });
     j = smallest;
@@ -230,7 +230,7 @@ const medianFrames: MedianFrame[] = (() => {
   const notes: string[] = [
     'Split the values into a low half and a high half. The low half is a max-heap, so its root is the largest small value; the high half is a min-heap, so its root is the smallest large value. Those two roots straddle the median.',
     'Every arrival: push it onto the low heap, move the low heap\'s root across to the high heap, then move back if the high heap has grown larger. Two O(log n) operations, and the invariant is restored.',
-    'With an odd count the low heap deliberately holds the extra element, so its root *is* the median - no averaging, no ambiguity.',
+    'With an odd count the low heap deliberately holds the extra element, so its root is exactly the median - no averaging, no ambiguity.',
     'The heaps never sort themselves. They only ever have to answer "what is the biggest thing in the low half" and "what is the smallest thing in the high half", which is exactly what a root is.',
     'The contents below each root are drawn in order here so they are readable - a real heap does not keep them that way, and never needs to. Only the roots are ever read.',
     'A value arriving in the middle of the range still costs O(log n) - it lands in one heap and at most one element crosses over.',

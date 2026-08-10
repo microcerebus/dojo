@@ -1,0 +1,9 @@
+Three problems here are solved by walking the data while maintaining one or two running values. They look different and are the same shape.
+
+Kadane, first. The best run ending at each element is either that element on its own, or that element added to the best run ending just before it. So keep a running total, throw it away whenever it drops below the element itself, and track the maximum you have seen. Decide up front what an all negative array should return. Zero and the least negative element are both defensible, and the interviewer wants you to ask.
+
+Second, the smallest window whose sorting would sort the whole array. Sweep left to right tracking the running maximum: any element below it must be inside the window, so the last such element is the right edge. Sweep right to left tracking the running minimum for the left edge. Two linear passes, no sorting, and the array is left untouched.
+
+Third, the sweep line. Incrementing a counter for every year a person was alive is people times lifespan. Recording plus one at the birth and minus one just after the death, then taking a running total, is people plus years. That same delta and prefix sum move answers meeting room counts, maximum interval overlap, and busiest moment questions of every kind.
+
+Never simulate what you can difference.

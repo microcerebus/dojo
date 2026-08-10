@@ -1,0 +1,9 @@
+Almost nothing in this chapter needs an algorithm you have not already met. What it needs is combining two of them, and then defending the result.
+
+A trie inside a backtracking search, so invalid prefixes die immediately. A heap inside a stream, so an order statistic stays available without re-sorting. A prefix sum inside a hash map, so a range question becomes a lookup. A sort inside a dynamic program, so one dimension of the constraint disappears. An inverted index inside a pairwise problem, so the all pairs loop never runs at all.
+
+Before you optimise anything, say what the floor is. If you have to read every element, you cannot beat linear. If the output is two to the n items, you cannot beat two to the n. Best conceivable runtime tells you when to stop, and it stops you chasing a logarithmic solution to a problem that must read all its input.
+
+Then attack the brute force with the three questions: what is the bottleneck, what work is unnecessary, and what work is duplicated. In this chapter the answer is almost always duplicated work, and the fix is almost always a precomputed index.
+
+And defend rather than assert. Give the invariant that holds after each step, or the exchange argument for why a greedy choice is safe. An unexplained correct answer scores below an explained near miss.

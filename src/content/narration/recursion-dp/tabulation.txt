@@ -1,0 +1,9 @@
+Once you have a memoised recursion you can usually flip it. Instead of recursing down and caching on the way back up, fill a table in an order that guarantees every dependency is already computed. Both directions are dynamic programming.
+
+Top down reads like the recurrence you derived, and it only ever computes states that are actually reachable, which matters when the state space is sparse. Its risk is the stack. Bottom up computes every cell whether you need it or not, but it has no stack at all and it is far easier to shrink. Its risk is filling in the wrong order.
+
+That shrinking is the follow up question you should expect. Look at what each cell actually reads. If it only reads the previous row, keep two rows instead of the whole grid, and a quadratic space bound becomes linear. If it only reads the previous two values, keep two variables and it becomes constant.
+
+Keep the full table only when you need to reconstruct the answer rather than measure it. How long is the longest common subsequence needs one row. What is the subsequence needs the whole grid, so you can walk backwards through it.
+
+And if counting nodes in a memoised tree is confusing, redraw it expanding the upper nodes instead of the lower ones. Same values, easier shape to count.

@@ -1,0 +1,9 @@
+A large family of range problems unlocks with the same rewriting. Define a running quantity over prefixes, and notice that the property you want is an equation between two of them.
+
+For the longest span with equally many letters and digits, define the difference between letters and digits over each prefix. A span has equal counts exactly when that difference is the same at both endpoints, because the two prefixes cancel. So store the first index at which each difference value appeared, and every later index with the same value gives a candidate span. One pass, linear time and space.
+
+That same rewriting has four disguises: equal counts of two symbols, a subarray summing to k, a subarray whose sum is divisible by k, and a binary array with equal zeros and ones.
+
+Boyer Moore is worth stating precisely. Hold a candidate and a counter. A match increments, a mismatch decrements, and a zero counter adopts the next element. A true majority survives because it outnumbers everything else combined. But the survivor is only a candidate, so a second pass has to verify it. Skipping that pass is the classic failure.
+
+And for repeated distance queries between words in a file, precompute a map from word to its sorted positions, then walk two lists together.

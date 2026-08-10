@@ -1,0 +1,9 @@
+Geometry questions here are rarely hard mathematically. They are graded on enumerating the degenerate cases, and on not trusting floating point.
+
+Segment intersection: compute where the infinite lines cross, then check the point lies within both segments. The cases that break naive code are parallel lines with different intercepts, which never meet; parallel and collinear lines, which meet infinitely often; and vertical segments, where the slope is undefined.
+
+A line bisecting two squares: any line through a square's centre halves it, so the answer is simply the line through both centres. No calculus. Just handle identical centres.
+
+The line through the most points: for every pair compute a normalised slope and intercept, and count. The trap is floating point equality. Two slopes that should be identical will differ in the last bits, so either compare within a tolerance, which means checking neighbouring hash buckets and not just the exact one, or store the slope as a reduced fraction so equality is exact.
+
+Grid problems here are about representation. Pond sizes is flood fill from every unvisited water cell, and connectivity is eight directional. Langton's Ant runs on an unbounded board, so the real decision is the data structure: grow the grid, or store only the flipped cells in a set.

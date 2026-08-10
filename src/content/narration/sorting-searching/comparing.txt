@@ -1,0 +1,13 @@
+Interviewers compare sorts on four axes, not one, and time is only the first.
+
+Stability means equal elements keep their input order. It matters the moment you sort by one key after having already sorted by another, which is exactly how radix sort works internally.
+
+In place means constant or logarithmic extra memory. Quicksort qualifies. Merge sort does not.
+
+Worst case matters when an adversary controls the input, or when you owe someone a tail latency guarantee. Merge sort has no bad case. Quicksort does.
+
+And auxiliary space is the one people forget to mention. Merge sort's linear helper is a real cost on large inputs, and it is why production sorts are usually hybrids.
+
+There is also a lower bound worth stating correctly. Any sort that only compares elements needs at least n log n comparisons, because there are n factorial orderings and each comparison can only halve the possibilities. Radix and counting sorts are not exceptions to that rule. They simply never compare. So the honest answer to can you beat n log n is: yes, if you know something about the values themselves.
+
+One more framing thing. Sorting strings so that anagrams end up adjacent is not alphabetical sorting. The move is a canonical key: sort each word's letters, and group on that.

@@ -1,0 +1,9 @@
+Sorting to find one rank is usually overkill. Three tools cover this space, and choosing between them is the question.
+
+For the smallest k, offline: a max heap of size k keeps the k best seen so far and evicts its own maximum, giving n log k, and it never holds more than k items, which matters on a stream. Quickselect partitions like quicksort but recurses into only one side, so it is linear expected time, quadratic worst case, and it mutates the array.
+
+For a streaming median: keep the smaller half in a max heap and the larger half in a min heap, rebalancing so their sizes differ by at most one. The median is then one or both heap tops, in constant time.
+
+And for the kth number whose only prime factors are three, five and seven: do not test numbers for factors. Generate them. Every such number is three, five or seven times a smaller one, so a min heap seeded with one, which pushes three x, five x and seven x on every pop, produces them in order. A set suppresses duplicates. Three queues do the same thing without a heap.
+
+That flip is the reusable idea. When valid items are sparse in a huge space, constructing them directly beats testing candidates. Generate, do not filter.

@@ -1,0 +1,9 @@
+A whole family of questions removes an operator and asks you to rebuild it. They all come from one observation: a column of binary addition produces two things, the digit you write down and the digit you carry.
+
+XOR is the digit you write down, addition with the carries thrown away. AND finds exactly the columns that produced a carry, and shifting it left by one puts each carry where it belongs. Feed the partial sum and the carry back in and repeat. Every round pushes the carries further left, so it always terminates.
+
+From addition you get everything else. Subtract by adding the negation. Multiply by shifting and adding: for each set bit of one operand, add the other operand shifted by that position. Divide by shifting the divisor left until it would overshoot, subtracting, and recording a bit. That is long division in base two.
+
+Recursive multiply is a nice variant. A times B is A times B halved, doubled, plus A when B was odd. Halve the smaller operand, so the recursion stays shallow.
+
+And to print a fraction in binary, multiply by two repeatedly. If you reach one, emit a one and subtract it, otherwise emit a zero. If you pass thirty-two characters without terminating, the value has no exact binary representation, so say so instead of looping forever.

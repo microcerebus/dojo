@@ -1,0 +1,9 @@
+Every single bit operation is the same two moves. Build one shifted left by i, a value with exactly one bit set where you intend to act. Then combine it with the operator that ignores the other positions.
+
+Get is AND with the mask, then compare against zero. Set is OR with the mask. Clear is AND with the inverted mask. Toggle is XOR with the mask.
+
+Update is the one people get wrong. To set a bit to a value that might be zero or might be one, you must clear it first and then OR the value in. Just ORing it in can never turn a bit off, so it silently fails for zero.
+
+Clearing a range uses the same trick with a fatter mask, and both variants come from one observation: subtracting one from a lone set bit turns it into a run of ones underneath. So one shifted left by i, minus one, keeps only the bits below i. And minus one shifted left by i plus one keeps only the bits above.
+
+The bugs in this chapter live in the plus ones. Inserting a pattern into a window means clearing that window and shifting the pattern into place, and both boundaries are easy to get wrong. Write out a concrete eight bit example on the board and check the ends before you trust the code.

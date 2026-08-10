@@ -1,0 +1,13 @@
+Bitwise operators act on each position independently. What happens in one column never affects another. That means a fact you prove for a single bit is automatically true for a whole word, which is why a very short table is worth more here than any memorised expression.
+
+Learn it as three sentences about which operator leaves a bit alone.
+
+AND leaves a bit alone when the mask bit is one, and clears it when the mask bit is zero. So AND is the clearing operator.
+
+OR leaves a bit alone when the mask bit is zero, and sets it when the mask bit is one. So OR is the setting operator.
+
+XOR leaves a bit alone when the mask bit is zero, and flips it when the mask bit is one. So XOR is the toggling operator.
+
+XOR has one extra property that carries a lot of weight. A value XORed with itself is zero, and anything XORed with zero is unchanged. So XOR is a cancellation operator: fold a list together with XOR and everything that appears an even number of times disappears.
+
+The book is blunt on this point, and it is right. Memorising get, set and clear leads to mistakes you cannot recover from mid-interview. Derive them.

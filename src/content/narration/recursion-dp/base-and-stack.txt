@@ -1,0 +1,9 @@
+Two obligations make a recursion correct, and they are separate.
+
+The base case has to be reachable. Every recursive call must shrink the state: a smaller index, a shorter remaining string, a strictly smaller amount. Write down what shrinks before you write any code.
+
+And the base case has to be right. The classic mistake is returning zero where the answer is one. How many ways are there to make zero cents? One way: take nothing. Return zero there and every count in the whole problem collapses to zero. Keep impossible cases, like a negative amount or an out of bounds cell, separate from the true base, because they usually return something different.
+
+The other thing to say out loud is space. A recursion that goes n deep is holding n stack frames, so it costs linear memory even when it allocates nothing. On a large input that is a real stack overflow, not a theoretical one.
+
+Every recursion has an iterative form, because the call stack is just a stack you can maintain yourself. Sometimes iterating is obviously better, like Fibonacci with two variables. Sometimes it is much uglier. Before you commit, ask which one you can actually write correctly, and say the trade-off aloud.

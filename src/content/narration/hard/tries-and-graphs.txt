@@ -1,0 +1,9 @@
+Word problems at this level are graph and trie problems wearing a disguise, and the question is always which side of the problem to index.
+
+To search one long text for many short patterns, build a trie of the patterns and walk it from every starting position. That is text length times longest pattern, rather than text length times number of patterns.
+
+The longest word made of other words is a recursive check on the suffix, memoised so the same tail is never re-solved. Re inserting spaces to minimise unrecognised characters is a dynamic program over suffixes, where a trie makes enumerating the words that start here cheap. And building a rectangle whose rows and columns are all words is backtracking where, after each row, the trie checks that every partial column is still a valid prefix. Without that check the search never finishes.
+
+Whenever a relation is stated as transitive and symmetric, you are being asked for connected components, and union find is one array and two short functions.
+
+A word ladder is a shortest path, so it is breadth first search, not backtracking. Bucket words under wildcard keys so neighbours are a lookup. And search from both ends: two frontiers of half the depth explore roughly the square root of what one frontier does. When they touch, join the halves, remembering to reverse the backward one.

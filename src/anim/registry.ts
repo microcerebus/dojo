@@ -25,6 +25,11 @@ import { specialSituationsAnimations } from '../content/modules/special-situatio
 import { beforeTheInterviewAnimations } from '../content/modules/before-the-interview/animations';
 import { behavioralAnimations } from '../content/modules/behavioral/animations';
 import { offerAndBeyondAnimations } from '../content/modules/offer-and-beyond/animations';
+import { bitManipulationAnimations } from '../content/modules/bit-manipulation/animations';
+import { recursionDpAnimations } from '../content/modules/recursion-dp/animations';
+import { sortingSearchingAnimations } from '../content/modules/sorting-searching/animations';
+import { moderateAnimations } from '../content/modules/moderate/animations';
+import { hardAnimations } from '../content/modules/hard/animations';
 
 export const ALL_ANIMATIONS: AnimationSpec[] = [
   ...bigOAnimations,
@@ -49,6 +54,11 @@ export const ALL_ANIMATIONS: AnimationSpec[] = [
   ...beforeTheInterviewAnimations,
   ...behavioralAnimations,
   ...offerAndBeyondAnimations,
+  ...bitManipulationAnimations,
+  ...recursionDpAnimations,
+  ...sortingSearchingAnimations,
+  ...moderateAnimations,
+  ...hardAnimations,
 ];
 
 const byId = new Map(ALL_ANIMATIONS.map((spec) => [spec.id, spec]));

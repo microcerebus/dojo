@@ -1,0 +1,9 @@
+Subtracting one from a number flips its lowest one to a zero, and turns every zero below it into a one. Everything above is untouched. That single fact powers the most used expression in the chapter.
+
+n AND n minus one clears the lowest set bit. Loop until you hit zero and you have counted the set bits, in time proportional to the number of ones rather than the width of the word. And if the very first n AND n minus one is already zero, then n had at most one set bit, which is the power of two test. Remember that zero passes it too, so guard that separately.
+
+Its sibling is n AND minus n, which isolates the lowest set bit instead of clearing it.
+
+XOR gives you two more. A XOR B has a one wherever the two differ, so the population count of A XOR B is the number of flips to turn A into B. And XORing a list where everything is paired except one leaves you the odd one out, with no extra space.
+
+Runs of ones deserve a mental picture. Think of the number as alternating blocks of zeros and ones. To flip a single zero for the longest possible run, walk the bits tracking the current run and the previous run, and when you hit a zero, carry the previous length forward only if the next bit is also a one. That is constant space, where building the block list first is linear.

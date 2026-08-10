@@ -1,0 +1,9 @@
+The last group of problems all share a shape. A cubic or quartic brute force becomes affordable once you precompute the right summary and then run something simple over it.
+
+Water in a histogram: each bar holds the smaller of the tallest bar to its left and the tallest to its right, minus its own height. Precomputing both maxima arrays is linear time and linear space. Two converging pointers get it to constant space, because the shorter end is always safe to resolve, since the taller end guarantees a wall at least that high behind it.
+
+Maximum sum submatrix: fix a top row and a bottom row, collapse everything between into one array of column sums, and run Kadane on it. Row pairs are quadratic and Kadane is linear, so the whole thing is cubic, and precomputed column prefix sums keep the collapse linear.
+
+The largest square with a fully black border: for every cell precompute the run of black pixels extending right and downwards. Then checking a candidate border is four constant time lookups instead of a scan.
+
+Two more. Sorting can remove a dimension entirely: a tower where each person is shorter and lighter than the one below becomes a longest increasing subsequence once you sort by height. And when overlaps are sparse, invert the index. Map each element to the documents containing it, then count pairs within those short lists, so only pairs that genuinely share something are ever touched.

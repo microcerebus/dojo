@@ -1,0 +1,7 @@
+Bit questions are lost on arithmetic slips, not on cleverness. So before anything else, be able to add, subtract and multiply four bit numbers on paper. When you get confused, work the same sum in base ten and copy the process across, because the process is identical.
+
+Two facts do most of the work. Shifting left by k multiplies by two to the k, and shifting right by k divides by it. So any question that takes away the multiply operator is telling you to shift.
+
+And not zero is a solid run of ones, so not zero shifted left by k gives ones on top and zeros below. That is the standard mask for clearing the bottom bits, and it is worth deriving rather than remembering.
+
+One last thing about complexity. When you loop over the bits of an integer, do not call the count n, because nobody can tell whether you mean the value or the width. Call it b. It costs you nothing and it removes the ambiguity for both of you.

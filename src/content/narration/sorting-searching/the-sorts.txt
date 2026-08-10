@@ -1,0 +1,11 @@
+Most sorting questions are a tweak of a standard algorithm, so when you are stuck, run down the list and ask which one the constraints are pointing at.
+
+Bubble and selection sort are quadratic. Know the names, and never propose them.
+
+Merge sort splits in half, sorts each half, and merges. It is n log n in every case and it is stable, and the price is a helper array, so it is never in place. One detail is worth being able to explain: when one side of a merge runs out, the leftovers on the left must be copied back, but leftovers on the right need no work at all, because they are already sitting in the right positions.
+
+Quicksort picks a pivot and partitions around it by swapping, so it needs no helper at all. It is n log n on average, but if the pivot is always an extreme value each partition peels off one element and it degrades to quadratic.
+
+Radix sort buckets by one digit at a time, and counting sort tallies occurrences when the range of values is small and known. Both are linear, and both get there by not comparing elements at all.
+
+That last point is the answer to a very common question. Sort a huge array of people by age. The array is large, so efficiency matters, and ages fall in a tiny known range. That is bucket sort, and it is linear.

@@ -1,0 +1,9 @@
+A cluster of these problems removes an operator or a construct and asks you to rebuild the behaviour. The move is always to find an expression that computes what a branch would otherwise decide.
+
+Swapping without a temporary works with XOR, because XOR is its own inverse. It also works with addition and subtraction. Both break when the two operands are the same variable, because the value zeroes itself out. Mention that, then use a temporary in real code.
+
+Maximum without a comparison: take the sign bit of a minus b, shift it down to zero or one, and use it to select between the two values arithmetically. The trap is that a minus b can overflow, which you fix by also inspecting the signs of the operands.
+
+Trailing zeros in n factorial: do not compute the factorial. A zero needs a factor of ten, twos are far more plentiful than fives, so count the fives. n over five, plus n over twenty five, plus n over one hundred and twenty five, because twenty five contributes two of them.
+
+And here is the habit worth stealing. Building a board from exactly K planks of two lengths looks like two to the K possibilities, but the length depends only on how many of each you used, so there are at most K plus one distinct answers. Noticing that a huge search space collapses to a small set of outcomes is worth more than any single trick.

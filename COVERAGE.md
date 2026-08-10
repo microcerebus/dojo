@@ -9,8 +9,8 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | | Count |
 |---|---:|
 | Modules | 27 |
-| Fully written (lesson + animations + audio + quiz + drills) | 22 |
-| Structured outline (concepts + drills, content coming) | 5 |
+| Fully written (lesson + animations + audio + quiz + drills) | 27 |
+| Structured outline (concepts + drills, content coming) | 0 |
 | Book questions indexed | 189 |
 | Questions with a LeetCode equivalent | 115 |
 | Questions that are book-only | 74 |
@@ -26,15 +26,15 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | Chapter 3 | Stacks & Queues `stacks-queues` | Core DSA | Complete | 7 | 11 |
 | Chapter 4 | Trees & Graphs `trees-graphs` | Core DSA | Complete | 16 | 32 |
 | Chapter 4 (heaps and tries) | Heaps & Tries `heaps-tries` | Core DSA | Complete | 7 | 15 |
-| Chapter 8 | Recursion, Backtracking & DP `recursion-dp` | Core DSA | Outline | 21 | 32 |
-| Chapter 10 | Sorting & Searching `sorting-searching` | Core DSA | Outline | 13 | 23 |
-| Chapter 5 | Bit Manipulation `bit-manipulation` | Core DSA | Outline | 13 | 13 |
+| Chapter 8 | Recursion, Backtracking & DP `recursion-dp` | Core DSA | Complete | 21 | 32 |
+| Chapter 10 | Sorting & Searching `sorting-searching` | Core DSA | Complete | 13 | 23 |
+| Chapter 5 | Bit Manipulation `bit-manipulation` | Core DSA | Complete | 13 | 13 |
 | Part VI | Big O `big-o` | Techniques | Complete | 0 | 5 |
 | Part VII | The technical-question method `technical-questions` | Techniques | Complete | 0 | 6 |
 | Chapter 6 | Math & Logic Puzzles `math-logic` | Techniques | Complete | 18 | 16 |
 | Chapter 11 | Testing `testing` | Techniques | Complete | 6 | 7 |
-| Chapter 16 | Moderate Mixed Review `moderate` | Techniques | Outline | 7 | 10 |
-| Chapter 17 | Hard Mixed Review `hard` | Techniques | Outline | 1 | 8 |
+| Chapter 16 | Moderate Mixed Review `moderate` | Techniques | Complete | 7 | 10 |
+| Chapter 17 | Hard Mixed Review `hard` | Techniques | Complete | 1 | 8 |
 | Part XI | Advanced Topics `advanced-topics` | Techniques | Complete | 0 | 7 |
 | Chapter 7 | Object-Oriented Design `ood` | Design | Complete | 12 | 9 |
 | Chapter 9 | System Design & Scalability `system-design` | Design | Complete | 8 | 7 |
@@ -455,24 +455,21 @@ Each problem appears in exactly one module drill list.
 
 ### Recursion, Backtracking & DP `recursion-dp`
 
-- Source: Chapter 8 · Track: Core DSA · Status: Outline
+- Source: Chapter 8 · Track: Core DSA · Status: Complete
 - Design the recursive case, then decide whether to memoise it, tabulate it, or prune it with backtracking.
-- Concepts listed: 19 · Lesson sections: 0 · Quiz questions: 0 · Drills: 32
-- Planned animations: 5
+- Concepts listed: 19 · Lesson sections: 8 · Quiz questions: 10 · Drills: 32
 
 ### Sorting & Searching `sorting-searching`
 
-- Source: Chapter 10 · Track: Core DSA · Status: Outline
+- Source: Chapter 10 · Track: Core DSA · Status: Complete
 - The sorts worth knowing, binary search on things that are not quite sorted, and searching data that will not fit in memory.
-- Concepts listed: 18 · Lesson sections: 0 · Quiz questions: 0 · Drills: 23
-- Planned animations: 5
+- Concepts listed: 18 · Lesson sections: 7 · Quiz questions: 10 · Drills: 23
 
 ### Bit Manipulation `bit-manipulation`
 
-- Source: Chapter 5 · Track: Core DSA · Status: Outline
+- Source: Chapter 5 · Track: Core DSA · Status: Complete
 - Masks, shifts and two's complement - plus the handful of tricks that turn arithmetic problems into one-liners.
-- Concepts listed: 13 · Lesson sections: 0 · Quiz questions: 0 · Drills: 13
-- Planned animations: 5
+- Concepts listed: 13 · Lesson sections: 7 · Quiz questions: 10 · Drills: 13
 
 ### Big O `big-o`
 
@@ -500,17 +497,15 @@ Each problem appears in exactly one module drill list.
 
 ### Moderate Mixed Review `moderate`
 
-- Source: Chapter 16 · Track: Techniques · Status: Outline
+- Source: Chapter 16 · Track: Techniques · Status: Complete
 - Twenty-six problems with the technique label removed. The skill being tested is recognition.
-- Concepts listed: 13 · Lesson sections: 0 · Quiz questions: 0 · Drills: 10
-- Planned animations: 4
+- Concepts listed: 13 · Lesson sections: 6 · Quiz questions: 10 · Drills: 10
 
 ### Hard Mixed Review `hard`
 
-- Source: Chapter 17 · Track: Techniques · Status: Outline
+- Source: Chapter 17 · Track: Techniques · Status: Complete
 - Twenty-six problems that combine two or three techniques. The goal is to derive and defend, not to recall.
-- Concepts listed: 15 · Lesson sections: 0 · Quiz questions: 0 · Drills: 8
-- Planned animations: 4
+- Concepts listed: 15 · Lesson sections: 6 · Quiz questions: 10 · Drills: 8
 
 ### Advanced Topics `advanced-topics`
 
