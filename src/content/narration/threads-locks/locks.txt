@@ -1,0 +1,9 @@
+Synchronized on a method means: while a thread is inside it, no other thread may enter any synchronized method on the same object. The lock belongs to the instance, not to the method.
+
+So: two threads, same instance, both calling the same synchronized method? One waits. Two threads on different instances? Both run, because those are two different locks. And one thread inside a synchronized method while another runs an unsynchronized method on the same object? Yes, always. The unsynchronized one never asks for the lock, so nothing stops it.
+
+That last case is the one people get wrong, and it matters. A lock is a convention, not a fence. It only protects state if every path that touches that state takes the same lock. One unsynchronized accessor is enough to reintroduce the race you thought you removed.
+
+A static synchronized method locks the class, not an instance.
+
+A monitor is a lock plus a waiting room. Wait releases the lock and parks the thread; notify wakes it. Always call wait inside a while loop rechecking the condition, never an if, because waking up means the condition may have changed, not that it holds.

@@ -1,0 +1,7 @@
+It is not common to be asked to implement a threaded algorithm. It is very common to be asked whether you understand threads, and above all, deadlock.
+
+A process has its own address space and cannot touch another process's memory, so communication between processes is explicit and slower: pipes, sockets, files. A thread lives inside a process and shares its heap, while keeping its own stack and registers. When one thread modifies shared state, sibling threads see it immediately. That is the feature, and it is the bug.
+
+Because increment is not atomic. It is three operations: read the value, add one, write it back. Two threads can interleave anywhere between them. Both read zero, both add one, both write one. Two increments happened and the counter reads one. Nothing crashed, nothing warned, and on most runs the interleaving never happens at all.
+
+Three guarantees, and you can lose them independently. Atomicity: an operation completes without another thread getting between its parts. Visibility: a write by one thread is actually seen by another. Ordering: operations appear to happen in program order. A lock gives you all three. Volatile gives you only visibility.

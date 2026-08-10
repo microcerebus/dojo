@@ -1,0 +1,9 @@
+A pointer holds an address. A reference is an alias for an existing object: it has no storage of its own, it cannot be null, and it cannot be re-seated after it binds. That is the whole difference. Use a pointer when nothing is a legal value, or when you need arithmetic.
+
+And pointer arithmetic scales by type. Incrementing an int pointer advances by the size of an int, not one byte. That is what makes p of i and star p plus i the same expression.
+
+Stack objects are freed when the scope ends. Heap objects live until you free them, and you must. New and delete run constructors and destructors; malloc and free do not. Never cross them.
+
+Then ownership, which is the real subject. A shallow copy duplicates member values, so a pointer member ends up shared. One buffer, two owners, two destructors. The first free leaves the other with a dangling pointer; the second free corrupts the allocator. A deep copy allocates a new buffer and copies the contents, so each object owns exactly one block.
+
+If a class manages a resource, the copy constructor, the assignment operator and the destructor all have to agree. Write one and forget the others and the compiler's shallow copy sneaks back in.

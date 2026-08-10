@@ -9,8 +9,8 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | | Count |
 |---|---:|
 | Modules | 27 |
-| Fully written (lesson + animations + audio + quiz + drills) | 7 |
-| Structured outline (concepts + drills, content coming) | 20 |
+| Fully written (lesson + animations + audio + quiz + drills) | 13 |
+| Structured outline (concepts + drills, content coming) | 14 |
 | Book questions indexed | 189 |
 | Questions with a LeetCode equivalent | 115 |
 | Questions that are book-only | 74 |
@@ -36,18 +36,18 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | Chapter 16 | Moderate Mixed Review `moderate` | Techniques | Outline | 7 | 10 |
 | Chapter 17 | Hard Mixed Review `hard` | Techniques | Outline | 1 | 8 |
 | Part XI | Advanced Topics `advanced-topics` | Techniques | Outline | 0 | 7 |
-| Chapter 7 | Object-Oriented Design `ood` | Design | Outline | 12 | 9 |
-| Chapter 9 | System Design & Scalability `system-design` | Design | Outline | 8 | 7 |
+| Chapter 7 | Object-Oriented Design `ood` | Design | Complete | 12 | 9 |
+| Chapter 9 | System Design & Scalability `system-design` | Design | Complete | 8 | 7 |
 | Part I | The Interview Process `interview-process` | Process | Outline | 0 | 2 |
 | Part II | Behind the Scenes `behind-the-scenes` | Process | Outline | 0 | 2 |
 | Part III | Special Situations `special-situations` | Process | Outline | 0 | 2 |
 | Part IV | Before the Interview `before-the-interview` | Process | Outline | 0 | 3 |
 | Part V | Behavioural Questions `behavioral` | Process | Outline | 0 | 4 |
 | Part VIII | The Offer & Beyond `offer-and-beyond` | Process | Outline | 0 | 3 |
-| Chapter 12 | C and C++ `c-cpp` | Reference | Outline | 11 | 5 |
-| Chapter 13 | Java `java` | Reference | Outline | 8 | 4 |
-| Chapter 14 | Databases `databases` | Reference | Outline | 7 | 9 |
-| Chapter 15 | Threads and Locks `threads-locks` | Reference | Outline | 7 | 7 |
+| Chapter 12 | C and C++ `c-cpp` | Reference | Complete | 11 | 5 |
+| Chapter 13 | Java `java` | Reference | Complete | 8 | 4 |
+| Chapter 14 | Databases `databases` | Reference | Complete | 7 | 9 |
+| Chapter 15 | Threads and Locks `threads-locks` | Reference | Complete | 7 | 7 |
 
 "Questions" counts the book questions whose *technique* this module teaches. For chapters 16 and 17 the book deliberately hides the technique, so those questions point at the module that teaches the tool they need rather than at the mixed-review module itself.
 
@@ -523,17 +523,15 @@ Each problem appears in exactly one module drill list.
 
 ### Object-Oriented Design `ood`
 
-- Source: Chapter 7 · Track: Design · Status: Outline
+- Source: Chapter 7 · Track: Design · Status: Complete
 - Turn a vague noun ("design a parking lot") into objects, responsibilities and relationships, without over-engineering.
-- Concepts listed: 14 · Lesson sections: 0 · Quiz questions: 0 · Drills: 7 · Practice tasks: 2
-- Planned animations: 3
+- Concepts listed: 14 · Lesson sections: 5 · Quiz questions: 10 · Drills: 7 · Practice tasks: 2
 
 ### System Design & Scalability `system-design`
 
-- Source: Chapter 9 · Track: Design · Status: Outline
+- Source: Chapter 9 · Track: Design · Status: Complete
 - A structured conversation: scope, estimate, sketch the data flow, find the bottleneck, then trade off deliberately.
-- Concepts listed: 20 · Lesson sections: 0 · Quiz questions: 0 · Drills: 5 · Practice tasks: 2
-- Planned animations: 4
+- Concepts listed: 20 · Lesson sections: 5 · Quiz questions: 10 · Drills: 5 · Practice tasks: 2
 
 ### The Interview Process `interview-process`
 
@@ -579,29 +577,25 @@ Each problem appears in exactly one module drill list.
 
 ### C and C++ `c-cpp`
 
-- Source: Chapter 12 · Track: Reference · Status: Outline
+- Source: Chapter 12 · Track: Reference · Status: Complete
 - Reference track. Memory ownership, virtual dispatch and pointer semantics - skim unless a role asks for systems work.
-- Concepts listed: 16 · Lesson sections: 0 · Quiz questions: 0 · Drills: 3 · Practice tasks: 2
-- Planned animations: 4
+- Concepts listed: 16 · Lesson sections: 4 · Quiz questions: 10 · Drills: 3 · Practice tasks: 2
 
 ### Java `java`
 
-- Source: Chapter 13 · Track: Reference · Status: Outline
+- Source: Chapter 13 · Track: Reference · Status: Complete
 - Reference track. Language-model questions with precise answers - worth an hour even if you never write Java, because the collection tradeoffs are universal.
-- Concepts listed: 12 · Lesson sections: 0 · Quiz questions: 0 · Drills: 2 · Practice tasks: 2
-- Planned animations: 3
+- Concepts listed: 12 · Lesson sections: 3 · Quiz questions: 10 · Drills: 2 · Practice tasks: 2
 
 ### Databases `databases`
 
-- Source: Chapter 14 · Track: Reference · Status: Outline
+- Source: Chapter 14 · Track: Reference · Status: Complete
 - Reference track, but high value: joins, normalisation and schema design come up in product-engineering interviews constantly.
-- Concepts listed: 16 · Lesson sections: 0 · Quiz questions: 0 · Drills: 7 · Practice tasks: 2
-- Planned animations: 4
+- Concepts listed: 16 · Lesson sections: 4 · Quiz questions: 10 · Drills: 7 · Practice tasks: 2
 
 ### Threads and Locks `threads-locks`
 
-- Source: Chapter 15 · Track: Reference · Status: Outline
+- Source: Chapter 15 · Track: Reference · Status: Complete
 - Reference track. The book is Java-specific, but races, deadlock and ordering guarantees are the same everywhere - including async JavaScript.
-- Concepts listed: 16 · Lesson sections: 0 · Quiz questions: 0 · Drills: 5 · Practice tasks: 2
-- Planned animations: 4
+- Concepts listed: 16 · Lesson sections: 4 · Quiz questions: 10 · Drills: 5 · Practice tasks: 2
 

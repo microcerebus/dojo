@@ -1,0 +1,9 @@
+SQL is written in one order and evaluated in another, and almost every confusing error comes from that gap.
+
+The engine starts with FROM and the joins, assembling the rows. Then WHERE throws away rows, before any grouping exists. Then GROUP BY collapses what survives into groups. Then HAVING throws away groups, and because it runs after grouping it is the only one that can use an aggregate. Then SELECT computes the output columns. Then ORDER BY and LIMIT.
+
+So: tenants renting more than one apartment is a group condition. Having count greater than one, because the count does not exist until the grouping has happened.
+
+The rule people trip on: everything in SELECT must be either an aggregate or listed in GROUP BY. Group by student id and select the student name and it is rejected, because the engine has a group of rows and no instruction for which name to pick.
+
+And aggregates and null. Count star counts rows; count of a column counts non null values. Sum, average, min and max all skip nulls. An aggregate over zero rows returns null, not zero, which is exactly what second highest salary is testing.

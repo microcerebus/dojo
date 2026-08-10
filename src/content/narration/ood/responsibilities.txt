@@ -1,0 +1,9 @@
+Once the relationships are drawn, the interesting question is who owns each decision. The default answer: the object that owns the data owns the rule.
+
+A level knows its own rows, so finding five consecutive large spots is a level method, and the parking lot just asks each level in turn. A board knows where the pieces are, so flipping captured pieces is a board method, while the game owns turns, timing and who won.
+
+The commonest failure is one class that does everything. Split it, even when the split looks like ceremony, because by the time that class is eight hundred lines it is the only thing keeping it readable.
+
+The second commonest failure is modelling status as a pile of booleans. Three booleans have eight combinations and half of them are contradictions you now have to defend in every branch. Use an enum plus a table of legal transitions, applied in one guarded method. Free, reserved, occupied, out of service. The same shape covers a chat message, an order, and a phone call.
+
+And design for the change the interviewer actually mentions, not for every change you can imagine.

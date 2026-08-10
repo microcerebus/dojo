@@ -49,13 +49,20 @@ function resolveRunner() {
   return null;
 }
 
+/**
+ * Every narration script in the repo, regardless of the module filter.
+ *
+ * The filter narrows what gets *synthesised*; it must never narrow the
+ * manifest, which describes everything that is committed. Filtering here was
+ * how `pnpm gen:audio one-module` used to silently drop every other module's
+ * clips from the manifest.
+ */
 function collectClips() {
   if (!existsSync(SCRIPT_DIR)) return [];
   const clips = [];
   for (const moduleId of readdirSync(SCRIPT_DIR).sort()) {
     const moduleDir = join(SCRIPT_DIR, moduleId);
     if (!statSync(moduleDir).isDirectory()) continue;
-    if (only.length > 0 && !only.includes(moduleId)) continue;
     for (const file of readdirSync(moduleDir).sort()) {
       if (!file.endsWith('.txt')) continue;
       clips.push({
@@ -152,8 +159,15 @@ if (clips.length === 0) {
   process.exit(1);
 }
 
-const stale = clips.filter(isStale);
-console.log(`${clips.length} narration scripts, ${stale.length} to (re)generate.`);
+/** What this run may synthesise. The manifest still covers `clips`. */
+const selected = only.length > 0 ? clips.filter((clip) => only.includes(clip.moduleId)) : clips;
+if (only.length > 0 && selected.length === 0) {
+  console.error(`No narration scripts for: ${only.join(', ')}`);
+  process.exit(1);
+}
+
+const stale = selected.filter(isStale);
+console.log(`${selected.length} narration scripts, ${stale.length} to (re)generate.`);
 
 if (stale.length > 0) {
   const runner = resolveRunner();
@@ -186,7 +200,12 @@ console.log(`Done. ${manifest.length} clips, ${totalKb} KB total.`);
 
 const missing = clips.filter((clip) => !existsSync(clip.outPath));
 if (missing.length > 0) {
+  // Anything this run was responsible for is a hard failure. A gap in another
+  // module is still worth shouting about - it means the manifest, and so the
+  // precache, is short - but it is not this run's job to fix.
+  const ours = missing.filter((clip) => selected.includes(clip));
   console.error(`Missing ${missing.length} clips:`);
   for (const clip of missing) console.error(`  - ${clip.moduleId}/${clip.sectionId}`);
-  process.exit(1);
+  if (ours.length > 0) process.exit(1);
+  console.error('Run `pnpm gen:audio` with no arguments to fill the gaps.');
 }

@@ -1,0 +1,7 @@
+Designing a database is the object design method with tables instead of classes. Handle the ambiguity, define the core objects, analyse the relationships, walk the actions through.
+
+One to many is a foreign key on the many side. Many to many always needs a third table holding both keys, and that junction table is the natural home for anything belonging to the pairing itself, like a lease start date. Is a becomes a shared key plus a table of the extra attributes.
+
+That is the entity relationship question. Companies, people and professionals. A professional is a person with extra attributes, and works for one company while a company hires many. The detail worth spotting is that the relationship itself has attributes: start date and salary belong to the employment, not to the person and not to the company.
+
+Normalisation stores each fact once, so it cannot contradict itself, and you pay in joins on read. Denormalisation copies the field to avoid the join, and you pay on every write, in storage, and in the risk that copies disagree. Anything at real scale uses both. The wrong answer is, it depends. The right one is, here, and here is what it costs me.

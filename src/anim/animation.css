@@ -533,6 +533,40 @@
   transition: all 0.2s ease;
 }
 
+/* Chips outside a bucket: a wrapping row for word-length labels, which a
+   fixed-size `viz__cell` would clip. */
+.viz__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.viz__chips .viz__chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.viz__chip em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+/* Inside a tinted state the sub-label has to stay readable against it. */
+.viz__chip.is-active em,
+.viz__chip.is-compare em,
+.viz__chip.is-done em,
+.viz__chip.is-bad em,
+.viz__chip.is-target em {
+  color: inherit;
+  opacity: 0.75;
+}
+
 /* bars ------------------------------------------------------------------- */
 
 .viz__bars {

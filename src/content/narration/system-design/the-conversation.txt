@@ -1,0 +1,7 @@
+Scalability questions look intimidating and are often the easiest thing in the loop. There is no trick, no hidden algorithm, no memorised answer. The question is: your manager asks you to design this. What do you actually do?
+
+Five steps. Scope the problem: what exactly are we building, and what are we not building. Make reasonable assumptions: a million new links a day is reasonable, a hundred users a day is not. Draw the major components and walk one request end to end, deliberately ignoring scale. Identify the key issues: where does this break first. Then redesign for those issues.
+
+How you behave matters as much as the boxes. Drive the conversation, because silence reads as being stuck. Go broad before deep. And when the interviewer interrupts with a concern, that is a hint. Validate it and change the design. Brushing it off is the worst possible response.
+
+There is no perfect system. Two strong candidates can produce very different designs and both be excellent under different assumptions. What is assessed is whether you can scope, assume sensibly, design against those assumptions, and name your own design's weaknesses.

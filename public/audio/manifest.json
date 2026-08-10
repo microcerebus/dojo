@@ -81,6 +81,54 @@
       "bytes": 375840
     },
     {
+      "moduleId": "c-cpp",
+      "sectionId": "classes",
+      "path": "audio/c-cpp/classes.mp3",
+      "bytes": 497952
+    },
+    {
+      "moduleId": "c-cpp",
+      "sectionId": "memory",
+      "path": "audio/c-cpp/memory.mp3",
+      "bytes": 494352
+    },
+    {
+      "moduleId": "c-cpp",
+      "sectionId": "questions",
+      "path": "audio/c-cpp/questions.mp3",
+      "bytes": 459360
+    },
+    {
+      "moduleId": "c-cpp",
+      "sectionId": "templates-volatile",
+      "path": "audio/c-cpp/templates-volatile.mp3",
+      "bytes": 491472
+    },
+    {
+      "moduleId": "databases",
+      "sectionId": "joins",
+      "path": "audio/databases/joins.mp3",
+      "bytes": 452880
+    },
+    {
+      "moduleId": "databases",
+      "sectionId": "performance",
+      "path": "audio/databases/performance.mp3",
+      "bytes": 501120
+    },
+    {
+      "moduleId": "databases",
+      "sectionId": "querying",
+      "path": "audio/databases/querying.mp3",
+      "bytes": 443664
+    },
+    {
+      "moduleId": "databases",
+      "sectionId": "schema",
+      "path": "audio/databases/schema.mp3",
+      "bytes": 461232
+    },
+    {
       "moduleId": "heaps-tries",
       "sectionId": "heap-operations",
       "path": "audio/heaps-tries/heap-operations.mp3",
@@ -109,6 +157,24 @@
       "sectionId": "tries",
       "path": "audio/heaps-tries/tries.mp3",
       "bytes": 400032
+    },
+    {
+      "moduleId": "java",
+      "sectionId": "generics-collections",
+      "path": "audio/java/generics-collections.mp3",
+      "bytes": 471024
+    },
+    {
+      "moduleId": "java",
+      "sectionId": "language-model",
+      "path": "audio/java/language-model.mp3",
+      "bytes": 472608
+    },
+    {
+      "moduleId": "java",
+      "sectionId": "reflection-lambdas",
+      "path": "audio/java/reflection-lambdas.mp3",
+      "bytes": 487152
     },
     {
       "moduleId": "linked-lists",
@@ -147,6 +213,36 @@
       "bytes": 342144
     },
     {
+      "moduleId": "ood",
+      "sectionId": "patterns",
+      "path": "audio/ood/patterns.mp3",
+      "bytes": 473040
+    },
+    {
+      "moduleId": "ood",
+      "sectionId": "relationships",
+      "path": "audio/ood/relationships.mp3",
+      "bytes": 487296
+    },
+    {
+      "moduleId": "ood",
+      "sectionId": "responsibilities",
+      "path": "audio/ood/responsibilities.mp3",
+      "bytes": 433872
+    },
+    {
+      "moduleId": "ood",
+      "sectionId": "the-method",
+      "path": "audio/ood/the-method.mp3",
+      "bytes": 470592
+    },
+    {
+      "moduleId": "ood",
+      "sectionId": "worked",
+      "path": "audio/ood/worked.mp3",
+      "bytes": 456624
+    },
+    {
       "moduleId": "stacks-queues",
       "sectionId": "both-structures",
       "path": "audio/stacks-queues/both-structures.mp3",
@@ -169,6 +265,36 @@
       "sectionId": "sorting-and-monotonic",
       "path": "audio/stacks-queues/sorting-and-monotonic.mp3",
       "bytes": 399312
+    },
+    {
+      "moduleId": "system-design",
+      "sectionId": "at-scale",
+      "path": "audio/system-design/at-scale.mp3",
+      "bytes": 465984
+    },
+    {
+      "moduleId": "system-design",
+      "sectionId": "building-blocks",
+      "path": "audio/system-design/building-blocks.mp3",
+      "bytes": 460080
+    },
+    {
+      "moduleId": "system-design",
+      "sectionId": "estimation",
+      "path": "audio/system-design/estimation.mp3",
+      "bytes": 475776
+    },
+    {
+      "moduleId": "system-design",
+      "sectionId": "the-conversation",
+      "path": "audio/system-design/the-conversation.mp3",
+      "bytes": 459792
+    },
+    {
+      "moduleId": "system-design",
+      "sectionId": "the-data",
+      "path": "audio/system-design/the-data.mp3",
+      "bytes": 479232
     },
     {
       "moduleId": "technical-questions",
@@ -211,6 +337,30 @@
       "sectionId": "the-loop",
       "path": "audio/technical-questions/the-loop.mp3",
       "bytes": 322704
+    },
+    {
+      "moduleId": "threads-locks",
+      "sectionId": "coordination",
+      "path": "audio/threads-locks/coordination.mp3",
+      "bytes": 478224
+    },
+    {
+      "moduleId": "threads-locks",
+      "sectionId": "deadlock",
+      "path": "audio/threads-locks/deadlock.mp3",
+      "bytes": 465264
+    },
+    {
+      "moduleId": "threads-locks",
+      "sectionId": "locks",
+      "path": "audio/threads-locks/locks.mp3",
+      "bytes": 462096
+    },
+    {
+      "moduleId": "threads-locks",
+      "sectionId": "threads-and-races",
+      "path": "audio/threads-locks/threads-and-races.mp3",
+      "bytes": 490464
     },
     {
       "moduleId": "trees-graphs",

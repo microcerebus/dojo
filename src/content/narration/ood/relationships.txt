@@ -1,0 +1,9 @@
+Once the objects exist, the design is the relationships between them. Is a, has one, has many, and many to many, which needs a third object to own the pairing.
+
+Inheritance is the one people over-reach with. It buys you exactly one axis of variation. Car, bus and motorcycle under vehicle looks perfect, right up until a second axis arrives. Some vehicles are electric. Now a hierarchy has to multiply out every combination, and the axis after that doubles it again. Composition just adds a field.
+
+Here is the test to say out loud. Is a must hold forever and under substitution: a bus is a vehicle, always, and anywhere a vehicle is accepted a bus is fine. Has a survives change: this vehicle is electric today. If the trait can change during the object's life, it is a field, not a subclass.
+
+Two rulings from this chapter are worth quoting because they show restraint. Parking spots do not need subclasses; they behave identically and differ only in size. And an Othello piece does not need a black class and a white class, because a piece keeps its identity when it flips.
+
+Where inheritance does earn its place, prefer an abstract base nobody can instantiate.

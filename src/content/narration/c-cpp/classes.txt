@@ -1,0 +1,9 @@
+C++ starts from C and adds classes. Two defaults surprise people: members are private by default in a class, and inheritance is written with its access level.
+
+A constructor runs on creation. Prefer the initialiser list form over assigning in the body, because it initialises the member before the body runs, and it is the only option for const members. A destructor runs on destruction and releases whatever the object owns. Through a hierarchy, construction runs base first and destruction runs derived first, the exact reverse.
+
+Now the part that gets asked. Take a base class pointer holding a derived object. Without the virtual keyword, the compiler resolves the call at compile time from the declared type alone, so the base implementation runs. That is static binding.
+
+Mark the function virtual and the compiler builds a vtable per class, an array of function pointers, and gives every object a hidden pointer to its own class's table. The call reads that pointer, indexes the table and jumps. One indirection, and the most derived implementation always wins.
+
+Which is exactly why a polymorphic base needs a virtual destructor. Otherwise deleting through a base pointer destroys only the base half, and the rest leaks. Silently.

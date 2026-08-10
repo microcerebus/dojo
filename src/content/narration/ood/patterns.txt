@@ -1,0 +1,9 @@
+Interviews test capability, not vocabulary, so most design patterns are out of scope. Two come up constantly anyway, and both come with an argument attached.
+
+A singleton ensures one instance, reachable from anywhere. Plenty of engineers call it an anti-pattern, and the objection is concrete: it is global mutable state under a nicer name. Nothing in a signature says a function depends on it, so coupling hides. Tests cannot get a fresh one, so state leaks between them. And it silently forbids ever having two. The answer that scores is: I would make game a singleton for convenience, but it means we can never run two games in one process. Is that acceptable?
+
+A factory keeps the decision of which subclass in exactly one place. Either an abstract creator whose subclasses decide, or a concrete one that takes a parameter and switches. Say which you picked.
+
+Three more are worth one sentence each. Observer, for pushing changes to interested parties. Strategy, for swapping an algorithm behind a stable interface. State, for behaviour that changes with status.
+
+The trap is treating the question as, which pattern is this? Design what the problem needs.

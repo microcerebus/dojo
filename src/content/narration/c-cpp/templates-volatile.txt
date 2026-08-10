@@ -1,0 +1,7 @@
+Templates reuse code across types, and the compiler instantiates a fresh copy for each type argument at compile time. The consequence that gets asked about: my class of foo and my class of bar are genuinely different types with separate static members, because the compiler generated two separate classes. Java generics do the opposite. One class, type argument erased.
+
+Volatile tells the compiler that a variable can change from outside the program's control: hardware, the operating system, another thread. So it must reload the value from memory on every read rather than caching it in a register. Without it, a loop waiting on a flag can legally be optimised into an infinite loop, because nothing in the code changes the flag.
+
+But volatile is not a threading primitive. It suppresses one optimisation. It gives you no atomicity and no ordering, so incrementing a volatile counter still races. That is a read, an add and a write. Saying that unprompted is what separates a good answer from a memorised one.
+
+Alignment is the last piece. To return an address divisible by a power of two, over allocate by alignment minus one, round up by clearing the low bits, and stash the original pointer just before the aligned one so free can recover it.

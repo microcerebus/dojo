@@ -1,0 +1,9 @@
+Four more answers worth having ready.
+
+Reversing a null terminated string in place. Walk to the terminator, then step back one, because end stops on the null and swapping from there moves the terminator into the middle of the string. Then swap inward until the pointers meet. Check for a null pointer too.
+
+Printing the last K lines of a file. The naive answer reads the file twice. One pass is enough with a circular buffer of K strings: write each line at size modulo K, overwriting the oldest, then print K entries starting from there. Only K lines are ever in memory, however large the file.
+
+Deep copying a node graph where each node has two arbitrary pointers. The structure can contain cycles and shared nodes, so keep a map from original to copy, record each node in the map before recursing, and return the existing copy on a second visit. The map is the visited set of a depth first traversal.
+
+And hash table versus map. A hash table is an array of linked lists with constant time average lookup and no ordering. A map is a balanced binary search tree: log n, guaranteed, and sorted. For small inputs, just use the tree.
