@@ -39,6 +39,11 @@ shell, the manifest, the icons, the fonts or any narration MP3.
   un-checking a drill impossible.
 - **Progress must stay out of the Cache API.** It lives in localStorage precisely so clearing cached
   assets cannot erase it. There is a test asserting the store never calls `caches`.
+- **Audio playback rate is a separate localStorage key (`dojo:audio-rate`, `src/lib/audioRate.ts`),
+  not part of the progress document.** It is a single scalar preference with no merge concerns, so it
+  intentionally does not go through `progressStore`/`mergeProgress`. `audioMachine`'s `skip` and
+  `setRate` events follow the same reducer-returns-a-command pattern as `press` - element mutations
+  (seek, playback rate) must come from a dispatched command, never bolted on beside it.
 - **Dates must use local time, not UTC.** `src/data/sprint.ts` exports `localIsoDate` for this;
   `toISOString().slice(0,10)` reports yesterday for early-morning local times east of UTC.
 - **`vite-node` runs the TS scripts** (`scripts/gen-coverage.ts`). Plain `node` cannot resolve this
