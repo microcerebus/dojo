@@ -1,0 +1,7 @@
+Preparation is not just interview questions. A realistic plan runs four tracks at once: build things, learn the fundamentals, practise problems properly, and research your targets.
+
+The core principle is deliberate practice over volume. Fifteen problems worked end to end, clarifying, drawing an example, stating a brute force, optimising, coding on paper, and testing out loud, are worth more than a hundred solutions you read and nodded at.
+
+Learn big O properly first, because everything downstream depends on it and it is the most common gap in people who learned to program on the job. Implement the core data structures from scratch once. Practise on the real medium, with no autocomplete and no test runner. Keep a list of your mistakes rather than your solved problems. And revisit every topic in a later week, because a topic learned once in week one is gone by week five.
+
+Do not save the mock interviews for the end. A mock in week two is uncomfortable and extremely useful, because it tells you what to fix while there is still time. A mock in the final week only tells you what you should have fixed.

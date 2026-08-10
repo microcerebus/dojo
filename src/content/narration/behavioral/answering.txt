@@ -1,0 +1,7 @@
+Open with a nugget: one sentence saying what the story is about. It grabs attention, and it forces you to know your own point before you start talking.
+
+Then situation, action, result, with most of the time on the action. Almost everyone inverts this: a long wander through the setup, a quick summary of what happened, and almost nothing about what they personally did. The interviewer comes away knowing about a project and nothing about you.
+
+Two habits fix most of it. First, be specific rather than modest or boastful. Not I did all the hard parts, but I owned the migration script and the rollback path. Give the facts and let the interviewer draw the flattering conclusion. Second, listen for how often you say we. This is the most common failure, especially for people in leadership roles who have been trained to credit their team. Say I for what you did and we for what the team did.
+
+Explore the action explicitly. I did three things, first, forces the depth interviewers are looking for. And afterwards, ask what the story says about you. If the honest answer is nothing, rework the telling or pick a different story.

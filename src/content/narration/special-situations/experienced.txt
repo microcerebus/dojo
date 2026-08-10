@@ -1,0 +1,7 @@
+The common hope is that algorithm questions are only for new graduates. They are not. If a company asks them of inexperienced candidates, it asks them of experienced ones too. Rightly or wrongly, those skills are believed to matter for every developer.
+
+The standard does not drop, either. Some interviewers go easier on experienced candidates, reasoning that it has been years since an algorithms class. Others go harder, reasoning that more years means more problems seen. On average it cancels out, so plan for the same bar.
+
+What genuinely changes is where the extra weight lands. System design and architecture, because students rarely encounter those outside a job, so your answers are judged against your experience level, and six years in means a vague answer is a bad answer. Your resume, where every line is fair game and the hardest bug you have faced should have a much better answer from you than from a graduate. And tradeoffs, because naming a technology is not the answer. Explaining what you gave up to choose it is.
+
+One warning. Never let the coding atrophy. Being out of practice is indistinguishable from being unable.

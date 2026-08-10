@@ -1,0 +1,7 @@
+At most large tech companies, algorithm and coding problems are the biggest part of the loop. They are problem solving questions: the interviewer wants to watch you handle something you have not seen before. You will usually get through exactly one of them in forty-five minutes.
+
+There is no scoresheet. Nobody awards points for using a hash map. Your interviewer forms a judgement across five areas, analysis, coding, computer science fundamentals, experience, and communication, and writes it up. A number may get attached at the end, but it summarises the judgement rather than computing it. And the weighting shifts with the round: a system design interview leans on analysis and experience and barely looks at syntax.
+
+The judgement is also relative. Your interviewer compares you against everyone they have ever asked that question, which has a useful consequence: a hard question is not bad luck, because it was hard for everyone.
+
+One more thing worth understanding. Companies accept that they reject good people. What they guard against is hiring someone who is not good. A false negative costs them one candidate. A false positive costs them years. That asymmetry explains most of the format.
