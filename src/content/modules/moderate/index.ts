@@ -1,0 +1,47 @@
+import type { CourseModule } from '../../types';
+
+export const moderate: CourseModule = {
+  id: 'moderate',
+  title: 'Moderate Mixed Review',
+  track: 'techniques',
+  status: 'outline',
+  source: 'Chapter 16',
+  summary:
+    'Twenty-six problems with the technique label removed. The skill being tested is recognition.',
+  estimatedMinutes: 120,
+  concepts: [
+    'Recognising the right tool when no chapter heading tells you what it is',
+    'Algebraic rearrangement and bit tricks in place of branching',
+    'Frequency maps, and precomputing when the same query repeats',
+    'Geometry: slopes, intersections, midpoints, and floating-point precision traps',
+    'Sweep line and delta counting instead of per-unit simulation',
+    'Sorted two-pointer scans across two collections',
+    'Maximum-subarray reasoning (Kadane) and its relatives',
+    'Minimal-window and smallest-disorder-range reasoning',
+    'Flood fill and grid simulation, including grids that grow',
+    'Rejection sampling for unbiased randomness',
+    'Hash map plus doubly linked list for O(1) LRU operations',
+    'Tokenisation and precedence-aware expression evaluation',
+    'Building a solution around a data structure the question never mentions',
+  ],
+  plannedAnimations: [
+    'The recognition drill: a problem statement, and the shortlist of techniques it should trigger',
+    'Sweep line over birth/death events, with the running count peaking',
+    'An LRU cache: map lookups plus list reordering on every access',
+    'Kadane running along an array, resetting when the prefix goes negative',
+  ],
+  sections: [],
+  quiz: [],
+  drills: [
+    { slug: 'lru-cache', note: 'CTCI 16.25 - map plus doubly linked list. Write it without a library.' },
+    { slug: 'shortest-unsorted-continuous-subarray', note: 'CTCI 16.16 - running max and min from both ends.' },
+    { slug: 'integer-to-english-words', note: 'CTCI 16.8 - pure decomposition and care.' },
+    { slug: 'max-points-on-a-line', note: 'CTCI 16.14 - hash by normalised slope.' },
+    { slug: 'game-of-life', note: 'Grid simulation, with the in-place encoding follow-up.' },
+    { slug: 'valid-tic-tac-toe-state', note: 'CTCI 16.4 - and discuss one-off vs repeated calls.' },
+    { slug: 'bulls-and-cows', note: 'CTCI 16.15 - exact matches first, then the rest by count.' },
+    { slug: 'word-pattern', note: 'CTCI 16.18 - a bijection needs both maps.' },
+    { slug: 'fair-candy-swap', note: 'CTCI 16.21 - the difference determines the pair.' },
+    { slug: 'top-k-frequent-words', note: 'CTCI 16.2 - precompute once, answer many queries.' },
+  ],
+};

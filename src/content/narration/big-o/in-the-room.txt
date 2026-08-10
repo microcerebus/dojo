@@ -1,0 +1,11 @@
+Six habits for saying complexity out loud in an interview.
+
+Name your variables first. Let n be the number of intervals and k the number of queries. Never let one letter mean two things.
+
+Count the innermost operation, including hidden costs. In JavaScript, array dot includes is linear, so inside a loop it is quadratic. String plus equals in a loop copies everything each time, also quadratic. Array dot shift is linear. Spreading an array inside a loop is quadratic. A Set or a Map is usually the fix.
+
+Combine: add sequential phases, multiply nested ones. Then reduce by dropping constants and dominated terms.
+
+State time and space separately, and say what the space is used by.
+
+Finally, sanity check against what the code means, and against the best conceivable runtime. Complexity is not a report you file at the end. Knowing you are quadratic when linear is possible is exactly what tells you to keep optimising.

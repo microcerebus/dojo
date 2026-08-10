@@ -1,0 +1,9 @@
+In JavaScript, Java, Python and C sharp, strings are immutable. Every concatenation allocates a new string and copies both sides into it.
+
+So concatenating n pieces in a loop copies the first piece, then the first two, then the first three, and so on. That is quadratic in the number of characters copied, even though the code looks like a single loop.
+
+The fix is a builder. Push the pieces into an array and join once at the end. That is linear.
+
+The same reasoning applies to in-place character work. If you need to mutate a string, convert to an array of characters once, mutate the array, and join at the end.
+
+And mention it out loud. Saying, I am building with an array so the concatenation does not go quadratic, is a cheap and very visible complexity point that interviewers notice.

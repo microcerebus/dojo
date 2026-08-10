@@ -1,0 +1,9 @@
+A linked list trades random access for constant time structural edits. That is the whole tradeoff.
+
+Reaching the kth element costs k steps, because there is no index arithmetic, only pointers. But inserting or deleting at the front, or at a node you already hold, is constant, where an array would have to shift everything.
+
+So if a problem never edits the structure, an array is almost certainly the better answer.
+
+In interviews you usually get a bare node with a next field and no wrapper class, and you refer to the list by its head. That matters. If the operation can change the head, by deleting the first node or prepending, you must return the new head, because a caller holding the old one is now looking at the wrong list.
+
+And always ask four things. Singly or doubly linked. Is there a tail pointer. Can the list be empty. Are the values unique. Each answer changes the code.

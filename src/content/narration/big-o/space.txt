@@ -1,0 +1,9 @@
+Space complexity is the same idea applied to memory, and usually the question is about auxiliary space, meaning extra memory beyond the input.
+
+The part people forget is that recursion costs stack space. Every pending call is a real frame holding real memory.
+
+Here is the distinction that matters. A function that recurses n deep, like summing n down to zero, is O of n time and O of n space, because n frames are alive at once. But a loop that makes n calls one after another is O of n time and O of one space, because only one call exists at a time.
+
+Depth is what costs, not count.
+
+That single rule powers a lot of interview answers. Iterative list reversal is constant space; the recursive version is linear. A naive Fibonacci call tree has two to the n nodes but only n of them alive at once, so it is exponential time and linear space.

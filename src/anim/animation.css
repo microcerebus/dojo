@@ -1,0 +1,888 @@
+/* ==========================================================================
+   Animation player + the shared visualisation vocabulary.
+   Frame changes only ever toggle a class, so the browser animates colour and
+   transform - cheap enough to stay smooth on a phone.
+   ========================================================================== */
+
+.anim {
+  margin: var(--space-5) 0;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.anim__head {
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.anim__title {
+  font-size: 15px;
+  font-weight: 640;
+}
+
+.anim__blurb {
+  margin-top: 3px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.anim__stage {
+  padding: var(--space-4) var(--space-3);
+  background: var(--bg-inset);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Vertical panning still works; horizontal is ours for swipe-to-step. */
+  touch-action: pan-y;
+}
+
+.anim__stage:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.anim__caption {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+  min-height: 64px;
+}
+
+.anim__captionText {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.anim__detail {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+.anim__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+}
+
+.anim__btn {
+  flex: 1;
+  min-height: var(--tap);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev-2);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.anim__btn:disabled {
+  opacity: 0.35;
+}
+
+.anim__btn--play {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  flex: 1.3;
+}
+
+.anim__count {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  min-width: 42px;
+  text-align: right;
+}
+
+.anim__ticks {
+  display: flex;
+  gap: 3px;
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+.anim__ticks li {
+  flex: 1;
+}
+
+.anim__tick {
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bg-elev-2);
+  transition: background-color 0.18s ease;
+}
+
+.anim__tick.is-past {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.anim__tick.is-current {
+  background: var(--accent);
+}
+
+/* ----------------------------------------------------------- viz basics */
+
+.viz {
+  --cell-size: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+  width: 100%;
+}
+
+.viz--tall {
+  min-height: 220px;
+  justify-content: center;
+}
+
+@media (min-width: 560px) {
+  .viz {
+    --cell-size: 40px;
+  }
+}
+
+.viz__note {
+  font-size: 12px;
+  color: var(--text-faint);
+  text-align: center;
+  max-width: 46ch;
+}
+
+.viz__row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.viz__cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  font-family: var(--mono);
+  font-size: 13px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.viz__cell--sm {
+  font-size: 11px;
+}
+
+.viz__cellSub {
+  font-size: 9px;
+  color: var(--text-faint);
+  line-height: 1;
+}
+
+/* Shared state colours for every primitive. */
+.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg-elev));
+  color: var(--ctp-lavender);
+  transform: translateY(-2px);
+}
+
+.is-compare {
+  border-color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 16%, var(--bg-elev));
+  color: var(--accent-2);
+}
+
+.is-done {
+  border-color: color-mix(in srgb, var(--good) 55%, transparent);
+  background: color-mix(in srgb, var(--good) 14%, var(--bg-elev));
+  color: var(--good);
+}
+
+.is-bad {
+  border-color: color-mix(in srgb, var(--bad) 55%, transparent);
+  background: color-mix(in srgb, var(--bad) 14%, var(--bg-elev));
+  color: var(--bad);
+}
+
+.is-target {
+  border-color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 16%, var(--bg-elev));
+  color: var(--warn);
+}
+
+.is-muted {
+  opacity: 0.35;
+}
+
+/* pointers --------------------------------------------------------------- */
+
+.viz__pointers {
+  display: grid;
+  gap: 4px;
+  justify-content: center;
+  min-height: 30px;
+}
+
+.viz__pointer {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  line-height: 1.1;
+  transition: grid-column 0.2s ease;
+}
+
+.viz__pointerArrow {
+  font-size: 9px;
+}
+
+.viz__pointerLabel {
+  font-family: var(--mono);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.viz__pointer--a {
+  color: var(--accent);
+}
+.viz__pointer--b {
+  color: var(--accent-2);
+}
+.viz__pointer--c {
+  color: var(--warn);
+}
+
+.viz__pointers--below .viz__pointer {
+  flex-direction: column-reverse;
+}
+
+/* readout ---------------------------------------------------------------- */
+
+.viz__readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+.viz__readoutItem {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.viz__readoutItem dt {
+  color: var(--text-faint);
+}
+
+.viz__readoutItem dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+/* linked list ------------------------------------------------------------ */
+
+.viz__chain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2px 0;
+}
+
+.viz__chainItem {
+  display: flex;
+  align-items: center;
+}
+
+.viz__node {
+  position: relative;
+  min-width: 38px;
+  height: 36px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  font-family: var(--mono);
+  font-size: 13px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.viz__nodeTag {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.viz__arrow {
+  padding: 0 4px;
+  color: var(--text-faint);
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.viz__arrow em {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.viz__loopNote {
+  width: 100%;
+  margin-top: 6px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--warn);
+}
+
+/* stack + queue ---------------------------------------------------------- */
+
+.viz__stacks {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.viz__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 84px;
+}
+
+.viz__stackItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 3px;
+  min-height: 108px;
+}
+
+.viz__stackCell {
+  min-width: 76px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  font-family: var(--mono);
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.viz__stackCell em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.viz__stackEmpty {
+  font-size: 11px;
+  color: var(--text-faint);
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.viz__stackBase {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 2px solid var(--border-strong);
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.viz__stackBase em {
+  display: block;
+  font-style: normal;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.viz__queue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.viz__queueItems {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  min-height: 30px;
+}
+
+.viz__queueCell {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  font-family: var(--mono);
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.viz__queueEnd {
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.viz__queueLabel {
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* hash buckets ----------------------------------------------------------- */
+
+.viz__buckets {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.viz__bucket {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 3px 6px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  min-height: 30px;
+  transition: all 0.2s ease;
+}
+
+.viz__bucketIndex {
+  width: 20px;
+  flex: none;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.viz__bucketChain {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.viz__bucketEmpty {
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.viz__chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+/* bars ------------------------------------------------------------------- */
+
+.viz__bars {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+}
+
+.viz__barCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+  max-width: 76px;
+  min-width: 0;
+}
+
+.viz__barTrack {
+  width: 100%;
+  height: var(--bars-height, 130px);
+  display: flex;
+  align-items: flex-end;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.viz__bar {
+  width: 100%;
+  background: color-mix(in srgb, var(--accent) 45%, var(--bg-elev));
+  border-top: 2px solid var(--accent);
+  transition: height 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.viz__bar.is-bad {
+  background: color-mix(in srgb, var(--bad) 40%, var(--bg-elev));
+  border-top-color: var(--bad);
+}
+
+.viz__bar.is-done {
+  background: color-mix(in srgb, var(--good) 35%, var(--bg-elev));
+  border-top-color: var(--good);
+}
+
+.viz__bar.is-target {
+  background: color-mix(in srgb, var(--warn) 35%, var(--bg-elev));
+  border-top-color: var(--warn);
+}
+
+.viz__barLabel {
+  font-size: 10.5px;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.viz__barValue {
+  font-size: 10.5px;
+  font-family: var(--mono);
+  color: var(--text-faint);
+  min-height: 14px;
+}
+
+/* matrix ----------------------------------------------------------------- */
+
+.viz__matrixWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.viz__matrixCols,
+.viz__matrixRows {
+  display: grid;
+  gap: 3px;
+  font-size: 10px;
+  color: var(--text-faint);
+  font-family: var(--mono);
+}
+
+.viz__matrixCols {
+  padding-left: 0;
+}
+
+.viz__matrixCols span,
+.viz__matrixRows span {
+  display: grid;
+  place-items: center;
+  height: var(--cell-size);
+}
+
+.viz__matrixRows {
+  grid-template-rows: auto;
+  width: 18px;
+}
+
+.viz__matrixBody {
+  display: flex;
+  gap: 3px;
+}
+
+.viz__matrix {
+  display: grid;
+  gap: 3px;
+}
+
+/* tree ------------------------------------------------------------------- */
+
+.viz__tree {
+  --tree-node: 30px;
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: calc(var(--tree-depth, 3) * 46px);
+  margin: 0 auto;
+}
+
+.viz__treeNode {
+  position: absolute;
+  transform: translate(-50%, 0);
+  min-width: var(--tree-node);
+  height: var(--tree-node);
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.viz__treeNode em {
+  position: absolute;
+  top: -13px;
+  font-style: normal;
+  font-size: 9px;
+  color: var(--warn);
+}
+
+.viz__treeEdge {
+  position: absolute;
+  border-left: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* bits ------------------------------------------------------------------- */
+
+.viz__bitsRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.viz__bitsLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  min-width: 42px;
+  text-align: right;
+}
+
+.viz__bits {
+  display: flex;
+  gap: 2px;
+}
+
+.viz__bit {
+  position: relative;
+  width: 22px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  font-family: var(--mono);
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.viz__bit em {
+  position: absolute;
+  bottom: -13px;
+  font-style: normal;
+  font-size: 8px;
+  color: var(--text-faint);
+}
+
+/* flow steps ------------------------------------------------------------- */
+
+.viz__flow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  max-width: 460px;
+}
+
+.viz__flowStep {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  transition: all 0.2s ease;
+}
+
+.viz__flowIndex {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--text-faint);
+}
+
+.viz__flowStep.is-active .viz__flowIndex,
+.viz__flowStep.is-done .viz__flowIndex {
+  border-color: currentColor;
+  color: inherit;
+}
+
+.viz__flowBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.viz__flowLabel {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.viz__flowLabel em {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  opacity: 0.85;
+}
+
+.viz__flowDetail {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
+.viz__flowStep.is-muted .viz__flowDetail {
+  display: none;
+}
+
+/* legend ----------------------------------------------------------------- */
+
+.viz__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.viz__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.viz__swatch {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  border-radius: 3px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+}
+
+/* At 11px the tinted state backgrounds are unreadable, so the legend uses
+   solid fills of the same hue instead. */
+.viz__swatch.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: none;
+}
+
+.viz__swatch.is-compare {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+.viz__swatch.is-done {
+  background: var(--good);
+  border-color: var(--good);
+}
+
+.viz__swatch.is-bad {
+  background: var(--bad);
+  border-color: var(--bad);
+}
+
+.viz__swatch.is-target {
+  background: var(--warn);
+  border-color: var(--warn);
+}
+
+.viz__swatch.is-muted {
+  background: var(--bg-elev-2);
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viz__cell,
+  .viz__node,
+  .viz__bar,
+  .viz__bit,
+  .viz__chip,
+  .viz__stackCell,
+  .viz__queueCell,
+  .viz__treeNode,
+  .viz__pointer,
+  .anim__tick {
+    transition: none;
+  }
+}

@@ -1,0 +1,9 @@
+Partitioning a list around a value looks like it needs swapping. It does not.
+
+Build two separate lists as you walk. One for values below the pivot, one for everything else. Append each node to whichever list it belongs to, then join the tail of the first to the head of the second. One pass, no swaps, no index arithmetic.
+
+Read the spec carefully first though. The classic version does not require stability, and nodes equal to the pivot may sit anywhere in the right partition. That freedom is what makes the two-list build legal.
+
+Digit arithmetic is the other building pattern. With digits stored in reverse order, ones digit first, addition is a straight walk: add the two digits plus the carry, append the remainder modulo ten, and carry when the sum reaches ten. Keep going while either list has nodes or the carry is non-zero. Forgetting that final carry node is the classic bug: ninety nine plus one needs a brand new most significant digit.
+
+Forward order is harder. Reverse both lists, or pad and recurse, or use two stacks.

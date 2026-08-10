@@ -1,0 +1,11 @@
+If BUD does not crack it, cycle through five more openings deliberately, rather than staring harder.
+
+Do it yourself. Write a big example and solve it by hand, fast, without thinking about algorithms. Then ask what you actually did. Your intuition usually finds a good algorithm immediately, including shortcuts you took without noticing.
+
+Simplify and generalise. Relax a constraint, solve the easier problem, then put the constraint back.
+
+Base case and build. Solve n equals one, then two, then three, and look at how each answer is built from the previous one. That naturally produces the recursion.
+
+Solve it wrong on purpose. Build something nearly right and study why it fails.
+
+And the data structure brainstorm. Say them out loud: array, linked list, hash map, set, stack, queue, heap, tree, search tree, trie, graph, bit vector. Nine times out of ten the problem is trivial once you land on the right one. A streaming median is hard until you say two heaps.

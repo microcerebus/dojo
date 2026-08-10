@@ -1,0 +1,186 @@
+{
+  "voice": "en-US-AvaMultilingualNeural",
+  "rate": "-4%",
+  "clips": [
+    {
+      "moduleId": "arrays-strings",
+      "sectionId": "arrays",
+      "path": "audio/arrays-strings/arrays.mp3",
+      "bytes": 354816
+    },
+    {
+      "moduleId": "arrays-strings",
+      "sectionId": "counting",
+      "path": "audio/arrays-strings/counting.mp3",
+      "bytes": 375984
+    },
+    {
+      "moduleId": "arrays-strings",
+      "sectionId": "hash-tables",
+      "path": "audio/arrays-strings/hash-tables.mp3",
+      "bytes": 358560
+    },
+    {
+      "moduleId": "arrays-strings",
+      "sectionId": "matrices",
+      "path": "audio/arrays-strings/matrices.mp3",
+      "bytes": 390096
+    },
+    {
+      "moduleId": "arrays-strings",
+      "sectionId": "sliding-window",
+      "path": "audio/arrays-strings/sliding-window.mp3",
+      "bytes": 361584
+    },
+    {
+      "moduleId": "arrays-strings",
+      "sectionId": "strings",
+      "path": "audio/arrays-strings/strings.mp3",
+      "bytes": 315216
+    },
+    {
+      "moduleId": "arrays-strings",
+      "sectionId": "two-pointers",
+      "path": "audio/arrays-strings/two-pointers.mp3",
+      "bytes": 393840
+    },
+    {
+      "moduleId": "big-o",
+      "sectionId": "amortised",
+      "path": "audio/big-o/amortised.mp3",
+      "bytes": 375264
+    },
+    {
+      "moduleId": "big-o",
+      "sectionId": "in-the-room",
+      "path": "audio/big-o/in-the-room.mp3",
+      "bytes": 387072
+    },
+    {
+      "moduleId": "big-o",
+      "sectionId": "logs-recursion",
+      "path": "audio/big-o/logs-recursion.mp3",
+      "bytes": 360144
+    },
+    {
+      "moduleId": "big-o",
+      "sectionId": "reducing",
+      "path": "audio/big-o/reducing.mp3",
+      "bytes": 373104
+    },
+    {
+      "moduleId": "big-o",
+      "sectionId": "space",
+      "path": "audio/big-o/space.mp3",
+      "bytes": 362448
+    },
+    {
+      "moduleId": "big-o",
+      "sectionId": "what-it-measures",
+      "path": "audio/big-o/what-it-measures.mp3",
+      "bytes": 375840
+    },
+    {
+      "moduleId": "linked-lists",
+      "sectionId": "building-lists",
+      "path": "audio/linked-lists/building-lists.mp3",
+      "bytes": 422640
+    },
+    {
+      "moduleId": "linked-lists",
+      "sectionId": "cycles",
+      "path": "audio/linked-lists/cycles.mp3",
+      "bytes": 385344
+    },
+    {
+      "moduleId": "linked-lists",
+      "sectionId": "deletion-and-dummies",
+      "path": "audio/linked-lists/deletion-and-dummies.mp3",
+      "bytes": 397296
+    },
+    {
+      "moduleId": "linked-lists",
+      "sectionId": "reversal",
+      "path": "audio/linked-lists/reversal.mp3",
+      "bytes": 390816
+    },
+    {
+      "moduleId": "linked-lists",
+      "sectionId": "runners",
+      "path": "audio/linked-lists/runners.mp3",
+      "bytes": 405936
+    },
+    {
+      "moduleId": "linked-lists",
+      "sectionId": "shape",
+      "path": "audio/linked-lists/shape.mp3",
+      "bytes": 342144
+    },
+    {
+      "moduleId": "stacks-queues",
+      "sectionId": "both-structures",
+      "path": "audio/stacks-queues/both-structures.mp3",
+      "bytes": 373824
+    },
+    {
+      "moduleId": "stacks-queues",
+      "sectionId": "composites",
+      "path": "audio/stacks-queues/composites.mp3",
+      "bytes": 400608
+    },
+    {
+      "moduleId": "stacks-queues",
+      "sectionId": "extra-state",
+      "path": "audio/stacks-queues/extra-state.mp3",
+      "bytes": 356112
+    },
+    {
+      "moduleId": "stacks-queues",
+      "sectionId": "sorting-and-monotonic",
+      "path": "audio/stacks-queues/sorting-and-monotonic.mp3",
+      "bytes": 399312
+    },
+    {
+      "moduleId": "technical-questions",
+      "sectionId": "bcr",
+      "path": "audio/technical-questions/bcr.mp3",
+      "bytes": 367056
+    },
+    {
+      "moduleId": "technical-questions",
+      "sectionId": "brute-force",
+      "path": "audio/technical-questions/brute-force.mp3",
+      "bytes": 256464
+    },
+    {
+      "moduleId": "technical-questions",
+      "sectionId": "bud",
+      "path": "audio/technical-questions/bud.mp3",
+      "bytes": 367776
+    },
+    {
+      "moduleId": "technical-questions",
+      "sectionId": "code-and-test",
+      "path": "audio/technical-questions/code-and-test.mp3",
+      "bytes": 406800
+    },
+    {
+      "moduleId": "technical-questions",
+      "sectionId": "listen-example",
+      "path": "audio/technical-questions/listen-example.mp3",
+      "bytes": 362304
+    },
+    {
+      "moduleId": "technical-questions",
+      "sectionId": "other-tools",
+      "path": "audio/technical-questions/other-tools.mp3",
+      "bytes": 415152
+    },
+    {
+      "moduleId": "technical-questions",
+      "sectionId": "the-loop",
+      "path": "audio/technical-questions/the-loop.mp3",
+      "bytes": 322704
+    }
+  ]
+}

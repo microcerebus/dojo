@@ -1,0 +1,7 @@
+Say the naive solution out loud, with its time and space, and then say you are going to improve it.
+
+It takes about twenty seconds and it buys three things. A baseline to measure against. Proof that you understand the problem. And a concrete thing to apply your optimisation techniques to.
+
+Do not skip it because it is embarrassing. Silence while you hunt for the clever answer reads as being stuck. Saying, the brute force is compare every pair, quadratic time, constant space, let me do better, reads as being in control.
+
+And do not start coding it. A brute force is something you say, not something you type, unless the interviewer explicitly asks you to write it.

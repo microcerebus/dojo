@@ -1,0 +1,11 @@
+You cannot walk backwards in a singly linked list, and you often do not know its length. Two pointers solve both without a second pass.
+
+Fixed gap. Advance the lead pointer k nodes, then move both together. When the lead hits the end, the trailing pointer is sitting on the kth node from the end.
+
+Fast and slow. The fast pointer moves two nodes for every one the slow pointer moves. When fast reaches the end, slow is at the midpoint. That is how you split a list without counting it.
+
+Weaving. Use fast and slow to find the middle, then interleave the two halves.
+
+The off-by-ones live in two places. Decide up front whether the midpoint of an even length list is the first or the second middle node. And always test that both fast and fast dot next exist before stepping twice.
+
+For intersection, remember that lists intersect by reference, so their tails are literally the same nodes. Walk both to the end, compare the last nodes, advance the longer list by the length difference, then step together.

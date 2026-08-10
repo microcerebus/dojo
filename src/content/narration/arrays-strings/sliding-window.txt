@@ -1,0 +1,7 @@
+A sliding window is the variant for finding the best contiguous run with some property. Both pointers only ever move forward, so each element enters and leaves the window at most once. That makes it linear no matter how much the window shuffles about.
+
+The loop is three steps. Extend the right pointer by one and update the window state, which is usually a count map, a sum or a set. Then, while the window violates the property, advance the left pointer and undo its contribution. Now the window is valid, so record it if it beats the best so far.
+
+One bug to watch for. If you jump the left pointer forward using a remembered index, check that the index is still inside the current window. A stale position from before the left pointer must be ignored, or the window will shrink backwards and your answer will be wrong.
+
+Fixed size windows are simpler: slide by one, add the entering element, remove the leaving one.

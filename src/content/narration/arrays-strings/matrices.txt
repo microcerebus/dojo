@@ -1,0 +1,5 @@
+Rotating a square matrix in place is done one concentric layer at a time. Within a layer, four cells form a cycle: top goes to right, right to bottom, bottom to left, left to top, held together by a single temporary variable. Write the four index expressions on the board before you code, because that is exactly where the bugs live.
+
+Zeroing a matrix has a different trap. If an element is zero, its row and column become zero, but if you zero them as you go, your own writes trigger more zeroing and the whole matrix collapses. Two passes fix it: record which rows and columns are affected, then apply.
+
+Finally, watch for reductions that make the problem disappear. To check whether one string is a rotation of another with a single substring search: every rotation of a string appears inside that string concatenated with itself. So check the lengths match, then ask whether the doubled string contains the other one. A problem that limits you to one call of some primitive is telling you a reduction exists.

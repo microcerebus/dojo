@@ -1,0 +1,7 @@
+Big O is a rate of growth, not a stopwatch. The only question it answers is: if the input doubles, how much more work do you do?
+
+That is why an O of n algorithm can genuinely beat an O of one algorithm on real inputs. O of one means the cost does not grow with n. It does not mean fast.
+
+The ladder worth memorising: constant, logarithmic, linear, n log n, quadratic, then exponential and factorial. Logarithmic means the problem halves each step. Quadratic means you touch every pair.
+
+Two warnings. First, runtime is not multiple choice. Square root of n is a real answer, and so is O of a log b. Derive it, do not guess the nearest familiar label. Second, academics separate big O, big omega and big theta, but industry has merged them. In an interview, O means the tightest bound you can state, so calling a single scan quadratic will be marked wrong.

@@ -1,0 +1,7 @@
+Before typing, walk through the algorithm once more and know what every variable is and when it changes. If you cannot narrate it, you cannot write it.
+
+Then write beautiful code. Modularise from the start and call helper functions you will define later. Use real data structures instead of returning parallel arrays. Name things properly. Reuse one function instead of writing two near-identical ones. And either validate inputs or say out loud that you would.
+
+Then test in this order, because it is cheapest first. A conceptual read of every line, like a code review. Then anything odd looking, like a minus two or a loop starting at one. Then hot spots: recursion base cases, integer division, null checks, first and last iterations. Then a small test case of three or four elements. Then edge cases: empty, single element, duplicates, negatives.
+
+When you find a bug, do not slap in the first patch you think of. Say why it happened and why your fix is the right one.

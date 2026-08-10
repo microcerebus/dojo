@@ -1,0 +1,7 @@
+A resizable array keeps a backing block with spare capacity. When it fills, it allocates a bigger block, usually double, and copies everything over. That copy is linear, but it happens rarely enough that appending n elements costs linear work in total. So append is constant amortised, and random access stays constant.
+
+The JavaScript specifics are worth knowing cold, because they are where hidden quadratics live.
+
+Index access is constant. Push and pop are constant amortised. But shift and unshift are linear, because every element moves. Includes and index of are linear, so inside a loop that is your quadratic. Slice, concat and spreading an array all copy, so doing any of them inside a loop is quadratic too. Splice shifts the tail.
+
+The smell to watch for: if you are calling shift to consume a queue, you have just written a quadratic loop. Keep a head index instead.

@@ -1,0 +1,7 @@
+Reversing a list is one link flip repeated, and the order of three assignments is the entire trick.
+
+Keep three references: previous, current, and next. Save next before you overwrite the pointer, or you lose the rest of the list. Then point current's next at previous. Then slide previous and current forward. When current is null, previous is the new head.
+
+That is linear time and constant space. The recursive version reads more elegantly but costs linear stack space, and on a long list it will overflow. Mention that tradeoff, because it is exactly what is being tested.
+
+Palindrome checking has three standard answers and being able to rank them is the point. Reverse a copy and compare: simple, linear space. Push the first half onto a stack using fast and slow pointers, then pop while walking the second half: half the space. Or reverse the second half in place, compare, then restore it: constant space, though you should flag that it mutates the input.

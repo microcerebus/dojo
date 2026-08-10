@@ -1,0 +1,7 @@
+Best conceivable runtime is the fastest any solution could possibly be, derived from the inputs and outputs alone, not from any algorithm.
+
+If you must read all n elements to be correct, the best conceivable runtime is at least linear. Careful though: if you are asked for all pairs that sum to a target, that is not quadratic. You want pairs with a property, and there may be very few. Derive it from what you must read and what you must output.
+
+It earns its keep in four ways. It tells you whether to keep optimising. It hints at what to reduce, because going from n times n to n log n means turning a search into a binary search. It makes setup work free, since any linear precomputation costs nothing when the floor is already linear. And it tells you when to stop, at which point you switch to optimising space.
+
+One more check. If your solution would work identically without a constraint you were given, you have probably not found the intended answer.

@@ -1,0 +1,7 @@
+Pushing onto a dynamic array is usually a single write. But when the backing block is full, the runtime allocates a bigger one, typically double the size, and copies everything across. That push is linear.
+
+So what do you call push? Neither constant nor linear is honest on its own. Amortised time is the answer: the average cost per operation across any sequence of operations.
+
+The arithmetic is worth knowing because it comes up again. Doubling your way to n elements means copying one, then two, then four, and so on up to n over two. Read that sum backwards and it is n over two plus n over four plus n over eight, which is just under n. So n pushes cost linear work in total, and each push is constant amortised.
+
+Say it exactly like this: push is O of one amortised, worst case O of n when it resizes, but resizes are rare enough that n pushes cost O of n in total.

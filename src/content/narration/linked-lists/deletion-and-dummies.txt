@@ -1,0 +1,7 @@
+To delete from a singly linked list you need the predecessor, then you point it at the node after the one you are removing. Two things go wrong: the node might be the head, and the predecessor might not exist.
+
+A dummy head fixes both. Allocate one throwaway node in front of the real list, do the work uniformly, and return dummy dot next at the end. Now there is no such thing as the first node as a special case. Just remember to return dummy dot next, never the original head, because the head may have been deleted.
+
+There is one exception worth knowing. If you are given only the node to delete and no access to the head, you cannot unlink it, but you can copy the successor's value into it and delete the successor instead. That fails on the last node, and you should say so.
+
+For removing duplicates, a set gives you linear time and linear space. If a buffer is not allowed, a second runner scans the tail for each node, which is quadratic time and constant space. Say both, then ask which tradeoff they want.

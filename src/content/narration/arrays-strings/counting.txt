@@ -1,0 +1,7 @@
+Most string questions are really questions about character counts, and the reframe removes a whole layer of complexity.
+
+Are all characters unique? Any count above one. Are these permutations of each other? Identical count maps, and first, identical lengths. Can the letters form a palindrome? At most one character has an odd count, and that one sits in the middle. Are these one edit apart? Lengths differ by at most one, and one scan finds at most one mismatch.
+
+Two details that catch people. Ask what the character set is, because a hundred and twenty eight ASCII characters, two hundred and fifty six extended, or full Unicode changes both the array size and whether an array is viable at all. And for the one edit check, handle replace and insert in the same loop: on the first mismatch, advance only the longer string if the lengths differ, otherwise advance both.
+
+If they ask for no extra data structures, pack presence into a single integer as a bit vector.

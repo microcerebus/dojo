@@ -1,0 +1,9 @@
+A huge fraction of array and string problems collapse the moment you use two indices instead of one. Three shapes cover almost all of them.
+
+Converging. One pointer at the start, one at the end, moving towards each other. This needs a rule that lets you discard one end, which is usually sortedness or a symmetry like palindromes.
+
+Fast and slow. Both move forward at different rates, or one lags the other by a fixed gap. That gives you midpoints, kth from the end, and cycle detection.
+
+One pointer per input. Two sorted arrays walked together, each advancing only when its value is behind. That is the merge step of merge sort.
+
+And know why converging pointers are correct. On a sorted array, if the sum of the two ends is too small, then no partner smaller than the right-hand value can rescue the left-hand one, so that element is finished. Each comparison eliminates a whole row of the brute force grid. That argument is the proof, and it is what the interviewer wants to hear.

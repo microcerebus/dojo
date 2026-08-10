@@ -1,0 +1,9 @@
+A hash table maps keys to values in constant average time, and the classic implementation is an array of buckets, each holding a small linked list.
+
+Three steps. Compute a hash code from the key. Map it to a slot by taking the hash modulo the number of buckets. Then store the key and the value in that bucket. You store the key too, because two different keys can land in the same bucket.
+
+Lookup repeats the same steps and then walks the bucket comparing keys. Collisions are normal, not errors. There are infinitely many possible keys and finitely many slots.
+
+State the complexity properly: constant on average, linear in the worst case when every key collides into one bucket. The average holds because a good hash spreads keys and the table resizes to keep chains short.
+
+Three questions should make you reach for one immediately. Have I seen this before. How many times. And where was it.
