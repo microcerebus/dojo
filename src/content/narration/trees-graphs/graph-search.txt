@@ -1,0 +1,7 @@
+Depth-first search follows one branch as far as it goes. Breadth-first finishes everything at distance one, then everything at distance two. Same code, different container: a stack gives you depth-first, a queue gives you breadth-first.
+
+Depth-first is naturally recursive, because the call stack is a stack. Breadth-first is not, and expecting it to be is the most common implementation mistake in this chapter. One detail: mark a node visited when you enqueue it, not when you dequeue it, or the same node gets queued several times over.
+
+The tradeoff. Depth-first holds only the current path, so it risks a stack overflow on deep graphs. Breadth-first holds a whole level, so it risks memory on wide ones. Both are linear, so the choice is about what the answer means. Only breadth-first finds shortest unweighted paths.
+
+And when you know both endpoints, run two searches, one from each end, and stop when the frontiers touch. With branching factor k and path length d, that turns k to the d into two times k to the d over two. Not a constant factor, a square root.

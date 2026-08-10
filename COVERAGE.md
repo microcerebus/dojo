@@ -9,8 +9,8 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | | Count |
 |---|---:|
 | Modules | 27 |
-| Fully written (lesson + animations + audio + quiz + drills) | 5 |
-| Structured outline (concepts + drills, content coming) | 22 |
+| Fully written (lesson + animations + audio + quiz + drills) | 7 |
+| Structured outline (concepts + drills, content coming) | 20 |
 | Book questions indexed | 189 |
 | Questions with a LeetCode equivalent | 115 |
 | Questions that are book-only | 74 |
@@ -24,8 +24,8 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | Chapter 1 | Arrays & Strings `arrays-strings` | Core DSA | Complete | 18 | 27 |
 | Chapter 2 | Linked Lists `linked-lists` | Core DSA | Complete | 9 | 16 |
 | Chapter 3 | Stacks & Queues `stacks-queues` | Core DSA | Complete | 7 | 11 |
-| Chapter 4 | Trees & Graphs `trees-graphs` | Core DSA | Outline | 16 | 32 |
-| Chapter 4 (heaps and tries) | Heaps & Tries `heaps-tries` | Core DSA | Outline | 7 | 15 |
+| Chapter 4 | Trees & Graphs `trees-graphs` | Core DSA | Complete | 16 | 32 |
+| Chapter 4 (heaps and tries) | Heaps & Tries `heaps-tries` | Core DSA | Complete | 7 | 15 |
 | Chapter 8 | Recursion, Backtracking & DP `recursion-dp` | Core DSA | Outline | 21 | 32 |
 | Chapter 10 | Sorting & Searching `sorting-searching` | Core DSA | Outline | 13 | 23 |
 | Chapter 5 | Bit Manipulation `bit-manipulation` | Core DSA | Outline | 13 | 13 |
@@ -443,17 +443,15 @@ Each problem appears in exactly one module drill list.
 
 ### Trees & Graphs `trees-graphs`
 
-- Source: Chapter 4 · Track: Core DSA · Status: Outline
+- Source: Chapter 4 · Track: Core DSA · Status: Complete
 - Tree shapes, the three traversals, BFS vs DFS, and the graph problems that hide inside tree questions.
-- Concepts listed: 20 · Lesson sections: 0 · Quiz questions: 0 · Drills: 32
-- Planned animations: 5
+- Concepts listed: 20 · Lesson sections: 7 · Quiz questions: 10 · Drills: 32
 
 ### Heaps & Tries `heaps-tries`
 
-- Source: Chapter 4 (heaps and tries) · Track: Core DSA · Status: Outline
+- Source: Chapter 4 (heaps and tries) · Track: Core DSA · Status: Complete
 - Two structures that turn hard problems easy: heaps for "top k" and streaming order, tries for prefix work.
-- Concepts listed: 13 · Lesson sections: 0 · Quiz questions: 0 · Drills: 15
-- Planned animations: 4
+- Concepts listed: 13 · Lesson sections: 5 · Quiz questions: 10 · Drills: 15
 
 ### Recursion, Backtracking & DP `recursion-dp`
 

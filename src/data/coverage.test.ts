@@ -218,9 +218,16 @@ describe('complete modules', () => {
   const complete = MODULES.filter((courseModule) => courseModule.status === 'complete');
 
   it('includes the weeks 1-2 modules', () => {
-    expect(complete.map((courseModule) => courseModule.id).sort()).toEqual(
-      ['arrays-strings', 'big-o', 'linked-lists', 'stacks-queues', 'technical-questions'].sort(),
-    );
+    const finished = new Set(complete.map((courseModule) => courseModule.id));
+    for (const id of [
+      'arrays-strings',
+      'big-o',
+      'linked-lists',
+      'stacks-queues',
+      'technical-questions',
+    ]) {
+      expect(finished.has(id), `${id} should be a complete module`).toBe(true);
+    }
   });
 
   it('gives each complete module lesson sections and a quiz of 5-10 questions', () => {
@@ -361,8 +368,6 @@ describe('sprint schedule', () => {
 
   it('schedules every week-1 and week-2 module as a complete module', () => {
     const firstTwo = new Set([...SPRINT_WEEKS[0].moduleIds, ...SPRINT_WEEKS[1].moduleIds]);
-    // trees-graphs starts in week 2 but is finished in a later PR.
-    firstTwo.delete('trees-graphs');
     for (const id of firstTwo) {
       expect(getModule(id)?.status, id).toBe('complete');
     }

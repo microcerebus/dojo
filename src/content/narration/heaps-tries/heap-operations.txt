@@ -1,0 +1,9 @@
+Both heap operations work the same way. Put the element somewhere that keeps the tree complete, then walk it along a single path until the property holds again. Nothing else ever moves.
+
+Insert. Append to the end of the array. That is the only position keeping the tree complete, and it is just a push. Now the property might be broken in exactly one place, so swap with the parent while the parent is larger.
+
+Extract the minimum. The answer is index zero. Removing it is the interesting part: move the last element of the array into the root, so the tree stays complete, then sink it while a child is smaller.
+
+Here is the part people get wrong. Swap with the smaller child. Siblings have no ordering between them, so you must compare against both. Swapping with the larger one fixes the property at this node while breaking it one level down, and it breaks quietly, in a way small test cases miss.
+
+Both operations touch one path, and a complete tree's height is always the floor of log base two of n.

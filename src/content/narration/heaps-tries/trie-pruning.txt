@@ -1,0 +1,7 @@
+The strongest use of a trie is not storage. It is early termination.
+
+A backtracking search that builds a string one character at a time can ask the trie, at every step, whether the string so far can still become a word. When the answer is no, the entire subtree of continuations is dead. The saving is not in the checks you make, it is in the paths you never walk.
+
+That is the shape of word search on a letter grid. Two refinements. Build the trie from the dictionary, not the grid. And pass the current trie node into the recursion, so each step is one lookup rather than a fresh walk from the root. A nice extra: prune the trie itself as you go, unflagging found words and deleting childless nodes, so it shrinks as the search proceeds.
+
+The same idea powers multi-pattern search, splitting a string into dictionary words, and word rectangles. But do not reach for a trie by reflex. If the question is only is this exact string in the set, a hash set is simpler and just as fast.

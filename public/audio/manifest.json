@@ -81,6 +81,36 @@
       "bytes": 375840
     },
     {
+      "moduleId": "heaps-tries",
+      "sectionId": "heap-operations",
+      "path": "audio/heaps-tries/heap-operations.mp3",
+      "bytes": 387360
+    },
+    {
+      "moduleId": "heaps-tries",
+      "sectionId": "heap-shape",
+      "path": "audio/heaps-tries/heap-shape.mp3",
+      "bytes": 384048
+    },
+    {
+      "moduleId": "heaps-tries",
+      "sectionId": "top-k-and-streams",
+      "path": "audio/heaps-tries/top-k-and-streams.mp3",
+      "bytes": 398736
+    },
+    {
+      "moduleId": "heaps-tries",
+      "sectionId": "trie-pruning",
+      "path": "audio/heaps-tries/trie-pruning.mp3",
+      "bytes": 399600
+    },
+    {
+      "moduleId": "heaps-tries",
+      "sectionId": "tries",
+      "path": "audio/heaps-tries/tries.mp3",
+      "bytes": 400032
+    },
+    {
       "moduleId": "linked-lists",
       "sectionId": "building-lists",
       "path": "audio/linked-lists/building-lists.mp3",
@@ -181,6 +211,48 @@
       "sectionId": "the-loop",
       "path": "audio/technical-questions/the-loop.mp3",
       "bytes": 322704
+    },
+    {
+      "moduleId": "trees-graphs",
+      "sectionId": "bst-work",
+      "path": "audio/trees-graphs/bst-work.mp3",
+      "bytes": 416304
+    },
+    {
+      "moduleId": "trees-graphs",
+      "sectionId": "dependency-order",
+      "path": "audio/trees-graphs/dependency-order.mp3",
+      "bytes": 395280
+    },
+    {
+      "moduleId": "trees-graphs",
+      "sectionId": "graph-search",
+      "path": "audio/trees-graphs/graph-search.mp3",
+      "bytes": 435744
+    },
+    {
+      "moduleId": "trees-graphs",
+      "sectionId": "graph-shapes",
+      "path": "audio/trees-graphs/graph-shapes.mp3",
+      "bytes": 410256
+    },
+    {
+      "moduleId": "trees-graphs",
+      "sectionId": "traversals",
+      "path": "audio/trees-graphs/traversals.mp3",
+      "bytes": 404064
+    },
+    {
+      "moduleId": "trees-graphs",
+      "sectionId": "tree-recursion",
+      "path": "audio/trees-graphs/tree-recursion.mp3",
+      "bytes": 440208
+    },
+    {
+      "moduleId": "trees-graphs",
+      "sectionId": "tree-shapes",
+      "path": "audio/trees-graphs/tree-shapes.mp3",
+      "bytes": 441648
     }
   ]
 }

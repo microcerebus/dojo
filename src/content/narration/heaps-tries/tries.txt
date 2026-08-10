@@ -1,0 +1,7 @@
+A trie stores a set of strings by their characters. Each edge is one character, so every path from the root spells a prefix, and shared prefixes are stored exactly once.
+
+The detail that gets forgotten: mark where words end. Reaching a node only proves the path is a prefix of something. Without a flag on the node, storing cart would make car look like a word too.
+
+Now the runtime, stated precisely, because the usual comparison is sloppy. Trie lookup is linear in the length of the key. A hash table is also linear in the length of the key, because hashing has to read every character. Calling that constant time quietly ignores the key length.
+
+So the trie's advantage is a different question entirely: is this string a prefix of any word I know? A hash table cannot answer that without trying every extension. A trie answers it by walking K pointers. Every serious use of a trie comes back to that one capability, and the price you pay for it is space: one node per character across all distinct prefixes.

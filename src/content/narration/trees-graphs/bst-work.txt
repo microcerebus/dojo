@@ -1,0 +1,7 @@
+Given sorted data, the minimal-height binary search tree is built by taking the middle element as the root and recursing on the two halves. Inserting one at a time reaches the same shape but costs n log n. Slicing the array is linear, and it is three lines. Test the empty array, one element and two, because this is where off-by-ones live.
+
+Validation is the other classic, and the naive version is wrong in a way that passes every small test you draw. Checking that each node sits between its own two children does not enforce the property, because the property is about all descendants. A node can beat both its children and still be in completely the wrong place.
+
+So pass a minimum and maximum down the tree. Turning left tightens the maximum, turning right tightens the minimum, and a node outside its inherited window is a rejection.
+
+There is an in-order alternative: walk in order and check each value beats the previous one. It works, with one weakness. If duplicates are legal, in-order cannot tell a valid tree from an invalid one. Bounds can.

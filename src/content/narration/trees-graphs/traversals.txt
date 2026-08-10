@@ -1,0 +1,7 @@
+All three depth-first traversals are the same three lines in a different order. Where you put the visit relative to the two recursive calls is the entire difference.
+
+In-order visits left, node, right. On a binary search tree that emits sorted order, which is why kth smallest and validation both fall out of it. Pre-order visits the node first, so the root comes out first, and that is what serialises a tree. Post-order visits the node last, so every child is finished before the parent, which is what you want when a node's answer depends on its children.
+
+Level order is the fourth, and it is breadth-first. You do not actually need a queue: a pre-order walk carrying the current level as a parameter works just as well. If you do use a queue, freeze its length before draining, because that count is exactly one level.
+
+And reconstruction. One traversal is not enough to rebuild a tree. Pre-order plus in-order is. Unless you record the nulls: a pre-order traversal with explicit null markers is unique, which is why serialise and deserialise work with a single sequence.
