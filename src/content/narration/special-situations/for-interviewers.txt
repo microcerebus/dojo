@@ -1,0 +1,7 @@
+This is worth reading even from the candidate side, because it tells you what a well run interview looks like, and it will be your job soon enough.
+
+Know which mode you are in. A sanity check confirms a floor of competence and cannot tell okay from great. A quality check distinguishes good problem solvers from excellent ones. A specialist question tests knowledge a good engineer could not pick up on the job. Proxy knowledge checks that someone absorbed things core to work they claim to have done. Most hiring problems are a mismatch between those four.
+
+Then a handful of rules. Do not ask questions straight out of a popular book, because your candidates have read it. Ask questions with several hurdles rather than one insight, because if a single hint transforms someone's performance, it is a weak question. Make the question hard, not the knowledge. Defuse anything that sounds intimidating. Offer positive reinforcement, because nervous candidates underperform. Probe deeper when someone credits only their team. Coach candidates past the interview skills you did not mean to measure. And if they want silence to think, give them silence.
+
+Above all, record evidence, not impressions.

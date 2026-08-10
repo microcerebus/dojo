@@ -1,0 +1,7 @@
+Breadth-first search finds shortest paths when every edge costs the same. Once edges carry weights, the fewest-hops route and the cheapest route come apart, and you need Dijkstra.
+
+The intuition is a race. Clone yourself at the source and send a copy down every edge at a speed matching its weight. The first clone to reach a node got there by the shortest path, and anyone arriving later can stop walking. Dijkstra is that race run one step at a time, always advancing whichever clone has spent the least so far.
+
+In code: keep a distance for every node, infinity except the source, a previous pointer so you can rebuild the route, and a priority queue of unsettled nodes keyed by distance. Repeatedly take the cheapest unsettled node and relax its edges, asking whether going through this node beats the best known distance to each neighbour.
+
+The invariant that makes it correct is that once a node leaves the queue, its distance is final. That holds only because weights are non-negative, and it is exactly what a negative edge destroys. With a binary heap the whole thing is order V plus E, times log V.

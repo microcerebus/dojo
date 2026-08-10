@@ -1,0 +1,7 @@
+When a puzzle asks whether something can be done, the answer is sometimes no. And "I tried for a while and could not" is not a proof.
+
+What you want is an invariant: a quantity that every legal move leaves unchanged, which the goal state gets wrong. The classic is the mutilated chessboard. Cut two diagonally opposite corners off an eight by eight board and you have sixty-two squares, which looks like exactly thirty-one dominoes. But every domino covers two adjacent squares, and adjacent squares always differ in colour, so every domino takes one light and one dark. Opposite corners are the same colour, so you are left with thirty of one and thirty-two of the other. Thirty-one dominoes need thirty-one of each. Impossible, and you never had to try an arrangement.
+
+Where do you look for an invariant? Parity first, then colouring, then any sum or total a move leaves alone. Ask what one move does to the number. If the answer is nothing, that is your invariant.
+
+And be precise about which claim you are making. "I have not found a construction" is honest. "It is impossible" needs the argument.

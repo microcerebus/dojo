@@ -1,0 +1,7 @@
+Chrome crashes on launch for this user. What do you do? Reinstalling might fix that one person and teaches you nothing. The goal is to find out what is really happening so it can be fixed for everyone.
+
+Four steps. Understand the scenario: how long, which version, which operating system, every time or sometimes, what changed. Break the flow into testable units: click the icon, process starts, settings load, request the homepage, response arrives, parse, render. The failure is at one of those joints. Make each step a specific test that you or the user can actually perform. Then narrow down to the smallest input that still fails before you change any code.
+
+For narrowing, bisect. Halve the search space rather than walking it. That works on builds, commits, config flags, input size, anything monotone, and it is the highest leverage debugging habit there is.
+
+When a single threaded program crashes in a different place every run, the usual suspects are a genuinely varying input, an uninitialised variable, memory corruption or exhaustion, and an external dependency. Change one thing at a time. And when you cannot reproduce it at all, instrument and wait: logging, assertions on states you believe impossible, and telemetry.

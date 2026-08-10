@@ -1,0 +1,7 @@
+A puzzle is an algorithm question with the code taken out, and the same techniques work on it. It is very rarely a trick of wording, and it can almost always be deduced.
+
+So start talking. Silence reads as stuck. Say what the state is, what moves are available, and what you are trying to reach. State your assumptions out loud, because half the difficulty in a puzzle is an assumption nobody said.
+
+Then write down every rule you discover, on the board, not in your head. Take the two ropes that each burn for an hour but burn unevenly. Rule one: burn them in sequence and you can time two hours. Rule two: light a rope at both ends and it is gone in thirty minutes, whatever the unevenness. Rule three: burning one rope while another burns from both ends removes thirty minutes from it. Those three rules assemble into the answer almost by themselves.
+
+And when the problem has a size parameter, use base case and build. Solve it for one, then for two, and look for how the second case is built out of the first.

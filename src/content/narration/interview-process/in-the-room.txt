@@ -1,0 +1,7 @@
+The behaviours that separate candidates are almost all visible ones, which means they only count if you say them out loud.
+
+Restate the problem and ask what is ambiguous, because questions are vague on purpose and clarifying is a scored part of the answer. State your assumptions about input types, sizes and available functions. Say the brute force and its complexity, then improve it, rather than going silent while you hunt for something clever. Name the alternatives you rejected and why. Take hints and build on them, because resisting help to look independent reads badly. And volunteer testing and complexity analysis instead of waiting to be asked.
+
+On the clock: in forty-five minutes, roughly half should pass before you write code. Clarify, draw an example, state a brute force, optimise, walk through the algorithm, and only then type. Fixing a design out loud is cheap. Fixing half written code on a whiteboard is not.
+
+A mistake is not the end. Almost nobody has a flawless interview and plenty of people are hired after a rocky one. When you find a bug, say what caused it and why your fix is right. Panicked patching does far more damage than the original mistake.

@@ -1,0 +1,7 @@
+Almost everyone practises problems in an editor, in silence, with no clock. Then the interview asks for something completely different, and that gap is why strong engineers underperform.
+
+So practise the conditions, not just the problems. Out loud, always: narrate every drill you solve this month, because silence reads as being stuck even when you are not. On the real medium: paper, a whiteboard, or a plain shared document, with no autocomplete and no test runner. Against a clock, forty-five minutes end to end including the parts you find boring. And with someone else choosing the question, because choosing your own quietly removes the hardest part.
+
+When you ask for feedback, ask about communication, not just correctness. That is the axis you cannot assess yourself.
+
+Keep a mistake list too. Every time you get something wrong, write down the mistake rather than the problem. Off by one in a while loop. Forgot the empty case. Started coding before the algorithm was settled. The list turns out to be short and repetitive, and reading it before an interview is worth more than another twenty problems.

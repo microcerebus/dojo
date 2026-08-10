@@ -1,0 +1,7 @@
+Behavioural questions exist to get to know you, to dig into your resume, and to ease you into the interview. They are entirely preparable, and almost nobody prepares them properly, which makes them cheap points.
+
+Build a grid. Your projects and jobs down one side. Across the top, the questions that keep coming back: biggest challenge, mistakes and failures, what you enjoyed, leadership, conflict, and what you would do differently. Fill in every cell you can with two or three keywords, because you want to recall a story, not read a script.
+
+Then read down the columns as well as across the rows. A thin column is a gap in your preparation, and the usual culprits are conflict and failure, which are the two questions you are most certain to be asked. A gap is not a reason to invent a story. It is a prompt to think harder about a real situation you have been downplaying.
+
+And pick two or three projects to master in real technical depth. The hardest decision and why, the tradeoffs you accepted, what broke in production, what you would do differently. Behavioural questions turn technical within about two follow ups.

@@ -1,0 +1,5 @@
+These topics are genuinely rare in interviews. When one does come up, the interviewer usually wants to watch you derive it, not recite it, and a candidate who already knows the algorithm is not rewarded for knowing it. So read this module for recognition rather than mastery. If you are short on time, this is the one to skim.
+
+Recognition still buys you something real. Knowing topological sort exists means you spot a dependency ordering problem in ten seconds instead of ten minutes. Knowing rolling hashes exist puts linear-time substring search on your menu.
+
+Before the algorithms, a few identities that keep showing up. One plus two up to n is n times n plus one, over two, which is why a loop with a shrinking inner bound is quadratic and not linear. The sum of powers of two up to two to the n is just under two to the n plus one, which is why the bottom row of a recursion tree usually decides the runtime, and why a doubling array is amortised constant time. And logs of different bases differ only by a constant factor, which is why the base never appears inside a big O.

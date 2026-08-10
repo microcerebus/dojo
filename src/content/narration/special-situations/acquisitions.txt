@@ -1,0 +1,7 @@
+During technical due diligence, many acquirers interview most or all of a startup's engineers. Partly because their own employees had to pass the same process, and partly because the team is often the point of the acquisition.
+
+These are not a formality. They can decide whether the acquisition happens at all, which employees receive offers, and the price. Everyone goes through them: engineers certainly, often sales, support and product too, and a chief executive is usually slotted into a product manager or engineering manager loop, whichever is closer to what they actually do.
+
+Being mis-slotted is a real risk. A data scientist interviewed as a software engineer, or a junior engineer sold as senior, underperforms for reasons that have nothing to do with their ability. Raise the levelling before the loop, not after.
+
+Two pieces of advice for a team facing this. Do not wait for a date, because these appear suddenly and come in at the end of the week is not enough time to learn big O from scratch. And do not decide in advance who needs preparation. Problem solving interviews measure something a manager rarely measures directly, so your strongest and weakest performers will surprise you.

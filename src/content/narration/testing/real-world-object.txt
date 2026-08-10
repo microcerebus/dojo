@@ -1,0 +1,7 @@
+How would you test a pen is not a joke question. It is a clarification exercise in disguise, and diving straight into test cases fails it.
+
+Five steps. Who will use it, and why. What are the use cases. What are the bounds of use, in numbers rather than adjectives. What are the stress and failure conditions, including what failure is allowed to look like. And how would you actually run the tests, because if a chair has to survive five years you cannot simply wait five years.
+
+Watch what the clarification does. Who uses it? Children. What for? Drawing. On what? Clothing. Felt tip or ballpoint? Washable or permanent? Six questions in, you are testing a washable fabric marker for five to ten year olds, which is a completely different product from the one you were handed.
+
+Only then list the tests, grouped by component. Fact check the product is what it claims. Intended use: does it write on fabric, does it wash out in hot, warm and cold water. Safety, because the user is a child. And unintended use: walls, skin, being stamped on, left uncapped.

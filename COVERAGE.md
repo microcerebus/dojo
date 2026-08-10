@@ -9,8 +9,8 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | | Count |
 |---|---:|
 | Modules | 27 |
-| Fully written (lesson + animations + audio + quiz + drills) | 13 |
-| Structured outline (concepts + drills, content coming) | 14 |
+| Fully written (lesson + animations + audio + quiz + drills) | 22 |
+| Structured outline (concepts + drills, content coming) | 5 |
 | Book questions indexed | 189 |
 | Questions with a LeetCode equivalent | 115 |
 | Questions that are book-only | 74 |
@@ -31,19 +31,19 @@ Every chapter of Cracking the Coding Interview (6th edition) maps to a dojo modu
 | Chapter 5 | Bit Manipulation `bit-manipulation` | Core DSA | Outline | 13 | 13 |
 | Part VI | Big O `big-o` | Techniques | Complete | 0 | 5 |
 | Part VII | The technical-question method `technical-questions` | Techniques | Complete | 0 | 6 |
-| Chapter 6 | Math & Logic Puzzles `math-logic` | Techniques | Outline | 18 | 16 |
-| Chapter 11 | Testing `testing` | Techniques | Outline | 6 | 7 |
+| Chapter 6 | Math & Logic Puzzles `math-logic` | Techniques | Complete | 18 | 16 |
+| Chapter 11 | Testing `testing` | Techniques | Complete | 6 | 7 |
 | Chapter 16 | Moderate Mixed Review `moderate` | Techniques | Outline | 7 | 10 |
 | Chapter 17 | Hard Mixed Review `hard` | Techniques | Outline | 1 | 8 |
-| Part XI | Advanced Topics `advanced-topics` | Techniques | Outline | 0 | 7 |
+| Part XI | Advanced Topics `advanced-topics` | Techniques | Complete | 0 | 7 |
 | Chapter 7 | Object-Oriented Design `ood` | Design | Complete | 12 | 9 |
 | Chapter 9 | System Design & Scalability `system-design` | Design | Complete | 8 | 7 |
-| Part I | The Interview Process `interview-process` | Process | Outline | 0 | 2 |
-| Part II | Behind the Scenes `behind-the-scenes` | Process | Outline | 0 | 2 |
-| Part III | Special Situations `special-situations` | Process | Outline | 0 | 2 |
-| Part IV | Before the Interview `before-the-interview` | Process | Outline | 0 | 3 |
-| Part V | Behavioural Questions `behavioral` | Process | Outline | 0 | 4 |
-| Part VIII | The Offer & Beyond `offer-and-beyond` | Process | Outline | 0 | 3 |
+| Part I | The Interview Process `interview-process` | Process | Complete | 0 | 3 |
+| Part II | Behind the Scenes `behind-the-scenes` | Process | Complete | 0 | 2 |
+| Part III | Special Situations `special-situations` | Process | Complete | 0 | 3 |
+| Part IV | Before the Interview `before-the-interview` | Process | Complete | 0 | 4 |
+| Part V | Behavioural Questions `behavioral` | Process | Complete | 0 | 5 |
+| Part VIII | The Offer & Beyond `offer-and-beyond` | Process | Complete | 0 | 4 |
 | Chapter 12 | C and C++ `c-cpp` | Reference | Complete | 11 | 5 |
 | Chapter 13 | Java `java` | Reference | Complete | 8 | 4 |
 | Chapter 14 | Databases `databases` | Reference | Complete | 7 | 9 |
@@ -488,17 +488,15 @@ Each problem appears in exactly one module drill list.
 
 ### Math & Logic Puzzles `math-logic`
 
-- Source: Chapter 6 · Track: Techniques · Status: Outline
+- Source: Chapter 6 · Track: Techniques · Status: Complete
 - Primes, probability, invariants and the disciplined way to attack a puzzle when there is no algorithm to reach for.
-- Concepts listed: 16 · Lesson sections: 0 · Quiz questions: 0 · Drills: 16
-- Planned animations: 5
+- Concepts listed: 16 · Lesson sections: 7 · Quiz questions: 10 · Drills: 16
 
 ### Testing `testing`
 
-- Source: Chapter 11 · Track: Techniques · Status: Outline
+- Source: Chapter 11 · Track: Techniques · Status: Complete
 - How to design tests for an object, a system, a function or a bug report - and how to debug something that only fails sometimes.
-- Concepts listed: 13 · Lesson sections: 0 · Quiz questions: 0 · Drills: 4 · Practice tasks: 3
-- Planned animations: 3
+- Concepts listed: 13 · Lesson sections: 5 · Quiz questions: 10 · Drills: 4 · Practice tasks: 3
 
 ### Moderate Mixed Review `moderate`
 
@@ -516,10 +514,9 @@ Each problem appears in exactly one module drill list.
 
 ### Advanced Topics `advanced-topics`
 
-- Source: Part XI · Track: Techniques · Status: Outline
+- Source: Part XI · Track: Techniques · Status: Complete
 - The reference survey: topological sort, Dijkstra, rolling hashes, self-balancing trees and MapReduce. For recognition, not mastery.
-- Concepts listed: 16 · Lesson sections: 0 · Quiz questions: 0 · Drills: 7
-- Planned animations: 5
+- Concepts listed: 16 · Lesson sections: 7 · Quiz questions: 10 · Drills: 7
 
 ### Object-Oriented Design `ood`
 
@@ -535,45 +532,39 @@ Each problem appears in exactly one module drill list.
 
 ### The Interview Process `interview-process`
 
-- Source: Part I · Track: Process · Status: Outline
+- Source: Part I · Track: Process · Status: Complete
 - What the interview is actually measuring, and how that should change your behaviour in the room.
-- Concepts listed: 10 · Lesson sections: 0 · Quiz questions: 0 · Drills: 0 · Practice tasks: 2
-- Planned animations: 2
+- Concepts listed: 10 · Lesson sections: 3 · Quiz questions: 8 · Drills: 0 · Practice tasks: 3
 
 ### Behind the Scenes `behind-the-scenes`
 
-- Source: Part II · Track: Process · Status: Outline
+- Source: Part II · Track: Process · Status: Complete
 - How loops are structured and how decisions get made after you leave the room. The company specifics are dated; the mechanics are not.
-- Concepts listed: 10 · Lesson sections: 0 · Quiz questions: 0 · Drills: 0 · Practice tasks: 2
-- Planned animations: 1
+- Concepts listed: 10 · Lesson sections: 3 · Quiz questions: 8 · Drills: 0 · Practice tasks: 2
 
 ### Special Situations `special-situations`
 
-- Source: Part III · Track: Process · Status: Outline
+- Source: Part III · Track: Process · Status: Complete
 - How preparation changes for experienced engineers, testers, PMs, leads, startup roles and acquisitions.
-- Concepts listed: 10 · Lesson sections: 0 · Quiz questions: 0 · Drills: 0 · Practice tasks: 2
-- Planned animations: 1
+- Concepts listed: 10 · Lesson sections: 4 · Quiz questions: 8 · Drills: 0 · Practice tasks: 3
 
 ### Before the Interview `before-the-interview`
 
-- Source: Part IV · Track: Process · Status: Outline
+- Source: Part IV · Track: Process · Status: Complete
 - Resume, referrals and a preparation schedule built on deliberate practice rather than problem volume.
-- Concepts listed: 12 · Lesson sections: 0 · Quiz questions: 0 · Drills: 0 · Practice tasks: 3
-- Planned animations: 2
+- Concepts listed: 12 · Lesson sections: 3 · Quiz questions: 8 · Drills: 0 · Practice tasks: 4
 
 ### Behavioural Questions `behavioral`
 
-- Source: Part V · Track: Process · Status: Outline
+- Source: Part V · Track: Process · Status: Complete
 - Build a story grid once, then answer any behavioural prompt from it with structure and specifics.
-- Concepts listed: 13 · Lesson sections: 0 · Quiz questions: 0 · Drills: 0 · Practice tasks: 4
-- Planned animations: 2
+- Concepts listed: 13 · Lesson sections: 4 · Quiz questions: 10 · Drills: 0 · Practice tasks: 5
 
 ### The Offer & Beyond `offer-and-beyond`
 
-- Source: Part VIII · Track: Process · Status: Outline
+- Source: Part VIII · Track: Process · Status: Complete
 - Rejection, comparing offers, negotiating on evidence, and the first months after you join.
-- Concepts listed: 12 · Lesson sections: 0 · Quiz questions: 0 · Drills: 0 · Practice tasks: 3
-- Planned animations: 2
+- Concepts listed: 12 · Lesson sections: 4 · Quiz questions: 10 · Drills: 0 · Practice tasks: 4
 
 ### C and C++ `c-cpp`
 

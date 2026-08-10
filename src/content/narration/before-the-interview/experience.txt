@@ -1,0 +1,7 @@
+Without a good resume there is no interview, and without real experience there is no good resume. Screeners are looking for exactly what interviewers are looking for: that you are smart and that you can code. Every line should serve one of those two claims.
+
+If you are still studying, take the classes with big projects, get an internship early because the first one makes the second easier, and start something of your own. A side project, a hackathon, an open source contribution. What it is matters far less than that you built it.
+
+If you are already working, shift your responsibilities towards coding. Without announcing that you are looking, ask for meatier projects using relevant technology. Those become the bulk of a strong resume. And if the day job cannot supply it, use your own time, because few things impress an interviewer more than something you built because you wanted it to exist.
+
+On getting in the door: a referral from someone who has genuinely seen your work beats a cold application by a wide margin, and beats name dropping someone who barely knows you by a wider one. Make the ask specific, and give them a paragraph they can paste.

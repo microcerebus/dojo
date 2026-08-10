@@ -1,0 +1,7 @@
+Testing software follows the same five steps, with more weight on how you would run the tests. Settle black box versus white box early, then work out who the users are, plural. Parental control software has parents configuring it, children subject to it, and guests who should be neither.
+
+Then build the grid. Down one side, the components. Across the top, the kinds of test: functional, boundary, invalid input, failure injection, concurrency, performance and load, security, usability. Fill it in out loud. That grid is what stops you missing a whole category, and demonstrating structure is a large part of what the question measures.
+
+State the priority order too. For a cash machine, money is always accounted for and accounts are always protected. Screen layout comes after that.
+
+And when you are asked to load test something with no tools available, the answer is to build one. Decide the metrics first: response time, throughput, resource use, and the maximum load the system survives. Then write a multithreaded client where each thread behaves like one user and records its own timings, and ramp it until something falls over.

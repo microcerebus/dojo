@@ -1,0 +1,13 @@
+Testing questions come up even for pure development roles, and they take one of four shapes: test a physical object, test a piece of software, write test code for a function, or debug something that is already broken. All four run on the same method.
+
+On the surface the task is to list a lot of test cases. It is not. Four things are being watched.
+
+Do you know what the thing is for? Testing an online shop, product images in the right place matters. Customers never being double charged matters far more. Say which is which.
+
+Do you see how the pieces fit together? A spreadsheet app is not just open, save and edit. It sits inside an ecosystem, and the seams are where the bugs live.
+
+Are you organised? Reeling off whatever comes to mind guarantees a missed category. Break the thing into parts and work through them.
+
+And is the plan practical? Reinstall the software is not a diagnosis, and a test that needs five real years of use is not a test.
+
+One more rule that applies to all four shapes: assume abuse. Never assume the input or the user will play nice.

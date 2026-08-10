@@ -1,0 +1,7 @@
+A whole family of puzzles is information theory in a costume. Before designing anything, ask two questions: how many outcomes can one test distinguish, and how many possibilities do I need to separate?
+
+Twenty bottles of pills, one of them heavier, and one use of an exact scale. One weighing produces a single number, so that number has to identify the bottle by itself. Take one pill from the first bottle, two from the second, and so on. If everything were normal the total would be two hundred and ten grams. The overage, divided by the extra weight per pill, is the bottle number.
+
+Same idea, different encoding, with the poisoned bottle. A thousand bottles, ten test strips, and results that take seven days. Each strip is one bit. Ten bits distinguish one thousand and twenty four possibilities, which is more than a thousand, so a seven day answer must exist. Write each bottle number in binary and drop it on every strip whose bit is set. Read the positive strips as the answer.
+
+Notice that in both cases the strange-sounding constraint was the hint. Only one weighing means one number carries everything. A seven day lag means the tests must run in parallel, not in sequence.

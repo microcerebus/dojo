@@ -1,0 +1,7 @@
+Companies interview in remarkably similar ways. The names differ, the number of rounds differs, but the pipeline is the same, and knowing it stops you inventing meaning for things that are just how the machine works.
+
+A recruiter screen, then one or two technical phone screens, sometimes a take home or an online assessment, then an onsite of three to six rounds including a lunch. Do not let the word screening fool you: a phone screen run by an engineer asks real coding questions and can hold the same bar as the onsite.
+
+Two structural facts should change how you behave. Interviewers write up their feedback before comparing notes, and often cannot see anyone else's until they have filed their own. So every round genuinely starts from a blank slate, and a bad first interview does not doom the rest. And the people who decide are frequently not the people who met you. They are reading write-ups, so what survives is evidence: what you built, what you said, what you got to.
+
+Consistency beats a single peak. Nobody is averaging your best answer with your worst.

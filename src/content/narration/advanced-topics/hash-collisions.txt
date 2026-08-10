@@ -1,0 +1,9 @@
+Every hash table collides eventually. The key space is larger than the array, so the pigeonhole principle guarantees it. What separates implementations is what happens next.
+
+Separate chaining puts a linked list, or occasionally a balanced tree, in each slot. It degrades gracefully, and it only gets bad with a terrible hash function or adversarial keys.
+
+Open addressing keeps everything in the array. On a collision you probe forward: the next slot for linear probing, quadratic steps for quadratic probing, or a step size from a second hash for double hashing. It is fast and space-efficient, but the table can never hold more entries than it has slots.
+
+Linear probing also suffers from clustering. In a hundred-slot table where slots twenty through twenty-nine are full, the next insert lands on slot thirty if it hashes anywhere in that range: about a ten percent chance rather than one percent. Full runs attract more entries, which makes them longer. Quadratic probing and double hashing exist to break that feedback loop.
+
+The load factor governs everything. Real tables resize and rehash at a threshold, which is amortised constant time.

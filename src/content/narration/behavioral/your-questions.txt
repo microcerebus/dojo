@@ -1,0 +1,7 @@
+Almost every interview ends with, any questions for me. The quality of yours factors into the decision, consciously or otherwise, so walk in with several, because a few will get answered before you can ask them.
+
+Three kinds are worth having. Genuine questions, the ones you actually need answered to make a decision: how planning works on this team, what the on call rotation looks like, what brought your interviewer here and what has been hardest for them. Insightful questions that demonstrate you understand the technology: I saw you moved to this system, how do you handle that problem. And passion questions that show you want to learn and will contribute.
+
+Specific beats generic every time. Asking what the on call rotation looks like tells an interviewer that you have run systems in production. Asking what the culture is like tells them nothing and could have been asked of any company on earth. The insightful ones require real research beforehand, which is exactly the point.
+
+One last thing. Credible beats flawless. An answer with real tradeoffs and honest reflection lands far better than a polished non answer, and interviewers have heard the polished version many times.

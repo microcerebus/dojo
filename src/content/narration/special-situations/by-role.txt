@@ -1,0 +1,9 @@
+The same loop is weighted differently for different roles, and preparing generically wastes the half of your time that should have gone somewhere specific.
+
+Testers and software engineers in test write code to test features rather than build them, which means double the preparation. The most common reason test candidates are rejected is coding, not testing. Expect the format: write code to do this, and now test it. Get into the habit of asking yourself that second question even when nobody does.
+
+Product and program roles assess handling ambiguity, customer focus in both attitude and technical depth, communicating at many levels, passion for technology, and above all teamwork and leadership.
+
+Leads and managers are usually expected to code well, plus prioritisation, communication in every direction, and a track record of getting things done. And note that leadership is assessed implicitly too, through how you interact with the interviewer. Coming across as arrogant, or as too passive to push back, both read badly.
+
+Startups look for initiative on your resume, the ability to hit the ground running in their specific stack, and personality fit assessed through the conversation itself.
