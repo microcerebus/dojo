@@ -1,0 +1,15 @@
+Each of the twelve chapter questions has one decision that carries the answer. Know the decision and you can rebuild the rest live.
+
+Deck of cards: card is abstract, because value means nothing until a game defines it, and aces belong to the hand, which scores every possibility and keeps the best under twenty one.
+
+Call centre: an abstract employee with a rank, and one queue per rank, so an escalated call waits with its peers rather than at the back of one line.
+
+Parking lot: size on the spot, subclasses on the vehicle. Splitting level out is what keeps the search logic from turning into array bookkeeping.
+
+Minesweeper: place bombs by shuffling rather than retry until free, set the numbers by incrementing the neighbours of each bomb, and expand blank regions with a queue.
+
+File system: file and directory both extend entry, so size and search recurse uniformly. That is the composite pattern.
+
+Hash table: each node stores both key and value, because two different keys collide into the same bucket.
+
+Practise these on paper, twenty five minutes each. If a use case cannot be traced through your boxes, the design is not finished.

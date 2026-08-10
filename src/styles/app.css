@@ -234,6 +234,9 @@
 .sectionrail__num {
   display: grid;
   place-items: center;
+  /* Without this the circle is a shrinkable flex item, and a section title long
+     enough to wrap squashes it until the text overlaps the digit. */
+  flex: none;
   width: 18px;
   height: 18px;
   border-radius: 50%;

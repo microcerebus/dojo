@@ -1,0 +1,11 @@
+Without an index, finding rows by a column means reading every row. An index is that column kept sorted beside the table, with a pointer back to each row, so a lookup becomes a seek.
+
+Index what you filter, join and sort on. Foreign keys especially, because an unindexed foreign key turns every join through it into a scan. But every index slows writes: each insert, update and delete has to maintain every affected index. Six indexes on a write heavy table is a design mistake, not thoroughness.
+
+Composite column order matters. An index on last name then first name serves queries on last name, and on both together, but not on first name alone. It is a phone book: useless for finding every Sara.
+
+Transactions make several statements one atomic unit. They all take effect or none do. Anything spanning more than one row or table needs one.
+
+And at large scale, joins are the thing that stops scaling. So you denormalise deliberately, split by a key you actually query on, replicate for read throughput, and accept that cross partition joins and transactions largely go away.
+
+Schema changes are expand then contract. Add nullable, backfill in batches, write both, switch reads, then tighten.

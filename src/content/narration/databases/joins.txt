@@ -1,0 +1,9 @@
+A join combines two tables on a matching field, and the join type decides which rows survive.
+
+Inner join keeps only rows that matched on both sides. Left outer join keeps every row of the left table, padding with nulls where the right had no match. Right outer is the mirror, which is why most people only ever write left. Full outer keeps everything from both sides. Cross join has no condition at all: every left row paired with every right row, which is usually a sign you forgot the on clause.
+
+Now the bug everyone writes. Ask for all students and how many courses each takes, with an inner join, and the students taking none vanish. The row you most wanted is the one that disappears. Any requirement containing all, or each, is a hint to reach for an outer join.
+
+Then the follow on bug, which is sharper. Switch to a left join and a student with no courses produces one row, with nulls on the right. So count star reports one, not zero. Count a column from the joined table instead, because nulls are not counted. One character.
+
+And test subqueries inside out. Run the inner part alone first.

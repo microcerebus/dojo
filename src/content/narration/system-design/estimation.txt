@@ -1,0 +1,11 @@
+Estimation is not a party trick. It is how you decide whether something fits in memory, whether one machine is enough, and whether a design is worth drawing at all.
+
+Two to the ten is a thousand, or a kilobyte. Two to the twenty is a million, a megabyte. Two to the thirty is a billion, a gigabyte. Two to the forty is a trillion, a terabyte.
+
+Worked example: can you map every thirty-two bit integer to a boolean in memory? Two to the thirty-two bits is two to the twenty-nine bytes. Half a gigabyte. Yes, comfortably.
+
+Another: ten billion URLs at a hundred characters each, four bytes a character, is about four terabytes. That one line is what tells you the problem needs disk or many machines, and it takes ten seconds.
+
+Then the latency ladder. Memory, a hundred nanoseconds. An SSD read, a hundred microseconds, a thousand times slower. A round trip inside a datacentre, half a millisecond. A disk seek, ten milliseconds. Across the world, a hundred and fifty.
+
+Estimate four things: queries per second, storage, bandwidth, and the read to write ratio. That last one decides whether you reach for caches or for queues.

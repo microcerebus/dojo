@@ -1,0 +1,9 @@
+Almost every system design question becomes a data question. Four decisions carry it: what store, how to split it, how to copy it, and what to give up.
+
+SQL or NoSQL is about data shape and access pattern, never fashion. Relational stores give you joins, constraints and transactions. Document and key value stores drop joins, and that is the point: joins are what get expensive as data grows, so removing them is what lets the store partition freely. Denormalisation buys the same thing inside a relational store, and you pay in writes, storage, and the risk of copies disagreeing.
+
+Sharding splits data across machines. Hash based sharding needs no lookup table, but change the number of shards and nearly every key moves. Consistent hashing limits that to about one over n. Directory based sharding is easy to rebalance but the table is a single point of failure.
+
+Sharding also takes things away: cross shard joins, transactions across two keys, global unique ids, and any query that does not carry the shard key. So choose the shard key from how the data is read.
+
+Replication is a different axis. One leader takes writes, followers serve reads, and followers lag.

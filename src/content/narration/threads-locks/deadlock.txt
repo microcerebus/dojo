@@ -1,0 +1,9 @@
+Deadlock is when a thread waits for a lock another thread holds, while that thread waits for a lock the first one holds. Both wait forever. Nothing crashes and nothing logs. The program simply stops.
+
+Four conditions must all hold. Mutual exclusion: only one thread can hold the resource. Hold and wait: a thread holding one resource may request another. No preemption: you cannot take a resource off another thread. And circular wait: a cycle of threads each waiting on the next.
+
+Remove any one and deadlock becomes impossible. But the first three are usually not yours to give up, so in practice you break the fourth. Number the locks and require every thread to acquire them in increasing order. Then a cycle is inexpressible, because every edge points from a lower number to a higher one and can never point back.
+
+That is the dining philosophers answer. Number the chopsticks and make each philosopher take the lower numbered one first. Four still go left then right, the last goes right then left, and that one asymmetry breaks the ring.
+
+Name the four conditions, give the two lock example, then show the ordering fix. That is your two minute answer.

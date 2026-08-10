@@ -1,0 +1,9 @@
+Sometimes you are asked for one algorithm that has to work at scale, not a whole system. There is a four step version. Ask questions. Make believe it all fits on one machine and solve that. Get real: how much does fit, and what breaks when you split it. Then solve those problems, and expect the fixes to create new ones.
+
+Take deduplicating ten billion URLs. In memory it is a hash set. In reality, four terabytes. So hash each URL into one of four thousand files and process them one at a time, or send each to one of four thousand machines and process them in parallel. Faster, but now you depend on four thousand machines behaving. A bloom filter shrinks the memory further at the cost of false positives.
+
+A few of the chapter answers worth carrying. For the social graph, bidirectional breadth first search: searching from both ends turns k to the q into k to the q over two. For a path of four with a hundred friends each, twenty thousand nodes instead of a hundred million.
+
+For a cache, a hash map plus a doubly linked list. Constant lookup, constant eviction.
+
+And poke holes in your own design. Unprompted.

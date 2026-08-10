@@ -1,0 +1,7 @@
+This chapter is knowledge, not aptitude. If one stumps you, do not bluff. Build a small example and reason out what must happen, or ask how another language handles it. Deriving the answer often impresses more than reciting it.
+
+Overloading and overriding sound alike and decide different things at different times. Overloading is two methods with the same name and different parameters. The compiler picks one from the static types it can see, at compile time. Overriding is a subclass redeclaring a method with an identical signature, and the runtime picks based on the actual object. Java has no virtual keyword because it does not need one: instance methods are dynamic unless they are static, private or final.
+
+A private constructor does not mean a class cannot be subclassed. It means it can only be subclassed from where its private members are visible, which is its own inner classes, and sibling inner classes of an enclosing class.
+
+Does finally run if try returns? Yes. The return expression is evaluated, then finally runs, then the method returns. It does not run in two cases: the virtual machine exiting, or the thread being killed. Naming those two turns a right answer into a complete one.

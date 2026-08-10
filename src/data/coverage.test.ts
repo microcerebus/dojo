@@ -3,7 +3,7 @@
  * COVERAGE.md and the module content from drifting apart as modules are filled
  * in over subsequent PRs.
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -261,6 +261,25 @@ describe('complete modules', () => {
     }
   });
 
+  it('has a narration script and a generated clip for every audio section', () => {
+    const missing: string[] = [];
+    for (const courseModule of complete) {
+      for (const section of courseModule.sections) {
+        if (!section.audio) continue;
+        const script = join(
+          process.cwd(),
+          'src/content/narration',
+          courseModule.id,
+          `${section.id}.txt`,
+        );
+        const clip = join(process.cwd(), 'public/audio', courseModule.id, `${section.id}.mp3`);
+        if (!existsSync(script)) missing.push(`script ${courseModule.id}/${section.id}.txt`);
+        if (!existsSync(clip)) missing.push(`clip ${courseModule.id}/${section.id}.mp3`);
+      }
+    }
+    expect(missing, 'run `pnpm gen:audio <moduleId>`').toEqual([]);
+  });
+
   it('uses at least one animation per complete module', () => {
     for (const courseModule of complete) {
       const animCount = courseModule.sections
@@ -325,6 +344,28 @@ describe('animations', () => {
         expect(spec.caption(i).length, `${spec.id} step ${i}`).toBeGreaterThan(10);
       }
     }
+  });
+
+  it('keeps markdown out of captions, blurbs and details', () => {
+    // The player renders these as plain text (`anim__captionText`), unlike
+    // lesson blocks which go through `RichText` - so `**bold**` and `code`
+    // ticks would show up literally on screen.
+    const offenders: string[] = [];
+    for (const spec of ALL_ANIMATIONS) {
+      const strings: [string, string][] = [
+        ['title', spec.title],
+        ['blurb', spec.blurb],
+      ];
+      for (let i = 0; i < spec.length; i++) {
+        strings.push([`caption ${i}`, spec.caption(i)]);
+        const detail = spec.detail?.(i);
+        if (detail) strings.push([`detail ${i}`, detail]);
+      }
+      for (const [where, text] of strings) {
+        if (/\*\*|`/.test(text)) offenders.push(`${spec.id} ${where}`);
+      }
+    }
+    expect(offenders, 'animation text is rendered literally - no markdown').toEqual([]);
   });
 
   it('clamps captions for out-of-range indices', () => {

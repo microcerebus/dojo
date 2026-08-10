@@ -1,0 +1,13 @@
+An object-oriented design question is two words. Design a parking lot. Design a jukebox. The vagueness is the test: the interviewer wants to see whether you assume, or ask.
+
+Four steps get you through every one of them.
+
+First, handle the ambiguity. Who uses this, and how? What are the top use cases, and what is out of scope? Is there one of these, or many, and does anything survive a restart? A coffee machine for a restaurant serving hundreds an hour and a coffee machine for one elderly user are completely different designs, and the words are identical.
+
+Second, define the core objects. The handful of nouns the problem is really about. For a restaurant: table, party, guest, order, meal, employee, server, host.
+
+Third, analyse relationships. A party has many guests. A table has one party, unless communal tables exist, which is a question and not an assumption.
+
+Fourth, investigate actions. Walk a real use case end to end. That is where you find the objects you forgot.
+
+You will have to assume something. The scoring is not, did you guess right. It is, did you notice you were guessing.

@@ -1,0 +1,9 @@
+Java generics and C++ templates look identical and work completely differently.
+
+Java uses type erasure. The compiler checks the types, throws them away, and inserts casts. Only one class exists at runtime. C++ generates a fresh copy of the code for every type argument, so my class of foo and my class of bar are genuinely different types, each with its own static members. In Java they are the same type and share statics.
+
+Erasure forbids a few things. No new array of T, no instanceof on a type parameter, no primitive type arguments, and no type parameter in a static member. If you have ever wondered why generic code passes a class object around, this is why.
+
+Then the three maps. Hash map: array of linked lists, constant time, arbitrary iteration order that you must never rely on. Tree map: red black tree, log n, keys sorted, and it answers range queries, which is what a More button is made of. Linked hash map: constant time, but insertion order preserved, or access order, which gives you an LRU cache almost for free.
+
+Default to hash map. This decision transfers to every language you will use.

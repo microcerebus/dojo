@@ -243,6 +243,34 @@ export function Buckets({ buckets }: { buckets: BucketSpec[] }) {
   );
 }
 
+export interface ChipSpec {
+  key: string;
+  label: string;
+  state?: CellState;
+  /** small trailing note, e.g. what this points at or who holds it */
+  sub?: string;
+}
+
+/**
+ * A row of auto-sized labelled chips.
+ *
+ * `Cells` is a fixed square, which is right for single values and wrong for
+ * word-length labels - `ParkingLot` in a 34px box just overflows. Anything
+ * whose label is a word belongs here instead.
+ */
+export function Chips({ chips, label }: { chips: ChipSpec[]; label?: string }) {
+  return (
+    <div className="viz__chips" role="list" aria-label={label}>
+      {chips.map((chip) => (
+        <span key={chip.key} role="listitem" className={`viz__chip is-${chip.state ?? 'idle'}`}>
+          {chip.label}
+          {chip.sub ? <em>{chip.sub}</em> : null}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export interface BarSpec {
   key: string;
   label: string;

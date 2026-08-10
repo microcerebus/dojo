@@ -1,0 +1,7 @@
+The other half of this chapter is not keeping threads apart, but making them go in sequence.
+
+Three threads must call first, then second, then third. A boolean flag will not do it, because checking a flag and acting on it is not atomic, and there is nothing to wait on. Use two semaphores, drained to zero in the constructor. Second and third block immediately on acquire, whatever the scheduler does. First runs, releases the first semaphore. Second wakes, re-releases it, does its work, releases the second. Third wakes and runs.
+
+Why not two locks? Because a Java lock is owned by the thread that acquired it, and only that thread may release it. Locking in a constructor and unlocking from three other threads throws. A semaphore is just a permit count, with no owner.
+
+Now, what does any of this mean in JavaScript? The main thread runs one thing at a time, so there are no data races. But there are still logical races. Two in flight requests writing the same state and landing out of order. A check then act across an await, because anything can run between the halves. A stale closure. The fixes rhyme with locks: sequence the work, ignore stale responses, or cancel.

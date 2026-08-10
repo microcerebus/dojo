@@ -1,0 +1,7 @@
+Reflection is the ability to inspect and manipulate classes at runtime. List the methods of a class, construct an instance, read a private field, call a method by name.
+
+That looks like a pointlessly long way to write two lines, and it is, when you know the class at compile time. It earns its keep when you do not. Frameworks wiring up classes they have never seen. Serialisation walking arbitrary fields. Test tooling reaching private state. Anything where the class name arrives as a string. The costs are real: no compile time checking, slower calls, and code refactoring tools cannot follow.
+
+Streams are built on functional interfaces, which are interfaces with exactly one abstract method. Filter and map are intermediate: they return another stream and run nothing. Reduce, collect and forEach are terminal, and they are what actually executes the pipeline. Because it is lazy, each element flows through every stage once, rather than building an intermediate list per stage.
+
+And one small probability result worth knowing. To pick a uniformly random subset, do not pick a size first, because sizes are not equally likely. Flip a fair coin per element. For any element, exactly half of all subsets contain it.

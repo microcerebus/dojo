@@ -1,0 +1,9 @@
+Start naive and let each bottleneck justify the next component. Designing the finished architecture up front is the mistake that reads as memorisation.
+
+Vertical scaling means a bigger machine. It is easy, often needs no code change, and it has a ceiling and a single point of failure. Horizontal scaling means more machines: no real ceiling, survives losing a node, but it demands statelessness. Any server must be able to serve any request, so session state moves out of the process. That is the actual price, and saying it unprompted is worth marks.
+
+A cache sits between the application and the store and absorbs reads. Its hard part is never the lookup. It is invalidation. Does the entry expire on a timer, get deleted when the data changes, or get overwritten on write? And what happens on a cold start when everything misses at once?
+
+Asynchronous queues take slow work off the request path. Transcoding, indexing, email, analytics. The user gets a fast response and the result becomes correct shortly after.
+
+And assume every box can die. Say what degrades and what stops.
