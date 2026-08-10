@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   audioReducer,
   formatTime,
@@ -7,6 +7,9 @@ import {
   type AudioEvent,
   type AudioState,
 } from './audioMachine';
+import { nextRate, readStoredRate, storeRate } from '../lib/audioRate';
+
+const SKIP_SECONDS = 10;
 
 /**
  * Narration scripts, bundled at build time so the transcript works offline and
@@ -40,7 +43,7 @@ export function AudioBite({
   const [showTranscript, setShowTranscript] = useState(false);
   const script = narrationScript(moduleId, sectionId);
 
-  const [state, setState] = useState<AudioState>(initialAudioState);
+  const [state, setState] = useState<AudioState>(() => initialAudioState(readStoredRate()));
   /**
    * The authoritative state for transitions.
    *
@@ -75,6 +78,11 @@ export function AudioBite({
       if (!command) return;
       const element = audioRef.current;
       if (!element) return;
+      if (typeof command === 'object') {
+        if (command.type === 'seek') element.currentTime = command.position;
+        else element.playbackRate = command.rate;
+        return;
+      }
       if (command === 'pause') {
         element.pause();
         return;
@@ -85,7 +93,42 @@ export function AudioBite({
     [applyEvent],
   );
 
+  // Applies the current rate to a freshly mounted element and after every
+  // change, so a fresh <audio> (which always starts at 1x) picks up the
+  // remembered speed without waiting for a user-initiated rate change.
+  useEffect(() => {
+    const element = audioRef.current;
+    if (element) element.playbackRate = state.rate;
+  }, [state.rate]);
+
+  // The component is reused across tracks (ModulePage swaps moduleId/sectionId
+  // on the same AudioBite instance rather than remounting it), so without this
+  // the reducer's position/duration would carry over from the previous track
+  // and a skip could jump relative to stale state. Skipped on the mounting
+  // render - there is no previous track to reset away from yet.
+  const isMounted = useRef(false);
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    dispatch({ type: 'reset' });
+  }, [moduleId, sectionId, dispatch]);
+
   const onPress = useCallback(() => dispatch({ type: 'press' }), [dispatch]);
+  const onSkipBack = useCallback(
+    () => dispatch({ type: 'skip', delta: -SKIP_SECONDS }),
+    [dispatch],
+  );
+  const onSkipForward = useCallback(
+    () => dispatch({ type: 'skip', delta: SKIP_SECONDS }),
+    [dispatch],
+  );
+  const onCycleRate = useCallback(() => {
+    const rate = nextRate(state.rate);
+    storeRate(rate);
+    dispatch({ type: 'setRate', rate });
+  }, [dispatch, state.rate]);
 
   const isBusy = state.status === 'loading';
   const isPlaying = state.status === 'playing' || isBusy;
@@ -109,22 +152,44 @@ export function AudioBite({
         onError={() => dispatch({ type: 'error' })}
       />
 
-      <button
-        type="button"
-        className="bite__play"
-        onClick={onPress}
-        aria-label={
-          state.status === 'error'
-            ? `Retry audio: ${title}`
-            : isPlaying
-              ? `Pause audio: ${title}`
-              : `Play audio recap: ${title}`
-        }
-      >
-        <span aria-hidden="true">
-          {state.status === 'error' ? '↻' : isPlaying ? '❙❙' : '▶'}
-        </span>
-      </button>
+      <div className="bite__controls">
+        <button
+          type="button"
+          className="bite__skip"
+          onClick={onSkipBack}
+          disabled={state.duration <= 0}
+          aria-label={`Back 10 seconds: ${title}`}
+        >
+          <span aria-hidden="true">«10</span>
+        </button>
+
+        <button
+          type="button"
+          className="bite__play"
+          onClick={onPress}
+          aria-label={
+            state.status === 'error'
+              ? `Retry audio: ${title}`
+              : isPlaying
+                ? `Pause audio: ${title}`
+                : `Play audio recap: ${title}`
+          }
+        >
+          <span aria-hidden="true">
+            {state.status === 'error' ? '↻' : isPlaying ? '❙❙' : '▶'}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          className="bite__skip"
+          onClick={onSkipForward}
+          disabled={state.duration <= 0}
+          aria-label={`Forward 10 seconds: ${title}`}
+        >
+          <span aria-hidden="true">10»</span>
+        </button>
+      </div>
 
       <div className="bite__body">
         {/* Just "Audio recap": the section title sits directly above this
@@ -143,6 +208,15 @@ export function AudioBite({
           ? `${formatTime(state.position)} / ${formatTime(state.duration)}`
           : '–:––'}
       </span>
+
+      <button
+        type="button"
+        className="bite__rate"
+        onClick={onCycleRate}
+        aria-label={`Playback speed, currently ${state.rate}x. Tap to change.`}
+      >
+        {state.rate}x
+      </button>
 
       {script ? (
         <button

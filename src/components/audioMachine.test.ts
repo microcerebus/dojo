@@ -13,7 +13,11 @@ const stateAfter = (state: AudioState, ...events: AudioEvent[]) =>
 
 describe('audio player state machine', () => {
   it('starts idle with no position', () => {
-    expect(initialAudioState()).toEqual({ status: 'idle', position: 0, duration: 0 });
+    expect(initialAudioState()).toEqual({ status: 'idle', position: 0, duration: 0, rate: 1 });
+  });
+
+  it('accepts a starting rate', () => {
+    expect(initialAudioState(2).rate).toBe(2);
   });
 
   it('only ever enters playback from a press', () => {
@@ -117,6 +121,19 @@ describe('audio player state machine', () => {
     expect(state.duration).toBe(0);
   });
 
+  it('clamps a stale position when metadata for a new, shorter track arrives', () => {
+    // Simulates a track change that, for whatever reason, did not reset state
+    // first: the old position must not survive past the new duration.
+    const midway = stateAfter(initialAudioState(), {
+      type: 'loadedmetadata',
+      duration: 90,
+    });
+    const stale = { ...midway, position: 80 };
+    const nextTrack = send(stale, { type: 'loadedmetadata', duration: 30 });
+    expect(nextTrack.state.duration).toBe(30);
+    expect(nextTrack.state.position).toBe(30);
+  });
+
   it('replays from the start after ending', () => {
     const ended = stateAfter(
       initialAudioState(),
@@ -154,6 +171,99 @@ describe('audio player state machine', () => {
     const reset = send(playing, { type: 'reset' });
     expect(reset.state).toEqual(initialAudioState());
     expect(reset.command).toBe('pause');
+  });
+
+  it('resets without losing the chosen rate', () => {
+    const state = stateAfter(initialAudioState(), { type: 'setRate', rate: 1.5 });
+    const reset = send(state, { type: 'reset' });
+    expect(reset.state.rate).toBe(1.5);
+  });
+
+  describe('skip', () => {
+    it('does nothing before duration is known', () => {
+      const skipped = send(initialAudioState(), { type: 'skip', delta: 10 });
+      expect(skipped.state.position).toBe(0);
+      expect(skipped.command).toBeNull();
+    });
+
+    it('clamps forward skips to the duration', () => {
+      const withDuration = send(initialAudioState(), {
+        type: 'loadedmetadata',
+        duration: 30,
+      }).state;
+      const nearEnd = { ...withDuration, position: 25 };
+      const skipped = send(nearEnd, { type: 'skip', delta: 10 });
+      expect(skipped.state.position).toBe(30);
+      expect(skipped.command).toEqual({ type: 'seek', position: 30 });
+    });
+
+    it('clamps backward skips to zero', () => {
+      const withDuration = send(initialAudioState(), {
+        type: 'loadedmetadata',
+        duration: 30,
+      }).state;
+      const nearStart = { ...withDuration, position: 5 };
+      const skipped = send(nearStart, { type: 'skip', delta: -10 });
+      expect(skipped.state.position).toBe(0);
+      expect(skipped.command).toEqual({ type: 'seek', position: 0 });
+    });
+
+    it('is a no-op already-clamped skip', () => {
+      const withDuration = send(initialAudioState(), {
+        type: 'loadedmetadata',
+        duration: 30,
+      }).state;
+      const skipped = send(withDuration, { type: 'skip', delta: -10 });
+      expect(skipped.state.position).toBe(0);
+      expect(skipped.command).toBeNull();
+    });
+
+    it('seeks while paused without resuming playback', () => {
+      const paused = stateAfter(
+        initialAudioState(),
+        { type: 'loadedmetadata', duration: 30 },
+        { type: 'press' },
+        { type: 'playing' },
+        { type: 'timeupdate', position: 12 },
+        { type: 'press' }, // pause
+      );
+      expect(paused.status).toBe('paused');
+
+      const skipped = send(paused, { type: 'skip', delta: 10 });
+      expect(skipped.state.status).toBe('paused');
+      expect(skipped.state.position).toBe(22);
+      expect(skipped.command).toEqual({ type: 'seek', position: 22 });
+    });
+  });
+
+  describe('setRate', () => {
+    it('changes the rate and commands the element', () => {
+      const changed = send(initialAudioState(), { type: 'setRate', rate: 1.5 });
+      expect(changed.state.rate).toBe(1.5);
+      expect(changed.command).toEqual({ type: 'rate', rate: 1.5 });
+    });
+
+    it('is a no-op when the rate is unchanged', () => {
+      const state = initialAudioState(1.5);
+      const changed = send(state, { type: 'setRate', rate: 1.5 });
+      expect(changed.state).toBe(state);
+      expect(changed.command).toBeNull();
+    });
+
+    it('applies while the element is still loading', () => {
+      const loading = send(initialAudioState(), { type: 'press' }).state;
+      expect(loading.status).toBe('loading');
+      const changed = send(loading, { type: 'setRate', rate: 2 });
+      expect(changed.state.status).toBe('loading');
+      expect(changed.state.rate).toBe(2);
+      expect(changed.command).toEqual({ type: 'rate', rate: 2 });
+    });
+
+    it('persists across a track change (a fresh reducer seeded with the prior rate)', () => {
+      const chosen = send(initialAudioState(), { type: 'setRate', rate: 1.25 }).state;
+      const freshTrack = initialAudioState(chosen.rate);
+      expect(freshTrack.rate).toBe(1.25);
+    });
   });
 });
 
