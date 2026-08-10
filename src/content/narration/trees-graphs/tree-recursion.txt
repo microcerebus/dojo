@@ -1,0 +1,5 @@
+Here is the recurring move in this chapter. A recursive call returns the value its parent needs, while a variable outside the recursion accumulates the answer. Return one thing, track another.
+
+Take the balance check. The obvious version measures each subtree's height from scratch at every node, so every node is re-measured once per ancestor, and that is n log n. Instead, have the height function also report failure, returning a sentinel the moment a subtree is unbalanced and passing it straight back up. One pass, linear. Diameter and maximum path sum are the same trick: the recursion returns the best path going down, while a variable outside records the best path passing through.
+
+Lowest common ancestor has one answer per set of tools. On a search tree, descend and stop at the first node between the two values. With parent pointers, equalise the depths and walk up together. With neither, recurse and return this node when both children came back non-null. Watch the bug everyone ships: that recursion returns a target even when only one of the two is actually in the tree.

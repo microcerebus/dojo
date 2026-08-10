@@ -1,0 +1,9 @@
+You are given projects and pairs saying this one must be built before that one. Produce a build order, or report that none exists.
+
+The derivation is short. Something has to go first, and it cannot depend on anything, so start with the nodes that have no incoming edges. Once those are built, nothing that depended on them is blocked any more, so delete their outgoing edges and look again.
+
+Concretely: count each node's indegree, queue everything at zero, pop, append to the order, and decrement everything that node points at. Anything hitting zero joins the queue.
+
+Cycle detection is free. You do not add a check; you notice the queue emptied while projects remain. Every leftover is waiting on another leftover, which is exactly what a cycle is.
+
+There is a depth-first version too, pushing each node after its children finish. But it needs three states, not two: visited, unvisited, and in-progress, because meeting a node currently on the recursion stack means you have looped back into your own path.

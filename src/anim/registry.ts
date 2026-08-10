@@ -8,6 +8,8 @@ import { technicalQuestionsAnimations } from '../content/modules/technical-quest
 import { arraysStringsAnimations } from '../content/modules/arrays-strings/animations';
 import { linkedListsAnimations } from '../content/modules/linked-lists/animations';
 import { stacksQueuesAnimations } from '../content/modules/stacks-queues/animations';
+import { treesGraphsAnimations } from '../content/modules/trees-graphs/animations';
+import { heapsTriesAnimations } from '../content/modules/heaps-tries/animations';
 
 export const ALL_ANIMATIONS: AnimationSpec[] = [
   ...bigOAnimations,
@@ -15,6 +17,8 @@ export const ALL_ANIMATIONS: AnimationSpec[] = [
   ...arraysStringsAnimations,
   ...linkedListsAnimations,
   ...stacksQueuesAnimations,
+  ...treesGraphsAnimations,
+  ...heapsTriesAnimations,
 ];
 
 const byId = new Map(ALL_ANIMATIONS.map((spec) => [spec.id, spec]));

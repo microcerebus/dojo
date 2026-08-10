@@ -1,0 +1,7 @@
+A min-heap is a complete binary tree in which every node is smaller than both of its children. That is the entire definition, and it is deliberately weak.
+
+Notice what it does not promise. A heap is not sorted. It will not give you the second smallest without work. It cannot search for an arbitrary value faster than scanning. It promises one thing: the extreme is at index zero.
+
+Because the tree is complete it has no holes, so it lays out level by level in a flat array, and the parent and child links become arithmetic instead of pointers. Children of index i are two i plus one and two i plus two; the parent is i minus one, halved and rounded down.
+
+Peek is constant. Insert and extract are logarithmic, because each walks a single root-to-leaf path. And one result worth justifying: building a heap from an existing array is linear, not n log n, because half the nodes are leaves that cannot move and only the root can travel the full height.

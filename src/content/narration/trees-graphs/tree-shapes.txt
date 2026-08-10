@@ -1,0 +1,7 @@
+A tree is a connected graph with no cycles. Everything else in this chapter is a restriction layered on top of that, and the restrictions are exactly what interviewers leave unsaid.
+
+Binary means at most two children, and nothing about ordering. Binary search adds the ordering, and it is stronger than people remember: all left descendants are less than or equal to the node, which is less than all right descendants. Not just the immediate children. All of them.
+
+Complete means every level is filled except possibly the last, which fills left to right. That is what lets a heap live in a flat array. Full means every node has zero or two children, never one. Perfect means both at once, which needs exactly two to the k, minus one nodes. Never assume one.
+
+Balanced is the loosest word of the four. It promises only that the height is logarithmic. So ask, every time: is this a binary search tree, or just a binary tree? And keep height in mind, because it is the whole complexity story. Balanced means log n. Degenerate means n, and your logarithmic recursion just became linear stack.

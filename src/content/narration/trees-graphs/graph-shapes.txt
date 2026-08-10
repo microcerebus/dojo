@@ -1,0 +1,7 @@
+A graph is nodes plus edges. A tree is the special case that is connected and acyclic. Drop acyclic and you need a visited set. Drop connected and one search no longer reaches everything.
+
+Two representations. An adjacency list costs nodes plus edges, and iterating a node's neighbours costs only its degree. An adjacency matrix answers is there an edge from u to v in constant time, but costs n squared space always, and finding neighbours means scanning a whole row. Default to the list. Reach for the matrix when the graph is dense or edge lookup dominates.
+
+Unlike a tree, you cannot hold a graph by one node, because there may be no node that reaches all the others. That is why graph problems hand you a list of nodes, and why counting components is a loop over that list.
+
+And bank this recognition: grids are graphs. A cell is a node, its four neighbours are its edges, and you never build the adjacency list. Seeing that turns a matrix problem into a search you already know how to write.

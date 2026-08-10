@@ -1,0 +1,7 @@
+Recognising a heap problem is easier than implementing one. The signal is that you need an extreme value over and over while the set keeps changing, and you never need the full ordering.
+
+Start with the inversion that catches everyone. For the k largest values, keep a min-heap of size k. Not a max-heap. Its root is the weakest thing you have kept, so a new value needs one comparison to be dismissed or to displace it. That is n log k time and k space, and it works on a stream, where sorting cannot.
+
+Rank the alternatives out loud. Quickselect is linear on average but degrades to quadratic and needs the whole input up front. Bucket sort is linear, but only when the values or frequencies are bounded small integers.
+
+The streaming median needs both flavours at once. Smaller half in a max-heap, larger half in a min-heap, sizes within one of each other, and the two roots straddle the middle. Let one heap hold the extra element on an odd count and its root is the median, with no case analysis at all.
