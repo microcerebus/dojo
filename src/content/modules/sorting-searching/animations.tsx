@@ -173,7 +173,7 @@ function MergeFrameView({ index }: { index: number }) {
 
 export const mergeSort: AnimationSpec = fromFrames(
   {
-    id: 'ss-merge-sort',
+    id: 'sort-merge-sort',
     title: 'Merge sort, one merge at a time',
     blurb: 'The split is free. The merge is the algorithm - and it needs a helper array.',
   },
@@ -298,7 +298,7 @@ function PartitionFrameView({ index }: { index: number }) {
 
 export const quickPartition: AnimationSpec = fromFrames(
   {
-    id: 'ss-quick-partition',
+    id: 'sort-quick-partition',
     title: 'Quicksort partitioning',
     blurb: 'Two scans walk inwards and swap. In place, but the pivot decides the runtime.',
   },
@@ -447,7 +447,7 @@ function RotatedFrameView({ index }: { index: number }) {
 
 export const rotatedSearch: AnimationSpec = fromFrames(
   {
-    id: 'ss-rotated-search',
+    id: 'sort-rotated-search',
     title: 'Searching a rotated array',
     blurb: 'One half is always sorted. Work out which, and binary search still applies.',
   },
@@ -581,7 +581,7 @@ function GridFrameView({ index }: { index: number }) {
 
 export const matrixCornerSearch: AnimationSpec = fromFrames(
   {
-    id: 'ss-matrix-corner',
+    id: 'sort-matrix-corner',
     title: 'Searching a row/column-sorted matrix',
     blurb: 'Start in a corner, and each comparison deletes an entire row or column.',
   },

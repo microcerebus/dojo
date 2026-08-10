@@ -51,14 +51,14 @@ export const sortingSearching: CourseModule = {
             '**Counting / bucket sort** - when the values come from a small known range, count occurrences and read them back out. O(n + range).',
           ],
         },
-        { kind: 'anim', animId: 'ss-merge-sort' },
+        { kind: 'anim', animId: 'sort-merge-sort' },
         {
           kind: 'callout',
           tone: 'key',
           title: 'The merge detail people miss',
           text: 'When one side runs out, the leftovers from the *left* side must be copied back, but the leftovers from the right side need no work at all - they are already sitting in exactly the right positions. Being able to say why is a good signal that you actually understand the merge.',
         },
-        { kind: 'anim', animId: 'ss-quick-partition' },
+        { kind: 'anim', animId: 'sort-quick-partition' },
         {
           kind: 'p',
           text: 'Quicksort earns its name from the constant factor: it swaps within the array instead of building a helper, so it is cache-friendly and needs no allocation. The cost is the pivot. If the pivot is always the extreme value, each partition peels off one element and the whole thing degrades to O(n²).',
@@ -172,7 +172,7 @@ export const sortingSearching: CourseModule = {
           kind: 'p',
           text: 'Most of this chapter\'s search questions take binary search and break one of its assumptions. The pattern for each is to find a weaker property that is still enough to discard half the data.',
         },
-        { kind: 'anim', animId: 'ss-rotated-search' },
+        { kind: 'anim', animId: 'sort-rotated-search' },
         {
           kind: 'bullets',
           items: [
@@ -204,7 +204,7 @@ export const sortingSearching: CourseModule = {
           kind: 'p',
           text: 'A matrix whose rows and columns are each sorted is not a sorted list - the value below a cell and the value to its right are incomparable. Binary searching every row works and costs O(m log n). Starting from the right corner is better.',
         },
-        { kind: 'anim', animId: 'ss-matrix-corner' },
+        { kind: 'anim', animId: 'sort-matrix-corner' },
         {
           kind: 'callout',
           tone: 'key',
@@ -309,7 +309,7 @@ export const sortingSearching: CourseModule = {
   ],
   quiz: [
     {
-      id: 'ss-1',
+      id: 'sort-1',
       kind: 'complexity',
       prompt: 'Which sort is O(n log n) in the worst case, stable, and needs O(n) extra space?',
       options: ['Quicksort', 'Merge sort', 'Heapsort', 'Radix sort'],
@@ -318,7 +318,7 @@ export const sortingSearching: CourseModule = {
         'Merge sort is the reliable one: no bad case and stable, paid for with the helper array. Quicksort trades the guarantee for in-place operation.',
     },
     {
-      id: 'ss-2',
+      id: 'sort-2',
       kind: 'concept',
       prompt: 'Why can radix sort beat the Ω(n log n) comparison lower bound?',
       options: [
@@ -332,7 +332,7 @@ export const sortingSearching: CourseModule = {
         'The bound is about comparison sorts. Radix and counting sorts exploit the structure of the values instead, so they sidestep it rather than break it.',
     },
     {
-      id: 'ss-3',
+      id: 'sort-3',
       kind: 'technique',
       prompt:
         'You are searching a rotated sorted array of distinct integers. What do you check at each step?',
@@ -347,7 +347,7 @@ export const sortingSearching: CourseModule = {
         'At least one half never wraps. Identify it, range-check the target against it, and keep or discard it - one extra comparison per step.',
     },
     {
-      id: 'ss-4',
+      id: 'sort-4',
       kind: 'complexity',
       prompt:
         'Searching a rotated sorted array that may contain duplicates. What is the worst-case time?',
@@ -357,7 +357,7 @@ export const sortingSearching: CourseModule = {
         'When the low, mid and high values are equal you cannot tell which half is sorted, so you can only shrink an end by one - and an array of all-equal values degrades to a linear scan.',
     },
     {
-      id: 'ss-5',
+      id: 'sort-5',
       kind: 'technique',
       prompt:
         'A sorted array-like structure has `elementAt(i)` but no length, returning −1 past the end. How do you find an element in O(log n)?',
@@ -372,7 +372,7 @@ export const sortingSearching: CourseModule = {
         'Doubling finds a bound in O(log n) probes, and the resulting window is at most twice the true size - so the follow-up binary search is O(log n) too.',
     },
     {
-      id: 'ss-6',
+      id: 'sort-6',
       kind: 'complexity',
       prompt:
         'An m×n matrix has every row and every column sorted ascending. Walking in from the top-right corner costs:',
@@ -382,7 +382,7 @@ export const sortingSearching: CourseModule = {
         'Each comparison eliminates a full row or a full column, so the walk visits at most m + n cells. Binary searching each row would be O(m log n).',
     },
     {
-      id: 'ss-7',
+      id: 'sort-7',
       kind: 'technique',
       prompt:
         'Four billion non-negative 32-bit integers, 1 GB of memory, find a value that is missing. What is the approach?',
@@ -397,7 +397,7 @@ export const sortingSearching: CourseModule = {
         'One bit per possible value is 512 MB, which fits. With only 10 MB you would first count values per block, then bit-vector the one block that is short.',
     },
     {
-      id: 'ss-8',
+      id: 'sort-8',
       kind: 'technique',
       prompt: 'Sorting an array of strings so that anagrams end up adjacent. What is the key idea?',
       options: [
@@ -411,7 +411,7 @@ export const sortingSearching: CourseModule = {
         'Anagrams share a canonical form, so a hash map keyed on it does in one pass what pairwise comparison does in O(n²).',
     },
     {
-      id: 'ss-9',
+      id: 'sort-9',
       kind: 'concept',
       prompt: 'Binary search requires:',
       options: [
@@ -425,7 +425,7 @@ export const sortingSearching: CourseModule = {
         'Anything that is false then true across the range can be bisected: find-peak, minimum feasible capacity, or the partition point in median-of-two-arrays.',
     },
     {
-      id: 'ss-10',
+      id: 'sort-10',
       kind: 'technique',
       prompt:
         'Rearranging an array into alternating peaks and valleys. What is the O(n) approach?',

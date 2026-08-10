@@ -18,7 +18,7 @@ import {
 
 const sorted = (values: number[]) => [...values].sort((a, b) => a - b);
 
-describe('ss-merge-sort', () => {
+describe('sort-merge-sort', () => {
   const first = mergeFrames[0];
   const last = mergeFrames[mergeFrames.length - 1];
 
@@ -50,7 +50,7 @@ describe('ss-merge-sort', () => {
   });
 });
 
-describe('ss-quick-partition', () => {
+describe('sort-quick-partition', () => {
   const first = partitionFrames[0];
   const settled = partitionFrames.filter((frame) => frame.settled)[0];
 
@@ -79,7 +79,7 @@ describe('ss-quick-partition', () => {
   });
 });
 
-describe('ss-rotated-search', () => {
+describe('sort-rotated-search', () => {
   const found = rotatedFrames.filter((frame) => frame.found && frame.mid !== null)[0];
 
   it('finds the target at an index that really holds it', () => {
@@ -114,7 +114,7 @@ describe('ss-rotated-search', () => {
   });
 });
 
-describe('ss-matrix-corner', () => {
+describe('sort-matrix-corner', () => {
   const found = gridFrames[gridFrames.length - 1];
 
   it('lands on the value it was looking for', () => {
