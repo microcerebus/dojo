@@ -81,6 +81,12 @@ shell, the manifest, the icons, the fonts or any narration MP3.
 - Drills reference `src/data/problems.ts` by slug only; problem metadata lives there once.
 - Behaviour lives in pure reducers next to the component (`quizMachine`, `audioMachine`,
   `anim/stepper`, `lib/progress`) so it is testable without rendering.
+- Animation frames must derive every number they display from executed state - never hand-count a
+  total or retype a computed value into a caption. Capture what a step is about *before* mutating,
+  and name each `Readout` entry after the row it mirrors: a generic label like "value" on a frame
+  mid-transition silently contradicts the row beside it. `animations.test.ts(x)` beside a module
+  pins these by recomputing each claim from an independent reference and by reading the rendered
+  DOM back out. Captions bypass `RichText`, so `**bold**` markup shows up literally.
 
 ## Mobile and iOS constraints
 

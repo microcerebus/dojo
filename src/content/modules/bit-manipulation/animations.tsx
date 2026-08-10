@@ -392,9 +392,17 @@ function ClearFrameView({ index }: { index: number }) {
           bits={bitRow(frame.after, `e${index}`, (_, bit) => (bit === 1 ? 'target' : undefined))}
         />
       )}
+      {/* One readout entry per rendered row, named after that row. A single
+          unqualified "value" is ambiguous mid-transition: n and n & (n−1) are
+          two different numbers on the same frame, and both are on screen. */}
       <Readout
         items={[
-          { key: 'v', label: 'value', value: String(frame.after ?? frame.before) },
+          { key: 'v', label: 'n', value: String(frame.before) },
+          {
+            key: 'r',
+            label: 'n & (n−1)',
+            value: frame.after === null ? '—' : String(frame.after),
+          },
           { key: 'k', label: 'bits cleared', value: String(frame.count) },
         ]}
       />

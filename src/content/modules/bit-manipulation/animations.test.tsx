@@ -5,6 +5,7 @@
  * longer drift away from the frame it describes.
  */
 import { describe, expect, it } from 'vitest';
+import { render } from '@testing-library/react';
 
 import {
   DRAW_LINE_SPEC,
@@ -19,6 +20,7 @@ import {
   maskFrames,
   toByte,
 } from './animations';
+import { addWithoutPlus, clearLowestBit, drawLine, maskOps, twosComplement } from './animations';
 
 const popcount = (value: number) =>
   binary(value)
@@ -206,5 +208,130 @@ describe('bm-draw-line', () => {
   it('never writes the same byte twice', () => {
     const touched = drawFrames.map((frame) => frame.touched).filter((b) => b !== null);
     expect(new Set(touched).size).toBe(touched.length);
+  });
+});
+
+/* ------------------------------------------------------------------------ */
+/* Rendered output: what a learner actually sees on one frame.               */
+/* ------------------------------------------------------------------------ */
+
+/** `<Bits>` rows as {label, value}, read back out of the DOM. */
+const readBitRows = (container: HTMLElement) =>
+  [...container.querySelectorAll('.viz__bitsRow')].map((row) => ({
+    label: row.querySelector('.viz__bitsLabel')?.textContent ?? '',
+    value: parseInt(
+      [...row.querySelectorAll('.viz__bit')]
+        .map((bit) => bit.childNodes[0]?.textContent ?? '')
+        .join(''),
+      2,
+    ),
+  }));
+
+/** `<Readout>` entries as {label, value}, read back out of the DOM. */
+const readReadout = (container: HTMLElement) =>
+  [...container.querySelectorAll('.viz__readoutItem')].map((item) => ({
+    label: item.querySelector('dt')?.textContent ?? '',
+    value: item.querySelector('dd')?.textContent ?? '',
+  }));
+
+/** Readout labels that are counters or metadata rather than a rendered row. */
+const NOT_A_ROW = new Set([
+  'bits cleared',
+  'round',
+  'a + b so far',
+  'expression',
+  'line',
+  'byte writes',
+]);
+
+describe('rendered frames', () => {
+  const specs = [maskOps, twosComplement, clearLowestBit, addWithoutPlus, drawLine];
+
+  it('never shows a number that contradicts the row it is named after', () => {
+    // The bug this pins: a readout labelled `value` showed the post-operation
+    // result while the row labelled `n` showed the pre-operation one, so the
+    // same frame displayed 180 and 176 for the same thing. Every readout must
+    // now either name a rendered row and agree with it, or be a counter.
+    for (const spec of specs) {
+      for (let index = 0; index < spec.length; index++) {
+        const { container, unmount } = render(<spec.Frame index={index} />);
+        const rows = readBitRows(container);
+        for (const item of readReadout(container)) {
+          if (NOT_A_ROW.has(item.label) || item.value === '—') continue;
+          const row = rows.find((candidate) => candidate.label === item.label);
+          expect(row, `${spec.id} step ${index}: readout "${item.label}" names no rendered row`)
+            .toBeDefined();
+          expect(
+            String((row as { value: number }).value),
+            `${spec.id} step ${index}: readout "${item.label}"`,
+          ).toBe(item.value);
+        }
+        unmount();
+      }
+    }
+  });
+
+  it('names both sides of the clear-lowest-bit transition', () => {
+    for (let index = 0; index < clearLowestBit.length; index++) {
+      const { container, unmount } = render(<clearLowestBit.Frame index={index} />);
+      const rows = readBitRows(container);
+      const readout = readReadout(container);
+      const labels = readout.map((item) => item.label);
+
+      // The value going in is always on screen and always named.
+      expect(labels, `step ${index}`).toContain('n');
+      expect(readout.find((item) => item.label === 'n')?.value).toBe(
+        String(rows.find((row) => row.label === 'n')?.value),
+      );
+
+      // The result is named too, and reads as absent exactly when no row for it
+      // is drawn - so no frame can imply a result it is not showing.
+      const resultRow = rows.find((row) => row.label === 'n & (n−1)');
+      const resultItem = readout.find((item) => item.label === 'n & (n−1)');
+      expect(resultItem, `step ${index} has no result readout`).toBeDefined();
+      if (resultRow === undefined) {
+        expect(resultItem?.value, `step ${index}`).toBe('—');
+      } else {
+        expect(resultItem?.value, `step ${index}`).toBe(String(resultRow.value));
+      }
+      unmount();
+    }
+  });
+
+  it('renders the borrow row as n − 1 whenever a bit is being cleared', () => {
+    for (let index = 0; index < clearLowestBit.length; index++) {
+      const { container, unmount } = render(<clearLowestBit.Frame index={index} />);
+      const rows = readBitRows(container);
+      const n = rows.find((row) => row.label === 'n');
+      const borrow = rows.find((row) => row.label === 'n − 1');
+      const result = rows.find((row) => row.label === 'n & (n−1)');
+      if (result !== undefined) {
+        expect(borrow, `step ${index} clears a bit but shows no n − 1`).toBeDefined();
+        expect(borrow?.value).toBe((n as { value: number }).value - 1);
+        // And the three rows are consistent with each other, on screen.
+        expect(result.value).toBe(
+          (n as { value: number }).value & ((n as { value: number }).value - 1),
+        );
+      } else {
+        expect(borrow, `step ${index} shows n − 1 with no result`).toBeUndefined();
+      }
+      unmount();
+    }
+  });
+
+  it('keeps the bits-cleared counter equal to the bits actually removed', () => {
+    const start = clearFrames[0].before;
+    for (let index = 0; index < clearLowestBit.length; index++) {
+      const { container, unmount } = render(<clearLowestBit.Frame index={index} />);
+      const rows = readBitRows(container);
+      const readout = readReadout(container);
+      // The counter includes the step this frame depicts, so it is measured
+      // against the result row when there is one, and against n otherwise.
+      const result = rows.find((row) => row.label === 'n & (n−1)');
+      const shown = (result ?? rows.find((row) => row.label === 'n')) as { value: number };
+      const cleared = Number(readout.find((item) => item.label === 'bits cleared')?.value);
+      expect(cleared, `step ${index}`).toBe(popcount(start) - popcount(shown.value));
+      unmount();
+    }
   });
 });
