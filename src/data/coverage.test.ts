@@ -217,26 +217,47 @@ describe('modules', () => {
 describe('complete modules', () => {
   const complete = MODULES.filter((courseModule) => courseModule.status === 'complete');
 
-  // Modules are finished in waves, so this asserts a floor rather than an exact
-  // set - a new complete module must not silently un-finish an earlier one.
-  it('includes the weeks 1-2 modules', () => {
-    const finished = new Set(complete.map((courseModule) => courseModule.id));
-    for (const id of [
-      'arrays-strings',
-      'big-o',
-      'linked-lists',
-      'stacks-queues',
-      'technical-questions',
-    ]) {
-      expect(finished.has(id), `${id} should be a complete module`).toBe(true);
-    }
-  });
-
-  it('gives each complete module lesson sections and a quiz of 5-10 questions', () => {
+  /**
+   * Modules are finished in waves, so listing the finished ones here would have
+   * to be edited by every branch that finishes another. Instead of a list, this
+   * holds `status: 'complete'` to its full meaning, which is strictly stronger:
+   * a module cannot claim to be complete unless it really is, whatever order the
+   * branches land in. "Every week 1-2 module is complete" is separately asserted
+   * from the sprint data, so nothing that is finished can quietly regress.
+   */
+  it('holds every complete module to the full completeness bar', () => {
     for (const courseModule of complete) {
-      expect(courseModule.sections.length, courseModule.id).toBeGreaterThan(0);
-      expect(courseModule.quiz.length, courseModule.id).toBeGreaterThanOrEqual(5);
-      expect(courseModule.quiz.length, courseModule.id).toBeLessThanOrEqual(10);
+      const where = courseModule.id;
+      expect(courseModule.sections.length, `${where}: no lesson sections`).toBeGreaterThan(0);
+      expect(courseModule.quiz.length, `${where}: quiz too short`).toBeGreaterThanOrEqual(5);
+      expect(courseModule.quiz.length, `${where}: quiz too long`).toBeLessThanOrEqual(10);
+
+      // Drills for the problem-solving modules, practice tasks for the process
+      // ones - `PracticeTask` exists precisely because drilling LeetCode is not
+      // how you rehearse a behavioural answer. Either satisfies the bar; neither
+      // does not.
+      expect(
+        courseModule.drills.length + (courseModule.practice?.length ?? 0),
+        `${where}: nothing to practise`,
+      ).toBeGreaterThan(0);
+
+      const animations = courseModule.sections
+        .flatMap((section) => section.blocks)
+        .filter((block) => block.kind === 'anim');
+      expect(animations.length, `${where}: no animations`).toBeGreaterThan(0);
+
+      expect(
+        courseModule.plannedAnimations ?? [],
+        `${where}: plannedAnimations is for outlines - the animations should exist`,
+      ).toEqual([]);
+
+      for (const section of courseModule.sections) {
+        expect(section.audio, `${where}/${section.id}: section is not narrated`).toBe(true);
+        const script = join('src', 'content', 'narration', where, `${section.id}.txt`);
+        const clip = join('public', 'audio', where, `${section.id}.mp3`);
+        expect(existsSync(join(process.cwd(), script)), `missing ${script}`).toBe(true);
+        expect(existsSync(join(process.cwd(), clip)), `missing ${clip}`).toBe(true);
+      }
     }
   });
 
@@ -260,34 +281,6 @@ describe('complete modules', () => {
           expect(getAnimation(block.animId), `${courseModule.id}/${block.animId}`).toBeDefined();
         }
       }
-    }
-  });
-
-  it('has a narration script and a generated clip for every audio section', () => {
-    const missing: string[] = [];
-    for (const courseModule of complete) {
-      for (const section of courseModule.sections) {
-        if (!section.audio) continue;
-        const script = join(
-          process.cwd(),
-          'src/content/narration',
-          courseModule.id,
-          `${section.id}.txt`,
-        );
-        const clip = join(process.cwd(), 'public/audio', courseModule.id, `${section.id}.mp3`);
-        if (!existsSync(script)) missing.push(`script ${courseModule.id}/${section.id}.txt`);
-        if (!existsSync(clip)) missing.push(`clip ${courseModule.id}/${section.id}.mp3`);
-      }
-    }
-    expect(missing, 'run `pnpm gen:audio <moduleId>`').toEqual([]);
-  });
-
-  it('uses at least one animation per complete module', () => {
-    for (const courseModule of complete) {
-      const animCount = courseModule.sections
-        .flatMap((section) => section.blocks)
-        .filter((block) => block.kind === 'anim').length;
-      expect(animCount, courseModule.id).toBeGreaterThan(0);
     }
   });
 

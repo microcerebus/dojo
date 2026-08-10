@@ -115,7 +115,7 @@ export const sieve: AnimationSpec = fromFrames(
 /* 2. The mutilated chessboard: a colouring argument.                        */
 /* ------------------------------------------------------------------------ */
 
-const BOARD = 8;
+export const BOARD = 8;
 /** Removed corners - both are light squares, which is the whole point. */
 const CUT = new Set(['0,0', '7,7']);
 
@@ -123,7 +123,7 @@ interface DominoPlacement {
   cells: [string, string];
 }
 
-const DOMINOES: DominoPlacement[] = [
+export const DOMINOES: DominoPlacement[] = [
   { cells: ['1,0', '1,1'] },
   { cells: ['1,2', '1,3'] },
   { cells: ['2,0', '3,0'] },
@@ -131,78 +131,157 @@ const DOMINOES: DominoPlacement[] = [
   { cells: ['6,6', '6,7'] },
 ];
 
-interface BoardFrame {
-  cut: boolean;
-  dominoes: number;
-  caption: string;
-  detail: string;
-}
+export const LIGHT = '□';
+export const DARK = '■';
+export const REMOVED = '✕';
 
-const boardFrames: BoardFrame[] = [
-  {
-    cut: false,
-    dominoes: 0,
-    caption:
-      'A full 8x8 board: 64 squares, 32 light and 32 dark. Thirty-two dominoes would tile it with room to spare.',
-    detail: 'Colour is not decoration here - it is the invariant the whole proof runs on.',
-  },
-  {
-    cut: true,
-    dominoes: 0,
-    caption:
-      'Cut off two diagonally opposite corners. Opposite corners are always the same colour, so 62 squares remain: 30 light, 32 dark.',
-    detail: 'Counting squares alone says 62 / 2 = 31 dominoes should fit. Counting colours says otherwise.',
-  },
-  {
-    cut: true,
-    dominoes: 1,
-    caption:
-      'Place one domino. It covers two adjacent squares, and adjacent squares always differ in colour - so it takes exactly one light and one dark.',
-    detail: 'This is true of every placement, horizontal or vertical, anywhere on the board.',
-  },
-  {
-    cut: true,
-    dominoes: 3,
-    caption: 'Keep going. Three dominoes down: 3 light and 3 dark consumed. The ratio never budges.',
-    detail: 'covered so far: 3 light, 3 dark · remaining: 27 light, 29 dark',
-  },
-  {
-    cut: true,
-    dominoes: 5,
-    caption:
-      'Thirty-one dominoes would consume exactly 31 light and 31 dark squares. We only have 30 light. Impossible - no search needed.',
-    detail:
-      'An invariant beats exhaustive trial: it rules out every arrangement at once, including the ones you never drew.',
-  },
-];
-
-function BoardFrame({ index }: { index: number }) {
-  const frame = boardFrames[Math.max(0, Math.min(index, boardFrames.length - 1))];
-  const covered = new Set(DOMINOES.slice(0, frame.dominoes).flatMap((domino) => domino.cells));
-  const rows: CellSpec[][] = Array.from({ length: BOARD }, (_, row) =>
+/** Builds the board for a step. This is the only place board state is decided. */
+function buildBoard(cut: boolean, dominoes: number): CellSpec[][] {
+  const covered = new Set(DOMINOES.slice(0, dominoes).flatMap((domino) => domino.cells));
+  return Array.from({ length: BOARD }, (_, row) =>
     Array.from({ length: BOARD }, (_, col) => {
       const key = `${row},${col}`;
-      const light = (row + col) % 2 === 0;
-      if (frame.cut && CUT.has(key)) {
-        return { key, label: '✕', state: 'bad' as const };
+      if (cut && CUT.has(key)) {
+        return { key, label: REMOVED, state: 'bad' as const };
       }
       return {
         key,
-        label: light ? '□' : '■',
+        label: (row + col) % 2 === 0 ? LIGHT : DARK,
         state: covered.has(key) ? ('done' as const) : ('idle' as const),
       };
     }),
   );
-  const lightLeft = frame.cut ? 30 : 32;
-  const darkLeft = 32;
+}
+
+export interface BoardCounts {
+  /** Uncovered squares still in play. */
+  light: number;
+  dark: number;
+  /** Squares consumed by the dominoes actually on the board. */
+  coveredLight: number;
+  coveredDark: number;
+  removed: number;
+  dominoes: number;
+  /** Squares that exist at all, by colour. */
+  totalLight: number;
+  totalDark: number;
+  playable: number;
+  /** How many dominoes 62 squares would naively allow. */
+  naiveDominoes: number;
+}
+
+/**
+ * Counts read back off the rendered cells rather than tracked alongside them,
+ * so the numbers in the captions cannot drift from the squares on screen.
+ */
+function countBoard(rows: CellSpec[][]): BoardCounts {
+  let light = 0;
+  let dark = 0;
+  let coveredLight = 0;
+  let coveredDark = 0;
+  let removed = 0;
+  for (const row of rows) {
+    for (const cell of row) {
+      if (cell.label === REMOVED) {
+        removed += 1;
+      } else if (cell.state === 'done') {
+        if (cell.label === LIGHT) coveredLight += 1;
+        else coveredDark += 1;
+      } else if (cell.label === LIGHT) {
+        light += 1;
+      } else {
+        dark += 1;
+      }
+    }
+  }
+  const playable = light + dark + coveredLight + coveredDark;
+  return {
+    light,
+    dark,
+    coveredLight,
+    coveredDark,
+    removed,
+    dominoes: (coveredLight + coveredDark) / 2,
+    totalLight: light + coveredLight,
+    totalDark: dark + coveredDark,
+    playable,
+    naiveDominoes: Math.floor(playable / 2),
+  };
+}
+
+interface BoardStep {
+  cut: boolean;
+  dominoes: number;
+  caption: (counts: BoardCounts) => string;
+  detail: (counts: BoardCounts) => string;
+}
+
+const BOARD_STEPS: BoardStep[] = [
+  {
+    cut: false,
+    dominoes: 0,
+    caption: (c) =>
+      `A full ${BOARD}x${BOARD} board: ${c.playable} squares, ${c.light} light and ${c.dark} dark. Thirty-two dominoes would tile it exactly.`,
+    detail: () => 'Colour is not decoration here - it is the invariant the whole proof runs on.',
+  },
+  {
+    cut: true,
+    dominoes: 0,
+    caption: (c) =>
+      `Cut off two diagonally opposite corners. Opposite corners are always the same colour, so ${c.playable} squares remain: ${c.light} light and ${c.dark} dark.`,
+    detail: (c) =>
+      `Counting squares alone says ${c.naiveDominoes} dominoes should fit. Counting colours says otherwise.`,
+  },
+  {
+    cut: true,
+    dominoes: 1,
+    caption: (c) =>
+      `Place one domino. Adjacent squares always differ in colour, so it takes exactly ${c.coveredLight} light and ${c.coveredDark} dark - leaving ${c.light} light and ${c.dark} dark.`,
+    detail: (c) =>
+      `covered: ${c.coveredLight} light, ${c.coveredDark} dark · remaining: ${c.light} light, ${c.dark} dark`,
+  },
+  {
+    cut: true,
+    dominoes: 3,
+    caption: () =>
+      'Keep going. Three dominoes down, and the split is still even - every placement consumes one of each colour, so the ratio never budges.',
+    detail: (c) =>
+      `covered: ${c.coveredLight} light, ${c.coveredDark} dark · remaining: ${c.light} light, ${c.dark} dark`,
+  },
+  {
+    cut: true,
+    dominoes: 5,
+    caption: (c) =>
+      `Five dominoes have consumed ${c.coveredLight} light and ${c.coveredDark} dark. Extrapolate: ${c.naiveDominoes} dominoes would need ${c.naiveDominoes} of each colour, and the board only has ${c.totalLight} light. Impossible - no search needed.`,
+    detail: () =>
+      'An invariant beats exhaustive trial: it rules out every arrangement at once, including the ones you never drew.',
+  },
+];
+
+export interface BoardFrame {
+  rows: CellSpec[][];
+  counts: BoardCounts;
+  caption: string;
+  detail: string;
+}
+
+export const boardFrames: BoardFrame[] = BOARD_STEPS.map((step) => {
+  const rows = buildBoard(step.cut, step.dominoes);
+  const counts = countBoard(rows);
+  return { rows, counts, caption: step.caption(counts), detail: step.detail(counts) };
+});
+
+function BoardFrame({ index }: { index: number }) {
+  const frame = boardFrames[Math.max(0, Math.min(index, boardFrames.length - 1))];
+  const { counts } = frame;
   return (
     <Stage tall>
-      <Matrix rows={rows} />
+      <Matrix rows={frame.rows} />
       <Readout
         items={[
-          { key: 'light', label: 'light squares', value: String(lightLeft) },
-          { key: 'dark', label: 'dark squares', value: String(darkLeft) },
-          { key: 'dom', label: 'dominoes placed', value: String(frame.dominoes) },
+          { key: 'light', label: 'light left', value: String(counts.light) },
+          { key: 'dark', label: 'dark left', value: String(counts.dark) },
+          { key: 'dom', label: 'dominoes placed', value: String(counts.dominoes) },
         ]}
       />
     </Stage>
