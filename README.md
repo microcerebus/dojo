@@ -12,14 +12,15 @@ the LeetCode links you choose to open.
 ## Quick start
 
 ```bash
-pnpm install
-pnpm dev          # http://localhost:5173
+pnpm install       # also wires up the git hooks below (husky's `prepare` script)
+pnpm dev           # http://localhost:5173
 ```
 
 ```bash
-pnpm check        # lint + typecheck + tests - run this before every commit
+pnpm check        # lint + prettier check + typecheck + tests - what CI and `pnpm run check` both run
 pnpm build        # static site into dist/, then verifies the offline precache
 pnpm preview      # serve the built site
+pnpm e2e           # Playwright, against a local dev server - see Testing below
 ```
 
 `dist/` is a plain static bundle. It uses a hash router and relative asset paths, so it works from any
@@ -146,6 +147,34 @@ map all work with the network off. `pnpm build` fails if the precache stops cove
 The layout is mobile-first and designed against a 390x844 iPhone: safe-area insets are respected,
 touch targets are at least 44px, animations step by tap or swipe as well as by arrow key, and audio
 playback only ever starts from an explicit tap, per the iOS autoplay policy.
+
+## Testing and CI
+
+`pnpm check` (lint, `prettier --check`, typecheck, `vitest run`) is the gate.
+It is enforced three times: a pre-commit hook (staged-file lint/format/related-tests via
+`lint-staged`), a pre-push hook (the full `pnpm check`), and the `check` job in
+`.github/workflows/ci.yml`.
+Hooks are bypassable (`--no-verify`), so CI re-runs everything regardless.
+Commit messages are validated against [Conventional Commits](https://www.conventionalcommits.org/) by
+commitlint, locally via a `commit-msg` hook and in CI via the `commitlint` job, which lints every
+commit on the PR.
+
+**CORE-FUNCTIONALITY.md** is the traceable spec of the app's core flows: each entry has a stable
+`CF-<n>` id, a one-line behavior, and a manual verification recipe.
+Every id must be cited by at least one Playwright test.
+`e2e/core-functionality.test.ts` (a vitest test) fails the build if any id has no citing test, so the
+spec cannot silently drift from what is actually covered.
+
+**`pnpm e2e`** runs the Playwright suite in `e2e/core-functionality.spec.ts` against a local dev server
+it starts itself, on desktop and one mobile viewport, both Chromium.
+`.github/workflows/e2e.yml` runs the same suite on every PR against that PR's Vercel preview
+deployment instead: it polls the GitHub Deployments API (via `wait-for-vercel-preview`) for the
+"Preview"-environment deployment the captain's Vercel integration creates for the PR's commit, then
+points Playwright at its URL (`PLAYWRIGHT_BASE_URL`).
+CF-8 (installability) skips itself against the plain dev server, since the PWA manifest and service
+worker only exist in a production build - it runs for real against the Vercel preview and against a
+local `pnpm build && pnpm preview` (see that test and CF-8 in CORE-FUNCTIONALITY.md for the manual,
+offline-specific check this does not automate).
 
 ## Content
 

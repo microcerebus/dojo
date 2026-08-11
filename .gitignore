@@ -7,3 +7,6 @@ coverage/
 dev-dist/
 *.log
 .vite/
+playwright-report/
+test-results/
+blob-report/

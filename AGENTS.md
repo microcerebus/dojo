@@ -8,11 +8,26 @@ A Vite + React + TypeScript PWA that teaches the *Cracking the Coding Interview*
 See `README.md` for layout and how to add or finish a module, and `COVERAGE.md` for what is written
 versus outlined.
 
-`pnpm check` (lint + typecheck + tests) is the gate. `pnpm build` also runs
-`scripts/verify-precache.mjs`, which fails the build if the service worker stops precaching the app
-shell, the manifest, the icons, the fonts or any narration MP3.
+`pnpm check` (lint + prettier check + typecheck + tests) is the gate.
+It is enforced by pre-commit/pre-push hooks and mirrored in CI - see README.md's "Testing and CI"
+section for the full pipeline: hooks, CORE-FUNCTIONALITY.md traceability, and the
+Playwright-against-Vercel-preview e2e workflow.
+`pnpm build` also runs `scripts/verify-precache.mjs`, which fails the build if the service worker stops
+precaching the app shell, the manifest, the icons, the fonts or any narration MP3.
 
 ## Sharp edges
+
+- **CORE-FUNCTIONALITY.md ids are stable, hand-maintained, and traced.** Add new `CF-<n>` entries
+  rather than renumbering when a flow changes shape - old e2e citations must keep pointing at the
+  right entry.
+  `e2e/core-functionality.test.ts` fails if any id has no citing Playwright test in `e2e/*.spec.ts`.
+- **Prettier formats everything except Markdown.** `.prettierignore` excludes `*.md`: prettier's
+  Markdown formatter rewrites `*italic*` to `_italic_`, which would otherwise silently reformat this
+  file and README.md on every `pnpm run format`.
+- **`pnpm e2e` boots its own dev server; it does not use `pnpm preview`.** The PWA manifest and service
+  worker only exist in a production build, so the one Playwright test that needs them (CF-8) skips
+  itself against the dev server.
+  It only runs for real against a production build or the CI-only Vercel-preview run - see README.md.
 
 - **COVERAGE.md is generated.** Never hand-edit it; run `pnpm gen:coverage`.
   `src/data/coverage.test.ts` fails if it disagrees with the content data, and that suite is also

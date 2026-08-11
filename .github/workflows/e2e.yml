@@ -1,0 +1,52 @@
+name: E2E (Vercel preview)
+
+# Triggered on pull_request (not deployment_status) so this workflow's own
+# definition comes from the PR branch, not from main - a deployment_status
+# trigger only ever runs the workflow file already on the default branch,
+# which would make this pipeline unable to demonstrate itself on the PR that
+# introduces it. wait-for-vercel-preview polls the same GitHub Deployments
+# API the captain's Vercel integration writes to (confirmed: it creates a
+# "Preview"-environment deployment + a successful deployment_status with the
+# preview URL in target_url/environment_url) for a deployment matching this
+# commit's SHA, so it works from a pull_request trigger just as well.
+on:
+  pull_request:
+
+concurrency:
+  group: e2e-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Vercel preview deployment
+        id: vercel
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: Preview
+          max_timeout: 600
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run Playwright against the preview deployment
+        run: pnpm exec playwright test
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.vercel.outputs.url }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
