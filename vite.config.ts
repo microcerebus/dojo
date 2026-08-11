@@ -17,8 +17,12 @@ export default defineConfig({
         short_name: 'dojo',
         description:
           'Animated lessons, audio bites, quizzes and a Blind 75 drill plan for the Cracking the Coding Interview curriculum.',
-        theme_color: '#1e1e2e',
-        background_color: '#1e1e2e',
+        // A manifest carries one colour and cannot branch on scheme, so these
+        // stay the dark palette's `--bg` - dojo is dark-first, and the icons
+        // are drawn on a dark ground. The in-page `theme-color` meta tag is
+        // what tracks the live scheme (see index.html and src/lib/theme.ts).
+        theme_color: '#181825',
+        background_color: '#181825',
         display: 'standalone',
         orientation: 'portrait',
         start_url: './',

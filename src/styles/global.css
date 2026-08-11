@@ -5,10 +5,25 @@
    desktop rule scaled down.
    ========================================================================== */
 
-:root {
-  /* Catppuccin Mocha. https://catppuccin.com/palette
-     Named palette entries first, then the semantic tokens the app uses, so a
-     future re-theme is a matter of swapping the block above. */
+/* --------------------------------------------------------------- palettes */
+/*
+ * Two complete palettes, one token set. Only the named `--ctp-*` entries
+ * differ between them - the semantic map below is written once and never
+ * learns which palette is live, which is what lets every component consume
+ * tokens only. `src/styles/palette.test.ts` fails if a colour literal appears
+ * anywhere outside these two blocks.
+ *
+ * `data-theme` is stamped on <html> before first paint by the boot script in
+ * index.html, which resolves the stored system/dark/light choice (see
+ * `src/lib/theme.ts`) against the OS preference. That is deliberately the only
+ * place the resolution happens: a `prefers-color-scheme` block here would be a
+ * third copy of the Latte values to keep correct, and dojo is a
+ * client-rendered PWA - there is no page to look at before that script runs.
+ */
+
+/* Catppuccin Mocha - dark, and the default. https://catppuccin.com/palette */
+:root,
+:root[data-theme='dark'] {
   --ctp-crust: #11111b;
   --ctp-mantle: #181825;
   --ctp-base: #1e1e2e;
@@ -17,6 +32,7 @@
   --ctp-surface2: #585b70;
   --ctp-overlay1: #7f849c;
   --ctp-subtext0: #a6adc8;
+  --ctp-subtext1: #bac2de;
   --ctp-text: #cdd6f4;
   --ctp-blue: #89b4fa;
   --ctp-lavender: #b4befe;
@@ -26,6 +42,44 @@
   --ctp-yellow: #f9e2af;
   --ctp-red: #f38ba8;
 
+  /* A hairline under a raised chip. On Mocha the surface it sits on is already
+     dark, so the shadow is a hard 1px edge rather than a soft drop. */
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.3);
+
+  color-scheme: dark;
+}
+
+/* Catppuccin Latte - light. https://catppuccin.com/palette */
+:root[data-theme='light'] {
+  --ctp-crust: #dce0e8;
+  --ctp-mantle: #e6e9ef;
+  --ctp-base: #eff1f5;
+  --ctp-surface0: #ccd0da;
+  --ctp-surface1: #bcc0cc;
+  --ctp-surface2: #acb0be;
+  --ctp-overlay1: #8c8fa1;
+  --ctp-subtext0: #6c6f85;
+  --ctp-subtext1: #5c5f77;
+  --ctp-text: #4c4f69;
+  --ctp-blue: #1e66f5;
+  --ctp-lavender: #7287fd;
+  --ctp-pink: #ea76cb;
+  --ctp-mauve: #8839ef;
+  --ctp-green: #40a02b;
+  --ctp-yellow: #df8e1d;
+  --ctp-red: #d20f39;
+
+  /* On a light surface a hard edge reads as a misdrawn border; a soft drop is
+     what carries elevation instead. Tinted with the palette's own ink so it
+     stays blue-grey rather than muddy. */
+  --shadow-1: 0 1px 2px rgba(76, 79, 105, 0.14);
+
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------- semantic map + scale */
+
+:root {
   --bg: var(--ctp-mantle);
   --bg-elev: var(--ctp-base);
   --bg-elev-2: var(--ctp-surface0);
@@ -90,8 +144,23 @@
   /* Everything the bottom bar occupies, including the home indicator. Content
      padding and sticky offsets both read this so they can never disagree. */
   --tabbar-total: calc(var(--tabbar-h) + var(--safe-bottom));
+}
 
-  color-scheme: dark;
+/*
+ * The three semantic roles whose Mocha mapping does not survive being pointed
+ * at Latte. Everything else above is palette-agnostic.
+ *
+ * Latte's overlay ramp is drawn to sit on white as decoration, so at the 11-13px
+ * this UI uses for secondary labels `--ctp-overlay1` lands around 2.6:1 against
+ * the page - both muted text roles shift one step darker to hold roughly the
+ * same contrast ladder Mocha has (~5:1 dim, ~4:1 faint). And the accent flips
+ * polarity: Mocha's blue is pale, so text on an accent fill is the darkest
+ * crust; Latte's is saturated, so it has to be the lightest base.
+ */
+:root[data-theme='light'] {
+  --text-dim: var(--ctp-subtext1);
+  --text-faint: var(--ctp-subtext0);
+  --accent-ink: var(--ctp-base);
 }
 
 *,
@@ -272,9 +341,16 @@ a {
   border-top: 1px solid var(--border);
 }
 
+.tabbar__nav {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
 .tabbar__link {
   position: relative;
   flex: 1;
+  min-width: 0;
   min-height: var(--tabbar-h);
   display: flex;
   flex-direction: column;
@@ -310,6 +386,54 @@ a {
   line-height: 1;
 }
 
+/* -------------------------------------------------------- theme toggle */
+
+/*
+ * Two instances exist (header and tab bar); each is `display: none` at the
+ * breakpoint where the other one is the live control, which also takes it out
+ * of the accessibility tree, so the reader is never offered the same button
+ * twice. Same trick the nav links already use.
+ */
+.themetoggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+  color: var(--text-faint);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.themetoggle__icon {
+  line-height: 1;
+}
+
+/* In the bar it is a fourth cell, shaped exactly like a tab so the row still
+   reads as one strip - but sized to its content rather than `flex: 1`, so it
+   cannot squeeze the three nav labels. */
+.themetoggle--tabbar {
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 72px;
+  min-height: var(--tabbar-h);
+  padding: 0 var(--space-2);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.02em;
+}
+
+.themetoggle--tabbar .themetoggle__icon {
+  font-size: var(--fs-h3);
+}
+
+/* The header instance only exists from the breakpoint where the header holds
+   the nav; below that the tab bar owns it. */
+.themetoggle--header {
+  display: none;
+}
+
 @media (min-width: 860px) {
   .header {
     position: sticky;
@@ -340,6 +464,25 @@ a {
   .header__nav a.is-active {
     background: var(--bg-elev-2);
     color: var(--text);
+  }
+
+  /* A pill matching the header nav links, so the row is one control strip.
+     Still a full 44px target: the header is 52px tall and the pointer that
+     usually drives it is a mouse, but a laptop trackpad is not the only input
+     at this width. */
+  .themetoggle--header {
+    display: inline-flex;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border-radius: 999px;
+    font-size: var(--fs-body);
+    color: var(--text-dim);
+  }
+
+  .themetoggle--header:hover {
+    color: var(--text);
+    background: var(--bg-elev-2);
   }
 
   .main {

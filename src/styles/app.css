@@ -275,7 +275,7 @@
 .tabs__tab.is-active {
   background: var(--bg-elev-2);
   color: var(--text);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-1);
 }
 
 /* A tab that carries a running count stacks it under the label instead of
