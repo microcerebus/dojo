@@ -12,6 +12,15 @@ name: E2E (Vercel preview)
 on:
   pull_request:
 
+# wait-for-vercel-preview reads the PR and its deployments via the API; the
+# repo's default workflow token permissions are read-only but scoped down
+# enough that these need to be requested explicitly.
+permissions:
+  contents: read
+  pull-requests: read
+  deployments: read
+  statuses: read
+
 concurrency:
   group: e2e-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
