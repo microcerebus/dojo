@@ -183,9 +183,18 @@ if (typeof window !== 'undefined') {
   });
 
   if (typeof window.matchMedia === 'function') {
-    window.matchMedia(LIGHT_QUERY).addEventListener('change', () => {
+    const query = window.matchMedia(LIGHT_QUERY);
+    const onSystemChange = () => {
       // Only `system` follows the OS; an explicit choice stays put.
       if (themeStore.getChoice() === 'system') themeStore.refresh();
-    });
+    };
+    // This runs during module evaluation, so an older WebView that exposes
+    // `matchMedia` with only the pre-2020 `addListener` API would throw here
+    // and take the whole app down with it - a blank screen, not a stale theme.
+    if (typeof query.addEventListener === 'function') {
+      query.addEventListener('change', onSystemChange);
+    } else {
+      query.addListener(onSystemChange);
+    }
   }
 }

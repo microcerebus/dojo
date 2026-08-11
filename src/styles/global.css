@@ -97,8 +97,15 @@
      blue is pale enough to read as a soft highlight at sentence length;
      Latte's is a saturated link blue, and a whole sentence of it reads as a
      hyperlink sitting under a heading. Mixing toward the ink derives one
-     answer for both instead of special-casing the light palette. */
-  --accent-quiet: color-mix(in srgb, var(--accent) 72%, var(--text));
+     answer for both instead of special-casing the light palette.
+
+     The plain accent is the static fallback, set unconditionally and then
+     replaced under @supports. Two declarations on the custom property alone
+     would not do it: a custom property's value is only a token stream, so an
+     unsupported `color-mix(...)` still parses here and only fails at the
+     consumer, where it lands as invalid-at-computed-value-time and silently
+     inherits the surrounding body text. */
+  --accent-quiet: var(--accent);
   --accent-2: var(--ctp-pink);
   --good: var(--ctp-green);
   --warn: var(--ctp-yellow);
@@ -106,6 +113,9 @@
 
   --radius: 14px;
   --radius-sm: 9px;
+  /* Fully rounded. Any value past half the tallest pill in the app does the
+     same job, so this is a name for "pill", not a measurement to tune. */
+  --radius-pill: 999px;
   --tap: 44px; /* iOS minimum comfortable touch target */
 
   --space-1: 4px;
@@ -147,6 +157,10 @@
 
   --header-h: 52px;
   --tabbar-h: 56px;
+  /* Icon to label inside one bottom-bar cell. Every cell reads this, links and
+     the theme control alike - they sit side by side, so a cell that sets its
+     own gap misaligns its label against the row by exactly that difference. */
+  --tabbar-gap: 3px;
   /* Everything the bottom bar occupies, including the home indicator. Content
      padding and sticky offsets both read this so they can never disagree. */
   --tabbar-total: calc(var(--tabbar-h) + var(--safe-bottom));
@@ -167,6 +181,15 @@
   --text-dim: var(--ctp-subtext1);
   --text-faint: var(--ctp-subtext0);
   --accent-ink: var(--ctp-base);
+}
+
+/* Upgrades `--accent-quiet` from the plain accent to the mixed one. Applies to
+   both palettes: the mix is written once and reads whichever `--accent` and
+   `--text` are live. */
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  :root {
+    --accent-quiet: color-mix(in srgb, var(--accent) 72%, var(--text));
+  }
 }
 
 *,
@@ -362,7 +385,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: var(--tabbar-gap);
   font-size: var(--fs-micro);
   letter-spacing: 0.02em;
   color: var(--text-faint);
@@ -422,8 +445,11 @@ a {
 .themetoggle--tabbar {
   flex: 0 0 auto;
   flex-direction: column;
-  gap: 3px;
-  min-width: 72px;
+  gap: var(--tabbar-gap);
+  /* No fixed width: the tap minimum is the only hard constraint, and letting
+     the label size the rest keeps the three nav cells as wide as possible on a
+     320px screen. */
+  min-width: var(--tap);
   min-height: var(--tabbar-h);
   padding: 0 var(--space-2);
   font-size: var(--fs-micro);
@@ -461,7 +487,7 @@ a {
     align-items: center;
     height: 34px;
     padding: 0 var(--space-3);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-size: var(--fs-body);
     color: var(--text-dim);
     text-decoration: none;
@@ -481,7 +507,7 @@ a {
     gap: var(--space-2);
     min-height: var(--tap);
     padding: 0 var(--space-3);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-size: var(--fs-body);
     color: var(--text-dim);
   }
@@ -599,7 +625,7 @@ h3 {
   gap: 5px;
   min-height: 24px;
   padding: 2px 9px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-size: var(--fs-micro);
   font-weight: 600;
   letter-spacing: 0.02em;
