@@ -4,6 +4,10 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Lets a maintainer manually re-run `check` for a specific branch (e.g.
+  # from the Actions tab or `gh workflow run`) without needing an empty
+  # commit. `commitlint` stays PR-only since it needs a PR's base/head SHAs.
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}

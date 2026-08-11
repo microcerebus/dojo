@@ -11,6 +11,12 @@ name: E2E (Vercel preview)
 # commit's SHA, so it works from a pull_request trigger just as well.
 on:
   pull_request:
+  # Lets a maintainer manually re-run e2e for a specific branch (e.g. from
+  # the Actions tab or `gh workflow run`) without needing an empty commit.
+  # wait-for-vercel-preview falls back to looking up the deployment by
+  # commit SHA when there is no pull_request event payload, so this works
+  # the same way outside a PR context too.
+  workflow_dispatch:
 
 # wait-for-vercel-preview reads the PR and its deployments via the API; the
 # repo's default workflow token permissions are read-only but scoped down
