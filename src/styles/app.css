@@ -318,6 +318,10 @@
  */
 .sectionrail {
   --fade-w: 40px;
+  /* So a pill can be capped at the width of the strip itself. A percentage
+     would resolve against the `max-content` list inside the scroller, which is
+     exactly the thing being constrained. */
+  container-type: inline-size;
 }
 
 .sectionrail .scrollx__viewport {
@@ -335,6 +339,10 @@
 .sectionrail__list > li {
   flex: none;
   scroll-snap-align: center;
+  /* A pill wider than the strip can never be brought fully into view, so a
+     long section title wraps inside the pill instead of hanging off both ends
+     of the rail. */
+  max-width: 100cqw;
 }
 
 .sectionrail__item {
@@ -348,7 +356,8 @@
   background: var(--bg-elev);
   color: var(--text-dim);
   font-size: var(--fs-small);
-  white-space: nowrap;
+  max-width: 100%;
+  text-align: left;
 }
 
 .sectionrail__num {

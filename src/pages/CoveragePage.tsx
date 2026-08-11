@@ -75,8 +75,11 @@ export function CoveragePage() {
             name="coverage-filter"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Filter by id, title, chapter or LeetCode name"
-            aria-label="Filter questions"
+            /* Short enough to survive a 320px field: a placeholder is clipped,
+               not ellipsised, and the old one broke off mid-phrase at every
+               phone width. What it searches is spelled out in the label. */
+            placeholder="Filter by id or title"
+            aria-label="Filter questions by id, title, chapter or LeetCode name"
           />
           <p className="lede">
             Showing {filteredQuestions.length} of {BOOK_QUESTIONS.length}.

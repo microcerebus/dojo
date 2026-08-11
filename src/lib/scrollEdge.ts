@@ -25,19 +25,27 @@ export function scrollMore(
 }
 
 /**
- * How far to scroll so `item` sits fully inside `viewport`, keeping the nearest
- * edge rule people expect from a tab strip: an item already in view does not
- * move, and one that is off-screen comes in with a little of its neighbour
- * showing so the strip still reads as scrollable.
+ * How far to scroll so `item` sits fully inside `viewport`.
+ *
+ * An item already comfortably in view - fully visible with `peek` of its
+ * neighbour still showing on the side it is nearest, so the strip keeps reading
+ * as scrollable - does not move at all. Anything else is centred.
+ *
+ * Centring rather than bringing the item just past the edge is what makes this
+ * agree with the strip's `scroll-snap-align: center`. Scrolling to a position
+ * that is not a snap point is not a smaller correction, it is no correction:
+ * the snap engine pulls straight back to the nearest snapped offset, which is
+ * how selecting the second section used to leave its own pill hanging off the
+ * end of the rail.
  */
 export function scrollLeftToReveal(
-  viewport: { scrollLeft: number; clientWidth: number },
+  viewport: { scrollLeft: number; clientWidth: number; scrollWidth: number },
   item: { offsetLeft: number; offsetWidth: number },
   peek = 24,
 ): number {
-  const start = item.offsetLeft - peek;
-  const end = item.offsetLeft + item.offsetWidth + peek - viewport.clientWidth;
-  if (viewport.scrollLeft > start) return Math.max(0, start);
-  if (viewport.scrollLeft < end) return end;
-  return viewport.scrollLeft;
+  const atLeast = item.offsetLeft + item.offsetWidth + peek - viewport.clientWidth;
+  const atMost = item.offsetLeft - peek;
+  if (viewport.scrollLeft >= atLeast && viewport.scrollLeft <= atMost) return viewport.scrollLeft;
+  const centred = item.offsetLeft + item.offsetWidth / 2 - viewport.clientWidth / 2;
+  return Math.max(0, Math.min(centred, viewport.scrollWidth - viewport.clientWidth));
 }
