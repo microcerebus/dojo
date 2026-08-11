@@ -621,7 +621,7 @@ reduce(word, counts):
   visualizers: [
     {
       url: visualgoUrl('sssp'),
-      note: "Run Dijkstra one relaxation at a time, then add a negative edge and watch it give a wrong answer.",
+      note: 'Run Dijkstra one relaxation at a time, then add a negative edge and watch it give a wrong answer.',
     },
     {
       url: visualgoUrl('mst'),
