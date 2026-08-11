@@ -1,57 +1,28 @@
 import { defineConfig, devices } from '@playwright/test';
-import { VERCEL_BYPASS_AUTH_FILE } from './e2e/global-setup';
 
 /**
- * Set by CI to point at a Vercel preview deployment. Locally, `pnpm e2e` runs
- * with no base URL and Playwright boots its own dev server instead (see
- * `webServer` below) - `pnpm run preview` is deliberately not used for that,
- * since the service worker it serves caches the previous build (see
- * AGENTS.md's "vite preview is served through the service worker" note).
+ * e2e always runs against a production build served locally - `pnpm build`
+ * then a static server on this port - never a deployed preview. This is a
+ * deliberate architecture choice: dojo stays private behind Vercel SSO, so
+ * there is no protected URL for CI to reach and no bypass credential to
+ * manage or leak. Building locally also means CF-8 (PWA manifest/service
+ * worker) is exercised for real on every run, not skipped.
  */
-const PREVIEW_URL = process.env.PLAYWRIGHT_BASE_URL;
-const DEV_URL = 'http://localhost:5173';
-
-/**
- * Vercel "Deployment Protection" (Vercel Authentication / SSO) gates every
- * preview URL behind a login by default, which 401s CI's plain requests.
- * The fix is Vercel's "Protection Bypass for Automation" secret
- * (VERCEL_AUTOMATION_BYPASS_SECRET). It is NOT sent as a header here - every
- * request `use` makes is subject to trace recording (`trace` below), and
- * artifacts on this public repo are world-readable, so a header set here
- * would put the secret in every uploaded trace/report. Instead
- * e2e/global-setup.ts spends the secret exactly once, in an untraced
- * request outside any test, and saves only the resulting Vercel session
- * cookie to VERCEL_BYPASS_AUTH_FILE for test contexts to load as
- * `storageState` - see that file for the full explanation.
- */
-const usingVercelBypass = Boolean(PREVIEW_URL && process.env.VERCEL_AUTOMATION_BYPASS_SECRET);
+const BASE_URL = 'http://localhost:4173';
 
 export default defineConfig({
   testDir: './e2e',
   // Only *.spec.ts are Playwright tests; e2e/*.test.ts is the vitest-run
   // check that every CORE-FUNCTIONALITY.md id is cited by a spec below.
   testMatch: '**/*.spec.ts',
-  globalSetup: usingVercelBypass ? './e2e/global-setup.ts' : undefined,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
-    baseURL: PREVIEW_URL ?? DEV_URL,
-    // Trace recording captures every request's headers AND cookies. When
-    // `usingVercelBypass` is true, storageState below loads the
-    // `_vercel_jwt` bypass cookie into every context, so every traced
-    // request would carry that bearer credential straight into the
-    // uploaded artifact (world-readable - this repo is public) - a
-    // real, PoC-confirmed leak (see .github/workflows/e2e.yml). A
-    // scanning guard on the artifact is not enough by itself: `trace:
-    // 'on-first-retry'` also fires on a merely flaky test, so a run that
-    // reports green can still produce and upload a trace. Tracing is
-    // therefore off outright whenever the bypass cookie is in play;
-    // screenshots carry no credential data and stay on for debugging.
-    trace: usingVercelBypass ? 'off' : 'on-first-retry',
+    baseURL: BASE_URL,
+    trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    ...(usingVercelBypass ? { storageState: VERCEL_BYPASS_AUTH_FILE } : {}),
   },
   // Chromium only (desktop + one mobile emulation) so CI does not need to
   // install and run the WebKit/Firefox browser binaries too.
@@ -59,11 +30,10 @@ export default defineConfig({
     { name: 'Desktop Chrome', use: { ...devices['Desktop Chrome'] } },
     { name: 'Mobile Chrome', use: { ...devices['Pixel 5'] } },
   ],
-  webServer: PREVIEW_URL
-    ? undefined
-    : {
-        command: 'pnpm run dev',
-        url: DEV_URL,
-        reuseExistingServer: !process.env.CI,
-      },
+  webServer: {
+    command: 'pnpm run build && pnpm run preview -- --port 4173 --strictPort',
+    url: BASE_URL,
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+  },
 });

@@ -6,17 +6,16 @@ import { expect, test } from '@playwright/test';
  * not a Playwright one) fails if any CF id in that file has no citing test
  * here.
  *
- * Runs against a local dev server for `pnpm e2e`, or against a Vercel
- * preview URL in CI (see playwright.config.ts and
- * .github/workflows/e2e.yml). Every test gets a fresh browser context, so
- * localStorage-backed progress starts empty unless a test seeds it itself.
+ * Always runs against a production build served locally, both for `pnpm e2e`
+ * and in CI (see playwright.config.ts) - never a deployed preview, so there
+ * is no protected URL to reach and no bypass credential to manage. Every
+ * test gets a fresh browser context, so localStorage-backed progress starts
+ * empty unless a test seeds it itself.
  *
  * CF-8 (installability) is intentionally not exercised end-to-end here -
  * actually installing a PWA is flaky under CI automation. Instead the CF-8
  * test below checks the two static artefacts installability depends on: the
- * web app manifest and the service worker script both being served. Those
- * only exist in a production build, so that test skips itself against the
- * plain `vite dev` server used for local `pnpm e2e` runs.
+ * web app manifest and the service worker script both being served.
  */
 
 test('CF-1: curriculum home lists all modules with progress', async ({ page }) => {
@@ -133,14 +132,7 @@ test('CF-7: coverage page shows study progress and a Blind 75 view', async ({ pa
 
 test('CF-8: pwa manifest and service worker are served', async ({ page, baseURL }) => {
   const manifestResponse = await page.request.get(new URL('manifest.webmanifest', baseURL).href);
-  // The plain vite dev server used for local `pnpm e2e` has no manifest route
-  // and falls back to serving index.html (200, text/html) for anything
-  // unmatched, so check content-type rather than just response.ok().
-  const contentType = manifestResponse.headers()['content-type'] ?? '';
-  test.skip(
-    !manifestResponse.ok() || !contentType.includes('json'),
-    'the manifest and service worker only exist in a production build (pnpm build, or a Vercel preview) - not the plain vite dev server used for local `pnpm e2e`',
-  );
+  expect(manifestResponse.ok()).toBeTruthy();
 
   const manifest = await manifestResponse.json();
   expect(manifest.name).toContain('dojo');

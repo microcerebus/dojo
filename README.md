@@ -165,27 +165,14 @@ Every id must be cited by at least one Playwright test.
 `e2e/core-functionality.test.ts` (a vitest test) fails the build if any id has no citing test, so the
 spec cannot silently drift from what is actually covered.
 
-**`pnpm e2e`** runs the Playwright suite in `e2e/core-functionality.spec.ts` against a local dev server
-it starts itself, on desktop and one mobile viewport, both Chromium.
-`.github/workflows/e2e.yml` runs the same suite on every PR against that PR's Vercel preview
-deployment instead: it polls the GitHub Deployments API (via `wait-for-vercel-preview`) for the
-"Preview"-environment deployment the captain's Vercel integration creates for the PR's commit, then
-points Playwright at its URL (`PLAYWRIGHT_BASE_URL`).
-CF-8 (installability) skips itself against the plain dev server, since the PWA manifest and service
-worker only exist in a production build - it runs for real against the Vercel preview and against a
-local `pnpm build && pnpm preview` (see that test and CF-8 in CORE-FUNCTIONALITY.md for the manual,
-offline-specific check this does not automate).
-
-**Vercel Deployment Protection.** If this project's Vercel previews sit behind Vercel Authentication
-(the default for new projects/teams - preview URLs redirect to `vercel.com/sso-api` for anyone not
-logged into that Vercel team), the e2e workflow needs a bypass: generate a secret under the Vercel
-project's Settings -> Deployment Protection -> Protection Bypass for Automation, then add it as the
-`VERCEL_AUTOMATION_BYPASS_SECRET` GitHub Actions secret on this repo.
-Both the preview-URL health check and every Playwright request then carry the bypass header
-automatically (see `playwright.config.ts` and `.github/workflows/e2e.yml`) - no further changes
-needed.
-The alternative is turning protection off for the Preview environment in the same settings page; either
-way this is a Vercel-project setting, not something this repo's code can decide on its own.
+**`pnpm e2e`** runs the Playwright suite in `e2e/core-functionality.spec.ts` on desktop and one mobile
+viewport, both Chromium.
+`.github/workflows/e2e.yml` runs the exact same command in CI, on every PR including one from a fork.
+Neither one talks to a deployed preview: dojo stays private behind Vercel SSO, so Playwright's
+`webServer` builds the app and serves it locally instead (`pnpm build && pnpm preview`, see
+`playwright.config.ts`) - there is no protected URL to reach and no bypass credential to manage.
+Building locally also means CF-8 (the PWA manifest and service worker) is exercised for real on every
+run, not skipped.
 
 ## Content
 

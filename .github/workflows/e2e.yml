@@ -1,75 +1,28 @@
-name: E2E (Vercel preview)
+name: E2E
 
-# Triggered on pull_request (not deployment_status) so this workflow's own
-# definition comes from the PR branch, not from main - a deployment_status
-# trigger only ever runs the workflow file already on the default branch,
-# which would make this pipeline unable to demonstrate itself on the PR that
-# introduces it. wait-for-vercel-preview polls the same GitHub Deployments
-# API the captain's Vercel integration writes to (confirmed: it creates a
-# "Preview"-environment deployment + a successful deployment_status with the
-# preview URL in target_url/environment_url) for a deployment matching this
-# commit's SHA, so it works from a pull_request trigger just as well.
+# dojo stays private behind Vercel SSO, and e2e never talks to a deployed
+# preview - it builds the app and serves it locally (see
+# playwright.config.ts), so there is no protected URL to reach and no
+# bypass credential to manage. That means every PR, including one from a
+# fork, can run this job with no secrets involved at all.
 on:
   pull_request:
   # Lets a maintainer manually re-run e2e for a specific branch (e.g. from
   # the Actions tab or `gh workflow run`) without needing an empty commit.
-  # wait-for-vercel-preview falls back to looking up the deployment by
-  # commit SHA when there is no pull_request event payload, so this works
-  # the same way outside a PR context too.
   workflow_dispatch:
 
-# wait-for-vercel-preview reads the PR and its deployments via the API; the
-# repo's default workflow token permissions are read-only but scoped down
-# enough that these need to be requested explicitly.
 permissions:
   contents: read
-  pull-requests: read
-  deployments: read
-  statuses: read
 
 concurrency:
   group: e2e-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # GitHub never exposes repository secrets to a pull_request-triggered run
-  # unless it belongs to this repo (not a fork) - so VERCEL_AUTOMATION_BYPASS_SECRET
-  # is unavailable both for fork PRs and for any PR opened before the secret
-  # existed. Checking availability up front, in its own minimal-permission
-  # job, lets the two jobs below skip or run honestly instead of the e2e job
-  # spending its whole run failing the Vercel health check and reporting a
-  # misleading red.
-  check-secret:
-    runs-on: ubuntu-latest
-    permissions: {}
-    outputs:
-      available: ${{ steps.check.outputs.available }}
-    steps:
-      - name: Check whether the Vercel bypass secret is available
-        id: check
-        env:
-          SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-        run: echo "available=${{ env.SECRET != '' }}" >> "$GITHUB_OUTPUT"
-
   e2e:
-    needs: check-secret
-    # Job-level `if`, not a step-level one: when false this makes the whole
-    # job report GitHub's native "skipped" (neutral, grey) status on the PR,
-    # rather than a job that ran and merely did nothing.
-    if: needs.check-secret.outputs.available == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-
-      - name: Wait for Vercel preview deployment
-        id: vercel
-        uses: patrickedqvist/wait-for-vercel-preview@d7982701e6fcd3ae073bff929e408e004404d38d # v1.3.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          environment: Preview
-          max_timeout: 600
-          vercel_protection_bypass_header: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-
       - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
@@ -78,101 +31,13 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
 
-      # Continues past a test failure so the scan/upload steps below still
-      # run against whatever the tests produced; "Fail the job if tests
-      # failed" at the end restores the correct pass/fail signal.
-      - name: Run Playwright against the preview deployment
-        id: e2e-tests
-        continue-on-error: true
+      - name: Run Playwright (builds and serves the app locally)
         run: pnpm exec playwright test
-        env:
-          PLAYWRIGHT_BASE_URL: ${{ steps.vercel.outputs.url }}
-          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-
-      # Defense in depth on top of two structural fixes (see
-      # playwright.config.ts and e2e/global-setup.ts): the shared secret
-      # never routes through a traced request, and tracing is off outright
-      # whenever the derived `_vercel_jwt` bypass cookie is loaded into a
-      # context - `trace: 'on-first-retry'` fires on a merely flaky test,
-      # not just a failing one, so a run that reports green could otherwise
-      # still produce and upload a credential-bearing trace. This repo is
-      # public, so an uploaded artifact is world-readable the moment it
-      # lands. Scans for both the secret's value AND the literal string
-      # "_vercel_jwt" - the cookie's *name*, not its value, which this
-      # guard never knows - across plaintext report files and the contents
-      # of any trace .zip archives (a raw grep does not see inside those).
-      # If that name appears anywhere, a bypass credential is present
-      # regardless of how it got there, and the upload must be refused.
-      - name: Verify no bypass credential leaked into Playwright artifacts
-        id: scan-secrets
-        if: always()
-        env:
-          SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-        run: |
-          set -euo pipefail
-          patterns=("_vercel_jwt")
-          if [ -n "$SECRET" ]; then
-            patterns+=("$SECRET")
-          fi
-          found=0
-          for pattern in "${patterns[@]}"; do
-            if grep -RIl --fixed-strings "$pattern" playwright-report test-results 2>/dev/null; then
-              echo "Match for '$pattern' found in a plaintext report/test-results file"
-              found=1
-            fi
-          done
-          while IFS= read -r -d '' zipfile; do
-            tmpdir="$(mktemp -d)"
-            if unzip -qq -o "$zipfile" -d "$tmpdir" 2>/dev/null; then
-              for pattern in "${patterns[@]}"; do
-                if grep -RIl --fixed-strings "$pattern" "$tmpdir" 2>/dev/null; then
-                  echo "Match for '$pattern' found inside archive: $zipfile"
-                  found=1
-                fi
-              done
-            fi
-            rm -rf "$tmpdir"
-          done < <(find playwright-report test-results -iname '*.zip' -print0 2>/dev/null)
-          if [ "$found" = "1" ]; then
-            echo "::error::a Vercel bypass credential (secret or _vercel_jwt cookie) was found in Playwright artifacts - refusing to upload"
-            exit 1
-          fi
-          echo "No bypass credential found in Playwright artifacts."
 
       - name: Upload Playwright report
-        if: always() && steps.scan-secrets.outcome == 'success'
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
-
-      - name: Fail the job if tests failed
-        if: steps.e2e-tests.outcome == 'failure'
-        run: exit 1
-
-  e2e-skip-notice:
-    needs: check-secret
-    if: needs.check-secret.outputs.available != 'true'
-    runs-on: ubuntu-latest
-    permissions: {}
-    steps:
-      - name: Explain why e2e was skipped
-        run: |
-          {
-            echo "## e2e was skipped"
-            echo ""
-            echo "The \`VERCEL_AUTOMATION_BYPASS_SECRET\` repo secret this job needs to reach"
-            echo "the Vercel preview past Deployment Protection is not available in this run."
-            echo ""
-            echo "GitHub never passes repository secrets to a pull_request run unless it"
-            echo "belongs to this repo, so this is expected for pull requests from a fork -"
-            echo "and it also happens for same-repo PRs opened before the secret existed."
-            echo ""
-            echo "A maintainer can run e2e for this change with:"
-            echo '```'
-            echo "gh pr checkout <PR number>"
-            echo "pnpm e2e"
-            echo '```'
-            echo "or push the branch to this repo (not a fork) and re-run this workflow."
-          } >> "$GITHUB_STEP_SUMMARY"
