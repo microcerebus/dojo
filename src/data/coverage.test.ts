@@ -77,9 +77,7 @@ describe('book questions', () => {
       const numbers = BOOK_QUESTIONS.filter((q) => q.chapter === chapter)
         .map((q) => Number(q.id.split('.')[1]))
         .sort((a, b) => a - b);
-      expect(numbers, chapter).toEqual(
-        Array.from({ length: numbers.length }, (_, i) => i + 1),
-      );
+      expect(numbers, chapter).toEqual(Array.from({ length: numbers.length }, (_, i) => i + 1));
     }
   });
 
@@ -303,9 +301,10 @@ describe('complete modules', () => {
   it('mixes quiz kinds in each complete module', () => {
     for (const courseModule of complete) {
       const kinds = new Set(courseModule.quiz.map((question) => question.kind));
-      expect(kinds.size, `${courseModule.id} should mix concept/complexity/technique`).toBeGreaterThan(
-        1,
-      );
+      expect(
+        kinds.size,
+        `${courseModule.id} should mix concept/complexity/technique`,
+      ).toBeGreaterThan(1);
     }
   });
 });

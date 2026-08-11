@@ -231,7 +231,8 @@ export const stacksQueues: CourseModule = {
     {
       id: 'sq-2',
       kind: 'complexity',
-      prompt: 'A queue built from two stacks, pouring only when the output stack is empty. Dequeue cost?',
+      prompt:
+        'A queue built from two stacks, pouring only when the output stack is empty. Dequeue cost?',
       options: [
         'O(1) worst case',
         'O(n) every time',
@@ -361,14 +362,32 @@ export const stacksQueues: CourseModule = {
   drills: [
     { slug: 'valid-parentheses', note: 'The canonical stack problem. Five minutes, no excuses.' },
     { slug: 'min-stack', note: 'CTCI 3.2 exactly. Then do the reduced-space version.' },
-    { slug: 'implement-queue-using-stacks', note: 'CTCI 3.4 - and be ready to explain the amortised analysis.' },
-    { slug: 'implement-stack-using-queues', note: 'The mirror image; decide which operation eats the cost.' },
-    { slug: 'evaluate-reverse-polish-notation', note: 'Stack evaluation with no precedence to worry about.' },
+    {
+      slug: 'implement-queue-using-stacks',
+      note: 'CTCI 3.4 - and be ready to explain the amortised analysis.',
+    },
+    {
+      slug: 'implement-stack-using-queues',
+      note: 'The mirror image; decide which operation eats the cost.',
+    },
+    {
+      slug: 'evaluate-reverse-polish-notation',
+      note: 'Stack evaluation with no precedence to worry about.',
+    },
     { slug: 'basic-calculator-ii', note: 'CTCI 16.26 - precedence without parentheses.' },
     { slug: 'daily-temperatures', note: 'The monotonic stack, in its purest form.' },
     { slug: 'next-greater-element-i', note: 'Same pattern, plus a map from value to answer.' },
-    { slug: 'asteroid-collision', note: 'A stack simulation where the pop conditions are the whole problem.' },
-    { slug: 'design-circular-queue', note: 'Fixed-capacity ring buffer - index arithmetic practice.' },
-    { slug: 'largest-rectangle-in-histogram', note: 'Hard, but it is the monotonic stack taken to its limit.' },
+    {
+      slug: 'asteroid-collision',
+      note: 'A stack simulation where the pop conditions are the whole problem.',
+    },
+    {
+      slug: 'design-circular-queue',
+      note: 'Fixed-capacity ring buffer - index arithmetic practice.',
+    },
+    {
+      slug: 'largest-rectangle-in-histogram',
+      note: 'Hard, but it is the monotonic stack taken to its limit.',
+    },
   ],
 };

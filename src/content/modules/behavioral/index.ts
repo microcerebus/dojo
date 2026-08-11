@@ -28,7 +28,8 @@ export const behavioral: CourseModule = {
     {
       id: 'the-grid',
       title: 'The story grid',
-      takeaway: 'Build it once. Every behavioural question then becomes a lookup instead of an improvisation.',
+      takeaway:
+        'Build it once. Every behavioural question then becomes a lookup instead of an improvisation.',
       audio: true,
       blocks: [
         {
@@ -61,7 +62,8 @@ export const behavioral: CourseModule = {
     {
       id: 'answering',
       title: 'Answering well',
-      takeaway: 'Nugget first, then situation, action and result - with most of the time on your own actions.',
+      takeaway:
+        'Nugget first, then situation, action and result - with most of the time on your own actions.',
       audio: true,
       blocks: [
         { kind: 'anim', animId: 'bq-sar' },
@@ -69,10 +71,22 @@ export const behavioral: CourseModule = {
           kind: 'table',
           headers: ['Instead of', 'Say'],
           rows: [
-            ['"I did all the hard parts"', '"I owned the migration script and the rollback path" - specifics let the interviewer draw the flattering conclusion'],
-            ['A ten-minute walk through your architecture', 'One sentence on impact, then "I can go into more detail if useful"'],
-            ['"We decided…", "the team shipped…"', '"I proposed…", "I built…" - and "we" only where it genuinely was the team'],
-            ['"It went well"', '"Latency dropped 40% and the on-call pages stopped" - a number, or at least a concrete change'],
+            [
+              '"I did all the hard parts"',
+              '"I owned the migration script and the rollback path" - specifics let the interviewer draw the flattering conclusion',
+            ],
+            [
+              'A ten-minute walk through your architecture',
+              'One sentence on impact, then "I can go into more detail if useful"',
+            ],
+            [
+              '"We decided…", "the team shipped…"',
+              '"I proposed…", "I built…" - and "we" only where it genuinely was the team',
+            ],
+            [
+              '"It went well"',
+              '"Latency dropped 40% and the on-call pages stopped" - a number, or at least a concrete change',
+            ],
           ],
         },
         {
@@ -118,7 +132,7 @@ export const behavioral: CourseModule = {
       blocks: [
         {
           kind: 'p',
-          text: 'Most interviews open with this, which makes it your interviewer\'s first impression - and it is entirely within your control. A chronological arc works for almost everybody.',
+          text: "Most interviews open with this, which makes it your interviewer's first impression - and it is entirely within your control. A chronological arc works for almost everybody.",
         },
         {
           kind: 'steps',
@@ -156,7 +170,8 @@ export const behavioral: CourseModule = {
     {
       id: 'your-questions',
       title: 'Your questions for them',
-      takeaway: 'Three kinds, prepared in advance, specific to this team. They are scored whether or not anyone admits it.',
+      takeaway:
+        'Three kinds, prepared in advance, specific to this team. They are scored whether or not anyone admits it.',
       audio: true,
       blocks: [
         {
@@ -167,10 +182,26 @@ export const behavioral: CourseModule = {
           kind: 'table',
           headers: ['Kind', 'Purpose', 'Example'],
           rows: [
-            ['Genuine', 'Things you actually need to know to decide', '"How does planning work on this team? What does the on-call rotation look like?"'],
-            ['Genuine', 'What the day-to-day is really like', '"What brought you here, and what has been the most challenging part?"'],
-            ['Insightful', 'Demonstrate that you understand the technology', '"I saw you moved to X - how do you handle Y? Most teams I have seen hit Z."'],
-            ['Passion', 'Show you want to learn and will contribute', '"I am interested in scalability - what opportunities are there here to go deeper on it?"'],
+            [
+              'Genuine',
+              'Things you actually need to know to decide',
+              '"How does planning work on this team? What does the on-call rotation look like?"',
+            ],
+            [
+              'Genuine',
+              'What the day-to-day is really like',
+              '"What brought you here, and what has been the most challenging part?"',
+            ],
+            [
+              'Insightful',
+              'Demonstrate that you understand the technology',
+              '"I saw you moved to X - how do you handle Y? Most teams I have seen hit Z."',
+            ],
+            [
+              'Passion',
+              'Show you want to learn and will contribute',
+              '"I am interested in scalability - what opportunities are there here to go deeper on it?"',
+            ],
           ],
         },
         {

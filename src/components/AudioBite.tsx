@@ -185,9 +185,7 @@ export function AudioBite({
                 : `Play audio recap: ${title}`
           }
         >
-          <span aria-hidden="true">
-            {state.status === 'error' ? '↻' : isPlaying ? '❙❙' : '▶'}
-          </span>
+          <span aria-hidden="true">{state.status === 'error' ? '↻' : isPlaying ? '❙❙' : '▶'}</span>
         </button>
 
         <button

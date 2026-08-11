@@ -81,9 +81,7 @@ describe('AnimationPlayer', () => {
 
   it('exposes the current step to assistive technology', () => {
     render(<AnimationPlayer spec={spec} />);
-    expect(
-      screen.getByRole('group', { name: /Step 1 of 3.*swipe to step/ }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: /Step 1 of 3.*swipe to step/ })).toBeInTheDocument();
   });
 });
 

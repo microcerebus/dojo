@@ -15,9 +15,7 @@ export interface QuizState {
 }
 
 export type QuizAction =
-  | { type: 'answer'; optionIndex: number }
-  | { type: 'next' }
-  | { type: 'restart' };
+  { type: 'answer'; optionIndex: number } | { type: 'next' } | { type: 'restart' };
 
 export const initialQuizState = (): QuizState => ({
   index: 0,

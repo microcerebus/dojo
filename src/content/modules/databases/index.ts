@@ -108,7 +108,11 @@ WHERE AptID IN (SELECT AptID FROM Apartments WHERE BuildingID = 11);`,
           kind: 'table',
           headers: ['Join', 'Returns', 'Reach for it when'],
           rows: [
-            ['`INNER JOIN`', 'Only rows matching on both sides', 'You genuinely only want pairs that exist'],
+            [
+              '`INNER JOIN`',
+              'Only rows matching on both sides',
+              'You genuinely only want pairs that exist',
+            ],
             [
               '`LEFT OUTER JOIN`',
               'Every left row; NULLs where the right had no match',
@@ -119,8 +123,16 @@ WHERE AptID IN (SELECT AptID FROM Apartments WHERE BuildingID = 11);`,
               'The mirror image',
               'Rarely - `A LEFT JOIN B` is `B RIGHT JOIN A`, so most people only write LEFT',
             ],
-            ['`FULL OUTER JOIN`', 'Everything from both sides, NULL-padded', 'Reconciling two sources and finding the mismatches'],
-            ['`CROSS JOIN`', 'Every left row × every right row', 'Generating grids - or by accident, when you forget the ON clause'],
+            [
+              '`FULL OUTER JOIN`',
+              'Everything from both sides, NULL-padded',
+              'Reconciling two sources and finding the mismatches',
+            ],
+            [
+              '`CROSS JOIN`',
+              'Every left row × every right row',
+              'Generating grids - or by accident, when you forget the ON clause',
+            ],
           ],
         },
         {
@@ -175,13 +187,21 @@ GROUP BY s.StudentID, s.StudentName;  -- name must be grouped or aggregated`,
           kind: 'table',
           headers: ['Cardinality', 'How it is stored', 'Example'],
           rows: [
-            ['One-to-many', 'A foreign key on the *many* side', '`Apartments.BuildingID` → `Buildings`'],
+            [
+              'One-to-many',
+              'A foreign key on the *many* side',
+              '`Apartments.BuildingID` → `Buildings`',
+            ],
             [
               'Many-to-many',
               'A third table holding both keys',
               '`AptTenants(TenantID, AptID)` - and it can carry its own columns, like a lease start date',
             ],
-            ['One-to-one', 'A foreign key with a unique constraint', 'A user and their settings row'],
+            [
+              'One-to-one',
+              'A foreign key with a unique constraint',
+              'A user and their settings row',
+            ],
             [
               'Is-a',
               'A shared key plus a table of the extra attributes',
@@ -196,7 +216,7 @@ GROUP BY s.StudentID, s.StudentName;  -- name must be grouped or aggregated`,
         { kind: 'anim', animId: 'db-normalisation' },
         {
           kind: 'p',
-          text: '**Normalisation** minimises redundancy: store each fact once, so it cannot contradict itself. Courses holds a `TeacherID`, and the teacher\'s name lives in exactly one row of Teachers, so a rename is a single-row update. The cost is joins on read.',
+          text: "**Normalisation** minimises redundancy: store each fact once, so it cannot contradict itself. Courses holds a `TeacherID`, and the teacher's name lives in exactly one row of Teachers, so a rename is a single-row update. The cost is joins on read.",
         },
         {
           kind: 'p',
@@ -208,7 +228,10 @@ GROUP BY s.StudentID, s.StudentName;  -- name must be grouped or aggregated`,
           rows: [
             ['Faster reads - fewer or no joins', 'Slower, more complex inserts and updates'],
             ['Simpler queries, so fewer query bugs', 'More storage, since data is repeated'],
-            ['Fewer tables to touch on a hot path', 'Copies can disagree, and nothing says which is right'],
+            [
+              'Fewer tables to touch on a hot path',
+              'Copies can disagree, and nothing says which is right',
+            ],
           ],
         },
         {
@@ -318,7 +341,8 @@ COMMIT;   -- ROLLBACK undoes both if anything fails`,
     {
       id: 'db-4',
       kind: 'concept',
-      prompt: 'You group by `StudentID` and select `StudentName` without aggregating it. What happens?',
+      prompt:
+        'You group by `StudentID` and select `StudentName` without aggregating it. What happens?',
       options: [
         'It works - names within a group are identical anyway',
         'It is rejected: every selected column must be aggregated or in the GROUP BY',
@@ -332,7 +356,8 @@ COMMIT;   -- ROLLBACK undoes both if anything fails`,
     {
       id: 'db-5',
       kind: 'concept',
-      prompt: 'A tenant can rent several apartments and an apartment can have several tenants. How is that stored?',
+      prompt:
+        'A tenant can rent several apartments and an apartment can have several tenants. How is that stored?',
       options: [
         'A list column on Tenants',
         'A junction table holding both keys - which can also carry attributes like the lease start date',
@@ -374,7 +399,8 @@ COMMIT;   -- ROLLBACK undoes both if anything fails`,
     {
       id: 'db-8',
       kind: 'technique',
-      prompt: '"Honour roll = top 10% by GPA." Why is `SELECT TOP 10 PERCENT … ORDER BY GPA` wrong?',
+      prompt:
+        '"Honour roll = top 10% by GPA." Why is `SELECT TOP 10 PERCENT … ORDER BY GPA` wrong?',
       options: [
         'It sorts the wrong way',
         'It returns literally 10% of rows, so students tied at the cut-off are arbitrarily excluded',
@@ -415,10 +441,16 @@ COMMIT;   -- ROLLBACK undoes both if anything fails`,
     },
   ],
   drills: [
-    { slug: 'combine-two-tables', note: 'CTCI 14.2 shape - LEFT JOIN so rows without a match survive.' },
+    {
+      slug: 'combine-two-tables',
+      note: 'CTCI 14.2 shape - LEFT JOIN so rows without a match survive.',
+    },
     { slug: 'duplicate-emails', note: 'CTCI 14.1 shape - GROUP BY with HAVING COUNT > 1.' },
     { slug: 'employees-earning-more-than-their-managers', note: 'Self-join.' },
-    { slug: 'department-highest-salary', note: 'Grouped maximum with a join back - a genuinely common pattern.' },
+    {
+      slug: 'department-highest-salary',
+      note: 'Grouped maximum with a join back - a genuinely common pattern.',
+    },
     { slug: 'rank-scores', note: 'Window functions, or the pre-window-function equivalent.' },
     { slug: 'second-highest-salary', note: 'The NULL-on-empty case is the whole question.' },
     { slug: 'swap-salary', note: 'CTCI 14.3 shape - a conditional UPDATE.' },

@@ -53,7 +53,7 @@ const TRAVERSAL_NOTES = [
   'Step 3. In-order is walking the values in sorted order, because that is what "left, node, right" means on a BST.',
   'Step 4. Post-order emits 4 only now: a node comes out after everything below it, which is why post-order is what you use to free or fold a tree bottom-up.',
   'Step 5. Pre-order has finished the whole left subtree and jumps to 12. It emits a node before descending, which is why it can serialise a tree.',
-  'Step 6. In-order is at 12, exactly the seventh-smallest value. Post-order is still finishing 12\'s children.',
+  "Step 6. In-order is at 12, exactly the seventh-smallest value. Post-order is still finishing 12's children.",
   'Step 7. Post-order ends on the root - always. Pre-order starts on the root, post-order ends on it, and in-order puts it in the middle.',
 ];
 
@@ -179,7 +179,7 @@ const boundFrames: BoundFrame[] = [
     max: '+∞',
     bad: false,
     caption:
-      'Every node in this tree is bigger than its left child and smaller than its right child. Check only that and you will call it a binary search tree. It is not one: 25 sits in 20\'s left subtree.',
+      "Every node in this tree is bigger than its left child and smaller than its right child. Check only that and you will call it a binary search tree. It is not one: 25 sits in 20's left subtree.",
     detail: 'local comparisons are not enough - the property is about all descendants',
   },
   {
@@ -208,7 +208,8 @@ const boundFrames: BoundFrame[] = [
     min: '−∞',
     max: '10',
     bad: false,
-    caption: 'Left again at 10, so the ceiling drops to 10. 5 fits, and it is a leaf, so this branch is clean.',
+    caption:
+      'Left again at 10, so the ceiling drops to 10. 5 fits, and it is a leaf, so this branch is clean.',
     detail: '5 ∈ (−∞, 10) ✓',
   },
   {
@@ -300,7 +301,7 @@ const BFS_ORDER = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 const SEARCH_NOTES = [
   'Both start at A. From here the two algorithms are the same code with one word changed: DFS pops the most recently seen node, BFS pops the oldest.',
   'Both take B. Nothing has diverged yet - with one frontier node there is nothing to choose between.',
-  'DFS commits: it follows B down to D. BFS refuses to leave A\'s neighbours and takes C instead. This is the fork.',
+  "DFS commits: it follows B down to D. BFS refuses to leave A's neighbours and takes C instead. This is the fork.",
   'DFS is now three edges out at G, chasing one branch to its end. BFS is still filling in distance 2.',
   'From G, DFS crosses the extra G–C edge and lands on C - a node that is one step from where it started. Without a visited set it would have looped back into D and never stopped.',
   'DFS picks up F. BFS, meanwhile, has finished everything within two steps of A and is only now going deeper.',
@@ -351,7 +352,11 @@ function SearchFrameView({ index }: { index: number }) {
     <Stage>
       <Readout
         items={[
-          { key: 's', label: 'step', value: frame.step === 0 ? '—' : String(Math.min(frame.step, 7)) },
+          {
+            key: 's',
+            label: 'step',
+            value: frame.step === 0 ? '—' : String(Math.min(frame.step, 7)),
+          },
         ]}
       />
       <div className="viz__note">DFS - go deep, backtrack only when stuck</div>
@@ -424,7 +429,7 @@ const topoFrames: TopoFrame[] = (() => {
     f: 'Build f. Nothing depended on it being later, and now a and b have lost their last blocker, so both become ready. Removing a node is the same as deleting its outgoing arrows.',
     e: 'Build e. It has no edges at all - an isolated node is still part of a valid order, and forgetting the ones with no dependencies in either direction is a common miss.',
     b: 'Build b. d loses one of its two blockers but still waits on a, so it does not join the queue yet.',
-    a: 'Build a. That was d\'s second blocker, so d is finally ready. Notice d could not have gone earlier under any tie-breaking.',
+    a: "Build a. That was d's second blocker, so d is finally ready. Notice d could not have gone earlier under any tie-breaking.",
     d: 'Build d, which releases c.',
     c: 'Build c. The queue is empty and every project is in the order, so this order is valid.',
   };
@@ -475,7 +480,9 @@ function TopoFrameView({ index }: { index: number }) {
   }));
   return (
     <Stage tall>
-      <div className="viz__note">projects, with the number of dependencies each is still waiting on</div>
+      <div className="viz__note">
+        projects, with the number of dependencies each is still waiting on
+      </div>
       <Cells cells={cells} label="projects" />
       <QueueRow
         label="ready"
@@ -492,7 +499,12 @@ function TopoFrameView({ index }: { index: number }) {
         cells={PROJECTS.map((_, i) => ({
           key: `o-${i}`,
           label: frame.order[i] ?? '·',
-          state: frame.order[i] === undefined ? 'idle' : frame.order[i] === frame.popped ? 'target' : 'done',
+          state:
+            frame.order[i] === undefined
+              ? 'idle'
+              : frame.order[i] === frame.popped
+                ? 'target'
+                : 'done',
         }))}
       />
       <Legend
@@ -510,7 +522,8 @@ export const topologicalSort: AnimationSpec = fromFrames(
   {
     id: 'tg-toposort',
     title: 'Topological sort by indegree',
-    blurb: 'Build whatever is waiting on nothing, delete its arrows, repeat. The queue draining is the algorithm.',
+    blurb:
+      'Build whatever is waiting on nothing, delete its arrows, repeat. The queue draining is the algorithm.',
   },
   topoFrames,
   TopoFrameView,
@@ -587,7 +600,11 @@ function BidiFrameView({ index }: { index: number }) {
     <Stage tall>
       <Readout
         items={[
-          { key: 'd', label: 'hops covered', value: `${Math.min(frame.radius * 2, PATH_LENGTH)}/8` },
+          {
+            key: 'd',
+            label: 'hops covered',
+            value: `${Math.min(frame.radius * 2, PATH_LENGTH)}/8`,
+          },
           { key: 'one', label: 'one search', value: single.toLocaleString('en-US') },
           { key: 'two', label: 'two searches', value: both.toLocaleString('en-US') },
         ]}
@@ -627,7 +644,8 @@ export const bidirectionalSearch: AnimationSpec = fromFrames(
   {
     id: 'tg-bidirectional',
     title: 'Bidirectional search',
-    blurb: 'Two frontiers meeting in the middle, and the square-root-sized bill that comes with it.',
+    blurb:
+      'Two frontiers meeting in the middle, and the square-root-sized bill that comes with it.',
   },
   bidiFrames,
   BidiFrameView,

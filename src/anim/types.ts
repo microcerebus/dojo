@@ -32,8 +32,7 @@ export function fromFrames<F extends { caption: string; detail?: string }>(
     ...meta,
     length: frames.length,
     caption: (index) => frames[Math.max(0, Math.min(index, frames.length - 1))].caption,
-    detail: (index) =>
-      frames[Math.max(0, Math.min(index, frames.length - 1))].detail ?? null,
+    detail: (index) => frames[Math.max(0, Math.min(index, frames.length - 1))].detail ?? null,
     Frame,
   };
 }

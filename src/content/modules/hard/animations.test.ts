@@ -40,10 +40,7 @@ describe('hard-trapping-water', () => {
     for (const frame of waterFrames) {
       frame.water.forEach((depth, i) => {
         if (depth === 0) return;
-        const bound = Math.min(
-          Math.max(...HEIGHTS.slice(0, i + 1)),
-          Math.max(...HEIGHTS.slice(i)),
-        );
+        const bound = Math.min(Math.max(...HEIGHTS.slice(0, i + 1)), Math.max(...HEIGHTS.slice(i)));
         expect(HEIGHTS[i] + depth, `column ${i}`).toBeLessThanOrEqual(bound);
       });
     }
@@ -126,9 +123,7 @@ describe('hard-union-find', () => {
     for (const [root, sum] of totals) {
       expect(final.caption).toContain(`${NAMES[root]} ${sum}`);
     }
-    expect([...totals.values()].reduce((a, b) => a + b, 0)).toBe(
-      FREQ.reduce((a, b) => a + b, 0),
-    );
+    expect([...totals.values()].reduce((a, b) => a + b, 0)).toBe(FREQ.reduce((a, b) => a + b, 0));
   });
 
   it('never creates a cycle in the parent forest', () => {

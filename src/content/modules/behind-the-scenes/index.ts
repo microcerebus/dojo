@@ -25,7 +25,8 @@ export const behindTheScenes: CourseModule = {
     {
       id: 'the-loop',
       title: 'The shape of a loop',
-      takeaway: 'Screen, onsite, independent written feedback, then a decision made by people you may never meet.',
+      takeaway:
+        'Screen, onsite, independent written feedback, then a decision made by people you may never meet.',
       audio: true,
       blocks: [
         {
@@ -41,7 +42,7 @@ export const behindTheScenes: CourseModule = {
         },
         {
           kind: 'p',
-          text: 'Two structural facts change how you should behave. Interviewers write up their feedback before comparing notes, and often cannot see anyone else\'s until they have filed their own - so **every round genuinely starts from a blank slate**, and a bad first interview does not doom the rest. And the people who decide are frequently not the people who met you; they are reading write-ups. What survives that translation is evidence: what you built, what you said, what you got to.',
+          text: "Two structural facts change how you should behave. Interviewers write up their feedback before comparing notes, and often cannot see anyone else's until they have filed their own - so **every round genuinely starts from a blank slate**, and a bad first interview does not doom the rest. And the people who decide are frequently not the people who met you; they are reading write-ups. What survives that translation is evidence: what you built, what you said, what you got to.",
         },
         {
           kind: 'callout',
@@ -69,14 +70,46 @@ export const behindTheScenes: CourseModule = {
           kind: 'table',
           headers: ['Pattern', 'Where it was documented', 'What it means for you'],
           rows: [
-            ['A dedicated bar-keeper from outside the team, with veto power', 'Amazon\'s "bar raiser"', 'One round may feel much harder and much less related to the team. Struggling in it does not mean failing it - it is graded against its own population.'],
-            ['A hiring committee that never met you', 'Google', 'Your interviewers are writing evidence, not verdicts. Enthusiasm in one write-up can carry a packet further than uniform mid scores.'],
-            ['Interviewers assigned distinct roles', 'Facebook: behavioural, coding, design', 'Rounds are deliberately non-overlapping. Prepare all three; do not assume the whole loop is algorithms.'],
-            ['Hiring by the company, not the team', 'Facebook bootcamp; Google', 'You may not know your team when you accept. Ask how placement works and how easy internal moves are.'],
-            ['Interviewing for one specific team', 'Palantir, Microsoft', 'Read that team\'s product. Specific, informed opinions about it are a real differentiator.'],
-            ['Meeting a manager or director late in the day', 'Microsoft "as app"; Apple', 'Usually a good sign - you only get there if the earlier rounds went well.'],
-            ['A timed online coding assessment', 'Palantir; increasingly common', 'You can look things up, so the bar is higher. Practise under the same time pressure.'],
-            ['Passion for the product tested explicitly', 'Apple, Microsoft', 'Have a real answer to "why us" grounded in something you have actually used or read.'],
+            [
+              'A dedicated bar-keeper from outside the team, with veto power',
+              'Amazon\'s "bar raiser"',
+              'One round may feel much harder and much less related to the team. Struggling in it does not mean failing it - it is graded against its own population.',
+            ],
+            [
+              'A hiring committee that never met you',
+              'Google',
+              'Your interviewers are writing evidence, not verdicts. Enthusiasm in one write-up can carry a packet further than uniform mid scores.',
+            ],
+            [
+              'Interviewers assigned distinct roles',
+              'Facebook: behavioural, coding, design',
+              'Rounds are deliberately non-overlapping. Prepare all three; do not assume the whole loop is algorithms.',
+            ],
+            [
+              'Hiring by the company, not the team',
+              'Facebook bootcamp; Google',
+              'You may not know your team when you accept. Ask how placement works and how easy internal moves are.',
+            ],
+            [
+              'Interviewing for one specific team',
+              'Palantir, Microsoft',
+              "Read that team's product. Specific, informed opinions about it are a real differentiator.",
+            ],
+            [
+              'Meeting a manager or director late in the day',
+              'Microsoft "as app"; Apple',
+              'Usually a good sign - you only get there if the earlier rounds went well.',
+            ],
+            [
+              'A timed online coding assessment',
+              'Palantir; increasingly common',
+              'You can look things up, so the bar is higher. Practise under the same time pressure.',
+            ],
+            [
+              'Passion for the product tested explicitly',
+              'Apple, Microsoft',
+              'Have a real answer to "why us" grounded in something you have actually used or read.',
+            ],
           ],
         },
         {
@@ -90,7 +123,8 @@ export const behindTheScenes: CourseModule = {
     {
       id: 'what-to-do',
       title: 'What to do with this',
-      takeaway: 'Ask the recruiter everything, treat every interaction as part of the loop, and read nothing into tone.',
+      takeaway:
+        'Ask the recruiter everything, treat every interaction as part of the loop, and read nothing into tone.',
       audio: true,
       blocks: [
         {
@@ -145,7 +179,8 @@ export const behindTheScenes: CourseModule = {
     {
       id: 'bts-2',
       kind: 'concept',
-      prompt: 'You had a weak second interview in a five-round onsite. The likely effect on round three is:',
+      prompt:
+        'You had a weak second interview in a five-round onsite. The likely effect on round three is:',
       options: [
         'Your interviewer will have seen the negative feedback and be primed against you',
         'None - feedback is usually written before it is shared, so each round starts from a blank slate',
@@ -159,7 +194,8 @@ export const behindTheScenes: CourseModule = {
     {
       id: 'bts-3',
       kind: 'concept',
-      prompt: 'One round felt far harder and much less related to the team than the others. The most likely explanation is:',
+      prompt:
+        'One round felt far harder and much less related to the team than the others. The most likely explanation is:',
       options: [
         'The interviewer had already decided to reject you',
         'A deliberately different interviewer - brought in from outside the team to hold the bar - which is graded against its own population',
@@ -173,7 +209,8 @@ export const behindTheScenes: CourseModule = {
     {
       id: 'bts-4',
       kind: 'concept',
-      prompt: 'Your interviewer was noticeably cold and gave no encouragement. What should you conclude?',
+      prompt:
+        'Your interviewer was noticeably cold and gave no encouragement. What should you conclude?',
       options: [
         'It went badly',
         'Nothing - affect is not signal, and some interviewers deliberately stay neutral',
@@ -215,7 +252,8 @@ export const behindTheScenes: CourseModule = {
     {
       id: 'bts-7',
       kind: 'concept',
-      prompt: 'A packet with one outstanding round and two weak ones usually loses to one with four solid rounds because:',
+      prompt:
+        'A packet with one outstanding round and two weak ones usually loses to one with four solid rounds because:',
       options: [
         'Interviewers average the scores',
         'The decision asks whether the evidence supports a hire, and repeated weak signals are evidence',

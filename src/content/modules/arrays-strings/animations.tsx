@@ -78,15 +78,16 @@ function TwoPointerFrameView({ index }: { index: number }) {
   const cells: CellSpec[] = SORTED.map((value, i) => ({
     key: `c-${i}`,
     label: String(value),
-    state: frame.done && (i === frame.lo || i === frame.hi)
-      ? 'done'
-      : i === frame.lo
-        ? 'active'
-        : i === frame.hi
-          ? 'compare'
-          : i < frame.lo || i > frame.hi
-            ? 'muted'
-            : 'idle',
+    state:
+      frame.done && (i === frame.lo || i === frame.hi)
+        ? 'done'
+        : i === frame.lo
+          ? 'active'
+          : i === frame.hi
+            ? 'compare'
+            : i < frame.lo || i > frame.hi
+              ? 'muted'
+              : 'idle',
   }));
   const pointers: PointerSpec[] = [
     { key: 'lo', at: frame.lo, label: 'lo', tone: 'a' },
@@ -387,12 +388,7 @@ const rotateFrames: RotateFrame[] = (() => {
       grid[i][last] = top;
       frames.push({
         grid: grid.map((row) => [...row]),
-        touched: [
-          idx(first, i),
-          idx(last - offset, first),
-          idx(last, last - offset),
-          idx(i, last),
-        ],
+        touched: [idx(first, i), idx(last - offset, first), idx(last, last - offset), idx(i, last)],
         layer,
         caption: `Layer ${layer}, offset ${offset}: four cells swap in a single cycle - top goes to right, right to bottom, bottom to left, left to top. One temporary variable holds the value being displaced.`,
         detail: `cycle ${frames.length} · each cell is written exactly once → O(n²) time, O(1) space`,

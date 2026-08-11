@@ -60,7 +60,9 @@ function GrowthFrame({ index }: { index: number }) {
     <Stage>
       <Readout items={[{ key: 'n', label: 'n', value: String(n) }]} />
       <Bars bars={bars} />
-      <p className="viz__note">Bar heights are log-scaled - otherwise O(n²) would be the only thing you could see.</p>
+      <p className="viz__note">
+        Bar heights are log-scaled - otherwise O(n²) would be the only thing you could see.
+      </p>
     </Stage>
   );
 }
@@ -259,8 +261,4 @@ export const recursionTree: AnimationSpec = fromFrames(
   FibFrame,
 );
 
-export const bigOAnimations: AnimationSpec[] = [
-  growthRace,
-  amortisedDoubling,
-  recursionTree,
-];
+export const bigOAnimations: AnimationSpec[] = [growthRace, amortisedDoubling, recursionTree];

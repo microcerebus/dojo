@@ -39,9 +39,21 @@ export const java: CourseModule = {
           kind: 'table',
           headers: ['', 'Overloading', 'Overriding'],
           rows: [
-            ['Same name, and…', 'different parameter types or count', 'identical signature, in a subclass'],
-            ['Chosen', 'At compile time, from the static types', 'At run time, from the actual object'],
-            ['Relationship', 'Unrelated methods that share a name', 'A subclass replacing its parent\'s behaviour'],
+            [
+              'Same name, and…',
+              'different parameter types or count',
+              'identical signature, in a subclass',
+            ],
+            [
+              'Chosen',
+              'At compile time, from the static types',
+              'At run time, from the actual object',
+            ],
+            [
+              'Relationship',
+              'Unrelated methods that share a name',
+              "A subclass replacing its parent's behaviour",
+            ],
           ],
         },
         {
@@ -140,7 +152,11 @@ String str = (String) vector.get(0);`,
           kind: 'table',
           headers: ['', 'Java generics', 'C++ templates'],
           rows: [
-            ['Mechanism', 'Erasure - one class, casts inserted', 'Instantiation - one class per type argument'],
+            [
+              'Mechanism',
+              'Erasure - one class, casts inserted',
+              'Instantiation - one class per type argument',
+            ],
             ['Primitive arguments', 'No - `Integer`, not `int`', 'Yes - `vector<int>` is fine'],
             ['Static members', 'Shared across all type arguments', 'Separate per type argument'],
             ['Type constraints', '`<T extends CardGame>`', 'Duck-typed until C++20 concepts'],
@@ -160,9 +176,24 @@ String str = (String) vector.get(0);`,
           caption: '13.5 - the map decision, in one table',
           headers: ['', 'Implementation', 'Lookup / insert', 'Iteration order'],
           rows: [
-            ['`HashMap`', 'Array of linked lists (buckets)', 'O(1) average', 'Arbitrary - never rely on it'],
-            ['`TreeMap`', 'Red-black tree', 'O(log n) guaranteed', 'Sorted by key (must be `Comparable`)'],
-            ['`LinkedHashMap`', 'Hash buckets + a doubly linked list', 'O(1) average', 'Insertion order, or access order'],
+            [
+              '`HashMap`',
+              'Array of linked lists (buckets)',
+              'O(1) average',
+              'Arbitrary - never rely on it',
+            ],
+            [
+              '`TreeMap`',
+              'Red-black tree',
+              'O(log n) guaranteed',
+              'Sorted by key (must be `Comparable`)',
+            ],
+            [
+              '`LinkedHashMap`',
+              'Hash buckets + a doubly linked list',
+              'O(1) average',
+              'Insertion order, or access order',
+            ],
           ],
         },
         {
@@ -173,7 +204,7 @@ String str = (String) vector.get(0);`,
           kind: 'callout',
           tone: 'key',
           title: 'This one transfers everywhere',
-          text: 'Hash map versus sorted map versus insertion-ordered map is the same decision in every language. JavaScript\'s `Map` is the insertion-ordered one and has no sorted equivalent, Python\'s `dict` is insertion-ordered since 3.7, C++ gives you `unordered_map` and `map`. Know the axis and you know all of them.',
+          text: "Hash map versus sorted map versus insertion-ordered map is the same decision in every language. JavaScript's `Map` is the insertion-ordered one and has no sorted equivalent, Python's `dict` is insertion-ordered since 3.7, C++ gives you `unordered_map` and `map`. Know the axis and you know all of them.",
         },
         {
           kind: 'p',
@@ -295,7 +326,7 @@ List<Integer> getRandomSubset(List<Integer> list) {
       ],
       answerIndex: 1,
       explain:
-        'A subclass constructor must call the parent\'s, so subclassing is limited to exactly where that constructor is visible.',
+        "A subclass constructor must call the parent's, so subclassing is limited to exactly where that constructor is visible.",
     },
     {
       id: 'java-3',
@@ -412,7 +443,10 @@ List<Integer> getRandomSubset(List<Integer> list) {
   ],
   drills: [
     { slug: 'design-hashset', note: 'Forces you to think about hashing and collisions directly.' },
-    { slug: 'sort-list', note: 'Merge sort on a linked list - a good comparator/stability discussion.' },
+    {
+      slug: 'sort-list',
+      note: 'Merge sort on a linked list - a good comparator/stability discussion.',
+    },
   ],
   practice: [
     {

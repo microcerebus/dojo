@@ -49,7 +49,7 @@ const COMPONENTS: { name: string; cases: string[] }[] = [
     name: 'Deposit',
     cases: [
       'cash and cheque, correctly credited',
-      'one note, the machine\'s maximum, zero notes',
+      "one note, the machine's maximum, zero notes",
       'foreign notes, torn notes, a jammed envelope',
       'power cut with the notes inside the machine',
       'deposit and withdrawal on the same account at once',
@@ -64,7 +64,7 @@ const COMPONENTS: { name: string; cases: string[] }[] = [
       'closed account, account not owned by this card',
       'backend unreachable - degrade, do not show a stale number as current',
       'balance read during a transfer',
-      'no other customer\'s balance is ever reachable',
+      "no other customer's balance is ever reachable",
     ],
   },
   {
@@ -120,7 +120,11 @@ function MatrixFrame({ index }: { index: number }) {
       key: `${component.name}-${type.key}`,
       label: row < frame.rows ? '✓' : '·',
       state:
-        row === frame.component ? ('active' as const) : row < frame.rows ? ('done' as const) : ('idle' as const),
+        row === frame.component
+          ? ('active' as const)
+          : row < frame.rows
+            ? ('done' as const)
+            : ('idle' as const),
     })),
   );
   return (
@@ -162,7 +166,11 @@ interface BoundaryFrame {
 }
 
 const line = (labels: string[], states: (CellSpec['state'] | undefined)[]): CellSpec[] =>
-  labels.map((label, i) => ({ key: `v${i}-${label}`, label, ...(states[i] ? { state: states[i] } : {}) }));
+  labels.map((label, i) => ({
+    key: `v${i}-${label}`,
+    label,
+    ...(states[i] ? { state: states[i] } : {}),
+  }));
 
 const RANGE_LABELS = ['−1', '0', '1', '2', '…', '99', '100', '101'];
 
@@ -171,7 +179,8 @@ const boundaryFrames: BoundaryFrame[] = [
     cells: line(RANGE_LABELS, []),
     caption:
       'The spec says the function accepts 1 to 100. There are infinitely many inputs and you get to pick a handful, so pick where behaviour changes.',
-    detail: 'A boundary is a pair of neighbouring values that are treated differently. Test both, and the point itself.',
+    detail:
+      'A boundary is a pair of neighbouring values that are treated differently. Test both, and the point itself.',
   },
   {
     cells: line(RANGE_LABELS, ['bad', 'bad', 'target', 'done', 'done', 'done', 'target', 'bad']),
@@ -186,19 +195,22 @@ const boundaryFrames: BoundaryFrame[] = [
     ),
     caption:
       'Then the boundaries the type itself brings, which the spec never mentions: empty, one element, the smallest and largest representable values, zero, negatives, duplicates, and null.',
-    detail: 'Illegal input deserves a decision, not an accident: does it return an error or throw? Ask, then test for it.',
+    detail:
+      'Illegal input deserves a decision, not an accident: does it return an error or throw? Ask, then test for it.',
   },
   {
     cells: line(['3', '2', '1', '0', '2³²−1'], ['done', 'done', 'done', 'target', 'bad']),
     caption:
       'The C loop "unsigned int i; for (i = 100; i >= 0; --i)" never ends. An unsigned value is never below zero, so at 0 the decrement wraps to 2³²−1 and the condition stays true.',
-    detail: 'The fix is i > 0, and print 0 separately if you need it. (Also %u, not %d, for an unsigned value.)',
+    detail:
+      'The fix is i > 0, and print 0 separately if you need it. (Also %u, not %d, for an unsigned value.)',
   },
   {
     cells: line(RANGE_LABELS, ['bad', 'bad', 'target', 'done', 'done', 'done', 'target', 'bad']),
     caption:
       'So: normal cases, the extremes, illegal input, and strange-but-legal input - an already sorted array, a reverse-sorted one, all-identical elements.',
-    detail: 'Then define the expected result for each, including "the input array must come back unmodified".',
+    detail:
+      'Then define the expected result for each, including "the input array must come back unmodified".',
   },
 ];
 
@@ -222,7 +234,8 @@ export const boundaries: AnimationSpec = fromFrames(
   {
     id: 't-boundaries',
     title: 'Where the bugs live',
-    blurb: 'Boundaries are pairs of neighbours treated differently. Test both sides, and the point between them.',
+    blurb:
+      'Boundaries are pairs of neighbours treated differently. Test both sides, and the point between them.',
   },
   boundaryFrames,
   BoundaryFrame,
@@ -252,7 +265,8 @@ const bisectFrames: BisectFrame[] = (() => {
       probe: null,
       answer: null,
       caption: `Something broke somewhere in the last ${BUILDS} builds. Testing each one costs ${BUILDS} runs - and you almost never need that many.`,
-      detail: 'The only property you need: once it is broken, it stays broken. That makes the sequence monotone.',
+      detail:
+        'The only property you need: once it is broken, it stays broken. That makes the sequence monotone.',
     },
   ];
   let lo = 1;
@@ -304,7 +318,11 @@ function BisectFrame({ index }: { index: number }) {
         items={[
           { key: 'r', label: 'range', value: `${frame.lo}…${frame.hi}` },
           { key: 'p', label: 'probe', value: frame.probe === null ? '-' : String(frame.probe) },
-          { key: 'a', label: 'first bad', value: frame.answer === null ? '-' : String(frame.answer) },
+          {
+            key: 'a',
+            label: 'first bad',
+            value: frame.answer === null ? '-' : String(frame.answer),
+          },
         ]}
       />
       <Legend
@@ -322,7 +340,8 @@ export const bisect: AnimationSpec = fromFrames(
   {
     id: 't-bisect',
     title: 'Bisecting a failure',
-    blurb: 'Halve the search space instead of walking it - the single most useful debugging habit there is.',
+    blurb:
+      'Halve the search space instead of walking it - the single most useful debugging habit there is.',
   },
   bisectFrames,
   BisectFrame,

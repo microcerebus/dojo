@@ -8,7 +8,7 @@ export const bitManipulation: CourseModule = {
   status: 'complete',
   source: 'Chapter 5',
   summary:
-    'Masks, shifts and two\'s complement - plus the handful of tricks that turn arithmetic problems into one-liners.',
+    "Masks, shifts and two's complement - plus the handful of tricks that turn arithmetic problems into one-liners.",
   estimatedMinutes: 60,
   concepts: [
     'Binary representation and doing binary addition, subtraction and multiplication by hand',
@@ -75,7 +75,7 @@ export const bitManipulation: CourseModule = {
       blocks: [
         {
           kind: 'p',
-          text: 'Computers store signed integers in two\'s complement. A non-negative number is just itself; a negative number is stored as the complement of its absolute value, with the top bit set to mark it negative.',
+          text: "Computers store signed integers in two's complement. A non-negative number is just itself; a negative number is stored as the complement of its absolute value, with the top bit set to mark it negative.",
         },
         {
           kind: 'p',
@@ -329,12 +329,13 @@ const updateBit = (n: number, i: number, v: 0 | 1) => (n & ~(1 << i)) | (v << i)
       ],
       answerIndex: 1,
       explain:
-        'n − 1 clears n\'s lowest set bit and sets everything below it, so the AND is zero only when there was nothing above that bit. Zero passes too, so guard it.',
+        "n − 1 clears n's lowest set bit and sets everything below it, so the AND is zero only when there was nothing above that bit. Zero passes too, so guard it.",
     },
     {
       id: 'bm-2',
       kind: 'complexity',
-      prompt: 'Counting set bits with `while (n) { count++; n &= n - 1; }` on a 32-bit integer costs:',
+      prompt:
+        'Counting set bits with `while (n) { count++; n &= n - 1; }` on a 32-bit integer costs:',
       options: [
         'O(1) - always 32 iterations',
         'O(number of set bits), at most 32',
@@ -348,7 +349,8 @@ const updateBit = (n: number, i: number, v: 0 | 1) => (n & ~(1 << i)) | (v << i)
     {
       id: 'bm-3',
       kind: 'technique',
-      prompt: 'You need to set bit i of n to a value v that may be 0 or 1. Which expression is correct?',
+      prompt:
+        'You need to set bit i of n to a value v that may be 0 or 1. Which expression is correct?',
       options: [
         '`n | (v << i)`',
         '`n ^ (v << i)`',
@@ -363,12 +365,7 @@ const updateBit = (n: number, i: number, v: 0 | 1) => (n & ~(1 << i)) | (v << i)
       id: 'bm-4',
       kind: 'concept',
       prompt: 'In JavaScript, what is the value of `x` after `let x = -8; x >>>= 1;`?',
-      options: [
-        '−4',
-        '2147483644',
-        '−1',
-        '4',
-      ],
+      options: ['−4', '2147483644', '−1', '4'],
       answerIndex: 1,
       explain:
         '`>>>` is the logical shift: it feeds in a 0 at the top rather than copying the sign bit, so a negative value becomes a large positive one. `>>` would have given −4.',
@@ -406,7 +403,8 @@ const updateBit = (n: number, i: number, v: 0 | 1) => (n & ~(1 << i)) | (v << i)
     {
       id: 'bm-7',
       kind: 'concept',
-      prompt: 'Adding two integers with no `+` operator: which pair of expressions is the loop body?',
+      prompt:
+        'Adding two integers with no `+` operator: which pair of expressions is the loop body?',
       options: [
         'sum = `a | b`, carry = `(a ^ b) << 1`',
         'sum = `a ^ b`, carry = `(a & b) << 1`',

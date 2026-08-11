@@ -80,7 +80,8 @@ export const kadaneFrames: KadaneFrame[] = (() => {
     bestRange,
     restarted: false,
     caption: `Answer ${best}, from indices ${bestRange[0]} to ${bestRange[1]}. Stated as a DP: the best run ending at i is either the element alone or the element plus the best run ending at i−1 - a two-variable rolling array.`,
-    detail: 'O(n) time, O(1) space · ask what an all-negative array should return before you code it',
+    detail:
+      'O(n) time, O(1) space · ask what an all-negative array should return before you code it',
   });
   return frames;
 })();
@@ -90,7 +91,15 @@ function KadaneFrameView({ index }: { index: number }) {
   const cells: CellSpec[] = SERIES.map((value, i) => {
     const inBest = i >= frame.bestRange[0] && i <= frame.bestRange[1];
     const state: CellState =
-      i === frame.at ? (frame.restarted ? 'bad' : 'active') : inBest ? 'target' : i < frame.at ? 'muted' : 'idle';
+      i === frame.at
+        ? frame.restarted
+          ? 'bad'
+          : 'active'
+        : inBest
+          ? 'target'
+          : i < frame.at
+            ? 'muted'
+            : 'idle';
     return { key: `k${i}`, label: String(value), sub: String(i), state };
   });
   return (
@@ -231,7 +240,11 @@ function SweepFrameView({ index }: { index: number }) {
       <Bars bars={bars} height={110} />
       <Readout
         items={[
-          { key: 'p', label: 'peak', value: frame.peakYear === null ? '—' : `${frame.peak} in ${frame.peakYear}` },
+          {
+            key: 'p',
+            label: 'peak',
+            value: frame.peakYear === null ? '—' : `${frame.peak} in ${frame.peakYear}`,
+          },
         ]}
       />
     </Stage>
@@ -339,13 +352,11 @@ function CacheFrameView({ index }: { index: number }) {
     sub: i === 0 ? 'newest' : i === frame.order.length - 1 ? 'oldest' : '',
     state: (key === frame.touched ? 'active' : 'done') as CellState,
   }));
-  const mapCells: CellSpec[] = [...frame.order]
-    .sort()
-    .map((key) => ({
-      key: `m${key}`,
-      label: key,
-      state: (key === frame.touched ? 'active' : 'idle') as CellState,
-    }));
+  const mapCells: CellSpec[] = [...frame.order].sort().map((key) => ({
+    key: `m${key}`,
+    label: key,
+    state: (key === frame.touched ? 'active' : 'idle') as CellState,
+  }));
   return (
     <Stage>
       <Cells cells={mapCells} size="sm" label="map keys" />

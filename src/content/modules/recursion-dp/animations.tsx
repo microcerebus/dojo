@@ -272,15 +272,15 @@ export const tableFrames: TableFrame[] = (() => {
     current: [rows, cols],
     deps: [],
     caption: `The bottom-right cell is the answer: ${values[rows][cols]}, for "${subsequence}". Every cell reads only the row above and the cell to its left, so one row of storage is enough - that is the rolling-array optimisation, O(n) space instead of O(mn).`,
-    detail: 'O(mn) time either way · keep the full table only if you must reconstruct the subsequence',
+    detail:
+      'O(mn) time either way · keep the full table only if you must reconstruct the subsequence',
   });
   return frames;
 })();
 
 function TableFrameView({ index }: { index: number }) {
   const frame = tableFrames[Math.min(Math.max(index, 0), tableFrames.length - 1)];
-  const isDep = (r: number, c: number) =>
-    frame.deps.some(([dr, dc]) => dr === r && dc === c);
+  const isDep = (r: number, c: number) => frame.deps.some(([dr, dc]) => dr === r && dc === c);
   const rows: CellSpec[][] = frame.values.map((row, r) =>
     row.map((value, c) => {
       const isCurrent = frame.current?.[0] === r && frame.current?.[1] === c;
@@ -360,8 +360,7 @@ export const queenFrames: QueenFrame[] = (() => {
 
   const conflicts = (row: number, col: number) =>
     placed.some(
-      (other, otherRow) =>
-        other === col || Math.abs(other - col) === Math.abs(otherRow - row),
+      (other, otherRow) => other === col || Math.abs(other - col) === Math.abs(otherRow - row),
     );
 
   const solve = (row: number) => {
@@ -449,7 +448,11 @@ function QueenFrameView({ index }: { index: number }) {
           : isRejected
             ? 'bad'
             : 'idle';
-      return { key: `${r}-${c}`, label: hasQueen || isChosen ? 'Q' : isRejected ? '×' : '·', state };
+      return {
+        key: `${r}-${c}`,
+        label: hasQueen || isChosen ? 'Q' : isRejected ? '×' : '·',
+        state,
+      };
     }),
   );
   return (
@@ -542,7 +545,7 @@ function SubsetFrameView({ index }: { index: number }) {
         showIndices
         bits={Array.from({ length: SET.length }, (_, i) => {
           const bitIndex = SET.length - 1 - i;
-          const value = frame.mask < 0 ? 0 : ((mask >> bitIndex) & 1);
+          const value = frame.mask < 0 ? 0 : (mask >> bitIndex) & 1;
           return {
             key: `b${bitIndex}`,
             value: value as 0 | 1,

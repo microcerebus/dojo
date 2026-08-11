@@ -143,7 +143,11 @@ export function Quiz({
                 aria-pressed={isChosen}
               >
                 <span className="quiz__optionMark" aria-hidden="true">
-                  {answered && isRight ? '✓' : answered && isChosen ? '✗' : String.fromCharCode(65 + index)}
+                  {answered && isRight
+                    ? '✓'
+                    : answered && isChosen
+                      ? '✗'
+                      : String.fromCharCode(65 + index)}
                 </span>
                 <span>
                   <RichText text={option} />

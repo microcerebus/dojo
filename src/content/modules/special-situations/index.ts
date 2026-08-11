@@ -25,7 +25,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'experienced',
       title: 'Experienced candidates',
-      takeaway: 'Slightly fewer algorithm questions, much higher expectations on architecture and on your own history.',
+      takeaway:
+        'Slightly fewer algorithm questions, much higher expectations on architecture and on your own history.',
       audio: true,
       blocks: [
         {
@@ -87,12 +88,27 @@ export const specialSituations: CourseModule = {
           kind: 'table',
           headers: ['Area', 'What it looks like in the room'],
           rows: [
-            ['Handling ambiguity', 'You are given a vague problem and expected to seek information, prioritise, and structure it rather than stall'],
-            ['Customer focus (attitude)', '"Design an alarm clock for the blind" - do you ask who the user is and how they use it, or design for yourself?'],
-            ['Customer focus (technical)', 'Enough depth in the product area to make feasible decisions; how much depends entirely on the team'],
-            ['Multi-level communication', '"Explain TCP/IP to your grandmother", and how you describe your own past projects'],
+            [
+              'Handling ambiguity',
+              'You are given a vague problem and expected to seek information, prioritise, and structure it rather than stall',
+            ],
+            [
+              'Customer focus (attitude)',
+              '"Design an alarm clock for the blind" - do you ask who the user is and how they use it, or design for yourself?',
+            ],
+            [
+              'Customer focus (technical)',
+              'Enough depth in the product area to make feasible decisions; how much depends entirely on the team',
+            ],
+            [
+              'Multi-level communication',
+              '"Explain TCP/IP to your grandmother", and how you describe your own past projects',
+            ],
             ['Passion for technology', 'A real, specific answer to "why this company / this team"'],
-            ['Teamwork and leadership', '"Tell me about a teammate who was not pulling their weight" - probably the most heavily weighted area'],
+            [
+              'Teamwork and leadership',
+              '"Tell me about a teammate who was not pulling their weight" - probably the most heavily weighted area',
+            ],
           ],
         },
         {
@@ -114,12 +130,13 @@ export const specialSituations: CourseModule = {
     {
       id: 'acquisitions',
       title: 'Acquisition and acquihire interviews',
-      takeaway: 'The team is evaluated as individuals. Prepare as a team, early, and expect surprises.',
+      takeaway:
+        'The team is evaluated as individuals. Prepare as a team, early, and expect surprises.',
       audio: true,
       blocks: [
         {
           kind: 'p',
-          text: 'During technical due diligence, many acquirers interview most or all of a startup\'s engineers - partly because their own employees had to pass the same process, and partly because the team is often the point of the acquisition. Very large product or user-base acquisitions usually skip it; talent-driven ones usually do not, and there is a wide grey area in between.',
+          text: "During technical due diligence, many acquirers interview most or all of a startup's engineers - partly because their own employees had to pass the same process, and partly because the team is often the point of the acquisition. Very large product or user-base acquisitions usually skip it; talent-driven ones usually do not, and there is a wide grey area in between.",
         },
         {
           kind: 'callout',
@@ -151,7 +168,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'for-interviewers',
       title: 'If you are the interviewer',
-      takeaway: 'Know which mode you are in, ask questions with several hurdles, and coach rather than watch people flounder.',
+      takeaway:
+        'Know which mode you are in, ask questions with several hurdles, and coach rather than watch people flounder.',
       audio: true,
       blocks: [
         {
@@ -162,12 +180,29 @@ export const specialSituations: CourseModule = {
           kind: 'table',
           headers: ['Mode', 'Purpose', 'How it goes wrong'],
           rows: [
-            ['Sanity check', 'Confirm a floor of competence', 'Treating a small difference in performance as a real signal'],
-            ['Quality check', 'Distinguish good from excellent problem-solvers', 'Asking a question that is hard for the wrong reasons'],
-            ['Specialist', 'Test knowledge a good engineer could not pick up on the job', 'Asking it of people who are not specialists, or hiring specialists you do not need'],
-            ['Proxy knowledge', 'Check they absorbed things core to work they claim to have done', 'Confusing it with specialist knowledge and rejecting on trivia'],
+            [
+              'Sanity check',
+              'Confirm a floor of competence',
+              'Treating a small difference in performance as a real signal',
+            ],
+            [
+              'Quality check',
+              'Distinguish good from excellent problem-solvers',
+              'Asking a question that is hard for the wrong reasons',
+            ],
+            [
+              'Specialist',
+              'Test knowledge a good engineer could not pick up on the job',
+              'Asking it of people who are not specialists, or hiring specialists you do not need',
+            ],
+            [
+              'Proxy knowledge',
+              'Check they absorbed things core to work they claim to have done',
+              'Confusing it with specialist knowledge and rejecting on trivia',
+            ],
           ],
-          caption: 'Most hiring problems are a mismatch between these four - usually asking one and grading as another.',
+          caption:
+            'Most hiring problems are a mismatch between these four - usually asking one and grading as another.',
         },
         {
           kind: 'bullets',
@@ -218,7 +253,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'ss-3',
       kind: 'technique',
-      prompt: 'Asked "design an alarm clock for the blind" in a PM interview, the assessed behaviour is:',
+      prompt:
+        'Asked "design an alarm clock for the blind" in a PM interview, the assessed behaviour is:',
       options: [
         'Producing a creative design quickly',
         'Asking who the user is and how they actually use it, rather than designing for yourself',
@@ -232,7 +268,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'ss-4',
       kind: 'concept',
-      prompt: 'In an acquisition interview, an employee performs poorly. The most likely benign explanation is:',
+      prompt:
+        'In an acquisition interview, an employee performs poorly. The most likely benign explanation is:',
       options: [
         'They are a weak engineer',
         'They were mis-slotted - a data scientist put through a software engineering loop, or a junior sold as senior',
@@ -246,7 +283,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'ss-5',
       kind: 'technique',
-      prompt: 'Your startup expects acquisition interviews at some unknown point. When should the team start preparing?',
+      prompt:
+        'Your startup expects acquisition interviews at some unknown point. When should the team start preparing?',
       options: [
         'When a date is confirmed',
         'Immediately - loops appear suddenly, and "come in at the end of the week" is not enough time to learn fundamentals',
@@ -260,7 +298,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'ss-6',
       kind: 'concept',
-      prompt: 'As an interviewer, a question where a single hint transforms a candidate\'s performance is:',
+      prompt:
+        "As an interviewer, a question where a single hint transforms a candidate's performance is:",
       options: [
         'Ideal - it isolates one crisp insight',
         'A weak question - it yields one data point instead of several hurdles',
@@ -274,7 +313,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'ss-7',
       kind: 'concept',
-      prompt: 'A candidate answers a behavioural question entirely in terms of "we" and "the team". You should:',
+      prompt:
+        'A candidate answers a behavioural question entirely in terms of "we" and "the team". You should:',
       options: [
         'Conclude they contributed little',
         'Ask directly what their own role and actions were before concluding anything',
@@ -288,7 +328,8 @@ export const specialSituations: CourseModule = {
     {
       id: 'ss-8',
       kind: 'technique',
-      prompt: 'An interviewer wants a harder question, so they ask about red-black tree internals. The problem is:',
+      prompt:
+        'An interviewer wants a harder question, so they ask about red-black tree internals. The problem is:',
       options: [
         'Nothing - it filters effectively',
         'They made the knowledge hard rather than the problem hard, so it screens on memorisation instead of problem-solving',

@@ -25,8 +25,7 @@ export const arithmeticShiftRight = (value: number, by: number): number =>
 export const logicalShiftRight = (value: number, by: number): number =>
   toByte(toByte(value) >>> by);
 
-export const binary = (value: number): string =>
-  toByte(value).toString(2).padStart(WIDTH, '0');
+export const binary = (value: number): string => toByte(value).toString(2).padStart(WIDTH, '0');
 
 interface BitSpec {
   key: string;
@@ -243,7 +242,7 @@ export const complementFrames: ComplementFrame[] = (() => {
         { key: 'b', label: `~${five}`, value: inverted, highlightSign: true },
       ],
       caption:
-        "Step one of negation: invert every bit. On its own this is \"one's complement\", and it is off by one - notice the sign bit has flipped to 1.",
+        'Step one of negation: invert every bit. On its own this is "one\'s complement", and it is off by one - notice the sign bit has flipped to 1.',
       detail: `~${binary(five)} = ${binary(inverted)}`,
     },
     {
@@ -324,7 +323,9 @@ export interface ClearFrame {
 export const clearFrames: ClearFrame[] = (() => {
   const frames: ClearFrame[] = [];
   const start = 0b10110100;
-  const popcount = binary(start).split('').filter((bit) => bit === '1').length;
+  const popcount = binary(start)
+    .split('')
+    .filter((bit) => bit === '1').length;
   let n = start;
   let count = 0;
   frames.push({
@@ -613,7 +614,11 @@ export const drawFrames: DrawFrame[] = (() => {
   });
 
   const litPixels = bytes.reduce(
-    (total, value) => total + binary(value).split('').filter((bit) => bit === '1').length,
+    (total, value) =>
+      total +
+      binary(value)
+        .split('')
+        .filter((bit) => bit === '1').length,
     0,
   );
   frames.push({

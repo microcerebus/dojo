@@ -36,7 +36,7 @@ const STAGES: { label: string; badge: string; detail: string }[] = [
     label: 'Written feedback',
     badge: 'independent',
     detail:
-      'Interviewers write up before discussing, and often cannot see each other\'s notes until they have submitted. That is deliberate: it stops one opinion anchoring the rest, and it means each round starts from a blank slate.',
+      "Interviewers write up before discussing, and often cannot see each other's notes until they have submitted. That is deliberate: it stops one opinion anchoring the rest, and it means each round starts from a blank slate.",
   },
   {
     label: 'The decision',
@@ -60,12 +60,16 @@ const frames = [
   },
   ...STAGES.map((stage, i) => ({
     caption: `${i + 1}. ${stage.label} - ${stage.detail}`,
-    detail: stage.badge === 'independent' ? 'This is why each interview is genuinely a fresh start.' : `typically: ${stage.badge}`,
+    detail:
+      stage.badge === 'independent'
+        ? 'This is why each interview is genuinely a fresh start.'
+        : `typically: ${stage.badge}`,
   })),
   {
     caption:
       'Two consequences worth internalising: every round is written up by someone who could not see the others, and the person who decides may never have met you. Consistency across rounds matters more than one spectacular answer.',
-    detail: 'Also: interviewer warmth is not signal. Some are trained to stay neutral, and some are just like that.',
+    detail:
+      'Also: interviewer warmth is not signal. Some are trained to stay neutral, and some are just like that.',
   },
 ];
 
@@ -76,7 +80,14 @@ function LoopFrame({ index }: { index: number }) {
     label: stage.label,
     badge: stage.badge,
     ...(i === step ? { detail: stage.detail } : {}),
-    state: i === step ? 'active' : step < 0 || step >= STAGES.length ? 'done' : i < step ? 'done' : 'muted',
+    state:
+      i === step
+        ? 'active'
+        : step < 0 || step >= STAGES.length
+          ? 'done'
+          : i < step
+            ? 'done'
+            : 'muted',
   }));
   return (
     <Stage>

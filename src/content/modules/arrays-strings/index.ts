@@ -230,14 +230,26 @@ const out2 = parts.join('');`,
           kind: 'table',
           headers: ['Question', 'The counting reframe'],
           rows: [
-            ['All characters unique?', 'Any count > 1, or a set whose size differs from the length'],
-            ['Are these permutations of each other?', 'Identical count maps (and, first, identical lengths)'],
+            [
+              'All characters unique?',
+              'Any count > 1, or a set whose size differs from the length',
+            ],
+            [
+              'Are these permutations of each other?',
+              'Identical count maps (and, first, identical lengths)',
+            ],
             [
               'Can the letters form a palindrome?',
               'At most one character has an odd count - the middle one',
             ],
-            ['Are these one edit apart?', 'Lengths differ by at most 1, and one scan finds at most one mismatch'],
-            ['Compress runs', 'Count each run and only return the compressed form if it is shorter'],
+            [
+              'Are these one edit apart?',
+              'Lengths differ by at most 1, and one scan finds at most one mismatch',
+            ],
+            [
+              'Compress runs',
+              'Count each run and only return the compressed form if it is shorter',
+            ],
           ],
         },
         {
@@ -342,7 +354,8 @@ for (const piece of pieces) s += piece;`,
         'Its first and last characters match',
       ],
       answerIndex: 1,
-      explain: 'Every character pairs off around the centre; a single odd count can sit in the middle.',
+      explain:
+        'Every character pairs off around the centre; a single odd count can sit in the middle.',
     },
     {
       id: 'as-5',
@@ -439,29 +452,53 @@ for (const piece of pieces) s += piece;`,
     },
     { slug: 'product-of-array-except-self', note: 'Prefix and suffix passes, no division.' },
     { slug: 'best-time-to-buy-and-sell-stock', note: 'One pass tracking the running minimum.' },
-    { slug: 'container-with-most-water', note: 'Converging pointers - prove why you move the shorter side.' },
-    { slug: '3sum', note: 'Sort, then a converging pair inside a loop. Duplicate handling is the hard part.' },
-    { slug: 'longest-consecutive-sequence', note: 'A hash set turns an O(n log n) sort into O(n).' },
+    {
+      slug: 'container-with-most-water',
+      note: 'Converging pointers - prove why you move the shorter side.',
+    },
+    {
+      slug: '3sum',
+      note: 'Sort, then a converging pair inside a loop. Duplicate handling is the hard part.',
+    },
+    {
+      slug: 'longest-consecutive-sequence',
+      note: 'A hash set turns an O(n log n) sort into O(n).',
+    },
     {
       slug: 'longest-repeating-character-replacement',
       note: 'Sliding window where the validity test uses the most frequent character.',
     },
-    { slug: 'minimum-window-substring', note: 'Hard, but it is the sliding window in full generality.' },
+    {
+      slug: 'minimum-window-substring',
+      note: 'Hard, but it is the sliding window in full generality.',
+    },
     { slug: 'longest-palindromic-substring', note: 'Expand around each of the 2n−1 centres.' },
     { slug: 'palindromic-substrings', note: 'Same expansion, counting instead of measuring.' },
-    { slug: 'encode-and-decode-strings', note: 'Length-prefix encoding. A clarify-the-spec problem.' },
+    {
+      slug: 'encode-and-decode-strings',
+      note: 'Length-prefix encoding. A clarify-the-spec problem.',
+    },
     { slug: 'rotate-image', note: 'CTCI 1.7 exactly - in place, layer by layer.' },
-    { slug: 'set-matrix-zeroes', note: 'CTCI 1.8 - mark first, then apply. Try the O(1) space version.' },
+    {
+      slug: 'set-matrix-zeroes',
+      note: 'CTCI 1.8 - mark first, then apply. Try the O(1) space version.',
+    },
     { slug: 'spiral-matrix', note: 'Boundary bookkeeping. Test on non-square inputs.' },
     { slug: 'move-zeroes', note: 'Slow/fast write pointer, in place.' },
-    { slug: 'two-sum-ii-input-array-is-sorted', note: 'The sorted version - two pointers, O(1) space.' },
+    {
+      slug: 'two-sum-ii-input-array-is-sorted',
+      note: 'The sorted version - two pointers, O(1) space.',
+    },
     { slug: 'valid-palindrome-ii', note: 'Two pointers with one allowed deletion.' },
     { slug: 'find-all-anagrams-in-a-string', note: 'Fixed-size window with a count map.' },
     { slug: 'string-compression', note: 'CTCI 1.6 - in place, and only if it is shorter.' },
     { slug: 'rotate-array', note: 'The reverse-three-times trick gives O(1) space.' },
     { slug: 'longest-common-prefix', note: 'Simple, but a good warm-up for careful edge cases.' },
     { slug: 'is-subsequence', note: 'One pointer per input.' },
-    { slug: 'repeated-substring-pattern', note: 'The doubled-string trick from CTCI 1.9, in another disguise.' },
+    {
+      slug: 'repeated-substring-pattern',
+      note: 'The doubled-string trick from CTCI 1.9, in another disguise.',
+    },
   ],
   visualizers: [
     {

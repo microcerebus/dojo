@@ -248,7 +248,11 @@ function CompFrameView({ index }: { index: number }) {
     <Stage tall>
       <Readout
         items={[
-          { key: 'm', label: 'modelled by', value: frame.mode === 'inherit' ? 'inheritance' : 'composition' },
+          {
+            key: 'm',
+            label: 'modelled by',
+            value: frame.mode === 'inherit' ? 'inheritance' : 'composition',
+          },
           { key: 'c', label: 'types', value: String(frame.classes) },
         ]}
       />

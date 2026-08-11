@@ -76,4 +76,6 @@ writeFileSync(
   ].join('\n'),
 );
 
-console.log(`Vendored ${copied.length} files, ${(total / 1024).toFixed(1)} KB total, into src/assets/fonts/.`);
+console.log(
+  `Vendored ${copied.length} files, ${(total / 1024).toFixed(1)} KB total, into src/assets/fonts/.`,
+);

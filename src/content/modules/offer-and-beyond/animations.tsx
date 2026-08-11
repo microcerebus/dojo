@@ -39,14 +39,16 @@ const offerFrames: OfferFrame[] = [
     b: 252,
     caption:
       'Equity: A grants 40k a year in liquid public shares. B grants "60k a year" priced at the last funding round - a number that is not a price anyone has paid you.',
-    detail: 'A +40k liquid · B +60k illiquid · treat these as different currencies until proven otherwise',
+    detail:
+      'A +40k liquid · B +60k illiquid · treat these as different currencies until proven otherwise',
   },
   {
     a: 226,
     b: 216,
     caption:
       'Now discount B honestly: further rounds dilute you, the strike price and exercise window matter, and most startups do not produce a liquidity event. Halving it is generous, not pessimistic.',
-    detail: 'B equity 60k → ~24k expected · ask about ownership percentage, dilution, vesting, strike price and post-departure exercise window',
+    detail:
+      'B equity 60k → ~24k expected · ask about ownership percentage, dilution, vesting, strike price and post-departure exercise window',
   },
   {
     a: 226,
@@ -101,7 +103,8 @@ export const offerComparison: AnimationSpec = fromFrames(
   {
     id: 'ob-equity',
     title: 'Same headline, different offer',
-    blurb: 'Amortise the one-offs, discount the illiquid, adjust for where you live - then look at everything else.',
+    blurb:
+      'Amortise the one-offs, discount the illiquid, adjust for where you live - then look at everything else.',
   },
   offerFrames,
   OfferFrame,
@@ -116,37 +119,43 @@ const STAGES = [
     key: 'apply',
     label: 'applying',
     leverage: 5,
-    detail: 'None to speak of. Anything you say about compensation here becomes an anchor you will not be able to move later.',
+    detail:
+      'None to speak of. Anything you say about compensation here becomes an anchor you will not be able to move later.',
   },
   {
     key: 'interview',
     label: 'interviewing',
     leverage: 15,
-    detail: 'Still very little. If asked for a number now, deflect to "I would rather hear the range for the level" - honestly, and without a figure.',
+    detail:
+      'Still very little. If asked for a number now, deflect to "I would rather hear the range for the level" - honestly, and without a figure.',
   },
   {
     key: 'offer',
     label: 'offer arrives',
     leverage: 70,
-    detail: 'Everything changes here. They have chosen you, spent real money doing it, and would rather pay a little more than start again. Nobody withdraws an offer because you negotiated.',
+    detail:
+      'Everything changes here. They have chosen you, spent real money doing it, and would rather pay a little more than start again. Nobody withdraws an offer because you negotiated.',
   },
   {
     key: 'window',
     label: 'the window',
     leverage: 100,
-    detail: 'Peak leverage: another live offer, or an honest, specific ask backed by market data. Deadlines are usually one to four weeks, and asking to extend is normal and routinely granted.',
+    detail:
+      'Peak leverage: another live offer, or an honest, specific ask backed by market data. Deadlines are usually one to four weeks, and asking to extend is normal and routinely granted.',
   },
   {
     key: 'accept',
     label: 'you accept',
     leverage: 5,
-    detail: 'It collapses the moment you say yes. Everything you agreed must already be in writing, because there is nothing left to trade with.',
+    detail:
+      'It collapses the moment you say yes. Everything you agreed must already be in writing, because there is nothing left to trade with.',
   },
   {
     key: 'inside',
     label: 'on the job',
     leverage: 20,
-    detail: 'Rebuilds slowly, on the review cycle and within a band. A raise cycle almost never recovers what a level or a starting number gave away.',
+    detail:
+      'Rebuilds slowly, on the review cycle and within a band. A raise cycle almost never recovers what a level or a starting number gave away.',
   },
 ];
 
@@ -154,7 +163,8 @@ const leverageFrames = [
   {
     caption:
       'Negotiating leverage is not constant. It appears at one moment, peaks briefly, and disappears the second you accept - so the whole game is about what you do inside that window.',
-    detail: 'Students in a negotiation class said they would pay 750 dollars to avoid an hour of haggling. Most of them also never negotiated a job offer.',
+    detail:
+      'Students in a negotiation class said they would pay 750 dollars to avoid an hour of haggling. Most of them also never negotiated a job offer.',
   },
   ...STAGES.map((stage) => ({
     caption: `${stage.label}: ${stage.detail}`,
@@ -182,7 +192,11 @@ function LeverageFrame({ index }: { index: number }) {
       <Bars bars={bars} />
       <Readout
         items={[
-          { key: 's', label: 'stage', value: step < 0 || step >= STAGES.length ? 'all' : STAGES[step].label },
+          {
+            key: 's',
+            label: 'stage',
+            value: step < 0 || step >= STAGES.length ? 'all' : STAGES[step].label,
+          },
           { key: 'p', label: 'peak', value: 'between offer and acceptance' },
         ]}
       />

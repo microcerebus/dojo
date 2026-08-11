@@ -42,9 +42,21 @@ export const threadsLocks: CourseModule = {
           kind: 'table',
           headers: ['', 'Process', 'Thread'],
           rows: [
-            ['Memory', 'Its own address space', 'Shares the process heap; has its own stack and registers'],
-            ['Isolation', 'Cannot touch another process\'s memory', 'Sees every change a sibling makes, immediately'],
-            ['Communication', 'Pipes, sockets, files, shared memory - explicit and slower', 'Just read the variable - fast, and dangerous'],
+            [
+              'Memory',
+              'Its own address space',
+              'Shares the process heap; has its own stack and registers',
+            ],
+            [
+              'Isolation',
+              "Cannot touch another process's memory",
+              'Sees every change a sibling makes, immediately',
+            ],
+            [
+              'Communication',
+              'Pipes, sockets, files, shared memory - explicit and slower',
+              'Just read the variable - fast, and dangerous',
+            ],
             ['Failure', 'A crash is contained', 'A crash usually takes the whole process down'],
             ['Cost to create', 'Heavier', 'Lighter'],
           ],
@@ -133,10 +145,26 @@ new MyClass(obj, "2").start();    // same instance -> one waits for the other`,
           caption: 'All four must hold at once - remove any one and deadlock is impossible',
           headers: ['Condition', 'Meaning', 'Can you remove it?'],
           rows: [
-            ['Mutual exclusion', 'Only one thread can hold the resource', 'Rarely - it is usually the whole point of the lock'],
-            ['Hold and wait', 'A thread holding one resource may request another', 'Sometimes: acquire everything at once, or nothing'],
-            ['No preemption', 'You cannot take a resource off another thread', 'Sometimes, with `tryLock()` and a back-off'],
-            ['Circular wait', 'A cycle of threads each waiting on the next', '**Yes** - impose a global order. This is the practical answer'],
+            [
+              'Mutual exclusion',
+              'Only one thread can hold the resource',
+              'Rarely - it is usually the whole point of the lock',
+            ],
+            [
+              'Hold and wait',
+              'A thread holding one resource may request another',
+              'Sometimes: acquire everything at once, or nothing',
+            ],
+            [
+              'No preemption',
+              'You cannot take a resource off another thread',
+              'Sometimes, with `tryLock()` and a back-off',
+            ],
+            [
+              'Circular wait',
+              'A cycle of threads each waiting on the next',
+              '**Yes** - impose a global order. This is the practical answer',
+            ],
           ],
         },
         {
@@ -237,7 +265,7 @@ new MyClass(obj, "2").start();    // same instance -> one waits for the other`,
       prompt: 'What is the essential difference between a process and a thread?',
       options: [
         'Threads are faster to create',
-        'Processes have separate address spaces; threads share the heap and see each other\'s writes immediately',
+        "Processes have separate address spaces; threads share the heap and see each other's writes immediately",
         'Only processes can run in parallel',
         'Threads cannot crash',
       ],
@@ -320,7 +348,8 @@ new MyClass(obj, "2").start();    // same instance -> one waits for the other`,
     {
       id: 'tl-7',
       kind: 'technique',
-      prompt: 'Three threads must call `first`, `second`, `third` in order. Why semaphores rather than two locks?',
+      prompt:
+        'Three threads must call `first`, `second`, `third` in order. Why semaphores rather than two locks?',
       options: [
         'Semaphores are faster',
         'A lock is owned by the thread that took it, so unlocking from a different thread throws. A semaphore has no owner',

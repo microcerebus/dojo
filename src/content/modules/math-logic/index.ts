@@ -31,7 +31,8 @@ export const mathLogic: CourseModule = {
     {
       id: 'primes',
       title: 'Primes and divisibility',
-      takeaway: 'Factorisation explains GCD, LCM and divisibility. √n bounds primality. The sieve bulk-generates.',
+      takeaway:
+        'Factorisation explains GCD, LCM and divisibility. √n bounds primality. The sieve bulk-generates.',
       audio: true,
       blocks: [
         {
@@ -83,7 +84,8 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
     {
       id: 'probability',
       title: 'Probability without the textbook',
-      takeaway: 'Two rules generate all of it. Independence and mutual exclusivity are opposites, not synonyms.',
+      takeaway:
+        'Two rules generate all of it. Independence and mutual exclusivity are opposites, not synonyms.',
       audio: true,
       blocks: [
         {
@@ -96,7 +98,11 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
           rows: [
             ['A and B', 'P(B given A) · P(A)', 'P(A) · P(B) when independent'],
             ['A or B', 'P(A) + P(B) − P(A and B)', 'P(A) + P(B) when mutually exclusive'],
-            ['A given B', 'P(B given A) · P(A) / P(B)', "Bayes' theorem, straight from the first row"],
+            [
+              'A given B',
+              'P(B given A) · P(A) / P(B)',
+              "Bayes' theorem, straight from the first row",
+            ],
           ],
         },
         {
@@ -157,7 +163,10 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
           rows: [
             ['Burn rope A, then rope B', 'x + y minutes - so 120'],
             ['Light one rope at both ends', 'x/2 minutes - so 30, and unevenness stops mattering'],
-            ['Burn one rope while another burns from both ends', 'turns a y-minute rope into a (y − x/2)-minute rope'],
+            [
+              'Burn one rope while another burns from both ends',
+              'turns a y-minute rope into a (y − x/2)-minute rope',
+            ],
           ],
           caption: 'Three rules, then the answer assembles itself.',
         },
@@ -180,7 +189,8 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
     {
       id: 'invariants',
       title: 'Invariants and impossibility',
-      takeaway: 'To prove something cannot be done, find a quantity that never changes and show the goal violates it.',
+      takeaway:
+        'To prove something cannot be done, find a quantity that never changes and show the goal violates it.',
       audio: true,
       blocks: [
         {
@@ -217,7 +227,8 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
     {
       id: 'information',
       title: 'How much can one measurement tell you?',
-      takeaway: 'Count the distinguishable outcomes first. Then design a test that uses all of them.',
+      takeaway:
+        'Count the distinguishable outcomes first. Then design a test that uses all of them.',
       audio: true,
       blocks: [
         {
@@ -242,9 +253,21 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
           kind: 'table',
           headers: ['Approach', 'Days', 'Why'],
           rows: [
-            ['Split across strips, then recurse on the positive one', '28', 'One 7-day round per 10× narrowing; wastes the waiting time'],
-            ['One decimal digit per day, plus a tiebreak day', '10', 'Uses parallel days, but needs a 4th test for repeated digits'],
-            ['Binary encoding across all 10 strips at once', '7', 'One round; 10 bits already separate 1024 bottles'],
+            [
+              'Split across strips, then recurse on the positive one',
+              '28',
+              'One 7-day round per 10× narrowing; wastes the waiting time',
+            ],
+            [
+              'One decimal digit per day, plus a tiebreak day',
+              '10',
+              'Uses parallel days, but needs a 4th test for repeated digits',
+            ],
+            [
+              'Binary encoding across all 10 strips at once',
+              '7',
+              'One round; 10 bits already separate 1024 bottles',
+            ],
           ],
         },
         {
@@ -258,7 +281,8 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
     {
       id: 'worst-case',
       title: 'Minimising the worst case',
-      takeaway: 'When branches cost different amounts, shift work from the expensive one to the cheap one until they match.',
+      takeaway:
+        'When branches cost different amounts, shift work from the expensive one to the cheap one until they match.',
       audio: true,
       blocks: [
         {
@@ -295,7 +319,8 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
     {
       id: 'randomness',
       title: 'Building fair randomness',
-      takeaway: 'Uniformity is a property you have to prove by counting outcomes, not one you get by looking plausible.',
+      takeaway:
+        'Uniformity is a property you have to prove by counting outcomes, not one you get by looking plausible.',
       audio: true,
       blocks: [
         {
@@ -350,7 +375,8 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
     {
       id: 'ml-2',
       kind: 'technique',
-      prompt: 'In the Sieve of Eratosthenes, why does crossing off multiples of p start at p² rather than 2p?',
+      prompt:
+        'In the Sieve of Eratosthenes, why does crossing off multiples of p start at p² rather than 2p?',
       options: [
         'To save memory',
         'Because every smaller multiple of p already has a smaller prime factor and is crossed off',
@@ -409,7 +435,12 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
       id: 'ml-6',
       kind: 'concept',
       prompt: 'After 100 toggling passes over 100 lockers, the ones left open are exactly the:',
-      options: ['Even-numbered lockers', 'Prime-numbered lockers', 'Perfect squares', 'Multiples of 10'],
+      options: [
+        'Even-numbered lockers',
+        'Prime-numbered lockers',
+        'Perfect squares',
+        'Multiples of 10',
+      ],
       answerIndex: 2,
       explain:
         'A locker is toggled once per divisor. Divisors pair up as (d, n/d), so the count is odd only when d = n/d - that is, when n is a perfect square.',
@@ -487,10 +518,16 @@ lcm = 2^max(2,2) · 3^max(1,2) · 7^max(1,0) = 2² · 3² · 7 = 252`,
     { slug: 'super-egg-drop', note: 'CTCI 6.8 - the full DP version.' },
     { slug: 'bulb-switcher', note: 'CTCI 6.9 - only perfect squares survive.' },
     { slug: 'poor-pigs', note: 'CTCI 6.10 - binary encoding across tests.' },
-    { slug: 'shuffle-an-array', note: 'CTCI 17.2 - Fisher-Yates, and why the naive shuffle is biased.' },
+    {
+      slug: 'shuffle-an-array',
+      note: 'CTCI 17.2 - Fisher-Yates, and why the naive shuffle is biased.',
+    },
     { slug: 'linked-list-random-node', note: 'CTCI 17.3 - reservoir sampling.' },
     { slug: 'number-of-digit-one', note: 'CTCI 17.6 - count per digit position.' },
     { slug: 'set-mismatch', note: 'CTCI 17.19 - recover missing values from sums.' },
-    { slug: 'max-points-on-a-line', note: 'CTCI 16.14 - slopes as hash keys, with the precision trap.' },
+    {
+      slug: 'max-points-on-a-line',
+      note: 'CTCI 16.14 - slopes as hash keys, with the precision trap.',
+    },
   ],
 };

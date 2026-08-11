@@ -1,10 +1,4 @@
-import {
-  Legend,
-  NodeChain,
-  Readout,
-  Stage,
-  type NodeSpec,
-} from '../../../anim/primitives';
+import { Legend, NodeChain, Readout, Stage, type NodeSpec } from '../../../anim/primitives';
 import { fromFrames, type AnimationSpec } from '../../../anim/types';
 
 /* ------------------------------------------------------------------------ */
@@ -75,8 +69,7 @@ function RunnerFrameView({ index }: { index: number }) {
       key: `n-${i}`,
       label: String(value),
       ...(tags.length ? { tag: tags.join(' + ') } : {}),
-      state:
-        i === frame.trail ? 'done' : i === frame.lead ? 'active' : 'idle',
+      state: i === frame.trail ? 'done' : i === frame.lead ? 'active' : 'idle',
     };
   });
   return (
@@ -199,8 +192,10 @@ function CycleFrameView({ index }: { index: number }) {
   const frame = cycleFrames[Math.min(index, cycleFrames.length - 1)];
   const nodes: NodeSpec[] = CYCLE_VALUES.map((value, i) => {
     const tags: string[] = [];
-    if (i === frame.slow) tags.push(frame.phase === 'locate' || frame.phase === 'found' ? 'p1' : 'slow');
-    if (i === frame.fast) tags.push(frame.phase === 'locate' || frame.phase === 'found' ? 'p2' : 'fast');
+    if (i === frame.slow)
+      tags.push(frame.phase === 'locate' || frame.phase === 'found' ? 'p1' : 'slow');
+    if (i === frame.fast)
+      tags.push(frame.phase === 'locate' || frame.phase === 'found' ? 'p2' : 'fast');
     return {
       key: `c-${i}`,
       label: value,
@@ -223,7 +218,16 @@ function CycleFrameView({ index }: { index: number }) {
     <Stage tall>
       <Readout
         items={[
-          { key: 'p', label: 'phase', value: frame.phase === 'detect' ? 'detect' : frame.phase === 'meet' ? 'collision' : 'find entry' },
+          {
+            key: 'p',
+            label: 'phase',
+            value:
+              frame.phase === 'detect'
+                ? 'detect'
+                : frame.phase === 'meet'
+                  ? 'collision'
+                  : 'find entry',
+          },
         ]}
       />
       <NodeChain
@@ -292,7 +296,8 @@ const reverseFrames: ReverseFrame[] = (() => {
   frames.push({
     reversed: [...reversed],
     remaining: [],
-    caption: 'curr is null, so prev is the new head. O(n) time, O(1) space - and the recursive version costs O(n) stack instead.',
+    caption:
+      'curr is null, so prev is the new head. O(n) time, O(1) space - and the recursive version costs O(n) stack instead.',
     detail: 'the order the three assignments happen in is the whole trick',
   });
   return frames;
@@ -385,7 +390,8 @@ const partitionFrames: PartitionFrame[] = (() => {
     at: PART.length,
     before: [...before],
     after: [...after],
-    caption: 'Join the tail of "before" to the head of "after". One pass, stable-enough, O(1) extra space beyond the two head pointers.',
+    caption:
+      'Join the tail of "before" to the head of "after". One pass, stable-enough, O(1) extra space beyond the two head pointers.',
     detail: `result: ${[...before, ...after].join(' → ')}`,
   });
   return frames;

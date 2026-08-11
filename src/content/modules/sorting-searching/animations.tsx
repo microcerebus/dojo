@@ -132,8 +132,7 @@ export const mergeFrames: MergeFrame[] = (() => {
 
 function MergeFrameView({ index }: { index: number }) {
   const frame = mergeFrames[Math.min(Math.max(index, 0), mergeFrames.length - 1)];
-  const inRange = (i: number) =>
-    frame.range !== null && i >= frame.range[0] && i <= frame.range[1];
+  const inRange = (i: number) => frame.range !== null && i >= frame.range[0] && i <= frame.range[1];
   const cells: CellSpec[] = frame.array.map((value, i) => ({
     key: `a${i}`,
     label: String(value),
@@ -155,15 +154,21 @@ function MergeFrameView({ index }: { index: number }) {
       <Pointers
         count={frame.array.length}
         below
-        pointers={frame.write === null ? [] : [{ key: 'w', at: frame.write, label: 'write', tone: 'c' }]}
+        pointers={
+          frame.write === null ? [] : [{ key: 'w', at: frame.write, label: 'write', tone: 'c' }]
+        }
       />
       <Cells cells={helperCells} label="helper" />
       <Pointers
         count={frame.helper.length}
         below
         pointers={[
-          ...(frame.left === null ? [] : [{ key: 'l', at: frame.left, label: 'L', tone: 'a' as const }]),
-          ...(frame.right === null ? [] : [{ key: 'r', at: frame.right, label: 'R', tone: 'b' as const }]),
+          ...(frame.left === null
+            ? []
+            : [{ key: 'l', at: frame.left, label: 'L', tone: 'a' as const }]),
+          ...(frame.right === null
+            ? []
+            : [{ key: 'r', at: frame.right, label: 'R', tone: 'b' as const }]),
         ]}
       />
       <Readout items={[{ key: 'c', label: 'helper copies', value: String(frame.copies) }]} />
@@ -338,7 +343,8 @@ export const rotatedFrames: RotatedFrame[] = (() => {
     found: false,
     steps,
     caption: `A sorted array rotated an unknown number of times, and we want ${TARGET}. Plain binary search fails because "is the target bigger than the midpoint" no longer tells you which side to keep.`,
-    detail: 'but one half is always still in sorted order - find it, and the decision is easy again',
+    detail:
+      'but one half is always still in sorted order - find it, and the decision is easy again',
   });
 
   while (lo <= hi) {
@@ -430,7 +436,11 @@ function RotatedFrameView({ index }: { index: number }) {
       <Readout
         items={[
           { key: 't', label: 'target', value: String(TARGET) },
-          { key: 'w', label: 'window', value: frame.lo > frame.hi ? '—' : `${frame.lo}..${frame.hi}` },
+          {
+            key: 'w',
+            label: 'window',
+            value: frame.lo > frame.hi ? '—' : `${frame.lo}..${frame.hi}`,
+          },
           { key: 's', label: 'probes', value: String(frame.steps) },
         ]}
       />
@@ -550,13 +560,7 @@ function GridFrameView({ index }: { index: number }) {
     line.map((value, c) => {
       const dead = frame.killedRows.includes(r) || frame.killedCols.includes(c);
       const here = r === frame.row && c === frame.col;
-      const state: CellState = here
-        ? frame.found
-          ? 'target'
-          : 'active'
-        : dead
-          ? 'muted'
-          : 'idle';
+      const state: CellState = here ? (frame.found ? 'target' : 'active') : dead ? 'muted' : 'idle';
       return { key: `${r}-${c}`, label: String(value), state };
     }),
   );

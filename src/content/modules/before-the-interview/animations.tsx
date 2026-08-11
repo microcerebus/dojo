@@ -116,7 +116,7 @@ interface WeekFrame {
 
 const WEEK_NOTES = [
   'Week 1 - the foundations, and the topics everything else is built on. Two topics, no more: learning three at once means learning none.',
-  'Week 2 - the next layer starts, and week 1\'s first topic comes back. The revisit is short: re-solve two problems and reread your mistake list, not the whole chapter.',
+  "Week 2 - the next layer starts, and week 1's first topic comes back. The revisit is short: re-solve two problems and reread your mistake list, not the whole chapter.",
   'Week 3 - the hardest new material lands while the earlier topics get their second pass. This is the week that decides whether week 1 stuck.',
   'Week 4 - the last new algorithm topics, plus revisits of everything before them. Mock interviews start now, not in the final week.',
   'Week 5 - design and behavioural, which need rehearsal rather than practice, plus a light revisit of everything. No new material this week.',
@@ -161,7 +161,10 @@ function ScheduleFrame({ index }: { index: number }) {
               : ('idle' as const),
     })),
   );
-  const current = frame.week === 0 ? [] : PLAN.map((row, i) => (row[frame.week - 1] !== 0 ? TOPICS[i] : '')).filter(Boolean);
+  const current =
+    frame.week === 0
+      ? []
+      : PLAN.map((row, i) => (row[frame.week - 1] !== 0 ? TOPICS[i] : '')).filter(Boolean);
   return (
     <Stage tall>
       <Matrix rows={rows} colLabels={['1', '2', '3', '4', '5']} />

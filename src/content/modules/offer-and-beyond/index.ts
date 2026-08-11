@@ -6,7 +6,8 @@ export const offerAndBeyond: CourseModule = {
   track: 'process',
   status: 'complete',
   source: 'Part VIII',
-  summary: 'Rejection, comparing offers, negotiating on evidence, and the first months after you join.',
+  summary:
+    'Rejection, comparing offers, negotiating on evidence, and the first months after you join.',
   estimatedMinutes: 20,
   concepts: [
     'Rejection is noisy evidence, not a verdict - ask when you can reapply and keep the relationship open',
@@ -26,7 +27,8 @@ export const offerAndBeyond: CourseModule = {
     {
       id: 'offers-and-rejection',
       title: 'Offers, deadlines and rejection',
-      takeaway: 'Deadlines are movable, declines should be unarguable, and a rejection is an appointment to come back.',
+      takeaway:
+        'Deadlines are movable, declines should be unarguable, and a rejection is an appointment to come back.',
       audio: true,
       blocks: [
         {
@@ -58,7 +60,8 @@ export const offerAndBeyond: CourseModule = {
     {
       id: 'evaluating',
       title: 'Evaluating an offer',
-      takeaway: 'Salary is one term of many, and rarely the biggest. Compare the whole thing, on paper, before the deadline.',
+      takeaway:
+        'Salary is one term of many, and rarely the biggest. Compare the whole thing, on paper, before the deadline.',
       audio: true,
       blocks: [
         {
@@ -71,11 +74,26 @@ export const offerAndBeyond: CourseModule = {
           headers: ['Component', 'How to compare it'],
           rows: [
             ['Base salary', 'Straightforward - and the least differentiating part'],
-            ['Signing bonus, relocation', 'Amortise over the years you expect to stay, then add to the annual figure'],
-            ['Annual bonus', 'Ask the target percentage and what it actually paid out last year. Ranges from about 3% to 30%'],
-            ['Equity (public)', 'Amortise the annual grant value; it is close to cash, subject to price movement'],
-            ['Equity (private)', 'Ownership percentage, not share count. Then dilution, vesting, cliff, strike price, and the exercise window if you leave'],
-            ['Cost of living and tax', 'A 30% difference between cities is normal and swamps most salary differences'],
+            [
+              'Signing bonus, relocation',
+              'Amortise over the years you expect to stay, then add to the annual figure',
+            ],
+            [
+              'Annual bonus',
+              'Ask the target percentage and what it actually paid out last year. Ranges from about 3% to 30%',
+            ],
+            [
+              'Equity (public)',
+              'Amortise the annual grant value; it is close to cash, subject to price movement',
+            ],
+            [
+              'Equity (private)',
+              'Ownership percentage, not share count. Then dilution, vesting, cliff, strike price, and the exercise window if you leave',
+            ],
+            [
+              'Cost of living and tax',
+              'A 30% difference between cities is normal and swamps most salary differences',
+            ],
           ],
         },
         {
@@ -111,7 +129,8 @@ export const offerAndBeyond: CourseModule = {
     {
       id: 'negotiating',
       title: 'Negotiating',
-      takeaway: 'Do it. Be specific, overshoot slightly, ask about the whole package, and never bluff.',
+      takeaway:
+        'Do it. Be specific, overshoot slightly, ask about the whole package, and never bluff.',
       audio: true,
       blocks: [
         {
@@ -150,7 +169,8 @@ export const offerAndBeyond: CourseModule = {
     {
       id: 'on-the-job',
       title: 'After you join',
-      takeaway: 'Set a timeline, ask for what you want, build the network before you need it, and keep interviewing.',
+      takeaway:
+        'Set a timeline, ask for what you want, build the network before you need it, and keep interviewing.',
       audio: true,
       blocks: [
         {
@@ -186,7 +206,8 @@ export const offerAndBeyond: CourseModule = {
     {
       id: 'ob-1',
       kind: 'concept',
-      prompt: 'Your offer deadline is in a week and another company has not finished interviewing you. You should:',
+      prompt:
+        'Your offer deadline is in a week and another company has not finished interviewing you. You should:',
       options: [
         'Accept the offer to be safe',
         'Ask for an extension - it is a normal request and usually granted',
@@ -214,7 +235,8 @@ export const offerAndBeyond: CourseModule = {
     {
       id: 'ob-3',
       kind: 'technique',
-      prompt: 'A company offers a 30k signing bonus. When comparing against another offer, you should:',
+      prompt:
+        'A company offers a 30k signing bonus. When comparing against another offer, you should:',
       options: [
         'Add the full 30k to the first year',
         'Amortise it over the time you expect to stay - about 10k a year over three years',
@@ -270,7 +292,8 @@ export const offerAndBeyond: CourseModule = {
     {
       id: 'ob-7',
       kind: 'concept',
-      prompt: 'At a large company, base pay barely moves however well you negotiate. The usual reason is:',
+      prompt:
+        'At a large company, base pay barely moves however well you negotiate. The usual reason is:',
       options: [
         'The recruiter has no authority',
         'Pay is banded by level, so real increases beyond the band require being levelled higher',

@@ -32,7 +32,8 @@ export const advancedTopics: CourseModule = {
     {
       id: 'why-this-module',
       title: 'Useful math, and how to use this module',
-      takeaway: 'Recognition, not mastery. Plus the handful of identities that keep appearing in complexity proofs.',
+      takeaway:
+        'Recognition, not mastery. Plus the handful of identities that keep appearing in complexity proofs.',
       audio: true,
       blocks: [
         {
@@ -53,12 +54,28 @@ export const advancedTopics: CourseModule = {
           kind: 'table',
           headers: ['Identity', 'Value', 'Where it bites'],
           rows: [
-            ['1 + 2 + … + n', 'n(n+1)/2', 'A loop whose inner bound shrinks each pass - O(n²), not O(n)'],
-            ['2⁰ + 2¹ + … + 2ⁿ', '2ⁿ⁺¹ − 1', 'A doubling array: all past copies together cost less than the last one'],
-            ['log_b k vs log_x k', 'off by the constant 1/log_x b', 'Why the base of a log never appears in big O'],
+            [
+              '1 + 2 + … + n',
+              'n(n+1)/2',
+              'A loop whose inner bound shrinks each pass - O(n²), not O(n)',
+            ],
+            [
+              '2⁰ + 2¹ + … + 2ⁿ',
+              '2ⁿ⁺¹ − 1',
+              'A doubling array: all past copies together cost less than the last one',
+            ],
+            [
+              'log_b k vs log_x k',
+              'off by the constant 1/log_x b',
+              'Why the base of a log never appears in big O',
+            ],
             ['n!', 'n · (n−1) · … · 1', 'Permutations of n distinct items'],
             ['n!/(n−k)!', 'n · (n−1) · … · (n−k+1)', 'Ordered k-length selections'],
-            ['n choose k', 'n! / (k!(n−k)!)', 'Unordered subsets - divide out the k! orderings of each'],
+            [
+              'n choose k',
+              'n! / (k!(n−k)!)',
+              'Unordered subsets - divide out the k! orderings of each',
+            ],
           ],
         },
         {
@@ -87,7 +104,7 @@ export const advancedTopics: CourseModule = {
         {
           kind: 'steps',
           items: [
-            'Count each node\'s indegree by walking every node\'s outgoing edges and incrementing the target.',
+            "Count each node's indegree by walking every node's outgoing edges and incrementing the target.",
             'Push every node with indegree 0 onto a queue - these have no prerequisites.',
             'Pop a node, append it to the output, and decrement the indegree of each node it points at.',
             'Whenever a node hits indegree 0, push it.',
@@ -109,8 +126,16 @@ export const advancedTopics: CourseModule = {
           headers: ['', 'Kahn (indegrees)', 'DFS post-order'],
           rows: [
             ['Shape', 'Iterative, queue-driven', 'Recursive'],
-            ['Cycle detection', 'Output is shorter than the node count', 'Edge to a node still on the stack'],
-            ['Extras', 'Lexicographically smallest order with a heap; detects all sources', 'Reuses an existing DFS; no indegree pass'],
+            [
+              'Cycle detection',
+              'Output is shorter than the node count',
+              'Edge to a node still on the stack',
+            ],
+            [
+              'Extras',
+              'Lexicographically smallest order with a heap; detects all sources',
+              'Reuses an existing DFS; no indegree pass',
+            ],
             ['Cost', 'O(V + E)', 'O(V + E)'],
           ],
         },
@@ -125,7 +150,8 @@ export const advancedTopics: CourseModule = {
     {
       id: 'dijkstra',
       title: "Dijkstra's algorithm",
-      takeaway: 'Settle the cheapest frontier node, relax its edges, repeat. Non-negative weights only.',
+      takeaway:
+        'Settle the cheapest frontier node, relax its edges, repeat. Non-negative weights only.',
       audio: true,
       blocks: [
         {
@@ -188,11 +214,36 @@ export const advancedTopics: CourseModule = {
           kind: 'table',
           headers: ['Scheme', 'How', 'Worst case', 'Watch out for'],
           rows: [
-            ['Separate chaining (lists)', 'Each slot holds a linked list of entries', 'O(n)', 'Only degenerates with a terrible hash or adversarial keys'],
-            ['Chaining with BSTs', 'Each slot holds a balanced tree', 'O(log n)', 'Rarely worth it unless the distribution is badly skewed'],
-            ['Linear probing', 'On collision, walk to the next free slot', 'O(n)', 'Clustering - and the table cannot exceed the array size'],
-            ['Quadratic probing', 'Step 1, 4, 9, … slots on', 'O(n)', 'Breaks up clusters; can fail to find a free slot without care'],
-            ['Double hashing', 'A second hash gives the step size', 'O(n)', 'Best clustering behaviour of the three'],
+            [
+              'Separate chaining (lists)',
+              'Each slot holds a linked list of entries',
+              'O(n)',
+              'Only degenerates with a terrible hash or adversarial keys',
+            ],
+            [
+              'Chaining with BSTs',
+              'Each slot holds a balanced tree',
+              'O(log n)',
+              'Rarely worth it unless the distribution is badly skewed',
+            ],
+            [
+              'Linear probing',
+              'On collision, walk to the next free slot',
+              'O(n)',
+              'Clustering - and the table cannot exceed the array size',
+            ],
+            [
+              'Quadratic probing',
+              'Step 1, 4, 9, … slots on',
+              'O(n)',
+              'Breaks up clusters; can fail to find a free slot without care',
+            ],
+            [
+              'Double hashing',
+              'A second hash gives the step size',
+              'O(n)',
+              'Best clustering behaviour of the three',
+            ],
           ],
         },
         {
@@ -216,7 +267,8 @@ export const advancedTopics: CourseModule = {
     {
       id: 'rabin-karp',
       title: 'Rabin-Karp substring search',
-      takeaway: 'Hash the window instead of comparing it, and update the hash in O(1) as it slides.',
+      takeaway:
+        'Hash the window instead of comparing it, and update the hash in O(1) as it slides.',
       audio: true,
       blocks: [
         {
@@ -237,7 +289,8 @@ export const advancedTopics: CourseModule = {
           lang: 'text',
           code: `hash("doe") = code(d)·128² + code(o)·128¹ + code(e)·128⁰
 hash("oe ") = (hash("doe") − code(d)·128²)·128 + code(" ")`,
-          caption: 'The Rabin fingerprint: treat the window as a base-128 number, so position matters and "ab" ≠ "ba".',
+          caption:
+            'The Rabin fingerprint: treat the window as a base-128 number, so position matters and "ab" ≠ "ba".',
         },
         {
           kind: 'callout',
@@ -254,7 +307,8 @@ hash("oe ") = (hash("doe") − code(d)·128²)·128 + code(" ")`,
     {
       id: 'balanced-trees',
       title: 'Self-balancing trees',
-      takeaway: 'Rotations keep the height logarithmic. That is what makes a sorted map O(log n) instead of O(n).',
+      takeaway:
+        'Rotations keep the height logarithmic. That is what makes a sorted map O(log n) instead of O(n).',
       audio: true,
       blocks: [
         {
@@ -264,7 +318,7 @@ hash("oe ") = (hash("doe") − code(d)·128²)·128 + code(" ")`,
         { kind: 'anim', animId: 'at-avl' },
         {
           kind: 'p',
-          text: 'An AVL tree stores each node\'s balance factor - left height minus right height - and requires it to stay within −1…1. Inserting can push a node to ±2, which is repaired on the way back up the recursion by one or two rotations.',
+          text: "An AVL tree stores each node's balance factor - left height minus right height - and requires it to stay within −1…1. Inserting can push a node to ±2, which is repaired on the way back up the recursion by one or two rotations.",
         },
         {
           kind: 'table',
@@ -297,7 +351,7 @@ hash("oe ") = (hash("doe") − code(d)·128²)·128 + code(" ")`,
           items: [
             'Insert as in a normal BST; colour the new node red, so no black count changes.',
             'If the root became red, just repaint it black - no other property is affected.',
-            'If the new node\'s parent is red, there is a red violation. Look at the uncle.',
+            "If the new node's parent is red, there is a red violation. Look at the uncle.",
             'Uncle red: recolour parent and uncle black and grandparent red. Black counts are preserved, but the grandparent may now clash with its own parent, so recurse upward.',
             'Uncle black: rotate. In each of the four child-position cases, the middle value of node, parent and grandparent becomes the local root and swaps colour with the grandparent.',
           ],
@@ -309,7 +363,11 @@ hash("oe ") = (hash("doe") − code(d)·128²)·128 + code(" ")`,
             ['Balance', 'Stricter - shallower trees', 'Looser - up to 2x path difference'],
             ['Lookups', 'Faster', 'Slightly slower'],
             ['Insert/delete', 'More rotations', 'Fewer rotations, cheaper rebalancing'],
-            ['Use when', 'Read-heavy', 'Write-heavy - which is why most standard libraries pick it'],
+            [
+              'Use when',
+              'Read-heavy',
+              'Write-heavy - which is why most standard libraries pick it',
+            ],
           ],
         },
         {
@@ -340,7 +398,8 @@ hash("oe ") = (hash("doe") − code(d)·128²)·128 + code(" ")`,
 
 reduce(word, counts):
   emit(word, sum(counts))`,
-          caption: 'Word count - the "hello world" of MapReduce, and worth being able to write from memory.',
+          caption:
+            'Word count - the "hello world" of MapReduce, and worth being able to write from memory.',
         },
         {
           kind: 'callout',
@@ -365,15 +424,33 @@ reduce(word, counts):
           headers: ['Topic', 'One line'],
           rows: [
             ['Bellman-Ford', 'Shortest paths with negative edges; detects negative cycles. O(VE)'],
-            ['Floyd-Warshall', 'All-pairs shortest paths, negative edges allowed, no negative cycles'],
-            ['Minimum spanning tree', 'Cheapest set of edges connecting every vertex - Kruskal or Prim'],
+            [
+              'Floyd-Warshall',
+              'All-pairs shortest paths, negative edges allowed, no negative cycles',
+            ],
+            [
+              'Minimum spanning tree',
+              'Cheapest set of edges connecting every vertex - Kruskal or Prim',
+            ],
             ['B-trees', 'High-fanout balanced trees for disk; the shape of every database index'],
             ['`A*`', 'Dijkstra plus an admissible heuristic on the queue key'],
             ['Interval trees', 'A balanced BST over ranges - "who overlaps this window?"'],
-            ['Graph colouring', 'No two adjacent nodes share a colour; register allocation, scheduling'],
-            ['Bipartite graphs', 'Nodes split into two sides with every edge crossing - the same as 2-colourable'],
-            ['P, NP, NP-complete', 'Solvable quickly / verifiable quickly / the hardest of those, all reducible to each other'],
-            ['Regular expressions', 'Know what they can match, and that matching compiles to a state machine'],
+            [
+              'Graph colouring',
+              'No two adjacent nodes share a colour; register allocation, scheduling',
+            ],
+            [
+              'Bipartite graphs',
+              'Nodes split into two sides with every edge crossing - the same as 2-colourable',
+            ],
+            [
+              'P, NP, NP-complete',
+              'Solvable quickly / verifiable quickly / the hardest of those, all reducible to each other',
+            ],
+            [
+              'Regular expressions',
+              'Know what they can match, and that matching compiles to a state machine',
+            ],
           ],
         },
       ],
@@ -383,7 +460,8 @@ reduce(word, counts):
     {
       id: 'at-1',
       kind: 'technique',
-      prompt: 'Kahn-style topological sort finishes with fewer nodes in the output than the graph contains. This means:',
+      prompt:
+        'Kahn-style topological sort finishes with fewer nodes in the output than the graph contains. This means:',
       options: [
         'The graph is disconnected',
         'The remaining nodes contain a cycle, so no valid ordering exists',
@@ -397,7 +475,8 @@ reduce(word, counts):
     {
       id: 'at-2',
       kind: 'concept',
-      prompt: 'Why does the DFS formulation of topological sort push a node when it *finishes* rather than when it is first visited?',
+      prompt:
+        'Why does the DFS formulation of topological sort push a node when it *finishes* rather than when it is first visited?',
       options: [
         'It is faster',
         'A node finishes only after everything reachable from it has finished, so the reversed finish order respects every edge',
@@ -425,7 +504,7 @@ reduce(word, counts):
     {
       id: 'at-4',
       kind: 'complexity',
-      prompt: "Dijkstra with a binary heap on a graph with V vertices and E edges runs in:",
+      prompt: 'Dijkstra with a binary heap on a graph with V vertices and E edges runs in:',
       options: ['O(V²)', 'O(V + E)', 'O((V + E) log V)', 'O(E log E + V²)'],
       answerIndex: 2,
       explain:
@@ -436,7 +515,12 @@ reduce(word, counts):
       kind: 'concept',
       prompt:
         'A hash table using linear probing has slots 20-29 full and the rest empty. The chance the next insert lands in slot 30 is:',
-      options: ['1%, like any other slot', 'About 10%, because anything hashing into 20-30 ends up there', '0%', '50%'],
+      options: [
+        '1%, like any other slot',
+        'About 10%, because anything hashing into 20-30 ends up there',
+        '0%',
+        '50%',
+      ],
       answerIndex: 1,
       explain:
         'That is clustering: a full run captures every key that hashes into it, which makes the run longer. Quadratic probing and double hashing break the feedback loop.',
@@ -444,7 +528,8 @@ reduce(word, counts):
     {
       id: 'at-6',
       kind: 'technique',
-      prompt: 'In Rabin-Karp, a window whose hash equals the pattern hash still has to be compared character by character. Why?',
+      prompt:
+        'In Rabin-Karp, a window whose hash equals the pattern hash still has to be compared character by character. Why?',
       options: [
         'To handle case sensitivity',
         'Because different strings can hash to the same value - equal hashes are necessary but not sufficient',
@@ -458,7 +543,8 @@ reduce(word, counts):
     {
       id: 'at-7',
       kind: 'complexity',
-      prompt: 'Rabin-Karp is described as O(s + b) expected but O(sb) worst case. The worst case happens when:',
+      prompt:
+        'Rabin-Karp is described as O(s + b) expected but O(sb) worst case. The worst case happens when:',
       options: [
         'The pattern is longer than the text',
         'Nearly every window collides with the pattern hash, so almost every position is verified in full',
@@ -472,8 +558,7 @@ reduce(word, counts):
     {
       id: 'at-8',
       kind: 'technique',
-      prompt:
-        'An AVL node reaches balance +2 and its left child has balance −1. The repair is:',
+      prompt: 'An AVL node reaches balance +2 and its left child has balance −1. The repair is:',
       options: [
         'One right rotation at the unbalanced node',
         'Left rotation on the child, then right rotation on the unbalanced node',
@@ -518,11 +603,20 @@ reduce(word, counts):
   drills: [
     { slug: 'course-schedule-ii', note: 'CTCI 4.7 - topological sort producing the actual order.' },
     { slug: 'network-delay-time', note: 'Dijkstra, straight.' },
-    { slug: 'cheapest-flights-within-k-stops', note: 'Where plain Dijkstra needs modifying - a good stress test.' },
+    {
+      slug: 'cheapest-flights-within-k-stops',
+      note: 'Where plain Dijkstra needs modifying - a good stress test.',
+    },
     { slug: 'path-with-maximum-probability', note: 'Dijkstra with a different relaxation rule.' },
     { slug: 'longest-duplicate-substring', note: 'Binary search on length plus Rabin-Karp.' },
-    { slug: 'redundant-connection', note: 'Union-find as the other way to think about connectivity.' },
-    { slug: 'design-hashmap', note: 'Implement chaining yourself, then think about open addressing.' },
+    {
+      slug: 'redundant-connection',
+      note: 'Union-find as the other way to think about connectivity.',
+    },
+    {
+      slug: 'design-hashmap',
+      note: 'Implement chaining yourself, then think about open addressing.',
+    },
   ],
   visualizers: [
     {

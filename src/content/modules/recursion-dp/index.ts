@@ -154,10 +154,22 @@ function fibIter(n: number): number {
           rows: [
             ['Climb n stairs', '`n`', 'the remaining height is all that matters'],
             ['Word break', 'start index', 'the answer depends only on the suffix'],
-            ['Coin combinations', '`(amount, coinIndex)`', 'without the index, orderings get counted twice'],
-            ['Target sum', '`(index, runningSum)`', 'the sum so far changes what is still reachable'],
+            [
+              'Coin combinations',
+              '`(amount, coinIndex)`',
+              'without the index, orderings get counted twice',
+            ],
+            [
+              'Target sum',
+              '`(index, runningSum)`',
+              'the sum so far changes what is still reachable',
+            ],
             ['Edit distance', '`(i, j)`', 'a position in each string'],
-            ['Boolean parenthesisation', '`(lo, hi, target)`', 'the same span can be asked for true and for false'],
+            [
+              'Boolean parenthesisation',
+              '`(lo, hi, target)`',
+              'the same span can be asked for true and for false',
+            ],
           ],
         },
         {
@@ -187,7 +199,11 @@ function fibIter(n: number): number {
             ['Reads like', 'the recurrence you derived', 'a loop over states'],
             ['Computes', 'only reachable states', 'every state in the table'],
             ['Space', 'memo + O(depth) stack', 'table only, often reducible'],
-            ['Best when', 'the state space is sparse or awkward to order', 'the order is obvious and space matters'],
+            [
+              'Best when',
+              'the state space is sparse or awkward to order',
+              'the order is obvious and space matters',
+            ],
             ['Risk', 'stack overflow on deep inputs', 'filling in the wrong order'],
           ],
         },
@@ -512,7 +528,10 @@ const subsets = <T,>(items: T[]): T[][] =>
     { slug: 'coin-change', note: 'Minimising, not counting. Know the difference from CTCI 8.11.' },
     { slug: 'house-robber', note: 'CTCI 17.16 - non-adjacent maximum.' },
     { slug: 'house-robber-ii', note: 'Same, in a circle - run it twice with one house excluded.' },
-    { slug: 'longest-increasing-subsequence', note: 'O(n²) DP, then the O(n log n) patience version.' },
+    {
+      slug: 'longest-increasing-subsequence',
+      note: 'O(n²) DP, then the O(n log n) patience version.',
+    },
     { slug: 'longest-common-subsequence', note: 'The two-dimensional table to know cold.' },
     { slug: 'word-break', note: 'CTCI 17.13 - memoise on the suffix index.' },
     { slug: 'combination-sum-iv', note: 'Order matters here - notice it changes the recurrence.' },
@@ -521,7 +540,10 @@ const subsets = <T,>(items: T[]): T[][] =>
     { slug: 'unique-paths-ii', note: 'CTCI 8.2 - the same grid with obstacles.' },
     { slug: 'jump-game', note: 'Greedy beats DP - work out why.' },
     { slug: 'maximum-subarray', note: 'CTCI 16.17 - Kadane. Say the DP framing.' },
-    { slug: 'maximum-product-subarray', note: 'Track the running minimum too, because of negatives.' },
+    {
+      slug: 'maximum-product-subarray',
+      note: 'Track the running minimum too, because of negatives.',
+    },
     { slug: 'subsets', note: 'CTCI 8.4 - recursion and the bit-mask version.' },
     { slug: 'permutations', note: 'CTCI 8.7 - choose / recurse / unchoose.' },
     { slug: 'combination-sum', note: 'Backtracking with reuse and a start index.' },
@@ -533,13 +555,22 @@ const subsets = <T,>(items: T[]): T[][] =>
     { slug: 'partition-equal-subset-sum', note: 'Subset sum as a boolean DP.' },
     { slug: 'min-cost-climbing-stairs', note: 'A gentle rolling-array exercise.' },
     { slug: 'target-sum', note: 'Counting sign assignments - memoise on (index, runningSum).' },
-    { slug: 'russian-doll-envelopes', note: 'CTCI 8.13 and 17.8 - sort, then LIS on the other dimension.' },
+    {
+      slug: 'russian-doll-envelopes',
+      note: 'CTCI 8.13 and 17.8 - sort, then LIS on the other dimension.',
+    },
     { slug: 'different-ways-to-add-parentheses', note: 'CTCI 8.14 - split at every operator.' },
-    { slug: 'coin-change-ii', note: 'CTCI 8.11 - counting combinations, where order does not matter.' },
+    {
+      slug: 'coin-change-ii',
+      note: 'CTCI 8.11 - counting combinations, where order does not matter.',
+    },
     { slug: 'permutations-ii', note: 'CTCI 8.8 - branch on counts to avoid duplicates.' },
     { slug: 'fixed-point', note: 'CTCI 8.3 - magic index by binary search. Premium.' },
     { slug: 'largest-1-bordered-square', note: 'CTCI 17.23 - precompute runs, then test squares.' },
-    { slug: 'max-sum-of-rectangle-no-larger-than-k', note: 'CTCI 17.24 - fix a row pair, then Kadane.' },
+    {
+      slug: 'max-sum-of-rectangle-no-larger-than-k',
+      note: 'CTCI 17.24 - fix a row pair, then Kadane.',
+    },
   ],
   visualizers: [
     {

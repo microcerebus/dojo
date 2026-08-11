@@ -36,7 +36,8 @@ export const treesGraphs: CourseModule = {
     {
       id: 'tree-shapes',
       title: 'What kind of tree is it?',
-      takeaway: 'Five words - binary, search, complete, full, balanced - that all mean different things.',
+      takeaway:
+        'Five words - binary, search, complete, full, balanced - that all mean different things.',
       audio: true,
       blocks: [
         {
@@ -58,7 +59,10 @@ export const treesGraphs: CourseModule = {
             ],
             ['Full', 'Every node has zero or two children. No only-children.'],
             ['Perfect', 'Full *and* complete: exactly 2ᵏ − 1 nodes, all leaves on the last level.'],
-            ['Balanced', 'Height is O(log n). That is all - it does not mean the halves are equal.'],
+            [
+              'Balanced',
+              'Height is O(log n). That is all - it does not mean the halves are equal.',
+            ],
           ],
         },
         {
@@ -133,7 +137,7 @@ export const treesGraphs: CourseModule = {
             [
               'In-order',
               'left, node, right',
-              'You want a BST\'s values in sorted order: kth smallest, validation, BST → sorted list.',
+              "You want a BST's values in sorted order: kth smallest, validation, BST → sorted list.",
             ],
             [
               'Pre-order',
@@ -143,7 +147,7 @@ export const treesGraphs: CourseModule = {
             [
               'Post-order',
               'left, right, node',
-              'A node\'s answer depends on its children: heights, deletion, folding subtree results upward.',
+              "A node's answer depends on its children: heights, deletion, folding subtree results upward.",
             ],
             [
               'Level order (BFS)',
@@ -196,7 +200,8 @@ export const treesGraphs: CourseModule = {
     {
       id: 'bst-work',
       title: 'Working with a BST',
-      takeaway: 'The ordering is free information. Bounds beat local comparisons; the middle element beats insertion.',
+      takeaway:
+        'The ordering is free information. Bounds beat local comparisons; the middle element beats insertion.',
       audio: true,
       blocks: [
         {
@@ -279,7 +284,7 @@ export const treesGraphs: CourseModule = {
         },
         {
           kind: 'p',
-          text: 'Two more BST questions worth recognising. **Which insertion orders produce this tree?** The root must have gone in first; after that the left and right subtrees are independent, so the answer is every *weave* of the two subtrees\' sequences, prefixed by the root - a merge that preserves relative order within each side. And **converting a BST into a sorted doubly linked list in place** is just an in-order traversal that relinks `left` as `prev` and `right` as `next` as it goes.',
+          text: "Two more BST questions worth recognising. **Which insertion orders produce this tree?** The root must have gone in first; after that the left and right subtrees are independent, so the answer is every *weave* of the two subtrees' sequences, prefixed by the root - a merge that preserves relative order within each side. And **converting a BST into a sorted doubly linked list in place** is just an in-order traversal that relinks `left` as `prev` and `right` as `next` as it goes.",
         },
       ],
     },
@@ -297,7 +302,7 @@ export const treesGraphs: CourseModule = {
           kind: 'callout',
           tone: 'key',
           title: 'Balance in one pass',
-          text: 'The obvious balance check computes each subtree\'s height from scratch at every node - that is O(n log n), because every node is re-measured once per ancestor. Instead have the height function *also* report failure: return the height when balanced and a sentinel (−∞, or null) the moment any subtree is not. One pass, O(n).',
+          text: "The obvious balance check computes each subtree's height from scratch at every node - that is O(n log n), because every node is re-measured once per ancestor. Instead have the height function *also* report failure: return the height when balanced and a sentinel (−∞, or null) the moment any subtree is not. One pass, O(n).",
         },
         {
           kind: 'code',
@@ -392,7 +397,8 @@ const isBalanced = (root: TreeNode | null) => height(root) !== UNBALANCED;`,
     {
       id: 'graph-shapes',
       title: 'Graphs, and how you are given one',
-      takeaway: 'A tree is a graph with the interesting parts removed. Everything else needs a visited set.',
+      takeaway:
+        'A tree is a graph with the interesting parts removed. Everything else needs a visited set.',
       audio: true,
       blocks: [
         {
@@ -413,9 +419,13 @@ const isBalanced = (root: TreeNode | null) => height(root) !== UNBALANCED;`,
           headers: ['', 'Adjacency list', 'Adjacency matrix'],
           rows: [
             ['Space', 'O(V + E)', 'O(V²) always'],
-            ['Iterate a node\'s neighbours', 'O(degree)', 'O(V) - you scan the whole row'],
+            ["Iterate a node's neighbours", 'O(degree)', 'O(V) - you scan the whole row'],
             ['"Is there an edge u→v?"', 'O(degree)', 'O(1)'],
-            ['Best for', 'Sparse graphs, which is nearly all of them', 'Dense graphs, or when edge lookup dominates'],
+            [
+              'Best for',
+              'Sparse graphs, which is nearly all of them',
+              'Dense graphs, or when edge lookup dominates',
+            ],
           ],
         },
         {
@@ -489,7 +499,11 @@ function bfs(start: Node) {
             ['Container', 'Call stack or explicit stack', 'Queue'],
             ['Memory', 'O(h) - the current path', 'O(width) - a whole level, which can be O(V)'],
             ['Finds shortest unweighted path', 'No', 'Yes'],
-            ['Good for', 'Visit everything, backtracking, cycle detection, topological order', 'Closest / fewest steps / level-by-level'],
+            [
+              'Good for',
+              'Visit everything, backtracking, cycle detection, topological order',
+              'Closest / fewest steps / level-by-level',
+            ],
             ['Watch out for', 'Stack overflow on deep graphs', 'Memory on wide graphs'],
           ],
         },
@@ -522,7 +536,8 @@ function bfs(start: Node) {
     {
       id: 'dependency-order',
       title: 'Topological sort and cycle detection',
-      takeaway: 'Build what is waiting on nothing, delete its arrows, repeat. Failure to finish *is* the cycle test.',
+      takeaway:
+        'Build what is waiting on nothing, delete its arrows, repeat. Failure to finish *is* the cycle test.',
       audio: true,
       blocks: [
         {
@@ -537,7 +552,7 @@ function bfs(start: Node) {
         {
           kind: 'steps',
           items: [
-            'Count each node\'s indegree - the number of dependencies it is waiting on.',
+            "Count each node's indegree - the number of dependencies it is waiting on.",
             'Put every node with indegree 0 into a queue.',
             'Pop a node, append it to the order, and decrement the indegree of each node it points at. Any that reach 0 join the queue.',
             'Repeat until the queue is empty. If the order is shorter than the node count, the leftovers form a cycle and there is no valid build order.',
@@ -551,7 +566,7 @@ function bfs(start: Node) {
         },
         {
           kind: 'p',
-          text: 'There is a DFS formulation too: recurse, and *after* a node\'s children are all finished, push it onto a stack. Reading the stack top-down gives a valid order, because a node is only pushed once everything that must follow it is already there.',
+          text: "There is a DFS formulation too: recurse, and *after* a node's children are all finished, push it onto a stack. Reading the stack top-down gives a valid order, because a node is only pushed once everything that must follow it is already there.",
         },
         {
           kind: 'callout',
@@ -589,7 +604,8 @@ function bfs(start: Node) {
       id: 'tg-2',
       kind: 'technique',
       prompt: 'Which check correctly validates a binary search tree?',
-      context: 'A node can be larger than its left child and smaller than its right child and still be misplaced.',
+      context:
+        'A node can be larger than its left child and smaller than its right child and still be misplaced.',
       options: [
         'At each node, compare it to its left and right children',
         'Pass a (min, max) window down, narrowing max going left and min going right',
@@ -632,7 +648,8 @@ function bfs(start: Node) {
     {
       id: 'tg-5',
       kind: 'technique',
-      prompt: 'You need the shortest path between two nodes in an unweighted graph. Which search, and why?',
+      prompt:
+        'You need the shortest path between two nodes in an unweighted graph. Which search, and why?',
       options: [
         'DFS, because it is simpler to implement recursively',
         'BFS, because it reaches every node at distance d before any node at distance d + 1',
@@ -661,7 +678,8 @@ function bfs(start: Node) {
     {
       id: 'tg-7',
       kind: 'technique',
-      prompt: 'In an indegree-based topological sort, how do you detect that no valid order exists?',
+      prompt:
+        'In an indegree-based topological sort, how do you detect that no valid order exists?',
       options: [
         'Run a separate DFS cycle check first',
         'The queue empties while some nodes are still unordered',
@@ -694,7 +712,7 @@ function bfs(start: Node) {
       options: [
         'A max-heap of partial sums',
         'A map from running prefix sum to how many times it occurred on the current path, decremented on the way back up',
-        'Memoising each subtree\'s total',
+        "Memoising each subtree's total",
         'Sorting the values first',
       ],
       answerIndex: 1,
@@ -722,33 +740,57 @@ function bfs(start: Node) {
     { slug: 'invert-binary-tree', note: 'Two lines, but say the complexity out loud.' },
     { slug: 'binary-tree-level-order-traversal', note: 'CTCI 4.3 - BFS with level boundaries.' },
     { slug: 'validate-binary-search-tree', note: 'CTCI 4.5 - bounds, not local comparisons.' },
-    { slug: 'lowest-common-ancestor-of-a-binary-search-tree', note: 'Use the ordering; it is much easier than the general tree.' },
-    { slug: 'binary-tree-maximum-path-sum', note: 'Return one value, track another - the classic two-value recursion.' },
+    {
+      slug: 'lowest-common-ancestor-of-a-binary-search-tree',
+      note: 'Use the ordering; it is much easier than the general tree.',
+    },
+    {
+      slug: 'binary-tree-maximum-path-sum',
+      note: 'Return one value, track another - the classic two-value recursion.',
+    },
     { slug: 'serialize-and-deserialize-binary-tree', note: 'Pre-order with null markers.' },
     { slug: 'subtree-of-another-tree', note: 'CTCI 4.10.' },
-    { slug: 'construct-binary-tree-from-preorder-and-inorder-traversal', note: 'Why you need two traversals to reconstruct.' },
+    {
+      slug: 'construct-binary-tree-from-preorder-and-inorder-traversal',
+      note: 'Why you need two traversals to reconstruct.',
+    },
     { slug: 'kth-smallest-element-in-a-bst', note: 'In-order traversal is sorted order.' },
     { slug: 'clone-graph', note: 'A map from old node to new node is the whole trick.' },
     { slug: 'course-schedule', note: 'CTCI 4.7 - cycle detection on a dependency graph.' },
     { slug: 'number-of-islands', note: 'Grid as graph. DFS or BFS both work.' },
-    { slug: 'pacific-atlantic-water-flow', note: 'Search backwards from the edges, not forwards from each cell.' },
+    {
+      slug: 'pacific-atlantic-water-flow',
+      note: 'Search backwards from the edges, not forwards from each cell.',
+    },
     { slug: 'alien-dictionary', note: 'Topological sort in disguise. Premium.' },
     { slug: 'graph-valid-tree', note: 'Connected and exactly n−1 edges. Premium.' },
-    { slug: 'number-of-connected-components-in-an-undirected-graph', note: 'Union-find or repeated DFS. Premium.' },
+    {
+      slug: 'number-of-connected-components-in-an-undirected-graph',
+      note: 'Union-find or repeated DFS. Premium.',
+    },
     { slug: 'balanced-binary-tree', note: 'CTCI 4.4 - do it in one pass, not O(n log n).' },
     { slug: 'diameter-of-binary-tree', note: 'Same two-value recursion as max path sum.' },
     { slug: 'path-sum-iii', note: 'CTCI 4.12 - running prefix sums in a map.' },
     { slug: 'lowest-common-ancestor-of-a-binary-tree', note: 'CTCI 4.8 - the general case.' },
     { slug: 'binary-tree-right-side-view', note: 'BFS, taking the last node of each level.' },
     { slug: 'rotting-oranges', note: 'Multi-source BFS - the "wave" made literal.' },
-    { slug: 'convert-sorted-array-to-binary-search-tree', note: 'CTCI 4.2 - minimal height by construction.' },
+    {
+      slug: 'convert-sorted-array-to-binary-search-tree',
+      note: 'CTCI 4.2 - minimal height by construction.',
+    },
     { slug: 'inorder-successor-in-bst', note: 'CTCI 4.6. Premium.' },
-    { slug: 'binary-tree-inorder-traversal', note: 'Then do it iteratively with an explicit stack.' },
+    {
+      slug: 'binary-tree-inorder-traversal',
+      note: 'Then do it iteratively with an explicit stack.',
+    },
     { slug: 'find-if-path-exists-in-graph', note: 'CTCI 4.1 - plain reachability.' },
     { slug: 'accounts-merge', note: 'CTCI 17.7 - components over a synonym graph.' },
     { slug: 'word-ladder', note: 'CTCI 17.22 - BFS over word transformations.' },
     { slug: 'max-area-of-island', note: 'CTCI 16.19 - flood fill returning a size.' },
-    { slug: 'convert-binary-search-tree-to-sorted-doubly-linked-list', note: 'CTCI 17.12. Premium.' },
+    {
+      slug: 'convert-binary-search-tree-to-sorted-doubly-linked-list',
+      note: 'CTCI 17.12. Premium.',
+    },
   ],
   visualizers: [
     {

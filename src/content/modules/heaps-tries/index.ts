@@ -29,7 +29,8 @@ export const heapsTries: CourseModule = {
     {
       id: 'heap-shape',
       title: 'A heap is an array wearing a tree costume',
-      takeaway: 'Complete binary tree, no pointers, and only one guarantee: the root is the extreme.',
+      takeaway:
+        'Complete binary tree, no pointers, and only one guarantee: the root is the extreme.',
       audio: true,
       blocks: [
         {
@@ -63,9 +64,21 @@ const parent = (i: number) => (i - 1) >> 1;   // floor((i - 1) / 2)
             ['Peek the minimum', 'O(1)', 'It is index 0.'],
             ['Insert', 'O(log n)', 'One comparison per level on the path to the root.'],
             ['Extract the minimum', 'O(log n)', 'One comparison pair per level on the way down.'],
-            ['Build from an unsorted array', 'O(n)', 'Sift down from the middle backwards - most nodes are near the bottom and barely move.'],
-            ['Find an arbitrary value', 'O(n)', 'There is no ordering to search by. Use a map alongside if you need this.'],
-            ['Delete an arbitrary value', 'O(log n) *given its index*', 'Finding the index is the expensive half.'],
+            [
+              'Build from an unsorted array',
+              'O(n)',
+              'Sift down from the middle backwards - most nodes are near the bottom and barely move.',
+            ],
+            [
+              'Find an arbitrary value',
+              'O(n)',
+              'There is no ordering to search by. Use a map alongside if you need this.',
+            ],
+            [
+              'Delete an arbitrary value',
+              'O(log n) *given its index*',
+              'Finding the index is the expensive half.',
+            ],
           ],
         },
         {
@@ -167,15 +180,31 @@ const parent = (i: number) => (i - 1) >> 1;   // floor((i - 1) / 2)
           kind: 'table',
           headers: ['Approach', 'Time', 'Notes'],
           rows: [
-            ['Sort, take k', 'O(n log n)', 'Fine when n is small or you need the k in order anyway.'],
-            ['Heap of size k', 'O(n log k)', 'The streaming answer. O(k) space; never holds the whole input.'],
-            ['Quickselect', 'O(n) expected', 'Fastest on an array you may reorder, but O(n²) worst case and it needs the whole input up front.'],
-            ['Counting / bucket sort', 'O(n)', 'Only when the values or frequencies are bounded small integers - e.g. top-k frequent elements.'],
+            [
+              'Sort, take k',
+              'O(n log n)',
+              'Fine when n is small or you need the k in order anyway.',
+            ],
+            [
+              'Heap of size k',
+              'O(n log k)',
+              'The streaming answer. O(k) space; never holds the whole input.',
+            ],
+            [
+              'Quickselect',
+              'O(n) expected',
+              'Fastest on an array you may reorder, but O(n²) worst case and it needs the whole input up front.',
+            ],
+            [
+              'Counting / bucket sort',
+              'O(n)',
+              'Only when the values or frequencies are bounded small integers - e.g. top-k frequent elements.',
+            ],
           ],
         },
         {
           kind: 'p',
-          text: '**Merging k sorted sequences** is the other canonical use. Push the head of each sequence into a min-heap; repeatedly pop the smallest and push that sequence\'s next element. The heap never exceeds k entries, giving O(n log k) rather than the O(nk) of scanning all k heads each time.',
+          text: "**Merging k sorted sequences** is the other canonical use. Push the head of each sequence into a min-heap; repeatedly pop the smallest and push that sequence's next element. The heap never exceeds k entries, giving O(n log k) rather than the O(nk) of scanning all k heads each time.",
         },
         {
           kind: 'p',
@@ -201,7 +230,8 @@ const parent = (i: number) => (i - 1) >> 1;   // floor((i - 1) / 2)
     {
       id: 'tries',
       title: 'Tries',
-      takeaway: 'A tree over characters. Lookup costs the length of the key, not the size of the dictionary.',
+      takeaway:
+        'A tree over characters. Lookup costs the length of the key, not the size of the dictionary.',
       audio: true,
       blocks: [
         {
@@ -257,14 +287,22 @@ function walk(root: TrieNode, prefix: string): TrieNode | null {
           kind: 'table',
           headers: ['Child storage', 'Cost', 'Use when'],
           rows: [
-            ['Fixed array of 26', 'Fast, one indexed lookup, but 26 slots per node even if one is used', 'Small known alphabet, dense dictionary, speed matters'],
-            ['Hash map char → node', 'Pays only for the children that exist', 'Unicode, sparse branches, or memory pressure'],
+            [
+              'Fixed array of 26',
+              'Fast, one indexed lookup, but 26 slots per node even if one is used',
+              'Small known alphabet, dense dictionary, speed matters',
+            ],
+            [
+              'Hash map char → node',
+              'Pays only for the children that exist',
+              'Unicode, sparse branches, or memory pressure',
+            ],
           ],
         },
         {
           kind: 'bullets',
           items: [
-            'Space is the trie\'s weakness: a node per character across all *distinct* prefixes. Words that share nothing share nothing.',
+            "Space is the trie's weakness: a node per character across all *distinct* prefixes. Words that share nothing share nothing.",
             'Insertion is O(K) and, like lookup, does not depend on how many words are already stored.',
             'A trie also gives you every word with a given prefix for free - walk to the prefix node, then collect the subtree below it. That is autocomplete.',
             'When you probe related prefixes in sequence - `M`, then `MA`, then `MAN` - carry the current node down the recursion instead of restarting at the root. Each extra character then costs one hop.',
@@ -275,7 +313,8 @@ function walk(root: TrieNode, prefix: string): TrieNode | null {
     {
       id: 'trie-pruning',
       title: 'Tries as pruners',
-      takeaway: 'The trie usually is not the answer. It is the thing that tells the search to stop.',
+      takeaway:
+        'The trie usually is not the answer. It is the thing that tells the search to stop.',
       audio: true,
       blocks: [
         {
@@ -337,7 +376,7 @@ function walk(root: TrieNode, prefix: string): TrieNode | null {
       ],
       answerIndex: 1,
       explain:
-        'Only the extreme is guaranteed. Searching is O(n), and the second smallest is one of the root\'s two children - not a fixed slot.',
+        "Only the extreme is guaranteed. Searching is O(n), and the second smallest is one of the root's two children - not a fixed slot.",
     },
     {
       id: 'ht-3',
@@ -439,7 +478,10 @@ function walk(root: TrieNode, prefix: string): TrieNode | null {
     },
   ],
   drills: [
-    { slug: 'top-k-frequent-elements', note: 'Count with a map, then a heap of size k (or bucket sort for O(n)).' },
+    {
+      slug: 'top-k-frequent-elements',
+      note: 'Count with a map, then a heap of size k (or bucket sort for O(n)).',
+    },
     { slug: 'find-median-from-data-stream', note: 'CTCI 17.20 - the two-heap answer.' },
     { slug: 'merge-k-sorted-lists', note: 'The heap solution: O(n log k).' },
     { slug: 'implement-trie-prefix-tree', note: 'Build it from scratch once.' },
