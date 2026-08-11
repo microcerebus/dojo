@@ -176,6 +176,17 @@ worker only exist in a production build - it runs for real against the Vercel pr
 local `pnpm build && pnpm preview` (see that test and CF-8 in CORE-FUNCTIONALITY.md for the manual,
 offline-specific check this does not automate).
 
+**Vercel Deployment Protection.** If this project's Vercel previews sit behind Vercel Authentication
+(the default for new projects/teams - preview URLs redirect to `vercel.com/sso-api` for anyone not
+logged into that Vercel team), the e2e workflow needs a bypass: generate a secret under the Vercel
+project's Settings -> Deployment Protection -> Protection Bypass for Automation, then add it as the
+`VERCEL_AUTOMATION_BYPASS_SECRET` GitHub Actions secret on this repo.
+Both the preview-URL health check and every Playwright request then carry the bypass header
+automatically (see `playwright.config.ts` and `.github/workflows/e2e.yml`) - no further changes
+needed.
+The alternative is turning protection off for the Preview environment in the same settings page; either
+way this is a Vercel-project setting, not something this repo's code can decide on its own.
+
 ## Content
 
 All teaching prose in this repo is original. It paraphrases concepts from *Cracking the Coding

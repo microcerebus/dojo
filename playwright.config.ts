@@ -10,6 +10,17 @@ import { defineConfig, devices } from '@playwright/test';
 const PREVIEW_URL = process.env.PLAYWRIGHT_BASE_URL;
 const DEV_URL = 'http://localhost:5173';
 
+/**
+ * Vercel "Deployment Protection" (Vercel Authentication / SSO) gates every
+ * preview URL behind a login by default, which 401s CI's plain requests.
+ * The fix is Vercel's "Protection Bypass for Automation" secret: set it as
+ * VERCEL_AUTOMATION_BYPASS_SECRET and every request here carries the header
+ * that bypasses the gate (see https://vercel.com/docs/deployment-protection).
+ * Unset locally and harmless if protection is off instead - no header is
+ * sent.
+ */
+const VERCEL_BYPASS_SECRET = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+
 export default defineConfig({
   testDir: './e2e',
   // Only *.spec.ts are Playwright tests; e2e/*.test.ts is the vitest-run
@@ -22,6 +33,14 @@ export default defineConfig({
   use: {
     baseURL: PREVIEW_URL ?? DEV_URL,
     trace: 'on-first-retry',
+    ...(VERCEL_BYPASS_SECRET
+      ? {
+          extraHTTPHeaders: {
+            'x-vercel-protection-bypass': VERCEL_BYPASS_SECRET,
+            'x-vercel-set-bypass-cookie': 'true',
+          },
+        }
+      : {}),
   },
   // Chromium only (desktop + one mobile emulation) so CI does not need to
   // install and run the WebKit/Firefox browser binaries too.

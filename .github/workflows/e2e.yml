@@ -31,6 +31,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # NOTE: this project has Vercel Deployment Protection (Vercel
+      # Authentication / SSO) enabled, so plain requests to a preview URL -
+      # including this health check - 401 and redirect to vercel.com/sso-api.
+      # Set the VERCEL_AUTOMATION_BYPASS_SECRET repo secret from Vercel's
+      # Project Settings -> Deployment Protection -> Protection Bypass for
+      # Automation, or disable protection for the Preview environment, or
+      # this job cannot pass. See playwright.config.ts.
       - name: Wait for Vercel preview deployment
         id: vercel
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
@@ -38,6 +45,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           environment: Preview
           max_timeout: 600
+          vercel_protection_bypass_header: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
@@ -51,6 +59,7 @@ jobs:
         run: pnpm exec playwright test
         env:
           PLAYWRIGHT_BASE_URL: ${{ steps.vercel.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Upload Playwright report
         if: always()
