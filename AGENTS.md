@@ -115,11 +115,32 @@ precaching the app shell, the manifest, the icons, the fonts or any narration MP
   its generator still use authoring status - that file is for contributors, not readers - so the two
   never claim to agree.
 
-## Mobile and iOS constraints
+## Theming
 
-The app is dark-only: `color-scheme: dark` plus explicit Catppuccin Mocha tokens, with no
-`prefers-color-scheme` branches. A light-OS device therefore gets the same Mocha rendering. If a light
-theme is ever wanted, Catppuccin Latte would drop into the `--ctp-*` block in `src/styles/global.css`.
+- **Two palettes, one token set, and no colour literal outside them.** Catppuccin Mocha and Latte are
+  declared as `--ctp-*` blocks in `src/styles/global.css` keyed on `html[data-theme]`; the semantic map
+  (`--bg`, `--text`, `--accent`, ...) is written once below them and never learns which is live.
+  `src/styles/palette.test.ts` fails on a colour literal anywhere else under `src/`, and on palettes
+  that share a value or land on the wrong side of mid-grey - the regression it exists for is a "light
+  theme" that renders identically to dark. Three roles are re-pointed for Latte where the Mocha mapping
+  does not survive the swap; the block says which and why. A role used as running prose rather than as
+  an affordance takes `--accent-quiet`, not `--accent` - Latte's blue is a link blue at sentence length.
+- **The theme is resolved in one place: the inline boot script in `index.html`.** It reads the
+  `system | dark | light` choice (`dojo:theme`, `src/lib/theme.ts`) and stamps `html[data-theme]`
+  before first paint, which is what prevents a flash of the wrong palette - a module script is deferred
+  and would paint dark first. There is deliberately no `prefers-color-scheme` block in the CSS: it
+  would be a third copy of the Latte values, and there is no page to look at before that script runs.
+  The script is a hand-written copy of `applyScheme`, so `src/lib/theme.test.ts` pins every constant it
+  hardcodes - storage key, media query, both chrome colours - against the module and against
+  `--ctp-mantle` in `global.css`. It also moves the iOS status-bar style: `black-translucent` forces
+  white status text, unreadable over Latte, so light mode uses `default`.
+- **`theme_color` in the manifest cannot branch on scheme**, so it stays the dark `--bg`; the in-page
+  `theme-color` meta tag is what tracks the live scheme.
+- **The toggle is rendered twice**, in the header and in the tab bar, each `display: none` at the
+  breakpoint where the other is live - the same trick the nav links use, and what keeps exactly one in
+  the accessibility tree. Both read one store (`themeStore`), so they cannot disagree across a resize.
+
+## Mobile and iOS constraints
 
 iPhone is the primary surface. Layouts are mobile-first, verified at 390x844, and the page must never
 scroll horizontally. Touch targets are >= 44px (`--tap`). Audio `play()` must stay inside the tap

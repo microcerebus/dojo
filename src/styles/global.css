@@ -93,6 +93,12 @@
 
   --accent: var(--ctp-blue);
   --accent-ink: var(--ctp-crust);
+  /* The accent used as running prose rather than as an affordance. Mocha's
+     blue is pale enough to read as a soft highlight at sentence length;
+     Latte's is a saturated link blue, and a whole sentence of it reads as a
+     hyperlink sitting under a heading. Mixing toward the ink derives one
+     answer for both instead of special-casing the light palette. */
+  --accent-quiet: color-mix(in srgb, var(--accent) 72%, var(--text));
   --accent-2: var(--ctp-pink);
   --good: var(--ctp-green);
   --warn: var(--ctp-yellow);
