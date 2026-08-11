@@ -117,7 +117,9 @@ test('CF-6: sprint view maps modules to weeks', async ({ page }) => {
   await expect(weeks.first().locator('.week__module').first()).toBeVisible();
 });
 
-test('CF-7: coverage page shows study progress and a Blind 75 view', async ({ page }) => {
+test('CF-7: coverage page shows study progress, Blind 75, and the VisuAlgo catalog', async ({
+  page,
+}) => {
   await page.goto('/#/coverage');
   await expect(page.getByRole('heading', { name: 'Coverage map' })).toBeVisible();
 
@@ -128,6 +130,15 @@ test('CF-7: coverage page shows study progress and a Blind 75 view', async ({ pa
 
   await page.getByRole('tab', { name: /Blind 75/ }).click();
   await expect(page.locator('table tbody tr')).toHaveCount(75);
+
+  await page.getByRole('tab', { name: /VisuAlgo/ }).click();
+  const visualgoRows = page.locator('table tbody tr');
+  const visualgoCount = await visualgoRows.count();
+  expect(visualgoCount).toBeGreaterThan(0);
+  await expect(visualgoRows.first().getByRole('link').first()).toHaveAttribute(
+    'href',
+    /visualgo\.net/,
+  );
 });
 
 test('CF-8: pwa manifest and service worker are served', async ({ page, baseURL }) => {
@@ -197,23 +208,16 @@ test('CF-10: progress persists locally and merges across concurrent writes', asy
 });
 
 test('CF-11: audio playback speed persists across section navigation', async ({ page }) => {
-  // Known-broken on main today (see CORE-FUNCTIONALITY.md CF-11): the rate
-  // *label* survives navigation but the <audio> element's actual
-  // playbackRate silently resets to 1x. A fix is in progress on a sibling
-  // branch - test.fail() keeps this a visible red flag without failing CI
-  // for an unrelated tooling PR. Delete this test.fail() call once the fix
-  // lands; if this test then unexpectedly passes, CI will say so.
-  test.fail();
-
   await page.goto('/#/module/big-o');
 
   const rateButton = page.locator('.bite__rate').first();
   const playButton = page.locator('.bite__play').first();
 
-  // Cycle from 1x to 2x (the rate cycles 1 -> 1.25 -> 1.5 -> 2 -> 1).
-  await rateButton.click();
-  await rateButton.click();
-  await rateButton.click();
+  // The rate cycles 1 -> 1.25 -> 1.5 -> 2 -> 1 and defaults to 2x on a fresh
+  // context - click until it reads 2x rather than assuming a start point.
+  for (let i = 0; i < 4 && (await rateButton.textContent()) !== '2x'; i++) {
+    await rateButton.click();
+  }
   await expect(rateButton).toHaveText('2x');
 
   await playButton.click();
@@ -242,4 +246,19 @@ test('CF-11: audio playback speed persists across section navigation', async ({ 
         .evaluate((el: HTMLMediaElement) => el.playbackRate),
     )
     .toBe(2);
+});
+
+test('CF-12: a module with visualizers shows a live VisuAlgo row', async ({ page }) => {
+  await page.goto('/#/module/arrays-strings');
+  const vizRow = page.locator('.vizrow');
+  await expect(vizRow).toBeVisible();
+  await expect(vizRow.getByText('Visualize it live')).toBeVisible();
+  const firstLink = vizRow.locator('.vizrow__link').first();
+  await expect(firstLink).toHaveAttribute('href', /visualgo\.net/);
+  await expect(firstLink).toHaveAttribute('target', '_blank');
+});
+
+test('CF-12: a module without visualizers shows no VisuAlgo row', async ({ page }) => {
+  await page.goto('/#/module/big-o');
+  await expect(page.locator('.vizrow')).toHaveCount(0);
 });

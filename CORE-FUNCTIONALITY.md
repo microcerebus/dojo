@@ -67,15 +67,17 @@ assigned to any week appear in an "Unscheduled" list.
 **Verify:** open `/sprint`, confirm five week entries render, each linking to real modules, and that
 exactly one week (or none, if outside the sprint's date range) is marked "this week".
 
-## CF-7: Coverage page shows study progress and Blind 75 view
+## CF-7: Coverage page shows study progress, Blind 75, and the VisuAlgo catalog
 
-`/coverage` has three tabs: all 189 book questions (filterable by id/title/chapter/LeetCode name, each
+`/coverage` has four tabs: all 189 book questions (filterable by id/title/chapter/LeetCode name, each
 linking to its owning module), the full Blind 75 list with a done checkmark driven by the same drill
-progress as the module Drills tab, and a table of all modules with their status and counts.
+progress as the module Drills tab, a table of all modules with the reader's own study progress
+("Your progress": started/lesson/quiz/drills, not the content's authoring status) and counts, and the
+full VisuAlgo catalog with each visualizer's dojo module mapping (or "no matching module").
 
 **Verify:** open `/coverage`, type a filter term in the questions tab and confirm the list narrows,
 switch to the Blind 75 tab and confirm a problem checked off in a module's Drills tab shows as done
-here too.
+here too, and switch to the VisuAlgo tab and confirm each row links out to visualgo.net.
 
 ## CF-8: App installs and works offline after first load
 
@@ -121,9 +123,14 @@ after navigation, not just still be displayed.
 next section (arrow key or the section rail), press play, and confirm the audio is audibly playing
 at 2x - not just that the rate button still reads "2x".
 
-**Status:** currently broken on `main` - the displayed rate label persists correctly, but the
-`<audio>` element's actual `playbackRate` silently resets to 1x after navigating sections (the
-component only reapplies it when its own rate *state* changes, not on every section change, and the
-browser resets `playbackRate` when the element's `src` changes). A fix is in progress on a sibling
-branch; the citing e2e test below is marked `test.fail()` until that lands, so it stays a red flag in
-the test file without failing this otherwise-unrelated CI run.
+## CF-12: Live VisuAlgo visualizer links on a module's lesson tab
+
+A module with a `visualizers` field shows a "Visualize it live" row on its Lesson tab, linking out to
+the matching [VisuAlgo](https://visualgo.net) visualizer(s) for that topic.
+These are external links only - dojo never copies or embeds VisuAlgo's visualizations - and the row
+notes that it needs a network connection, dimming itself (without blocking the links) when the browser
+reports it is offline.
+
+**Verify:** open a module that has visualizers (e.g. `arrays-strings`), confirm the "Visualize it live"
+row appears on the Lesson tab with working external links to visualgo.net, and confirm a module without
+visualizers (e.g. `big-o`) shows no such row.
