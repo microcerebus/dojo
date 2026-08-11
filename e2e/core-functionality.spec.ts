@@ -125,7 +125,10 @@ test('CF-7: coverage page shows study progress, Blind 75, and the VisuAlgo catal
 
   const totalCount = await page.locator('.qitem').count();
   expect(totalCount).toBeGreaterThan(0);
-  await page.getByPlaceholder('Filter by id, title, chapter or LeetCode name').fill('array');
+  // By role, not by placeholder: the placeholder is copy that has to fit a
+  // 320px field, so keying the test to it makes every wording change a test
+  // failure.
+  await page.getByRole('searchbox', { name: /Filter questions/ }).fill('array');
   await expect(page.locator('.qitem')).not.toHaveCount(totalCount);
 
   await page.getByRole('tab', { name: /Blind 75/ }).click();
