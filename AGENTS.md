@@ -133,6 +133,17 @@ rather than deferring it.
   `overflow-x: auto` box; a clipped row with no fade is indistinguishable from a broken one.
 - **A strip must not bleed past the page gutter.** A negative inline margin looks better but widens
   every ancestor's scrollWidth, which is unintentional horizontal overflow by another name.
+- **Inside an animation stage the strip is `Track`** (`src/anim/primitives.tsx`). The stage itself
+  must never scroll sideways - it owns swipe-to-step - so anything too wide goes in a `Track`, whose
+  inner box is `max-content` but at least the stage width: a diagram that fits looks untouched.
+  `Cells` wraps and a `Pointers` grid cannot, so a pointer row and its cells must share one `Track`
+  or the arrows end up aimed at the wrong cells on a narrow screen.
+- **A programmatic scroll must target a snap point.** The rail is `scroll-snap-align: center`, so
+  `scrollLeftToReveal` centres what it moves. Scrolling a snapping strip to a non-snap offset is not
+  a smaller correction, it is none: the snap engine pulls straight back and the move looks like dead
+  code. An item wider than the strip can never be revealed at all, which is why rail pills are capped
+  at `100cqw` (`container-type: inline-size` on `.sectionrail`) - a percentage would resolve against
+  the `max-content` list being constrained.
 - **Wide tables restack, they do not shrink.** `table--stack` (in `global.css`) turns a table into
   cards below 720px and promotes each `<th>` to a per-cell label, so every `<td>` needs `data-label`.
 - **Inline `code` keeps `box-decoration-break: slice`.** With `clone`, Chrome re-adds both paddings to
@@ -144,9 +155,13 @@ rather than deferring it.
 - **Sizes come from the `--fs-*` scale**, not fresh pixel values. The `--gutter*` and `--tabbar-total`
   tokens are likewise the single source for page padding and bottom-bar clearance.
 - **Auditing a layout change:** at each viewport, walk every element and flag any whose
-  `getBoundingClientRect().right` exceeds the viewport without a horizontally-clipping ancestor, plus
-  any unclipped box whose `scrollWidth` beats its `clientWidth`. Both must be zero on every route,
-  tab and lesson section at 320/390/430/768/1280.
+  `getBoundingClientRect().right` exceeds the viewport without a horizontally-clipping ancestor, any
+  box that clips content it never lets you reach, and any sideways scroller outside `ScrollX`. All
+  must be zero on every route, tab and lesson section at 320/390/430/768/1280. Two things the naive
+  version gets wrong: `.visually-hidden` is a deliberate 1px clip, not lost content; and a target's
+  *rect* is not its hit area, so probe with `elementFromPoint` before calling anything sub-44px (the
+  5px animation step ticks pass that way, via an `::after`). Below 44px is expected above 860px,
+  where the input is a mouse. Driving 200+ states from one `eval` will time out - batch it.
 
 ## Maintaining this file
 
