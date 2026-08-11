@@ -38,7 +38,19 @@ export default defineConfig({
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
     baseURL: PREVIEW_URL ?? DEV_URL,
-    trace: 'on-first-retry',
+    // Trace recording captures every request's headers AND cookies. When
+    // `usingVercelBypass` is true, storageState below loads the
+    // `_vercel_jwt` bypass cookie into every context, so every traced
+    // request would carry that bearer credential straight into the
+    // uploaded artifact (world-readable - this repo is public) - a
+    // real, PoC-confirmed leak (see .github/workflows/e2e.yml). A
+    // scanning guard on the artifact is not enough by itself: `trace:
+    // 'on-first-retry'` also fires on a merely flaky test, so a run that
+    // reports green can still produce and upload a trace. Tracing is
+    // therefore off outright whenever the bypass cookie is in play;
+    // screenshots carry no credential data and stay on for debugging.
+    trace: usingVercelBypass ? 'off' : 'on-first-retry',
+    screenshot: 'only-on-failure',
     ...(usingVercelBypass ? { storageState: VERCEL_BYPASS_AUTH_FILE } : {}),
   },
   // Chromium only (desktop + one mobile emulation) so CI does not need to

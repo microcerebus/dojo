@@ -89,43 +89,55 @@ jobs:
           PLAYWRIGHT_BASE_URL: ${{ steps.vercel.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
-      # Defense in depth on top of e2e/global-setup.ts never routing the
-      # secret through a traced request in the first place (see that file
-      # and playwright.config.ts): this repo is public, so an uploaded
-      # artifact is world-readable the moment it lands. Scans plaintext
-      # report files AND the contents of any trace .zip archives, since a
-      # raw grep does not see inside those. Gates the upload step below -
-      # finding the secret here fails the job instead of shipping it.
-      - name: Verify no secret leaked into Playwright artifacts
+      # Defense in depth on top of two structural fixes (see
+      # playwright.config.ts and e2e/global-setup.ts): the shared secret
+      # never routes through a traced request, and tracing is off outright
+      # whenever the derived `_vercel_jwt` bypass cookie is loaded into a
+      # context - `trace: 'on-first-retry'` fires on a merely flaky test,
+      # not just a failing one, so a run that reports green could otherwise
+      # still produce and upload a credential-bearing trace. This repo is
+      # public, so an uploaded artifact is world-readable the moment it
+      # lands. Scans for both the secret's value AND the literal string
+      # "_vercel_jwt" - the cookie's *name*, not its value, which this
+      # guard never knows - across plaintext report files and the contents
+      # of any trace .zip archives (a raw grep does not see inside those).
+      # If that name appears anywhere, a bypass credential is present
+      # regardless of how it got there, and the upload must be refused.
+      - name: Verify no bypass credential leaked into Playwright artifacts
         id: scan-secrets
         if: always()
         env:
           SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           set -euo pipefail
-          if [ -z "$SECRET" ]; then
-            echo "No bypass secret in this run; nothing to scan for."
-            exit 0
+          patterns=("_vercel_jwt")
+          if [ -n "$SECRET" ]; then
+            patterns+=("$SECRET")
           fi
           found=0
-          if grep -RIl --fixed-strings "$SECRET" playwright-report test-results 2>/dev/null; then
-            found=1
-          fi
+          for pattern in "${patterns[@]}"; do
+            if grep -RIl --fixed-strings "$pattern" playwright-report test-results 2>/dev/null; then
+              echo "Match for '$pattern' found in a plaintext report/test-results file"
+              found=1
+            fi
+          done
           while IFS= read -r -d '' zipfile; do
             tmpdir="$(mktemp -d)"
             if unzip -qq -o "$zipfile" -d "$tmpdir" 2>/dev/null; then
-              if grep -RIl --fixed-strings "$SECRET" "$tmpdir" 2>/dev/null; then
-                echo "Secret found inside archive: $zipfile"
-                found=1
-              fi
+              for pattern in "${patterns[@]}"; do
+                if grep -RIl --fixed-strings "$pattern" "$tmpdir" 2>/dev/null; then
+                  echo "Match for '$pattern' found inside archive: $zipfile"
+                  found=1
+                fi
+              done
             fi
             rm -rf "$tmpdir"
           done < <(find playwright-report test-results -iname '*.zip' -print0 2>/dev/null)
           if [ "$found" = "1" ]; then
-            echo "::error::VERCEL_AUTOMATION_BYPASS_SECRET value found in Playwright artifacts - refusing to upload"
+            echo "::error::a Vercel bypass credential (secret or _vercel_jwt cookie) was found in Playwright artifacts - refusing to upload"
             exit 1
           fi
-          echo "No secret found in Playwright artifacts."
+          echo "No bypass credential found in Playwright artifacts."
 
       - name: Upload Playwright report
         if: always() && steps.scan-secrets.outcome == 'success'
