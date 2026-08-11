@@ -216,6 +216,55 @@ describe('AudioBite', () => {
     expect(labelOf(button)).toMatch(/^Play audio recap/);
   });
 
+  it('starts a fresh mount for a different track at the persisted rate, not the default', () => {
+    // Simulates crossing a module boundary, where ModulePage remounts a new
+    // AudioBite instance (see ModulePage.tsx's `key={moduleId}`).
+    const { unmount } = render(
+      <AudioBite moduleId="big-o" sectionId="space" title="Space complexity" />,
+    );
+    const firstRate = screen.getByRole('button', { name: /playback speed/i });
+    act(() => firstRate.click()); // 2x -> 1x
+    expect(firstRate).toHaveTextContent('1x');
+    unmount();
+
+    render(<AudioBite moduleId="recursion" sectionId="base-case" title="Base case" />);
+    const rateButton = screen.getByRole('button', { name: /playback speed/i });
+    const audio = document.querySelector('audio') as HTMLAudioElement;
+    expect(rateButton).toHaveTextContent('1x');
+    expect(audio.playbackRate).toBe(1);
+  });
+
+  it('reapplies the chosen rate to a fresh source on a same-instance track change', () => {
+    // ModulePage keeps the same AudioBite instance across sections within a
+    // module, reusing the <audio> element and only swapping its `src`. A real
+    // browser can reset the element's playbackRate when it loads that new
+    // source even though the reducer's `rate` never changed, so the fix has
+    // to reassert it once the new source's metadata is actually in - not
+    // just when the reducer's rate value changes.
+    const { rerender } = render(
+      <AudioBite moduleId="big-o" sectionId="space" title="Space complexity" />,
+    );
+    const rateButton = screen.getByRole('button', { name: /playback speed/i });
+    const audio = document.querySelector('audio') as HTMLAudioElement;
+    act(() => rateButton.click()); // 2x -> 1x
+    expect(audio.playbackRate).toBe(1);
+
+    rerender(<AudioBite moduleId="big-o" sectionId="amortised-time" title="Amortised time" />);
+    audio.playbackRate = 1; // simulate a browser that reset it away from the chosen rate
+    act(() => audio.dispatchEvent(new Event('loadedmetadata')));
+    expect(audio.playbackRate).toBe(1);
+
+    // 1x -> 1.25x -> 1.5x -> 2x, to prove the *chosen* rate reapplies, not just 1x.
+    act(() => rateButton.click());
+    act(() => rateButton.click());
+    act(() => rateButton.click());
+    expect(rateButton).toHaveTextContent('2x');
+    rerender(<AudioBite moduleId="big-o" sectionId="space" title="Space complexity" />);
+    audio.playbackRate = 1; // simulate the browser resetting on the next source load
+    act(() => audio.dispatchEvent(new Event('loadedmetadata')));
+    expect(audio.playbackRate).toBe(2);
+  });
+
   it('resets position and duration on a track change, so a skip does not jump from stale state', () => {
     // ModulePage swaps moduleId/sectionId on the same AudioBite instance when
     // navigating sections rather than remounting it, so the reducer has to be

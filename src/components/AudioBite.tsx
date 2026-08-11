@@ -75,6 +75,16 @@ export function AudioBite({
   const dispatch = useCallback(
     (event: AudioEvent) => {
       const command = applyEvent(event);
+      // The element is reused across sections (see the reset effect below),
+      // so loading a new source can reset its playbackRate to 1x even though
+      // the reducer's `rate` never changed. `loadedmetadata` is the one event
+      // guaranteed to fire once the new source is actually ready, after any
+      // browser reset - reassert the chosen rate here rather than relying on
+      // a dependency (e.g. duration) that a same-length track would not change.
+      if (event.type === 'loadedmetadata') {
+        const element = audioRef.current;
+        if (element) element.playbackRate = stateRef.current.rate;
+      }
       if (!command) return;
       const element = audioRef.current;
       if (!element) return;
@@ -94,8 +104,8 @@ export function AudioBite({
   );
 
   // Applies the current rate to a freshly mounted element and after every
-  // change, so a fresh <audio> (which always starts at 1x) picks up the
-  // remembered speed without waiting for a user-initiated rate change.
+  // user-initiated rate change (loading a new source is separately handled
+  // in `dispatch` above, via the `loadedmetadata` event).
   useEffect(() => {
     const element = audioRef.current;
     if (element) element.playbackRate = state.rate;
