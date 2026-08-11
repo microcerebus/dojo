@@ -1,4 +1,5 @@
 import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { BrandMark } from './components/BrandMark';
 import { HomePage } from './pages/HomePage';
 import { ModulePage } from './pages/ModulePage';
@@ -67,6 +68,7 @@ export function App() {
           ))}
         </nav>
       </div>
+      <Analytics />
     </HashRouter>
   );
 }
