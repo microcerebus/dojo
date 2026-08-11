@@ -928,8 +928,11 @@
   background: var(--bg-inset);
 }
 
-.vizrow__item.is-disabled {
-  opacity: 0.5;
+/* A dimmer look, not a disabled one - `navigator.onLine` false-reports
+   offline often enough that only the browser gets to decide whether a link
+   actually loads. The click is never blocked. */
+.vizrow__item.is-maybe-offline {
+  opacity: 0.6;
 }
 
 .vizrow__link {
@@ -940,12 +943,8 @@
   color: var(--text);
 }
 
-.vizrow__item:not(.is-disabled) .vizrow__link:hover {
+.vizrow__link:hover {
   color: var(--accent);
-}
-
-.vizrow__item.is-disabled .vizrow__link {
-  cursor: not-allowed;
 }
 
 .vizrow__linkTitle {

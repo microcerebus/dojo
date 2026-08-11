@@ -27,24 +27,16 @@ export function VisualizerRow({ visualizers }: { visualizers?: VisualizerLink[] 
       </p>
       {!online ? (
         <p className="vizrow__offline" role="status">
-          You are offline - these links will not load until your connection is back.
+          Your browser reports no connection right now, so these may not load - that signal is
+          only a hint though, so the links below still open in case it is wrong.
         </p>
       ) : null}
       <ul className="vizrow__list">
         {visualizers.map((viz) => {
           const entry = visualgoEntryForUrl(viz.url);
           return (
-            <li key={viz.url} className={`vizrow__item${online ? '' : ' is-disabled'}`}>
-              <a
-                className="vizrow__link"
-                href={viz.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-disabled={!online}
-                onClick={(event) => {
-                  if (!online) event.preventDefault();
-                }}
-              >
+            <li key={viz.url} className={`vizrow__item${online ? '' : ' is-maybe-offline'}`}>
+              <a className="vizrow__link" href={viz.url} target="_blank" rel="noreferrer noopener">
                 <span className="vizrow__linkTitle">
                   {entry?.title ?? 'VisuAlgo'} <span aria-hidden="true">↗</span>
                 </span>
