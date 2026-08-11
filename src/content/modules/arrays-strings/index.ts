@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const arraysStrings: CourseModule = {
   id: 'arrays-strings',
@@ -461,5 +462,15 @@ for (const piece of pieces) s += piece;`,
     { slug: 'longest-common-prefix', note: 'Simple, but a good warm-up for careful edge cases.' },
     { slug: 'is-subsequence', note: 'One pointer per input.' },
     { slug: 'repeated-substring-pattern', note: 'The doubled-string trick from CTCI 1.9, in another disguise.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('array'),
+      note: 'Watch a resizable array grow and shift on insert/delete before you trust the amortised O(1) claim.',
+    },
+    {
+      url: visualgoUrl('hashtable'),
+      note: 'Insert colliding keys and pick chaining vs open addressing to see the load factor bite.',
+    },
   ],
 };

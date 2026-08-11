@@ -498,6 +498,11 @@ h3 {
 
 /* tabs ------------------------------------------------------------------- */
 
+/* A wide tab strip scrolls horizontally rather than squeezing every label
+   onto two lines - `flex: none` + `white-space: nowrap` on the tab keeps
+   text intact, `overflow-x: auto` moves the clipping to the strip instead of
+   the page, and the mask fades the edge as a deliberate "more this way" hint
+   rather than a hard cut. Scroll-snap makes a swipe land on a whole tab. */
 .tabs {
   display: flex;
   gap: var(--space-1);
@@ -505,11 +510,23 @@ h3 {
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: 999px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tabs__tab {
-  flex: 1;
-  min-height: 38px;
+  flex: none;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
+  white-space: nowrap;
+  scroll-snap-align: start;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 560;
@@ -520,6 +537,21 @@ h3 {
   background: var(--bg-elev-2);
   color: var(--text);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Once there is room for every label at its natural width, go back to an
+   evenly spread pill group instead of a scroller with nothing to scroll. */
+@media (min-width: 720px) {
+  .tabs {
+    overflow-x: visible;
+    scroll-snap-type: none;
+    mask-image: none;
+  }
+
+  .tabs__tab {
+    flex: 1;
+    white-space: normal;
+  }
 }
 
 /* table ------------------------------------------------------------------ */

@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const recursionDp: CourseModule = {
   id: 'recursion-dp',
@@ -539,5 +540,15 @@ const subsets = <T,>(items: T[]): T[][] =>
     { slug: 'fixed-point', note: 'CTCI 8.3 - magic index by binary search. Premium.' },
     { slug: 'largest-1-bordered-square', note: 'CTCI 17.23 - precompute runs, then test squares.' },
     { slug: 'max-sum-of-rectangle-no-larger-than-k', note: 'CTCI 17.24 - fix a row pair, then Kadane.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('recursion'),
+      note: 'Watch the call tree for something like Fibonacci expand and see exactly which subtrees repeat.',
+    },
+    {
+      url: visualgoUrl('bitmask'),
+      note: 'The same subset-generation loop this module recurses to build - here it is one integer at a time.',
+    },
   ],
 };

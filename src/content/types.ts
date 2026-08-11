@@ -94,6 +94,18 @@ export interface PracticeTask {
   detail: string;
 }
 
+/**
+ * A link to a live VisuAlgo (https://visualgo.net) visualizer, LINKS ONLY -
+ * VisuAlgo's visualizations are copyrighted educational material, not
+ * licensed for copying or embedding. `url` must match a `VISUALGO_CATALOG`
+ * entry in `src/data/visualgo.ts`; `note` is the one-line prompt for what to
+ * try there.
+ */
+export interface VisualizerLink {
+  url: string;
+  note: string;
+}
+
 export interface CourseModule {
   id: string;
   title: string;
@@ -111,6 +123,8 @@ export interface CourseModule {
   drills: DrillRef[];
   /** Non-LeetCode practice, for modules where drilling problems is not the point. */
   practice?: PracticeTask[];
+  /** Live VisuAlgo visualizers relevant to this module, shown as "Visualize it live". */
+  visualizers?: VisualizerLink[];
   /** For outline modules: what the finished lesson will animate. */
   plannedAnimations?: string[];
 }

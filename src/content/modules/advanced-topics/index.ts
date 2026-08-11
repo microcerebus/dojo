@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const advancedTopics: CourseModule = {
   id: 'advanced-topics',
@@ -522,5 +523,31 @@ reduce(word, counts):
     { slug: 'longest-duplicate-substring', note: 'Binary search on length plus Rabin-Karp.' },
     { slug: 'redundant-connection', note: 'Union-find as the other way to think about connectivity.' },
     { slug: 'design-hashmap', note: 'Implement chaining yourself, then think about open addressing.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('sssp'),
+      note: "Run Dijkstra one relaxation at a time, then add a negative edge and watch it give a wrong answer.",
+    },
+    {
+      url: visualgoUrl('mst'),
+      note: "Compare Kruskal's edge-by-edge picks against Prim's frontier growth on the same weighted graph.",
+    },
+    {
+      url: visualgoUrl('hashtable'),
+      note: 'Push the load factor toward 1 under open addressing and watch clustering take over.',
+    },
+    {
+      url: visualgoUrl('bst'),
+      note: 'Force an imbalance, switch to the AVL tab, and watch the rotation that fixes it.',
+    },
+    {
+      url: visualgoUrl('cyclefinding'),
+      note: 'Same DFS-based detection this module describes, on a graph you build edge by edge.',
+    },
+    {
+      url: visualgoUrl('reductions'),
+      note: 'See an NP-complete problem reduce to another - the "all reducible to each other" claim, live.',
+    },
   ],
 };

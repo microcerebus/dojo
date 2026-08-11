@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const heapsTries: CourseModule = {
   id: 'heaps-tries',
@@ -453,5 +454,11 @@ function walk(root: TrieNode, prefix: string): TrieNode | null {
     { slug: 'concatenated-words', note: 'CTCI 17.15 - trie plus memoised splitting.' },
     { slug: 'stream-of-characters', note: 'CTCI 17.17 - multi-pattern search with a suffix trie.' },
     { slug: 'letter-combinations-of-a-phone-number', note: 'CTCI 16.20 - the T9 mapping.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('heap'),
+      note: 'Insert and extract-min repeatedly and watch bubble-up/bubble-down move array indices, not pointers.',
+    },
   ],
 };

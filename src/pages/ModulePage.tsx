@@ -8,6 +8,7 @@ import { AudioBite } from '../components/AudioBite';
 import { Quiz } from '../components/Quiz';
 import { DrillList } from '../components/DrillList';
 import { ProgressRing } from '../components/ProgressRing';
+import { VisualizerRow } from '../components/VisualizerRow';
 import { NotFoundPage } from './NotFoundPage';
 
 type Tab = 'lesson' | 'quiz' | 'drills';
@@ -101,17 +102,20 @@ function ModuleView({ moduleId }: { moduleId: string }) {
       </div>
 
       {tab === 'lesson' ? (
-        isOutline ? (
-          <OutlineView courseModule={courseModule} />
-        ) : (
-          <LessonView
-            moduleId={courseModule.id}
-            sectionIndex={sectionIndex}
-            onNavigate={setSectionIndex}
-            sections={courseModule.sections}
-            readSections={moduleState.readSections}
-          />
-        )
+        <div className="stack-4">
+          <VisualizerRow visualizers={courseModule.visualizers} />
+          {isOutline ? (
+            <OutlineView courseModule={courseModule} />
+          ) : (
+            <LessonView
+              moduleId={courseModule.id}
+              sectionIndex={sectionIndex}
+              onNavigate={setSectionIndex}
+              sections={courseModule.sections}
+              readSections={moduleState.readSections}
+            />
+          )}
+        </div>
       ) : null}
 
       {tab === 'quiz' ? (
