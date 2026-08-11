@@ -72,19 +72,66 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
 
+      # Continues past a test failure so the scan/upload steps below still
+      # run against whatever the tests produced; "Fail the job if tests
+      # failed" at the end restores the correct pass/fail signal.
       - name: Run Playwright against the preview deployment
+        id: e2e-tests
+        continue-on-error: true
         run: pnpm exec playwright test
         env:
           PLAYWRIGHT_BASE_URL: ${{ steps.vercel.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
-      - name: Upload Playwright report
+      # Defense in depth on top of e2e/global-setup.ts never routing the
+      # secret through a traced request in the first place (see that file
+      # and playwright.config.ts): this repo is public, so an uploaded
+      # artifact is world-readable the moment it lands. Scans plaintext
+      # report files AND the contents of any trace .zip archives, since a
+      # raw grep does not see inside those. Gates the upload step below -
+      # finding the secret here fails the job instead of shipping it.
+      - name: Verify no secret leaked into Playwright artifacts
+        id: scan-secrets
         if: always()
+        env:
+          SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "$SECRET" ]; then
+            echo "No bypass secret in this run; nothing to scan for."
+            exit 0
+          fi
+          found=0
+          if grep -RIl --fixed-strings "$SECRET" playwright-report test-results 2>/dev/null; then
+            found=1
+          fi
+          while IFS= read -r -d '' zipfile; do
+            tmpdir="$(mktemp -d)"
+            if unzip -qq -o "$zipfile" -d "$tmpdir" 2>/dev/null; then
+              if grep -RIl --fixed-strings "$SECRET" "$tmpdir" 2>/dev/null; then
+                echo "Secret found inside archive: $zipfile"
+                found=1
+              fi
+            fi
+            rm -rf "$tmpdir"
+          done < <(find playwright-report test-results -iname '*.zip' -print0 2>/dev/null)
+          if [ "$found" = "1" ]; then
+            echo "::error::VERCEL_AUTOMATION_BYPASS_SECRET value found in Playwright artifacts - refusing to upload"
+            exit 1
+          fi
+          echo "No secret found in Playwright artifacts."
+
+      - name: Upload Playwright report
+        if: always() && steps.scan-secrets.outcome == 'success'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
+
+      - name: Fail the job if tests failed
+        if: steps.e2e-tests.outcome == 'failure'
+        run: exit 1
 
   e2e-skip-notice:
     needs: check-secret
