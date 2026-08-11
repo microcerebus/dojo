@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getModule } from '../content';
 import { moduleCompletion, moduleProgress, setSectionRead } from '../lib/progress';
@@ -9,9 +9,18 @@ import { Quiz } from '../components/Quiz';
 import { DrillList } from '../components/DrillList';
 import { ProgressRing } from '../components/ProgressRing';
 import { VisualizerRow } from '../components/VisualizerRow';
+import { ScrollX } from '../components/ScrollX';
+import { Tabs } from '../components/Tabs';
+import { scrollLeftToReveal } from '../lib/scrollEdge';
 import { NotFoundPage } from './NotFoundPage';
 
 type Tab = 'lesson' | 'quiz' | 'drills';
+
+const TABS = [
+  { value: 'lesson', label: 'Lesson' },
+  { value: 'quiz', label: 'Quiz' },
+  { value: 'drills', label: 'Drills' },
+] as const satisfies readonly { value: Tab; label: string }[];
 
 export function ModulePage() {
   const { moduleId = '' } = useParams();
@@ -74,7 +83,9 @@ function ModuleView({ moduleId }: { moduleId: string }) {
         <Link to="/">← Curriculum</Link>
       </p>
 
-      <header className="modulehead">
+      {/* `data-tab` lets the phone layout drop the summary on the two tabs
+          where it is only pushing the controls down the screen. */}
+      <header className="modulehead" data-tab={tab}>
         <div className="modulehead__text">
           <p className="eyebrow">
             {courseModule.source}
@@ -83,23 +94,10 @@ function ModuleView({ moduleId }: { moduleId: string }) {
           <h1>{courseModule.title}</h1>
           <p className="lede">{courseModule.summary}</p>
         </div>
-        <ProgressRing value={completion.overall} size={56} label={courseModule.title} />
+        <ProgressRing value={completion.overall} size={52} label={courseModule.title} />
       </header>
 
-      <div className="tabs" role="tablist" aria-label="Module sections">
-        {(['lesson', 'quiz', 'drills'] as const).map((value) => (
-          <button
-            key={value}
-            type="button"
-            role="tab"
-            aria-selected={tab === value}
-            className={`tabs__tab${tab === value ? ' is-active' : ''}`}
-            onClick={() => setTab(value)}
-          >
-            {value === 'lesson' ? 'Lesson' : value === 'quiz' ? 'Quiz' : 'Drills'}
-          </button>
-        ))}
-      </div>
+      <Tabs items={TABS} value={tab} onChange={setTab} label="Module sections" />
 
       {tab === 'lesson' ? (
         <div className="stack-4">
@@ -152,27 +150,42 @@ function LessonView({
   readSections: string[];
 }) {
   const section = sections[sectionIndex];
+  const railRef = useRef<HTMLDivElement>(null);
+  const currentRef = useRef<HTMLLIElement>(null);
+
+  // On a phone the rail is a strip, so moving to a section that is scrolled off
+  // the end has to bring its pill along - otherwise the strip silently reports
+  // the wrong place in the lesson.
+  useEffect(() => {
+    const viewport = railRef.current;
+    const item = currentRef.current;
+    if (!viewport || !item || viewport.scrollWidth <= viewport.clientWidth) return;
+    viewport.scrollTo({ left: scrollLeftToReveal(viewport, item), behavior: 'smooth' });
+  }, [sectionIndex]);
+
   if (!section) return null;
 
   return (
     <div className="lesson">
       <nav className="sectionrail" aria-label="Lesson sections">
-        <ol>
-          {sections.map((candidate, index) => (
-            <li key={candidate.id}>
-              <button
-                type="button"
-                className={`sectionrail__item${index === sectionIndex ? ' is-current' : ''}${
-                  readSections.includes(candidate.id) ? ' is-read' : ''
-                }`}
-                onClick={() => onNavigate(index)}
-              >
-                <span className="sectionrail__num">{index + 1}</span>
-                <span className="sectionrail__title">{candidate.title}</span>
-              </button>
-            </li>
-          ))}
-        </ol>
+        <ScrollX viewportRef={railRef}>
+          <ol className="sectionrail__list">
+            {sections.map((candidate, index) => (
+              <li key={candidate.id} {...(index === sectionIndex ? { ref: currentRef } : {})}>
+                <button
+                  type="button"
+                  className={`sectionrail__item${index === sectionIndex ? ' is-current' : ''}${
+                    readSections.includes(candidate.id) ? ' is-read' : ''
+                  }`}
+                  onClick={() => onNavigate(index)}
+                >
+                  <span className="sectionrail__num">{index + 1}</span>
+                  <span className="sectionrail__title">{candidate.title}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </ScrollX>
       </nav>
 
       <article className="lesson__body prose">

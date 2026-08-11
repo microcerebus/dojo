@@ -122,9 +122,31 @@ The app is dark-only: `color-scheme: dark` plus explicit Catppuccin Mocha tokens
 theme is ever wanted, Catppuccin Latte would drop into the `--ctp-*` block in `src/styles/global.css`.
 
 iPhone is the primary surface. Layouts are mobile-first, verified at 390x844, and the page must never
-scroll horizontally (wide tables scroll inside their own `.tablewrap`). Touch targets are >= 44px
-(`--tap`). Audio `play()` must stay inside the tap handler - iOS ignores it from an effect, which is
-why `AudioBite` issues the command synchronously rather than deferring it.
+scroll horizontally. Touch targets are >= 44px (`--tap`). Audio `play()` must stay inside the tap
+handler - iOS ignores it from an effect, which is why `AudioBite` issues the command synchronously
+rather than deferring it.
+
+- **One horizontal-scroll pattern: `ScrollX`.** Every strip wider than the screen - tab rows, the
+  lesson section rail, code blocks, wide tables - is wrapped in `src/components/ScrollX.tsx`, which
+  sets `data-more` to the side that still has content so `.scrollx` can fade only that edge. The
+  measuring logic is pure in `src/lib/scrollEdge.ts` and tested there. Do not hand-roll another
+  `overflow-x: auto` box; a clipped row with no fade is indistinguishable from a broken one.
+- **A strip must not bleed past the page gutter.** A negative inline margin looks better but widens
+  every ancestor's scrollWidth, which is unintentional horizontal overflow by another name.
+- **Wide tables restack, they do not shrink.** `table--stack` (in `global.css`) turns a table into
+  cards below 720px and promotes each `<th>` to a per-cell label, so every `<td>` needs `data-label`.
+- **Inline `code` keeps `box-decoration-break: slice`.** With `clone`, Chrome re-adds both paddings to
+  the continuation fragment *after* breaking, and a long identifier overshoots its column again -
+  which is what used to push whole lesson pages sideways.
+- **`animation.css` state classes stay scoped under `.anim__stage`.** `.is-active` / `.is-done` are
+  also shell class names; unscoped they painted a tinted block behind the active bottom-bar tab and
+  nudged the module tabs up two pixels.
+- **Sizes come from the `--fs-*` scale**, not fresh pixel values. The `--gutter*` and `--tabbar-total`
+  tokens are likewise the single source for page padding and bottom-bar clearance.
+- **Auditing a layout change:** at each viewport, walk every element and flag any whose
+  `getBoundingClientRect().right` exceeds the viewport without a horizontally-clipping ancestor, plus
+  any unclipped box whose `scrollWidth` beats its `clientWidth`. Both must be zero on every route,
+  tab and lesson section at 320/390/430/768/1280.
 
 ## Maintaining this file
 
