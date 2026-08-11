@@ -6,6 +6,25 @@
  * per-frame work is a class change.
  */
 import type { ReactNode } from 'react';
+import { ScrollX } from '../components/ScrollX';
+
+/**
+ * Keeps a pointer row and the cells it labels on one line together.
+ *
+ * `Cells` wraps by default, which is right for a bare row, but a `Pointers`
+ * grid is a fixed `count` columns wide and cannot wrap with it - so on a narrow
+ * screen the cells reflowed onto two lines while the arrows stayed on one,
+ * leaving every pointer aimed at the wrong cell and the row spilling past the
+ * stage. Inside a `Track` the pair is `max-content` wide, so neither wraps and
+ * the whole diagram scrolls sideways as one unit through the app's usual strip.
+ */
+export function Track({ children }: { children: ReactNode }) {
+  return (
+    <ScrollX className="viz__track">
+      <div className="viz__trackInner">{children}</div>
+    </ScrollX>
+  );
+}
 
 export type CellState =
   | 'idle'
@@ -282,20 +301,25 @@ export interface BarSpec {
 
 export function Bars({ bars, height = 130 }: { bars: BarSpec[]; height?: number }) {
   return (
-    <div className="viz__bars" style={{ ['--bars-height' as string]: `${height}px` }}>
-      {bars.map((bar) => (
-        <div key={bar.key} className="viz__barCol">
-          <span className="viz__barValue">{bar.caption ?? ''}</span>
-          <div className="viz__barTrack">
-            <div
-              className={`viz__bar is-${bar.state ?? 'idle'}`}
-              style={{ height: `${Math.max(2, Math.min(1, bar.value) * 100)}%` }}
-            />
+    // In a `Track` because a bar's label is prose: at 320px the columns are
+    // 28px wide and a word like "questions" is 42px, so unwrapped labels used
+    // to overlap their neighbours and hang off the end of the chart.
+    <Track>
+      <div className="viz__bars" style={{ ['--bars-height' as string]: `${height}px` }}>
+        {bars.map((bar) => (
+          <div key={bar.key} className="viz__barCol">
+            <span className="viz__barValue">{bar.caption ?? ''}</span>
+            <div className="viz__barTrack">
+              <div
+                className={`viz__bar is-${bar.state ?? 'idle'}`}
+                style={{ height: `${Math.max(2, Math.min(1, bar.value) * 100)}%` }}
+              />
+            </div>
+            <span className="viz__barLabel">{bar.label}</span>
           </div>
-          <span className="viz__barLabel">{bar.label}</span>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </Track>
   );
 }
 
@@ -311,39 +335,44 @@ export function Matrix({
 }) {
   const width = rows[0]?.length ?? 0;
   return (
-    <div className="viz__matrixWrap">
-      {colLabels ? (
-        <div
-          className="viz__matrixCols"
-          style={{ gridTemplateColumns: `repeat(${width}, var(--cell-size))` }}
-        >
-          {colLabels.map((label, i) => (
-            <span key={i}>{label}</span>
-          ))}
-        </div>
-      ) : null}
-      <div className="viz__matrixBody">
-        {rowLabels ? (
-          <div className="viz__matrixRows">
-            {rowLabels.map((label, i) => (
+    <Track>
+      <div className="viz__matrixWrap">
+        {colLabels ? (
+          <div
+            className="viz__matrixCols"
+            style={{ gridTemplateColumns: `repeat(${width}, var(--cell-size))` }}
+          >
+            {colLabels.map((label, i) => (
               <span key={i}>{label}</span>
             ))}
           </div>
         ) : null}
-        <div
-          className="viz__matrix"
-          style={{ gridTemplateColumns: `repeat(${width}, var(--cell-size))` }}
-        >
-          {rows.flatMap((row) =>
-            row.map((cell) => (
-              <div key={cell.key} className={`viz__cell viz__cell--sm is-${cell.state ?? 'idle'}`}>
-                <span className="viz__cellLabel">{cell.label}</span>
-              </div>
-            )),
-          )}
+        <div className="viz__matrixBody">
+          {rowLabels ? (
+            <div className="viz__matrixRows">
+              {rowLabels.map((label, i) => (
+                <span key={i}>{label}</span>
+              ))}
+            </div>
+          ) : null}
+          <div
+            className="viz__matrix"
+            style={{ gridTemplateColumns: `repeat(${width}, var(--cell-size))` }}
+          >
+            {rows.flatMap((row) =>
+              row.map((cell) => (
+                <div
+                  key={cell.key}
+                  className={`viz__cell viz__cell--sm is-${cell.state ?? 'idle'}`}
+                >
+                  <span className="viz__cellLabel">{cell.label}</span>
+                </div>
+              )),
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </Track>
   );
 }
 

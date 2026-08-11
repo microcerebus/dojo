@@ -6,6 +6,7 @@ import {
   Pointers,
   Readout,
   Stage,
+  Track,
   type BucketSpec,
   type CellSpec,
   type PointerSpec,
@@ -105,8 +106,10 @@ function TwoPointerFrameView({ index }: { index: number }) {
           },
         ]}
       />
-      <Pointers pointers={pointers} count={SORTED.length} />
-      <Cells cells={cells} label="sorted array" />
+      <Track>
+        <Pointers pointers={pointers} count={SORTED.length} />
+        <Cells cells={cells} label="sorted array" />
+      </Track>
       <Legend
         items={[
           { key: 'm', state: 'muted', label: 'eliminated' },
@@ -315,14 +318,16 @@ function WindowFrameView({ index }: { index: number }) {
           { key: 'b', label: 'best', value: String(frame.best) },
         ]}
       />
-      <Pointers
-        pointers={[
-          { key: 'lo', at: frame.lo, label: 'lo', tone: 'a' },
-          { key: 'hi', at: frame.hi, label: 'hi', tone: 'b' },
-        ]}
-        count={WINDOW_INPUT.length}
-      />
-      <Cells cells={cells} label="input string" />
+      <Track>
+        <Pointers
+          pointers={[
+            { key: 'lo', at: frame.lo, label: 'lo', tone: 'a' },
+            { key: 'hi', at: frame.hi, label: 'hi', tone: 'b' },
+          ]}
+          count={WINDOW_INPUT.length}
+        />
+        <Cells cells={cells} label="input string" />
+      </Track>
       <Legend
         items={[
           { key: 'd', state: 'done', label: 'in window' },

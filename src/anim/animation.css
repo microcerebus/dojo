@@ -179,6 +179,27 @@
   flex-wrap: wrap;
 }
 
+/*
+ * A `Track` is the one place inside a stage that may move sideways.
+ *
+ * `max-content` is what stops a row wrapping out of alignment with the pointer
+ * grid above it, and `min-width: 100%` is what keeps the common case looking
+ * untouched: while the diagram fits, the track is exactly the stage width and
+ * its rows centre themselves in it as before, so only a diagram that genuinely
+ * cannot fit ever scrolls.
+ */
+.viz__track {
+  width: 100%;
+}
+
+.viz__trackInner {
+  width: max-content;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
 .viz__cell {
   width: var(--cell-size);
   height: var(--cell-size);
@@ -667,13 +688,12 @@
 
 /* matrix ----------------------------------------------------------------- */
 
+/* The sideways scrolling belongs to the enclosing `Track`, not here. */
 .viz__matrixWrap {
   display: flex;
   flex-direction: column;
   gap: 3px;
   align-items: center;
-  max-width: 100%;
-  overflow-x: auto;
 }
 
 .viz__matrixCols,

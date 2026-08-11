@@ -393,6 +393,23 @@ h3 {
   margin-top: var(--space-3);
 }
 
+/*
+ * A citation link sitting inside a sentence cannot be given a 44px block
+ * without wrecking the line rhythm, so it grows its hit area instead: vertical
+ * padding on an inline box enlarges the rect the finger has to find without
+ * changing the line height, and the matching negative margin keeps the
+ * paragraph's spacing exactly where it was. 14px either side of a 16px line
+ * box is what puts the smallest of these links on the 44px floor.
+ */
+.lede a,
+.prose p a,
+.prose li a,
+.callout__text a,
+.vizrow__attrib a {
+  padding-block: 14px;
+  margin-block: -14px;
+}
+
 @media (min-width: 860px) {
   :root {
     --fs-h1: 30px;
