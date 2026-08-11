@@ -21,7 +21,9 @@ import {
 describe('rdp-memo-tree', () => {
   /** Independent reference for ways(n) with hops of 1, 2 or 3. */
   const tripleStep = (n: number): number =>
-    n === 0 ? 1 : [n - 1, n - 2, n - 3].filter((k) => k >= 0).reduce((sum, k) => sum + tripleStep(k), 0);
+    n === 0
+      ? 1
+      : [n - 1, n - 2, n - 3].filter((k) => k >= 0).reduce((sum, k) => sum + tripleStep(k), 0);
 
   it('reports the true answer', () => {
     const last = treeFrames[treeFrames.length - 1];

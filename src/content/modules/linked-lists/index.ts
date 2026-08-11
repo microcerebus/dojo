@@ -110,7 +110,7 @@ export const linkedLists: CourseModule = {
           kind: 'callout',
           tone: 'tip',
           title: 'The one exception worth knowing',
-          text: 'If you are given only the node to delete and no access to the head, you cannot unlink it - but you can copy the successor\'s value into it and delete the successor instead. It fails on the last node, and you should say so.',
+          text: "If you are given only the node to delete and no access to the head, you cannot unlink it - but you can copy the successor's value into it and delete the successor instead. It fails on the last node, and you should say so.",
         },
         {
           kind: 'p',
@@ -231,7 +231,7 @@ export const linkedLists: CourseModule = {
       blocks: [
         {
           kind: 'p',
-          text: 'A corrupted list whose tail points back into itself never terminates. A hash set of visited nodes detects that in O(n) time and O(n) space. Floyd\'s algorithm does it in O(1) space, and the second half - finding where the loop starts - is the part interviews actually care about.',
+          text: "A corrupted list whose tail points back into itself never terminates. A hash set of visited nodes detects that in O(n) time and O(n) space. Floyd's algorithm does it in O(1) space, and the second half - finding where the loop starts - is the part interviews actually care about.",
         },
         { kind: 'anim', animId: 'll-floyd' },
         {
@@ -264,12 +264,14 @@ export const linkedLists: CourseModule = {
       prompt: 'What is the cost of accessing the kth element of a singly linked list?',
       options: ['O(1)', 'O(log k)', 'O(k)', 'O(n log n)'],
       answerIndex: 2,
-      explain: 'There is no index arithmetic - you walk k pointers. This is the price of O(1) structural edits.',
+      explain:
+        'There is no index arithmetic - you walk k pointers. This is the price of O(1) structural edits.',
     },
     {
       id: 'll-2',
       kind: 'technique',
-      prompt: 'Find the kth node from the end of a singly linked list in one pass. Which technique?',
+      prompt:
+        'Find the kth node from the end of a singly linked list in one pass. Which technique?',
       options: [
         'Recursion, counting on the way back',
         'Two pointers with a fixed gap of k',
@@ -297,7 +299,7 @@ export const linkedLists: CourseModule = {
     {
       id: 'll-4',
       kind: 'concept',
-      prompt: 'After Floyd\'s fast/slow pointers collide, that collision node is:',
+      prompt: "After Floyd's fast/slow pointers collide, that collision node is:",
       options: [
         'The first node of the loop',
         'The last node before the loop',
@@ -348,13 +350,13 @@ export const linkedLists: CourseModule = {
         'There is no difference',
       ],
       answerIndex: 1,
-      explain: 'Both are O(n) time. Recursion depth is real memory, and on a long list it overflows.',
+      explain:
+        'Both are O(n) time. Recursion depth is real memory, and on a long list it overflows.',
     },
     {
       id: 'll-8',
       kind: 'technique',
-      prompt:
-        'Partition a list around x so smaller values come first. The cleanest approach is:',
+      prompt: 'Partition a list around x so smaller values come first. The cleanest approach is:',
       options: [
         'Swap node values in place',
         'Sort the list',
@@ -396,22 +398,37 @@ export const linkedLists: CourseModule = {
     },
   ],
   drills: [
-    { slug: 'reverse-linked-list', note: 'The one to be able to write without thinking. Both ways.' },
+    {
+      slug: 'reverse-linked-list',
+      note: 'The one to be able to write without thinking. Both ways.',
+    },
     { slug: 'linked-list-cycle', note: 'Floyd, part one - detection only.' },
     { slug: 'linked-list-cycle-ii', note: 'CTCI 2.8 - part two, finding the entry node.' },
     { slug: 'merge-two-sorted-lists', note: 'Dummy head plus one pointer per input.' },
-    { slug: 'remove-nth-node-from-end-of-list', note: 'CTCI 2.2 - fixed-gap runner, with a dummy head.' },
+    {
+      slug: 'remove-nth-node-from-end-of-list',
+      note: 'CTCI 2.2 - fixed-gap runner, with a dummy head.',
+    },
     { slug: 'reorder-list', note: 'Three techniques in one: find middle, reverse, weave.' },
     { slug: 'middle-of-the-linked-list', note: 'Fast/slow. Decide which middle you return.' },
     { slug: 'palindrome-linked-list', note: 'CTCI 2.6 - get to the O(1) space version.' },
-    { slug: 'intersection-of-two-linked-lists', note: 'CTCI 2.7 - by reference, using the length difference.' },
+    {
+      slug: 'intersection-of-two-linked-lists',
+      note: 'CTCI 2.7 - by reference, using the length difference.',
+    },
     { slug: 'add-two-numbers', note: 'CTCI 2.5 - watch the final carry.' },
     { slug: 'partition-list', note: 'CTCI 2.4 - two chains, one splice.' },
-    { slug: 'delete-node-in-a-linked-list', note: 'CTCI 2.3 - copy the successor forward. Say why it fails on the tail.' },
+    {
+      slug: 'delete-node-in-a-linked-list',
+      note: 'CTCI 2.3 - copy the successor forward. Say why it fails on the tail.',
+    },
     { slug: 'copy-list-with-random-pointer', note: 'Interleave-and-split for O(1) extra space.' },
     { slug: 'swap-nodes-in-pairs', note: 'Pointer surgery where a dummy head really pays off.' },
     { slug: 'odd-even-linked-list', note: 'Another two-chains-then-splice problem.' },
-    { slug: 'lru-cache', note: 'CTCI 16.25 - hash map for lookup, doubly linked list for recency.' },
+    {
+      slug: 'lru-cache',
+      note: 'CTCI 16.25 - hash map for lookup, doubly linked list for recency.',
+    },
   ],
   visualizers: [
     {

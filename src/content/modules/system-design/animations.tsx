@@ -121,7 +121,8 @@ export const sdEvolution: AnimationSpec = fromFrames(
   {
     id: 'sd-evolution',
     title: 'One box becomes a system',
-    blurb: 'Find the bottleneck, fix that one thing, then find the next. Never design it all at once.',
+    blurb:
+      'Find the bottleneck, fix that one thing, then find the next. Never design it all at once.',
   },
   evoFrames,
   EvoFrameView,
@@ -261,7 +262,8 @@ export const sdSharding: AnimationSpec = fromFrames(
   {
     id: 'sd-sharding',
     title: 'Sharding, and the cost of adding a machine',
-    blurb: 'Modulo sharding is trivial until n changes. Watch nearly every key move, then watch the fix.',
+    blurb:
+      'Modulo sharding is trivial until n changes. Watch nearly every key move, then watch the fix.',
   },
   shardFrames,
   ShardFrameView,

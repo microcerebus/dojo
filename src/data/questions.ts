@@ -413,10 +413,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Compute collision probability via the complement of the two all-same-direction cases.',
     null,
   ),
-  q('6.5', 'Jugs of Water', C6, 'math-logic', 'Measure four quarts with five- and three-quart jugs.', [
-    'water-and-jug-problem',
-    'Water and Jug Problem',
-  ]),
+  q(
+    '6.5',
+    'Jugs of Water',
+    C6,
+    'math-logic',
+    'Measure four quarts with five- and three-quart jugs.',
+    ['water-and-jug-problem', 'Water and Jug Problem'],
+  ),
   q(
     '6.6',
     'Blue-Eyed Island',
@@ -451,8 +455,22 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
   ]),
 
   // ---------------------------------------------------- Chapter 7
-  q('7.1', 'Deck of Cards', C7, 'ood', 'Model a generic deck, then specialise it for blackjack.', null),
-  q('7.2', 'Call Center', C7, 'ood', 'Escalate a call through respondent, manager, director.', null),
+  q(
+    '7.1',
+    'Deck of Cards',
+    C7,
+    'ood',
+    'Model a generic deck, then specialise it for blackjack.',
+    null,
+  ),
+  q(
+    '7.2',
+    'Call Center',
+    C7,
+    'ood',
+    'Escalate a call through respondent, manager, director.',
+    null,
+  ),
   q('7.3', 'Jukebox', C7, 'ood', 'Model playlists, selection, payment and playback.', null),
   q(
     '7.4',
@@ -462,7 +480,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Model levels, spot sizes and multi-spot vehicles with a clean allocation rule.',
     ['design-parking-system', 'Design Parking System'],
   ),
-  q('7.5', 'Online Book Reader', C7, 'ood', 'Model users, library, and the active reading session.', null),
+  q(
+    '7.5',
+    'Online Book Reader',
+    C7,
+    'ood',
+    'Model users, library, and the active reading session.',
+    null,
+  ),
   q('7.6', 'Jigsaw', C7, 'ood', 'Model edge shapes so fitting pieces is a local predicate.', null),
   q('7.7', 'Chat Server', C7, 'ood', 'Model users, presence, conversations and delivery.', null),
   q('7.8', 'Othello', C7, 'ood', 'Model the board, colour flipping and move legality.', null),
@@ -478,14 +503,10 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'minesweeper',
     'Minesweeper',
   ]),
-  q(
-    '7.11',
-    'File System',
-    C7,
-    'ood',
-    'Model files and directories as a composite hierarchy.',
-    ['design-in-memory-file-system', 'Design In-Memory File System'],
-  ),
+  q('7.11', 'File System', C7, 'ood', 'Model files and directories as a composite hierarchy.', [
+    'design-in-memory-file-system',
+    'Design In-Memory File System',
+  ]),
   q('7.12', 'Hash Table', C7, 'ood', 'Implement a hash table with separate chaining.', [
     'design-hashmap',
     'Design HashMap',
@@ -496,10 +517,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'climbing-stairs',
     'Climbing Stairs',
   ]),
-  q('8.2', 'Robot in a Grid', C8, 'recursion-dp', 'Find a path through a grid with blocked cells.', [
-    'unique-paths-ii',
-    'Unique Paths II',
-  ]),
+  q(
+    '8.2',
+    'Robot in a Grid',
+    C8,
+    'recursion-dp',
+    'Find a path through a grid with blocked cells.',
+    ['unique-paths-ii', 'Unique Paths II'],
+  ),
   q(
     '8.3',
     'Magic Index',
@@ -520,7 +545,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Multiply using shifts and additions by halving one operand.',
     null,
   ),
-  q('8.6', 'Towers of Hanoi', C8, 'recursion-dp', 'Move n disks using the classic recursive plan.', null),
+  q(
+    '8.6',
+    'Towers of Hanoi',
+    C8,
+    'recursion-dp',
+    'Move n disks using the classic recursive plan.',
+    null,
+  ),
   q(
     '8.7',
     'Permutations without Dups',
@@ -603,10 +635,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Detect duplicates among ten billion URLs by hashing and sharding.',
     null,
   ),
-  q('9.5', 'Cache', C9, 'system-design', 'Design a distributed query cache with sensible eviction.', [
-    'lru-cache',
-    'LRU Cache',
-  ]),
+  q(
+    '9.5',
+    'Cache',
+    C9,
+    'system-design',
+    'Design a distributed query cache with sensible eviction.',
+    ['lru-cache', 'LRU Cache'],
+  ),
   q(
     '9.6',
     'Sales Rank',
@@ -715,7 +751,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
   ),
 
   // ---------------------------------------------------- Chapter 11
-  q('11.1', 'Mistake', C11, 'testing', 'Spot the off-by-one/precedence bug in a sampling loop.', null),
+  q(
+    '11.1',
+    'Mistake',
+    C11,
+    'testing',
+    'Spot the off-by-one/precedence bug in a sampling loop.',
+    null,
+  ),
   q(
     '11.2',
     'Random Crashes',
@@ -751,7 +794,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
   ),
 
   // ---------------------------------------------------- Chapter 12
-  q('12.1', 'Last K Lines', C12, 'c-cpp', 'Print a file tail with a circular buffer in one pass.', null),
+  q(
+    '12.1',
+    'Last K Lines',
+    C12,
+    'c-cpp',
+    'Print a file tail with a circular buffer in one pass.',
+    null,
+  ),
   q('12.2', 'Reverse String', C12, 'c-cpp', 'Reverse a null-terminated C string in place.', [
     'reverse-string',
     'Reverse String',
@@ -803,7 +853,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Explain what a private constructor means for subclassing.',
     null,
   ),
-  q('13.2', 'Return from Finally', C13, 'java', 'Explain whether finally runs after a return.', null),
+  q(
+    '13.2',
+    'Return from Finally',
+    C13,
+    'java',
+    'Explain whether finally runs after a return.',
+    null,
+  ),
   q('13.3', 'Final, etc.', C13, 'java', 'Distinguish final, finally and finalize.', null),
   q(
     '13.4',
@@ -846,7 +903,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'swap-salary',
     'Swap Salary',
   ]),
-  q('14.4', 'Joins', C14, 'databases', 'Explain inner, outer and cross joins and their outputs.', null),
+  q(
+    '14.4',
+    'Joins',
+    C14,
+    'databases',
+    'Explain inner, outer and cross joins and their outputs.',
+    null,
+  ),
   q(
     '14.5',
     'Denormalization',
@@ -881,7 +945,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Compare isolation, shared memory and communication cost.',
     null,
   ),
-  q('15.2', 'Context Switch', C15, 'threads-locks', 'Design a measurement of switching overhead.', null),
+  q(
+    '15.2',
+    'Context Switch',
+    C15,
+    'threads-locks',
+    'Design a measurement of switching overhead.',
+    null,
+  ),
   q(
     '15.3',
     'Dining Philosophers',
@@ -910,13 +981,24 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Explain which calls can and cannot run concurrently on one instance.',
     null,
   ),
-  q('15.7', 'FizzBuzz', C15, 'threads-locks', 'Interleave four threads to print FizzBuzz in order.', [
-    'fizz-buzz-multithreaded',
-    'Fizz Buzz Multithreaded',
-  ]),
+  q(
+    '15.7',
+    'FizzBuzz',
+    C15,
+    'threads-locks',
+    'Interleave four threads to print FizzBuzz in order.',
+    ['fizz-buzz-multithreaded', 'Fizz Buzz Multithreaded'],
+  ),
 
   // ---------------------------------------------------- Chapter 16
-  q('16.1', 'Number Swapper', C16, 'bit-manipulation', 'Swap two numbers with XOR, no temporary.', null),
+  q(
+    '16.1',
+    'Number Swapper',
+    C16,
+    'bit-manipulation',
+    'Swap two numbers with XOR, no temporary.',
+    null,
+  ),
   q(
     '16.2',
     'Word Frequencies',
@@ -933,10 +1015,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Intersect two segments, handling parallel and collinear cases.',
     null,
   ),
-  q('16.4', 'Tic Tac Win', C16, 'moderate', 'Detect a winner, and discuss one-off versus repeated calls.', [
-    'valid-tic-tac-toe-state',
-    'Valid Tic-Tac-Toe State',
-  ]),
+  q(
+    '16.4',
+    'Tic Tac Win',
+    C16,
+    'moderate',
+    'Detect a winner, and discuss one-off versus repeated calls.',
+    ['valid-tic-tac-toe-state', 'Valid Tic-Tac-Toe State'],
+  ),
   q(
     '16.5',
     'Factorial Zeros',
@@ -961,10 +1047,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Pick the larger value using the sign bit instead of a comparison.',
     null,
   ),
-  q('16.8', 'English Int', C16, 'moderate', 'Convert an integer into English words, chunk by chunk.', [
-    'integer-to-english-words',
-    'Integer to English Words',
-  ]),
+  q(
+    '16.8',
+    'English Int',
+    C16,
+    'moderate',
+    'Convert an integer into English words, chunk by chunk.',
+    ['integer-to-english-words', 'Integer to English Words'],
+  ),
   q(
     '16.9',
     'Operations',
@@ -989,16 +1079,38 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Enumerate lengths by counting how many short planks are used.',
     null,
   ),
-  q('16.12', 'XML Encoding', C16, 'moderate', 'Serialise a tree of elements with integer tag codes.', null),
-  q('16.13', 'Bisect Squares', C16, 'math-logic', 'The line through both centres bisects both squares.', null),
-  q('16.14', 'Best Line', C16, 'moderate', 'Hash lines by slope and intercept to find the most popular.', [
-    'max-points-on-a-line',
-    'Max Points on a Line',
-  ]),
-  q('16.15', 'Master Mind', C16, 'moderate', 'Count exact hits first, then colour-only hits from the rest.', [
-    'bulls-and-cows',
-    'Bulls and Cows',
-  ]),
+  q(
+    '16.12',
+    'XML Encoding',
+    C16,
+    'moderate',
+    'Serialise a tree of elements with integer tag codes.',
+    null,
+  ),
+  q(
+    '16.13',
+    'Bisect Squares',
+    C16,
+    'math-logic',
+    'The line through both centres bisects both squares.',
+    null,
+  ),
+  q(
+    '16.14',
+    'Best Line',
+    C16,
+    'moderate',
+    'Hash lines by slope and intercept to find the most popular.',
+    ['max-points-on-a-line', 'Max Points on a Line'],
+  ),
+  q(
+    '16.15',
+    'Master Mind',
+    C16,
+    'moderate',
+    'Count exact hits first, then colour-only hits from the rest.',
+    ['bulls-and-cows', 'Bulls and Cows'],
+  ),
   q(
     '16.16',
     'Sub Sort',
@@ -1011,18 +1123,30 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'maximum-subarray',
     'Maximum Subarray',
   ]),
-  q('16.18', 'Pattern Matching', C16, 'moderate', 'Try every split of the value between the a and b parts.', [
-    'word-pattern',
-    'Word Pattern',
-  ]),
-  q('16.19', 'Pond Sizes', C16, 'trees-graphs', 'Flood fill eight-directionally and record region sizes.', [
-    'max-area-of-island',
-    'Max Area of Island',
-  ]),
-  q('16.20', 'T9', C16, 'heaps-tries', 'Map digit sequences to words with a precomputed dictionary index.', [
-    'letter-combinations-of-a-phone-number',
-    'Letter Combinations of a Phone Number',
-  ]),
+  q(
+    '16.18',
+    'Pattern Matching',
+    C16,
+    'moderate',
+    'Try every split of the value between the a and b parts.',
+    ['word-pattern', 'Word Pattern'],
+  ),
+  q(
+    '16.19',
+    'Pond Sizes',
+    C16,
+    'trees-graphs',
+    'Flood fill eight-directionally and record region sizes.',
+    ['max-area-of-island', 'Max Area of Island'],
+  ),
+  q(
+    '16.20',
+    'T9',
+    C16,
+    'heaps-tries',
+    'Map digit sequences to words with a precomputed dictionary index.',
+    ['letter-combinations-of-a-phone-number', 'Letter Combinations of a Phone Number'],
+  ),
   q(
     '16.21',
     'Sum Swap',
@@ -1031,7 +1155,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'The swapped pair must differ by exactly half the sum difference.',
     ['fair-candy-swap', 'Fair Candy Swap'],
   ),
-  q("16.22", "Langton's Ant", C16, 'moderate', 'Simulate on a growable board and print the visited region.', null),
+  q(
+    '16.22',
+    "Langton's Ant",
+    C16,
+    'moderate',
+    'Simulate on a growable board and print the visited region.',
+    null,
+  ),
   q(
     '16.23',
     'Rand7 from Rand5',
@@ -1040,14 +1171,22 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Build a uniform range from repeated calls and reject out-of-range draws.',
     ['implement-rand10-using-rand7', 'Implement Rand10() Using Rand7()'],
   ),
-  q('16.24', 'Pairs with Sum', C16, 'arrays-strings', 'Find target-sum pairs with a hash map or two pointers.', [
-    'two-sum',
-    'Two Sum',
-  ]),
-  q('16.25', 'LRU Cache', C16, 'linked-lists', 'Hash map for lookup plus a doubly linked list for recency.', [
-    'lru-cache',
+  q(
+    '16.24',
+    'Pairs with Sum',
+    C16,
+    'arrays-strings',
+    'Find target-sum pairs with a hash map or two pointers.',
+    ['two-sum', 'Two Sum'],
+  ),
+  q(
+    '16.25',
     'LRU Cache',
-  ]),
+    C16,
+    'linked-lists',
+    'Hash map for lookup plus a doubly linked list for recency.',
+    ['lru-cache', 'LRU Cache'],
+  ),
   q(
     '16.26',
     'Calculator',
@@ -1058,18 +1197,30 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
   ),
 
   // ---------------------------------------------------- Chapter 17
-  q('17.1', 'Add Without Plus', C17, 'bit-manipulation', 'Add with XOR for sum and AND-shift for carry.', [
-    'sum-of-two-integers',
-    'Sum of Two Integers',
-  ]),
-  q('17.2', 'Shuffle', C17, 'math-logic', 'Fisher-Yates: swap each position with a random earlier-or-self.', [
-    'shuffle-an-array',
-    'Shuffle an Array',
-  ]),
-  q('17.3', 'Random Set', C17, 'math-logic', 'Reservoir-style sampling of m elements with equal probability.', [
-    'linked-list-random-node',
-    'Linked List Random Node',
-  ]),
+  q(
+    '17.1',
+    'Add Without Plus',
+    C17,
+    'bit-manipulation',
+    'Add with XOR for sum and AND-shift for carry.',
+    ['sum-of-two-integers', 'Sum of Two Integers'],
+  ),
+  q(
+    '17.2',
+    'Shuffle',
+    C17,
+    'math-logic',
+    'Fisher-Yates: swap each position with a random earlier-or-self.',
+    ['shuffle-an-array', 'Shuffle an Array'],
+  ),
+  q(
+    '17.3',
+    'Random Set',
+    C17,
+    'math-logic',
+    'Reservoir-style sampling of m elements with equal probability.',
+    ['linked-list-random-node', 'Linked List Random Node'],
+  ),
   q(
     '17.4',
     'Missing Number',
@@ -1086,10 +1237,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Longest balanced span via prefix differences stored in a hash map.',
     ['contiguous-array', 'Contiguous Array'],
   ),
-  q('17.6', 'Count of 2s', C17, 'math-logic', 'Count digit occurrences position by position, not by scanning.', [
-    'number-of-digit-one',
-    'Number of Digit One',
-  ]),
+  q(
+    '17.6',
+    'Count of 2s',
+    C17,
+    'math-logic',
+    'Count digit occurrences position by position, not by scanning.',
+    ['number-of-digit-one', 'Number of Digit One'],
+  ),
   q(
     '17.7',
     'Baby Names',
@@ -1098,14 +1253,22 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Merge synonym-connected names as graph components and sum frequencies.',
     ['accounts-merge', 'Accounts Merge'],
   ),
-  q('17.8', 'Circus Tower', C17, 'recursion-dp', 'Sort by one dimension, then longest increasing subsequence on the other.', [
-    'russian-doll-envelopes',
-    'Russian Doll Envelopes',
-  ]),
-  q('17.9', 'Kth Multiple', C17, 'heaps-tries', 'Generate multiples of 3, 5 and 7 in order with a heap or queues.', [
-    'ugly-number-ii',
-    'Ugly Number II',
-  ]),
+  q(
+    '17.8',
+    'Circus Tower',
+    C17,
+    'recursion-dp',
+    'Sort by one dimension, then longest increasing subsequence on the other.',
+    ['russian-doll-envelopes', 'Russian Doll Envelopes'],
+  ),
+  q(
+    '17.9',
+    'Kth Multiple',
+    C17,
+    'heaps-tries',
+    'Generate multiples of 3, 5 and 7 in order with a heap or queues.',
+    ['ugly-number-ii', 'Ugly Number II'],
+  ),
   q(
     '17.10',
     'Majority Element',
@@ -1122,10 +1285,17 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'One pass for a single query; a position index when queries repeat.',
     ['shortest-word-distance-ii', 'Shortest Word Distance II'],
   ),
-  q('17.12', 'BiNode', C17, 'trees-graphs', 'Convert a BST into a sorted doubly linked list in place.', [
-    'convert-binary-search-tree-to-sorted-doubly-linked-list',
-    'Convert BST to Sorted Doubly Linked List',
-  ]),
+  q(
+    '17.12',
+    'BiNode',
+    C17,
+    'trees-graphs',
+    'Convert a BST into a sorted doubly linked list in place.',
+    [
+      'convert-binary-search-tree-to-sorted-doubly-linked-list',
+      'Convert BST to Sorted Doubly Linked List',
+    ],
+  ),
   q(
     '17.13',
     'Re-Space',
@@ -1134,22 +1304,38 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Re-insert spaces minimising unrecognised characters, with memoised suffix costs.',
     ['word-break', 'Word Break'],
   ),
-  q('17.14', 'Smallest K', C17, 'heaps-tries', 'Max-heap of size k, or quickselect for linear expected time.', [
-    'kth-largest-element-in-an-array',
-    'Kth Largest Element in an Array',
-  ]),
-  q('17.15', 'Longest Word', C17, 'heaps-tries', 'Build words from other words with a trie plus memoised splitting.', [
-    'concatenated-words',
-    'Concatenated Words',
-  ]),
-  q('17.16', 'The Masseuse', C17, 'recursion-dp', 'Maximise non-adjacent bookings - house robber in disguise.', [
-    'house-robber',
-    'House Robber',
-  ]),
-  q('17.17', 'Multi Search', C17, 'heaps-tries', 'Search one text for many patterns using a trie of the patterns.', [
-    'stream-of-characters',
-    'Stream of Characters',
-  ]),
+  q(
+    '17.14',
+    'Smallest K',
+    C17,
+    'heaps-tries',
+    'Max-heap of size k, or quickselect for linear expected time.',
+    ['kth-largest-element-in-an-array', 'Kth Largest Element in an Array'],
+  ),
+  q(
+    '17.15',
+    'Longest Word',
+    C17,
+    'heaps-tries',
+    'Build words from other words with a trie plus memoised splitting.',
+    ['concatenated-words', 'Concatenated Words'],
+  ),
+  q(
+    '17.16',
+    'The Masseuse',
+    C17,
+    'recursion-dp',
+    'Maximise non-adjacent bookings - house robber in disguise.',
+    ['house-robber', 'House Robber'],
+  ),
+  q(
+    '17.17',
+    'Multi Search',
+    C17,
+    'heaps-tries',
+    'Search one text for many patterns using a trie of the patterns.',
+    ['stream-of-characters', 'Stream of Characters'],
+  ),
   q(
     '17.18',
     'Shortest Supersequence',
@@ -1166,10 +1352,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Recover two missing values from the sum and the sum of squares.',
     ['set-mismatch', 'Set Mismatch'],
   ),
-  q('17.20', 'Continuous Median', C17, 'heaps-tries', 'Two heaps kept balanced around the median.', [
-    'find-median-from-data-stream',
-    'Find Median from Data Stream',
-  ]),
+  q(
+    '17.20',
+    'Continuous Median',
+    C17,
+    'heaps-tries',
+    'Two heaps kept balanced around the median.',
+    ['find-median-from-data-stream', 'Find Median from Data Stream'],
+  ),
   q(
     '17.21',
     'Volume of Histogram',
@@ -1178,10 +1368,14 @@ export const BOOK_QUESTIONS: BookQuestion[] = [
     'Water above each bar is bounded by the tallest bar on each side.',
     ['trapping-rain-water', 'Trapping Rain Water'],
   ),
-  q('17.22', 'Word Transformer', C17, 'trees-graphs', 'BFS over one-letter-apart words, ideally bidirectional.', [
-    'word-ladder',
-    'Word Ladder',
-  ]),
+  q(
+    '17.22',
+    'Word Transformer',
+    C17,
+    'trees-graphs',
+    'BFS over one-letter-apart words, ideally bidirectional.',
+    ['word-ladder', 'Word Ladder'],
+  ),
   q(
     '17.23',
     'Max Black Square',

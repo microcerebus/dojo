@@ -1,10 +1,4 @@
-import {
-  Caption,
-  Matrix,
-  Readout,
-  Stage,
-  type CellSpec,
-} from '../../../anim/primitives';
+import { Caption, Matrix, Readout, Stage, type CellSpec } from '../../../anim/primitives';
 import { fromFrames, type AnimationSpec } from '../../../anim/types';
 
 const ROUNDS = [
@@ -19,38 +13,32 @@ const ROLES: { name: string; weights: number[]; note: string }[] = [
   {
     name: 'New grad SWE',
     weights: [3, 1, 1, 1, 0],
-    note:
-      'Almost entirely problem-solving. Design questions still appear and are graded against your experience level, so attempt them rather than declining.',
+    note: 'Almost entirely problem-solving. Design questions still appear and are graded against your experience level, so attempt them rather than declining.',
   },
   {
     name: 'Experienced SWE',
     weights: [3, 3, 1, 2, 2],
-    note:
-      'Coding does not go away - only slightly less of it. What is added is architecture, and much deeper expectations on "the hardest bug you have faced" and everything on your resume.',
+    note: 'Coding does not go away - only slightly less of it. What is added is architecture, and much deeper expectations on "the hardest bug you have faced" and everything on your resume.',
   },
   {
     name: 'SDET / tester',
     weights: [3, 1, 3, 2, 1],
-    note:
-      'Double the preparation: strong coding plus a rigorous risk-based testing mindset. The commonest rejection reason for testers is coding, not testing.',
+    note: 'Double the preparation: strong coding plus a rigorous risk-based testing mindset. The commonest rejection reason for testers is coding, not testing.',
   },
   {
     name: 'Product / program',
     weights: [1, 2, 2, 3, 3],
-    note:
-      'Handling ambiguity, customer focus, prioritisation, metrics, and explaining technical things at several levels. Some PM roles still test coding - ask.',
+    note: 'Handling ambiguity, customer focus, prioritisation, metrics, and explaining technical things at several levels. Some PM roles still test coding - ask.',
   },
   {
     name: 'Lead / manager',
     weights: [2, 3, 1, 3, 2],
-    note:
-      'Coding is still expected where you will code. Added: prioritisation, hiring and coaching stories, conflict, and demonstrable "gets things done".',
+    note: 'Coding is still expected where you will code. Added: prioritisation, hiring and coaching stories, conflict, and demonstrable "gets things done".',
   },
   {
     name: 'Startup',
     weights: [3, 2, 1, 2, 3],
-    note:
-      'Personality fit, hitting the ground running in a specific stack, and breadth. Expect deep questions about what you have actually shipped.',
+    note: 'Personality fit, hitting the ground running in a specific stack, and breadth. Expect deep questions about what you have actually shipped.',
   },
 ];
 
@@ -93,7 +81,11 @@ function RoleFrame({ index }: { index: number }) {
       key: `${role.name}-${round.key}`,
       label: row < frame.rows ? GLYPH[role.weights[col]] : '',
       state:
-        row === frame.role ? ('active' as const) : row < frame.rows ? ('done' as const) : ('idle' as const),
+        row === frame.role
+          ? ('active' as const)
+          : row < frame.rows
+            ? ('done' as const)
+            : ('idle' as const),
     })),
   );
   return (
@@ -113,7 +105,8 @@ export const roleWeights: AnimationSpec = fromFrames(
   {
     id: 'ss-weights',
     title: 'Where your prep time should go',
-    blurb: 'Role down one axis, kind of round across the other. Prepare to the weighting, not the average.',
+    blurb:
+      'Role down one axis, kind of round across the other. Prepare to the weighting, not the average.',
   },
   roleFrames,
   RoleFrame,

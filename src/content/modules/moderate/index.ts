@@ -45,7 +45,10 @@ export const moderate: CourseModule = {
           headers: ['If the question says…', 'Reach for'],
           rows: [
             ['"how many times does X appear", asked repeatedly', 'Precompute a frequency map once'],
-            ['"without using an if statement / comparison / temporary"', 'Bit tricks and algebraic rearrangement'],
+            [
+              '"without using an if statement / comparison / temporary"',
+              'Bit tricks and algebraic rearrangement',
+            ],
             ['"the largest / smallest contiguous…"', 'A running scan: Kadane, or a sliding window'],
             ['"the most X at the same time"', 'Sweep line over start and end events'],
             ['"all pairs that…"', 'Hash map of complements, or sort and converge'],
@@ -139,7 +142,7 @@ export const moderate: CourseModule = {
       blocks: [
         {
           kind: 'p',
-          text: 'Three of this chapter\'s problems are solved by walking the data while maintaining one or two running values. They look different and are the same shape.',
+          text: "Three of this chapter's problems are solved by walking the data while maintaining one or two running values. They look different and are the same shape.",
         },
         { kind: 'anim', animId: 'mod-kadane' },
         {
@@ -174,8 +177,8 @@ export const moderate: CourseModule = {
         {
           kind: 'bullets',
           items: [
-            '**Segment intersection.** Compute the infinite-line intersection, then check that the point lies within both segments\' ranges. The cases that break naive code: parallel lines with different intercepts (no intersection), parallel and collinear (infinitely many - return an endpoint of the overlap), and vertical segments where the slope is undefined.',
-            '**A line bisecting two squares.** Any line through a square\'s centre halves it, so the answer is the line through both centres - no calculus, one formula. Handle the identical-centres case, and clip the result to the squares if the question wants a segment.',
+            "**Segment intersection.** Compute the infinite-line intersection, then check that the point lies within both segments' ranges. The cases that break naive code: parallel lines with different intercepts (no intersection), parallel and collinear (infinitely many - return an endpoint of the overlap), and vertical segments where the slope is undefined.",
+            "**A line bisecting two squares.** Any line through a square's centre halves it, so the answer is the line through both centres - no calculus, one formula. Handle the identical-centres case, and clip the result to the squares if the question wants a segment.",
             '**The line through the most points.** For every pair, compute a normalised (slope, intercept) key and count. That is O(n²) pairs, and the trap is floating-point equality: round slopes to a tolerance and check neighbouring buckets, or store the slope as a reduced integer fraction to avoid the problem entirely.',
           ],
         },
@@ -187,7 +190,7 @@ export const moderate: CourseModule = {
         },
         {
           kind: 'p',
-          text: 'Grid problems in this chapter are about representation. Pond sizes is a flood fill run from every unvisited water cell, summing the connected cells - with the wrinkle that connectivity is eight-directional, diagonals included. Langton\'s Ant is a simulation on an *unbounded* board, so the interesting decision is the data structure: grow the grid when the ant leaves it, or store only the flipped cells in a hash set and compute the bounding box at the end.',
+          text: "Grid problems in this chapter are about representation. Pond sizes is a flood fill run from every unvisited water cell, summing the connected cells - with the wrinkle that connectivity is eight-directional, diagonals included. Langton's Ant is a simulation on an *unbounded* board, so the interesting decision is the data structure: grow the grid when the ant leaves it, or store only the flipped cells in a hash set and compute the bounding box at the end.",
         },
         {
           kind: 'callout',
@@ -391,8 +394,14 @@ export const moderate: CourseModule = {
     },
   ],
   drills: [
-    { slug: 'lru-cache', note: 'CTCI 16.25 - map plus doubly linked list. Write it without a library.' },
-    { slug: 'shortest-unsorted-continuous-subarray', note: 'CTCI 16.16 - running max and min from both ends.' },
+    {
+      slug: 'lru-cache',
+      note: 'CTCI 16.25 - map plus doubly linked list. Write it without a library.',
+    },
+    {
+      slug: 'shortest-unsorted-continuous-subarray',
+      note: 'CTCI 16.16 - running max and min from both ends.',
+    },
     { slug: 'integer-to-english-words', note: 'CTCI 16.8 - pure decomposition and care.' },
     { slug: 'max-points-on-a-line', note: 'CTCI 16.14 - hash by normalised slope.' },
     { slug: 'game-of-life', note: 'Grid simulation, with the in-place encoding follow-up.' },

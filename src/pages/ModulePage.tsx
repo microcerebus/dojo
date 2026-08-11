@@ -224,8 +224,8 @@ function OutlineView({
       <div className="card notice">
         <p className="notice__title">Lesson and animations are still being written.</p>
         <p>
-          Everything this module will teach is listed below, and the drill list is already
-          complete - so you can start practising now and read the lesson when it lands.
+          Everything this module will teach is listed below, and the drill list is already complete
+          - so you can start practising now and read the lesson when it lands.
         </p>
       </div>
 

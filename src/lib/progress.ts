@@ -70,11 +70,7 @@ export function setSectionRead(
   });
 }
 
-export function toggleDrill(
-  state: ProgressState,
-  moduleId: string,
-  slug: string,
-): ProgressState {
+export function toggleDrill(state: ProgressState, moduleId: string, slug: string): ProgressState {
   return withModule(state, moduleId, (current) => ({
     ...current,
     drills: { ...current.drills, [slug]: !current.drills[slug] },
@@ -210,10 +206,7 @@ function betterQuiz(a: QuizResult | null, b: QuizResult | null): QuizResult | nu
   return a.at >= b.at ? a : b;
 }
 
-export function mergeModuleProgress(
-  stored: ModuleProgress,
-  next: ModuleProgress,
-): ModuleProgress {
+export function mergeModuleProgress(stored: ModuleProgress, next: ModuleProgress): ModuleProgress {
   return {
     // Sections are read-only-once in practice: the app never un-marks one, so
     // union is exactly right and can never lose a read.

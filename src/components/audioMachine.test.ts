@@ -81,10 +81,9 @@ describe('audio player state machine', () => {
   });
 
   it('keeps holding the pause if the element reports playing more than once', () => {
-    const paused = send(
-      send(initialAudioState(), { type: 'press' }).state,
-      { type: 'press' },
-    ).state;
+    const paused = send(send(initialAudioState(), { type: 'press' }).state, {
+      type: 'press',
+    }).state;
     const first = send(paused, { type: 'playing' });
     const second = send(first.state, { type: 'playing' });
     expect(second.state.status).toBe('paused');

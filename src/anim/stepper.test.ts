@@ -50,11 +50,7 @@ describe('animation stepper', () => {
   });
 
   it('restarts from the beginning when play is pressed on the last frame', () => {
-    const state = run(
-      initialStepState(),
-      { type: 'goto', index: LENGTH - 1 },
-      { type: 'play' },
-    );
+    const state = run(initialStepState(), { type: 'goto', index: LENGTH - 1 }, { type: 'play' });
     expect(state).toEqual({ index: 0, playing: true });
   });
 

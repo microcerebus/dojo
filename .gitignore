@@ -7,3 +7,7 @@ coverage/
 dev-dist/
 *.log
 .vite/
+playwright-report/
+test-results/
+blob-report/
+e2e/.auth/

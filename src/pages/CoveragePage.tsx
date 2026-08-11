@@ -45,8 +45,8 @@ export function CoveragePage() {
         <p className="eyebrow">Nothing hidden</p>
         <h1>Coverage map</h1>
         <p className="lede">
-          All {BOOK_QUESTIONS.length} numbered book questions, every module, and the full Blind 75
-          - with the module that teaches each technique.
+          All {BOOK_QUESTIONS.length} numbered book questions, every module, and the full Blind 75 -
+          with the module that teaches each technique.
         </p>
       </header>
 
@@ -165,9 +165,7 @@ export function CoveragePage() {
                         {problem.premium ? <span className="chip">premium</span> : null}
                       </td>
                       <td>{problem.difficulty}</td>
-                      <td>
-                        {owner ? <Link to={`/module/${owner.id}`}>{owner.title}</Link> : '—'}
-                      </td>
+                      <td>{owner ? <Link to={`/module/${owner.id}`}>{owner.title}</Link> : '—'}</td>
                     </tr>
                   );
                 })}
@@ -206,9 +204,7 @@ export function CoveragePage() {
                         {formatStudySummary(summary)}
                       </span>
                     </td>
-                    <td>
-                      {BOOK_QUESTIONS.filter((q) => q.moduleId === courseModule.id).length}
-                    </td>
+                    <td>{BOOK_QUESTIONS.filter((q) => q.moduleId === courseModule.id).length}</td>
                     <td>
                       {courseModule.drills.length +
                         (courseModule.practice ? courseModule.practice.length : 0)}

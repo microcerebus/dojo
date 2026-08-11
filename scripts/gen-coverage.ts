@@ -45,7 +45,9 @@ push(`| Modules | ${MODULES.length} |`);
 push(`| Fully written (lesson + animations + audio + quiz + drills) | ${complete.length} |`);
 push(`| Structured outline (concepts + drills, content coming) | ${outline.length} |`);
 push(`| Book questions indexed | ${BOOK_QUESTIONS.length} |`);
-push(`| Questions with a LeetCode equivalent | ${BOOK_QUESTIONS.filter((q) => q.leetcode).length} |`);
+push(
+  `| Questions with a LeetCode equivalent | ${BOOK_QUESTIONS.filter((q) => q.leetcode).length} |`,
+);
 push(`| Questions that are book-only | ${BOOK_QUESTIONS.filter((q) => !q.leetcode).length} |`);
 push(`| Blind 75 assigned | ${BLIND_75.length} of 75 |`);
 push(

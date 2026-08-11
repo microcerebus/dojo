@@ -90,9 +90,7 @@ function ModuleCard({
 }) {
   const moduleState = moduleProgress(progressState, courseModule.id);
   const completion = moduleCompletion(courseModule, moduleState);
-  const blindCount = courseModule.drills.filter(
-    (drill) => getProblem(drill.slug)?.blind75,
-  ).length;
+  const blindCount = courseModule.drills.filter((drill) => getProblem(drill.slug)?.blind75).length;
 
   return (
     <Link className="modulecard" to={`/module/${courseModule.id}`}>
@@ -106,11 +104,7 @@ function ModuleCard({
 
       <p className="modulecard__summary">{courseModule.summary}</p>
 
-      <ProgressBars
-        lesson={completion.lesson}
-        quiz={completion.quiz}
-        drills={completion.drills}
-      />
+      <ProgressBars lesson={completion.lesson} quiz={completion.quiz} drills={completion.drills} />
 
       <div className="modulecard__tags">
         {courseModule.status === 'outline' ? (

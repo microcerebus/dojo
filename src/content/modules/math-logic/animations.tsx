@@ -85,7 +85,11 @@ function SieveFrame({ index }: { index: number }) {
       <Cells cells={cells} size="sm" label={`integers 2 to ${SIEVE_MAX}`} />
       <Readout
         items={[
-          { key: 'p', label: 'sieving on', value: frame.prime === null ? '-' : String(frame.prime) },
+          {
+            key: 'p',
+            label: 'sieving on',
+            value: frame.prime === null ? '-' : String(frame.prime),
+          },
           { key: 'left', label: 'still standing', value: String(primes.length) },
           { key: 'stop', label: 'stop after', value: `√${SIEVE_MAX} ≈ 5.5` },
         ]}
@@ -327,21 +331,24 @@ const eggFrames: EggFrame[] = [
     worstIndex: 9,
     caption:
       'The branches are wildly uneven. Breaking at floor 10 costs 10 drops; breaking at floor 100 costs 19. The worst case is what counts, so this plan costs 19.',
-    detail: 'best branch 10 · worst branch 19 · every step of egg 1 makes the tail one drop more expensive',
+    detail:
+      'best branch 10 · worst branch 19 · every step of egg 1 makes the tail one drop more expensive',
   },
   {
     totals: NAIVE_TOTALS,
     worstIndex: 9,
     caption:
       'The fix is worst-case balancing. Every extra drop of egg 1 must buy back exactly one drop of egg 2 - so the interval has to shrink by one each time.',
-    detail: 'Start at floor X, then X−1 more, then X−2 … until the intervals reach the top of the building.',
+    detail:
+      'Start at floor X, then X−1 more, then X−2 … until the intervals reach the top of the building.',
   },
   {
     totals: BALANCED_TOTALS,
     worstIndex: null,
     caption:
       'Drop from 14, then 27, 39, 50, 60, 69, 77, 84, 90, 95, 99. Now every branch costs the same: 14 drops. Flat is optimal.',
-    detail: 'No branch is cheap and no branch is expensive - the definition of a balanced worst case.',
+    detail:
+      'No branch is cheap and no branch is expensive - the definition of a balanced worst case.',
   },
   {
     totals: BALANCED_TOTALS,
@@ -404,27 +411,32 @@ const rejectFrames: RejectFrame[] = [
     highlightResidue: null,
     caption:
       'rand5() gives 0-4 uniformly. Combine two calls as 5·rand5() + rand5() and every value 0-24 comes out exactly one way, so all 25 are equally likely.',
-    detail: 'Row = first call, column = second call. 2·rand5() + rand5() would NOT work - some values arise several ways.',
+    detail:
+      'Row = first call, column = second call. 2·rand5() + rand5() would NOT work - some values arise several ways.',
   },
   {
     reject: false,
     highlightResidue: null,
     caption:
       'Tempting shortcut: return value % 7. But 25 is not a multiple of 7 - the leftovers 21, 22, 23, 24 hand an extra slot to residues 0, 1, 2 and 3.',
-    detail: 'Residues 0-3 would appear 4 times out of 25; residues 4-6 only 3 times. Not uniform, so not a correct answer.',
+    detail:
+      'Residues 0-3 would appear 4 times out of 25; residues 4-6 only 3 times. Not uniform, so not a correct answer.',
   },
   {
     reject: true,
     highlightResidue: null,
     caption:
       'Throw those four away and try again. What remains is 21 outcomes - exactly 3 × 7 - and they are still all equally likely.',
-    detail: 'Discarding uniformly-chosen outcomes leaves the survivors uniform. That is the whole trick.',
+    detail:
+      'Discarding uniformly-chosen outcomes leaves the survivors uniform. That is the whole trick.',
   },
   {
     reject: true,
     highlightResidue: 3,
-    caption: 'Now take the value mod 7. Every residue is hit by exactly three cells, so each result has probability 1/7.',
-    detail: 'Highlighted: the cells giving 3 - namely 3, 10 and 17. Every other residue looks the same.',
+    caption:
+      'Now take the value mod 7. Every residue is hit by exactly three cells, so each result has probability 1/7.',
+    detail:
+      'Highlighted: the cells giving 3 - namely 3, 10 and 17. Every other residue looks the same.',
   },
   {
     reject: true,
@@ -443,7 +455,8 @@ function RejectFrame({ index }: { index: number }) {
       const value = 5 * a + b;
       let state: CellSpec['state'] = 'idle';
       if (value >= 21) state = frame.reject ? 'muted' : 'bad';
-      else if (frame.highlightResidue !== null && value % 7 === frame.highlightResidue) state = 'target';
+      else if (frame.highlightResidue !== null && value % 7 === frame.highlightResidue)
+        state = 'target';
       else if (frame.reject) state = 'done';
       return { key: `v${value}`, label: frame.reject && value >= 21 ? '✕' : String(value), state };
     }),
@@ -470,7 +483,8 @@ export const rejectionSampling: AnimationSpec = fromFrames(
   {
     id: 'ml-rejection',
     title: 'Rejection sampling',
-    blurb: 'Turn one uniform generator into another by throwing away the outcomes that would skew it.',
+    blurb:
+      'Turn one uniform generator into another by throwing away the outcomes that would skew it.',
   },
   rejectFrames,
   RejectFrame,
@@ -508,7 +522,8 @@ const shuffleFrames: ShuffleFrame[] = (() => {
       fixedFrom: DECK.length,
       caption:
         'Five cards in order. The naive shuffle - walk the array and swap each element with a random index anywhere - looks fine and is provably biased.',
-      detail: 'It has 5⁵ = 3125 equally likely execution paths mapping onto 5! = 120 orderings. 3125 is not divisible by 120, so some orderings must come out more often.',
+      detail:
+        'It has 5⁵ = 3125 equally likely execution paths mapping onto 5! = 120 orderings. 3125 is not divisible by 120, so some orderings must come out more often.',
     },
   ];
   for (const { i, k } of PICKS) {
@@ -532,7 +547,8 @@ const shuffleFrames: ShuffleFrame[] = (() => {
     fixedFrom: 0,
     caption:
       'Done in one pass. Each of the 5! orderings is produced by exactly one sequence of picks, so all of them are equally likely.',
-    detail: 'O(n) time, O(1) extra space, and the correctness argument is a one-liner: 5 × 4 × 3 × 2 × 1 = 120 = 5!.',
+    detail:
+      'O(n) time, O(1) extra space, and the correctness argument is a one-liner: 5 × 4 × 3 × 2 × 1 = 120 = 5!.',
   });
   return frames;
 })();

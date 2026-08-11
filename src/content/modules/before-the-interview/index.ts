@@ -6,7 +6,8 @@ export const beforeTheInterview: CourseModule = {
   track: 'process',
   status: 'complete',
   source: 'Part IV',
-  summary: 'Resume, referrals and a preparation schedule built on deliberate practice rather than problem volume.',
+  summary:
+    'Resume, referrals and a preparation schedule built on deliberate practice rather than problem volume.',
   estimatedMinutes: 20,
   concepts: [
     'Build demonstrable experience: substantial projects, ownership at work, open source',
@@ -26,7 +27,8 @@ export const beforeTheInterview: CourseModule = {
     {
       id: 'experience',
       title: 'Getting the right experience',
-      takeaway: 'Everything reduces to two claims: you are smart, and you can code. Build evidence for both.',
+      takeaway:
+        'Everything reduces to two claims: you are smart, and you can code. Build evidence for both.',
       audio: true,
       blocks: [
         {
@@ -58,7 +60,8 @@ export const beforeTheInterview: CourseModule = {
     {
       id: 'resume',
       title: 'Writing the resume',
-      takeaway: 'One page, scannable in twenty seconds, and every line defensible for five minutes.',
+      takeaway:
+        'One page, scannable in twenty seconds, and every line defensible for five minutes.',
       audio: true,
       blocks: [
         {
@@ -90,17 +93,33 @@ export const beforeTheInterview: CourseModule = {
           kind: 'code',
           lang: 'text',
           code: 'Languages: TypeScript (expert), Python (proficient), Go (prior experience)',
-          caption: 'Plain English beats "years of experience", which is unreadable - occasional use over ten years is not ten years.',
+          caption:
+            'Plain English beats "years of experience", which is unreadable - occasional use over ten years is not ten years.',
         },
         {
           kind: 'table',
           headers: ['Trap', 'Why it costs you'],
           rows: [
-            ['Listing office software and IDEs', 'Uses space without adding signal at technology companies'],
-            ['Flaunting specific language versions and flavours', 'Reads as defining yourself by a language; some screeners bucket that negatively'],
-            ['A long list of certifications', 'Same bias as above at many companies - occasionally a positive, so know your audience'],
-            ['Only one or two languages', 'Suggests narrow exposure and possible difficulty picking up new things'],
-            ['Age, marital status, nationality, photo (US roles)', 'Companies do not want it; it creates legal exposure for them'],
+            [
+              'Listing office software and IDEs',
+              'Uses space without adding signal at technology companies',
+            ],
+            [
+              'Flaunting specific language versions and flavours',
+              'Reads as defining yourself by a language; some screeners bucket that negatively',
+            ],
+            [
+              'A long list of certifications',
+              'Same bias as above at many companies - occasionally a positive, so know your audience',
+            ],
+            [
+              'Only one or two languages',
+              'Suggests narrow exposure and possible difficulty picking up new things',
+            ],
+            [
+              'Age, marital status, nationality, photo (US roles)',
+              'Companies do not want it; it creates legal exposure for them',
+            ],
             ['A typo', 'Some screeners discard on sight. Get a native speaker to proofread'],
           ],
         },
@@ -177,7 +196,8 @@ export const beforeTheInterview: CourseModule = {
     {
       id: 'bti-2',
       kind: 'concept',
-      prompt: 'You have twelve years of experience and your resume runs to three pages. The likely reading is:',
+      prompt:
+        'You have twelve years of experience and your resume runs to three pages. The likely reading is:',
       options: [
         'You have a lot of experience',
         'You have not prioritised - and a screener spending ten seconds may never reach your best material',
@@ -191,7 +211,8 @@ export const beforeTheInterview: CourseModule = {
     {
       id: 'bti-3',
       kind: 'technique',
-      prompt: 'You worked with a technology briefly two years ago. Listing it on your resume is risky because:',
+      prompt:
+        'You worked with a technology briefly two years ago. Listing it on your resume is risky because:',
       options: [
         'Recruiters check dates',
         'Most interviewers treat everything on the page as fair game, so a line you cannot defend becomes a visible gap',

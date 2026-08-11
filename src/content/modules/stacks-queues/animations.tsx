@@ -339,8 +339,7 @@ const minFrames: MinFrame[] = (() => {
         main: [...main],
         mins: [...mins],
         caption: `Pop ${value}. Pop the min stack in lockstep, and the previous minimum is instantly correct again - no rescan.`,
-        detail:
-          main.length === 0 ? 'stack empty, min() undefined' : `min() = ${currentMin}`,
+        detail: main.length === 0 ? 'stack empty, min() undefined' : `min() = ${currentMin}`,
       });
     }
   }
@@ -362,22 +361,14 @@ function MinFrameView({ index }: { index: number }) {
         <StackColumn
           label="stack"
           items={frame.main.map((value, i) =>
-            cell(
-              String(value),
-              i === frame.main.length - 1 ? 'active' : 'idle',
-              `m${i}`,
-            ),
+            cell(String(value), i === frame.main.length - 1 ? 'active' : 'idle', `m${i}`),
           )}
         />
         <StackColumn
           label="min stack"
           hint="top = current minimum"
           items={frame.mins.map((value, i) =>
-            cell(
-              String(value),
-              i === frame.mins.length - 1 ? 'target' : 'idle',
-              `n${i}`,
-            ),
+            cell(String(value), i === frame.mins.length - 1 ? 'target' : 'idle', `n${i}`),
           )}
         />
       </div>
@@ -486,9 +477,7 @@ function SortFrameView({ index }: { index: number }) {
         <StackColumn
           label="helper"
           hint="always sorted"
-          items={frame.helper.map((value, i) =>
-            cell(String(value), 'done', `h${i}`),
-          )}
+          items={frame.helper.map((value, i) => cell(String(value), 'done', `h${i}`))}
         />
       </div>
       <Readout

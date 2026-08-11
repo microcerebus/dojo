@@ -151,7 +151,11 @@ function HeapFrameView({ index }: { index: number }) {
     <Stage tall>
       <Readout
         items={[
-          { key: 'op', label: 'operation', value: frame.phase === 'idle' ? 'settled' : frame.phase },
+          {
+            key: 'op',
+            label: 'operation',
+            value: frame.phase === 'idle' ? 'settled' : frame.phase,
+          },
           { key: 'size', label: 'size', value: String(frame.heap.length) },
         ]}
       />
@@ -229,7 +233,7 @@ const medianFrames: MedianFrame[] = (() => {
 
   const notes: string[] = [
     'Split the values into a low half and a high half. The low half is a max-heap, so its root is the largest small value; the high half is a min-heap, so its root is the smallest large value. Those two roots straddle the median.',
-    'Every arrival: push it onto the low heap, move the low heap\'s root across to the high heap, then move back if the high heap has grown larger. Two O(log n) operations, and the invariant is restored.',
+    "Every arrival: push it onto the low heap, move the low heap's root across to the high heap, then move back if the high heap has grown larger. Two O(log n) operations, and the invariant is restored.",
     'With an odd count the low heap deliberately holds the extra element, so its root is exactly the median - no averaging, no ambiguity.',
     'The heaps never sort themselves. They only ever have to answer "what is the biggest thing in the low half" and "what is the smallest thing in the high half", which is exactly what a root is.',
     'The contents below each root are drawn in order here so they are readable - a real heap does not keep them that way, and never needs to. Only the roots are ever read.',
@@ -309,7 +313,8 @@ export const streamingMedian: AnimationSpec = fromFrames(
   {
     id: 'ht-two-heaps',
     title: 'Two heaps, one median',
-    blurb: 'A max-heap and a min-heap facing each other. The median is always between the two roots.',
+    blurb:
+      'A max-heap and a min-heap facing each other. The median is always between the two roots.',
   },
   medianFrames,
   MedianFrameView,
@@ -551,7 +556,8 @@ const gridFrames: GridFrame[] = [
     word: 'CAR',
     status: 'word',
     found: ['CAT', 'CAR'],
-    caption: 'Backtrack to A and try R instead. "CAR" is a word too - and it has a child, so there is more below.',
+    caption:
+      'Backtrack to A and try R instead. "CAR" is a word too - and it has a child, so there is more below.',
     detail: 'found CAR · still a live prefix',
   },
   {
@@ -564,7 +570,8 @@ const gridFrames: GridFrame[] = [
     word: 'CARD',
     status: 'word',
     found: ['CAT', 'CAR', 'CARD'],
-    caption: 'D extends it to CARD. All three dictionary words come out of one shared walk down the trie.',
+    caption:
+      'D extends it to CARD. All three dictionary words come out of one shared walk down the trie.',
     detail: 'found CARD',
   },
   {
@@ -638,7 +645,11 @@ function GridFrameView({ index }: { index: number }) {
         label="found"
         cells={
           frame.found.length
-            ? frame.found.map((word) => ({ key: `f-${word}`, label: word, state: 'target' as const }))
+            ? frame.found.map((word) => ({
+                key: `f-${word}`,
+                label: word,
+                state: 'target' as const,
+              }))
             : [{ key: 'f-none', label: '∅', state: 'idle' as const }]
         }
       />

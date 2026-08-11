@@ -6,7 +6,8 @@ export const interviewProcess: CourseModule = {
   track: 'process',
   status: 'complete',
   source: 'Part I',
-  summary: 'What the interview is actually measuring, and how that should change your behaviour in the room.',
+  summary:
+    'What the interview is actually measuring, and how that should change your behaviour in the room.',
   estimatedMinutes: 15,
   concepts: [
     'The interview samples how you reason, communicate and code - it is not a trivia test',
@@ -24,7 +25,8 @@ export const interviewProcess: CourseModule = {
     {
       id: 'what-is-measured',
       title: 'What is actually measured',
-      takeaway: 'Five axes, weighted by round, graded against everyone who ever got the same question.',
+      takeaway:
+        'Five axes, weighted by round, graded against everyone who ever got the same question.',
       audio: true,
       blocks: [
         {
@@ -75,10 +77,22 @@ export const interviewProcess: CourseModule = {
           kind: 'table',
           headers: ['Do', 'Instead of'],
           rows: [
-            ['Restate the problem and ask what is ambiguous', 'Assuming, and building the wrong thing'],
-            ['State your assumptions about input, size, and available APIs', 'Leaving them implicit and being surprised later'],
-            ['Say the brute force and its complexity, then improve it', 'Silence while you hunt for the clever answer'],
-            ['Name the alternatives and why you rejected them', 'Presenting one approach as if it were the only one'],
+            [
+              'Restate the problem and ask what is ambiguous',
+              'Assuming, and building the wrong thing',
+            ],
+            [
+              'State your assumptions about input, size, and available APIs',
+              'Leaving them implicit and being surprised later',
+            ],
+            [
+              'Say the brute force and its complexity, then improve it',
+              'Silence while you hunt for the clever answer',
+            ],
+            [
+              'Name the alternatives and why you rejected them',
+              'Presenting one approach as if it were the only one',
+            ],
             ['Take the hint and build on it', 'Resisting help to look independent'],
             ['Volunteer testing and complexity', 'Waiting to be asked'],
           ],
@@ -144,7 +158,8 @@ export const interviewProcess: CourseModule = {
     {
       id: 'ip-1',
       kind: 'concept',
-      prompt: 'You are given a noticeably harder question than a friend who interviewed the same week. This is:',
+      prompt:
+        'You are given a noticeably harder question than a friend who interviewed the same week. This is:',
       options: [
         'Bad luck that will lower your score',
         'Neutral - you are compared against other candidates on the same question, and it was hard for them too',
@@ -186,8 +201,14 @@ export const interviewProcess: CourseModule = {
     {
       id: 'ip-4',
       kind: 'technique',
-      prompt: 'In a 45-minute algorithm interview, roughly how much time should pass before you write code?',
-      options: ['Two or three minutes', 'About half the interview', 'As soon as you have any idea', 'Thirty-five minutes'],
+      prompt:
+        'In a 45-minute algorithm interview, roughly how much time should pass before you write code?',
+      options: [
+        'Two or three minutes',
+        'About half the interview',
+        'As soon as you have any idea',
+        'Thirty-five minutes',
+      ],
       answerIndex: 1,
       explain:
         'Clarify, example, brute force and optimise all come first. Fixing a design out loud is far cheaper than fixing half-written code.',
@@ -195,7 +216,8 @@ export const interviewProcess: CourseModule = {
     {
       id: 'ip-5',
       kind: 'concept',
-      prompt: 'Asking "what are the recent interview questions at company X?" misunderstands the process because:',
+      prompt:
+        'Asking "what are the recent interview questions at company X?" misunderstands the process because:',
       options: [
         'Companies never repeat questions',
         'Interviewers mostly choose their own questions, so there is no company-wide list and the questions barely differ between similar companies',

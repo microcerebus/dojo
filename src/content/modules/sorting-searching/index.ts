@@ -97,7 +97,7 @@ export const sortingSearching: CourseModule = {
             '**Stability** means equal elements keep their input order. It matters the moment you sort by one key after already sorting by another - which is exactly how radix sort works internally.',
             '**In place** means O(1) or O(log n) extra memory. Quicksort qualifies; merge sort does not.',
             '**Worst case** matters when an adversary controls the input, or when a tail-latency guarantee is needed. Merge sort has none; quicksort does.',
-            '**Auxiliary space** is the number people forget. Merge sort\'s O(n) helper is a real cost on large inputs, and it is why library sorts are often hybrids.',
+            "**Auxiliary space** is the number people forget. Merge sort's O(n) helper is a real cost on large inputs, and it is why library sorts are often hybrids.",
           ],
         },
         {
@@ -110,7 +110,7 @@ export const sortingSearching: CourseModule = {
           kind: 'callout',
           tone: 'tip',
           title: 'Say what "sorted" means first',
-          text: 'Sorting strings so anagrams end up adjacent is not the same as sorting them alphabetically. The trick is a **canonical key** - sort each word\'s characters and group by that - which turns an all-pairs comparison into one pass with a hash map.',
+          text: "Sorting strings so anagrams end up adjacent is not the same as sorting them alphabetically. The trick is a **canonical key** - sort each word's characters and group by that - which turns an all-pairs comparison into one pass with a hash map.",
         },
       ],
     },
@@ -171,7 +171,7 @@ export const sortingSearching: CourseModule = {
       blocks: [
         {
           kind: 'p',
-          text: 'Most of this chapter\'s search questions take binary search and break one of its assumptions. The pattern for each is to find a weaker property that is still enough to discard half the data.',
+          text: "Most of this chapter's search questions take binary search and break one of its assumptions. The pattern for each is to find a weaker property that is still enough to discard half the data.",
         },
         { kind: 'anim', animId: 'sort-rotated-search' },
         {
@@ -251,9 +251,21 @@ export const sortingSearching: CourseModule = {
           caption: 'The memory arithmetic you should be able to do out loud',
           headers: ['Task', 'Budget', 'Approach'],
           rows: [
-            ['Find a missing value among 4 billion ints', '1 GB', 'One bit per possible value: 2³² bits = 512 MB. One pass, then scan for a zero.'],
-            ['Same, distinct values, ≤ 1 billion of them', '10 MB', 'Pass one: count how many values fall in each block. Some block must be short. Pass two: bit vector over that block only.'],
-            ['Print duplicates among values 1..32,000', '4 KB', '32,000 bits is 4 KB exactly. Set a bit on first sight; a value whose bit is already set is a duplicate.'],
+            [
+              'Find a missing value among 4 billion ints',
+              '1 GB',
+              'One bit per possible value: 2³² bits = 512 MB. One pass, then scan for a zero.',
+            ],
+            [
+              'Same, distinct values, ≤ 1 billion of them',
+              '10 MB',
+              'Pass one: count how many values fall in each block. Some block must be short. Pass two: bit vector over that block only.',
+            ],
+            [
+              'Print duplicates among values 1..32,000',
+              '4 KB',
+              '32,000 bits is 4 KB exactly. Set a bit on first sight; a value whose bit is already set is a duplicate.',
+            ],
           ],
         },
         {
@@ -403,7 +415,7 @@ export const sortingSearching: CourseModule = {
       prompt: 'Sorting an array of strings so that anagrams end up adjacent. What is the key idea?',
       options: [
         'Compare every pair of strings for anagram-ness',
-        'Sort each string\'s characters to build a canonical key, then group by it',
+        "Sort each string's characters to build a canonical key, then group by it",
         'Sort by string length',
         'Sort alphabetically and scan for neighbours',
       ],
@@ -428,8 +440,7 @@ export const sortingSearching: CourseModule = {
     {
       id: 'sort-10',
       kind: 'technique',
-      prompt:
-        'Rearranging an array into alternating peaks and valleys. What is the O(n) approach?',
+      prompt: 'Rearranging an array into alternating peaks and valleys. What is the O(n) approach?',
       options: [
         'Sort, then interleave the two halves',
         'At every other index, swap with the larger neighbour - each local fix cannot break the previous pair',
@@ -442,9 +453,18 @@ export const sortingSearching: CourseModule = {
     },
   ],
   drills: [
-    { slug: 'binary-search', note: 'Write it with no off-by-one. Then write the first-occurrence variant.' },
-    { slug: 'search-in-rotated-sorted-array', note: 'CTCI 10.3 - decide which half is sorted first.' },
-    { slug: 'find-minimum-in-rotated-sorted-array', note: 'The same reasoning, looking for the pivot.' },
+    {
+      slug: 'binary-search',
+      note: 'Write it with no off-by-one. Then write the first-occurrence variant.',
+    },
+    {
+      slug: 'search-in-rotated-sorted-array',
+      note: 'CTCI 10.3 - decide which half is sorted first.',
+    },
+    {
+      slug: 'find-minimum-in-rotated-sorted-array',
+      note: 'The same reasoning, looking for the pivot.',
+    },
     { slug: 'group-anagrams', note: 'CTCI 10.2 - a canonical key beats comparing pairs.' },
     { slug: 'merge-intervals', note: 'Sort by start, then sweep. The interval template.' },
     { slug: 'insert-interval', note: 'Same family, without needing the sort.' },
@@ -462,9 +482,15 @@ export const sortingSearching: CourseModule = {
     { slug: 'first-missing-positive', note: 'CTCI 10.7 - index-as-hash, O(1) space.' },
     { slug: 'minimum-absolute-difference', note: 'CTCI 16.6 - sort, then a single scan.' },
     { slug: 'maximum-population-year', note: 'CTCI 16.10 - the delta/sweep trick.' },
-    { slug: 'count-of-smaller-numbers-after-self', note: 'CTCI 10.10 - augmented BST or merge sort.' },
+    {
+      slug: 'count-of-smaller-numbers-after-self',
+      note: 'CTCI 10.10 - augmented BST or merge sort.',
+    },
     { slug: 'wiggle-sort', note: 'CTCI 10.11 - local swaps, no full sort needed. Premium.' },
-    { slug: 'search-in-rotated-sorted-array-ii', note: 'The duplicate case that breaks the clean O(log n).' },
+    {
+      slug: 'search-in-rotated-sorted-array-ii',
+      note: 'The duplicate case that breaks the clean O(log n).',
+    },
   ],
   visualizers: [
     {

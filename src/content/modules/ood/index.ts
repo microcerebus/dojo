@@ -29,7 +29,8 @@ export const ood: CourseModule = {
     {
       id: 'the-method',
       title: 'The method',
-      takeaway: 'Clarify, name the objects, draw the relationships, walk a use case. In that order.',
+      takeaway:
+        'Clarify, name the objects, draw the relationships, walk a use case. In that order.',
       audio: true,
       blocks: [
         {
@@ -97,11 +98,11 @@ export const ood: CourseModule = {
           kind: 'callout',
           tone: 'key',
           title: 'The test to say out loud',
-          text: 'Is-a must hold forever and under substitution: a bus is a vehicle, always, and anywhere a vehicle is accepted a bus is fine. Has-a survives change: this vehicle is electric *today*. If the trait can change during the object\'s life, it is a field, not a subclass.',
+          text: "Is-a must hold forever and under substitution: a bus is a vehicle, always, and anywhere a vehicle is accepted a bus is fine. Has-a survives change: this vehicle is electric *today*. If the trait can change during the object's life, it is a field, not a subclass.",
         },
         {
           kind: 'p',
-          text: 'Two concrete rulings from this chapter\'s questions, both worth quoting because they show restraint:',
+          text: "Two concrete rulings from this chapter's questions, both worth quoting because they show restraint:",
         },
         {
           kind: 'bullets',
@@ -118,7 +119,7 @@ export const ood: CourseModule = {
           kind: 'callout',
           tone: 'tip',
           title: 'Encapsulation, concretely',
-          text: 'Callers should ask an object to do something, not read its fields and decide for it. `level.park(vehicle)` beats `if (level.spots[i].size >= vehicle.size) …` - the second one has moved the level\'s rules into every caller, and every caller can now get them wrong.',
+          text: "Callers should ask an object to do something, not read its fields and decide for it. `level.park(vehicle)` beats `if (level.spots[i].size >= vehicle.size) …` - the second one has moved the level's rules into every caller, and every caller can now get them wrong.",
         },
       ],
     },
@@ -428,7 +429,8 @@ class Spot {
     {
       id: 'ood-7',
       kind: 'technique',
-      prompt: 'How should you model a parking spot that is free, reserved, occupied or out of service?',
+      prompt:
+        'How should you model a parking spot that is free, reserved, occupied or out of service?',
       options: [
         'Three booleans: isFree, isReserved, isBroken',
         'An enum plus a table of legal transitions, applied in one guarded method',
@@ -484,10 +486,16 @@ class Spot {
     },
   ],
   drills: [
-    { slug: 'design-parking-system', note: 'CTCI 7.4 in miniature - then design the full version on paper.' },
+    {
+      slug: 'design-parking-system',
+      note: 'CTCI 7.4 in miniature - then design the full version on paper.',
+    },
     { slug: 'design-hashmap', note: 'CTCI 7.12 - separate chaining, implemented properly.' },
     { slug: 'design-underground-system', note: 'Choosing the right keys is the whole design.' },
-    { slug: 'design-browser-history', note: 'Two stacks, or a doubly linked list - justify the choice.' },
+    {
+      slug: 'design-browser-history',
+      note: 'Two stacks, or a doubly linked list - justify the choice.',
+    },
     { slug: 'design-circular-deque', note: 'CTCI 7.9 - circular array with a rotation offset.' },
     { slug: 'minesweeper', note: 'CTCI 7.10 - cascading reveal, modelled cleanly.' },
     { slug: 'design-in-memory-file-system', note: 'CTCI 7.11 - the composite pattern. Premium.' },

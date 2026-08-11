@@ -50,7 +50,8 @@ const topoFrames: TopoFrame[] = (() => {
       taken: null,
       caption:
         'Count how many edges point into each node. Anything with an indegree of zero has no prerequisites left, so it is safe to emit now.',
-      detail: 'A cycle-free directed graph always has at least one such node - walk edges backwards and you must stop somewhere.',
+      detail:
+        'A cycle-free directed graph always has at least one such node - walk edges backwards and you must stop somewhere.',
     },
   ];
   while (ready.length > 0) {
@@ -97,9 +98,20 @@ function TopoFrame({ index }: { index: number }) {
     key: node,
     label: node,
     sub: emitted.has(node) ? '-' : String(frame.indegree[node]),
-    state: node === frame.taken ? 'active' : emitted.has(node) ? 'done' : readySet.has(node) ? 'target' : 'idle',
+    state:
+      node === frame.taken
+        ? 'active'
+        : emitted.has(node)
+          ? 'done'
+          : readySet.has(node)
+            ? 'target'
+            : 'idle',
   }));
-  const queue: CellSpec[] = frame.ready.map((node) => ({ key: `q${node}`, label: node, state: 'target' }));
+  const queue: CellSpec[] = frame.ready.map((node) => ({
+    key: `q${node}`,
+    label: node,
+    state: 'target',
+  }));
   const order: CellSpec[] = frame.order.map((node, i) => ({
     key: `o${node}`,
     label: node,
@@ -111,7 +123,11 @@ function TopoFrame({ index }: { index: number }) {
       <Caption>edges: {TOPO_EDGES.map(([from, to]) => `${from}→${to}`).join('  ')}</Caption>
       <Cells cells={cells} label="nodes with remaining indegree" />
       <QueueRow items={queue} label="indegree 0" />
-      <Cells cells={order.length > 0 ? order : [{ key: 'none', label: '·', state: 'muted' }]} size="sm" label="topological order" />
+      <Cells
+        cells={order.length > 0 ? order : [{ key: 'none', label: '·', state: 'muted' }]}
+        size="sm"
+        label="topological order"
+      />
     </Stage>
   );
 }
@@ -154,7 +170,9 @@ const INF = Number.POSITIVE_INFINITY;
 
 const dijFrames: DijFrame[] = (() => {
   const dist: Record<string, number> = Object.fromEntries(DIJ_NODES.map((n) => [n, INF]));
-  const previous: Record<string, string | null> = Object.fromEntries(DIJ_NODES.map((n) => [n, null]));
+  const previous: Record<string, string | null> = Object.fromEntries(
+    DIJ_NODES.map((n) => [n, null]),
+  );
   dist.a = 0;
   const settled: string[] = [];
   const frames: DijFrame[] = [
@@ -165,7 +183,8 @@ const dijFrames: DijFrame[] = (() => {
       current: null,
       caption:
         'Every distance starts at infinity except the source, which starts at zero. A priority queue holds every node, keyed by its current best distance.',
-      detail: 'The invariant to hold on to: once a node is removed from the queue, its distance is final.',
+      detail:
+        'The invariant to hold on to: once a node is removed from the queue, its distance is final.',
     },
   ];
   while (settled.length < DIJ_NODES.length) {
@@ -203,7 +222,8 @@ const dijFrames: DijFrame[] = (() => {
     current: null,
     caption:
       'Queue empty. Following the previous pointers back from e gives a → c → b → d → e with total weight 8 - not the route with the fewest hops.',
-    detail: 'With a binary heap: O((V + E) log V). With a plain array: O(V²), which wins on dense graphs.',
+    detail:
+      'With a binary heap: O((V + E) log V). With a plain array: O(V²), which wins on dense graphs.',
   });
   return frames;
 })();
@@ -215,7 +235,14 @@ function DijFrame({ index }: { index: number }) {
     key: node,
     label: node,
     sub: frame.dist[node] === INF ? '∞' : String(frame.dist[node]),
-    state: node === frame.current ? 'active' : settled.has(node) ? 'done' : frame.dist[node] === INF ? 'idle' : 'compare',
+    state:
+      node === frame.current
+        ? 'active'
+        : settled.has(node)
+          ? 'done'
+          : frame.dist[node] === INF
+            ? 'idle'
+            : 'compare',
   }));
   const previous = DIJ_NODES.filter((n) => frame.previous[n] !== null)
     .map((n) => `${frame.previous[n]}→${n}`)
@@ -228,7 +255,11 @@ function DijFrame({ index }: { index: number }) {
       <Cells cells={cells} label="nodes with best known distance" />
       <Readout
         items={[
-          { key: 's', label: 'settled', value: frame.settled.length === 0 ? '-' : frame.settled.join(' ') },
+          {
+            key: 's',
+            label: 'settled',
+            value: frame.settled.length === 0 ? '-' : frame.settled.join(' '),
+          },
           { key: 'p', label: 'tree so far', value: previous === '' ? '-' : previous },
         ]}
       />
@@ -247,7 +278,8 @@ export const dijkstra: AnimationSpec = fromFrames(
   {
     id: 'at-dijkstra',
     title: "Dijkstra's algorithm",
-    blurb: 'Always settle the cheapest frontier node next, then relax its edges. Greedy, and provably right - with non-negative weights.',
+    blurb:
+      'Always settle the cheapest frontier node next, then relax its edges. Greedy, and provably right - with non-negative weights.',
   },
   dijFrames,
   DijFrame,
@@ -260,7 +292,8 @@ export const dijkstra: AnimationSpec = fromFrames(
 const TEXT = 'abcba';
 const PATTERN = 'ba';
 const code = (character: string) => character.charCodeAt(0) - 96;
-const sumHash = (value: string) => [...value].reduce((total, character) => total + code(character), 0);
+const sumHash = (value: string) =>
+  [...value].reduce((total, character) => total + code(character), 0);
 const TARGET_HASH = sumHash(PATTERN);
 
 interface RkFrame {
@@ -285,7 +318,8 @@ const rkFrames: RkFrame[] = (() => {
       hash: null,
       verified: 'none',
       caption: `Hash the pattern once. Using a=1, b=2, c=3 and simply summing, "${PATTERN}" hashes to ${TARGET_HASH}. Equal strings always have equal hashes.`,
-      detail: 'The converse is not true - unequal strings can collide - which is why a hash match still needs verifying.',
+      detail:
+        'The converse is not true - unequal strings can collide - which is why a hash match still needs verifying.',
     },
   ];
   let hash = sumHash(TEXT.slice(0, PATTERN.length));
@@ -345,7 +379,11 @@ function RkFrame({ index }: { index: number }) {
             key: 'v',
             label: 'verify',
             value:
-              frame.verified === 'true' ? 'real match' : frame.verified === 'false' ? 'false positive' : '-',
+              frame.verified === 'true'
+                ? 'real match'
+                : frame.verified === 'false'
+                  ? 'false positive'
+                  : '-',
           },
         ]}
       />
@@ -390,8 +428,9 @@ const avlFrames: AvlFrame[] = [
       { label: '40', depth: 1, slot: 5.5, parentSlot: 3.5, badge: '0' },
     ],
     caption:
-      'An AVL tree stores each node\'s balance: left height minus right height. Every node must stay in −1…1, which is what keeps the height O(log n).',
-    detail: 'Balance is checked on the way back up the recursion, so one insert touches at most O(log n) nodes.',
+      "An AVL tree stores each node's balance: left height minus right height. Every node must stay in −1…1, which is what keeps the height O(log n).",
+    detail:
+      'Balance is checked on the way back up the recursion, so one insert touches at most O(log n) nodes.',
   },
   {
     nodes: [
@@ -401,7 +440,7 @@ const avlFrames: AvlFrame[] = [
       { label: '10', depth: 2, slot: 0.5, parentSlot: 1.5, state: 'active' },
     ],
     caption:
-      'Insert 10. Node 30 now has balance +2 - too left-heavy - and the extra depth hangs off 20\'s left. That is the left-left shape.',
+      "Insert 10. Node 30 now has balance +2 - too left-heavy - and the extra depth hangs off 20's left. That is the left-left shape.",
     detail: 'Left-left and right-right are the easy cases: one rotation fixes them.',
   },
   {
@@ -413,7 +452,8 @@ const avlFrames: AvlFrame[] = [
     ],
     caption:
       'Rotate right around 30: the left child rises, the old root becomes its right child. In-order sequence 10, 20, 30, 40 is unchanged - which is why a rotation is always safe.',
-    detail: 'A rotation is O(1) pointer work. It never reorders the tree, it only re-parents three links.',
+    detail:
+      'A rotation is O(1) pointer work. It never reorders the tree, it only re-parents three links.',
   },
   {
     nodes: [
@@ -423,8 +463,9 @@ const avlFrames: AvlFrame[] = [
       { label: '25', depth: 2, slot: 2.5, parentSlot: 1.5, state: 'active' },
     ],
     caption:
-      'Start over and insert 25 instead. Node 30 is again +2, but now the depth hangs off 20\'s right: the left-right shape. A single right rotation would not fix it.',
-    detail: 'Rotating right here would just produce a right-heavy tree - the imbalance would move, not go away.',
+      "Start over and insert 25 instead. Node 30 is again +2, but now the depth hangs off 20's right: the left-right shape. A single right rotation would not fix it.",
+    detail:
+      'Rotating right here would just produce a right-heavy tree - the imbalance would move, not go away.',
   },
   {
     nodes: [
@@ -433,7 +474,8 @@ const avlFrames: AvlFrame[] = [
       { label: '40', depth: 1, slot: 5.5, parentSlot: 3.5, badge: '0' },
       { label: '20', depth: 2, slot: 0.5, parentSlot: 1.5 },
     ],
-    caption: 'First rotate left around 20. The subtree is now the left-left shape, which we already know how to fix.',
+    caption:
+      'First rotate left around 20. The subtree is now the left-left shape, which we already know how to fix.',
     detail: 'Left-right and right-left always reduce to the easy cases with one extra rotation.',
   },
   {
@@ -445,7 +487,8 @@ const avlFrames: AvlFrame[] = [
     ],
     caption:
       'Then rotate right around 30. Balanced again. Four cases in total - LL, LR, RR, RL - and the two crooked ones are just the straight ones plus a preparatory rotation.',
-    detail: 'Red-black trees allow sloppier balance for cheaper rebalancing; the guarantee is still O(log n).',
+    detail:
+      'Red-black trees allow sloppier balance for cheaper rebalancing; the guarantee is still O(log n).',
   },
 ];
 
@@ -486,22 +529,26 @@ const MR_STAGES: { label: string; badge: string; detail: string }[] = [
   {
     label: 'Split',
     badge: 'system',
-    detail: 'Machine 1 gets "the cat sat", machine 2 gets "the cat ran". The framework decides the split; you do not.',
+    detail:
+      'Machine 1 gets "the cat sat", machine 2 gets "the cat ran". The framework decides the split; you do not.',
   },
   {
     label: 'Map',
     badge: 'yours',
-    detail: 'Each machine emits one pair per word: (the,1) (cat,1) (sat,1) on one, (the,1) (cat,1) (ran,1) on the other.',
+    detail:
+      'Each machine emits one pair per word: (the,1) (cat,1) (sat,1) on one, (the,1) (cat,1) (ran,1) on the other.',
   },
   {
     label: 'Shuffle',
     badge: 'system',
-    detail: 'Every pair with the same key is routed to the same reducer: the→[1,1], cat→[1,1], sat→[1], ran→[1].',
+    detail:
+      'Every pair with the same key is routed to the same reducer: the→[1,1], cat→[1,1], sat→[1], ran→[1].',
   },
   {
     label: 'Reduce',
     badge: 'yours',
-    detail: 'Sum the values for a key and emit it: the→2, cat→2, sat→1, ran→1. Done - and it ran in parallel throughout.',
+    detail:
+      'Sum the values for a key and emit it: the→2, cat→2, sat→1, ran→1. Done - and it ran in parallel throughout.',
   },
   {
     label: 'Reduce again',

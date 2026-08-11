@@ -58,8 +58,7 @@
   /* One typeface for everything, UI and code alike. The fallbacks are
      monospace too, so a swap before the woff2 lands does not reflow the page
      into a different shape. */
-  --font: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo,
-    Consolas, monospace;
+  --font: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
   --mono: var(--font);
 
   --safe-top: env(safe-area-inset-top, 0px);
@@ -225,9 +224,8 @@ a {
   width: 100%;
   max-width: 1080px;
   margin: 0 auto;
-  padding: var(--space-5) calc(var(--space-4) + var(--safe-right)) calc(
-      var(--tabbar-h) + var(--safe-bottom) + var(--space-6)
-    )
+  padding: var(--space-5) calc(var(--space-4) + var(--safe-right))
+    calc(var(--tabbar-h) + var(--safe-bottom) + var(--space-6))
     calc(var(--space-4) + var(--safe-left));
   min-width: 0;
 }
@@ -466,10 +464,7 @@ h3 {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: conic-gradient(
-    var(--accent) calc(var(--ring-value) * 1turn),
-    var(--bg-elev-2) 0
-  );
+  background: conic-gradient(var(--accent) calc(var(--ring-value) * 1turn), var(--bg-elev-2) 0);
 }
 
 .ring::after {
@@ -514,7 +509,13 @@ h3 {
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
-  mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 14px,
+    black calc(100% - 14px),
+    transparent
+  );
 }
 
 .tabs::-webkit-scrollbar {

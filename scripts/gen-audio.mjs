@@ -111,7 +111,9 @@ function synthesise(runner, clip) {
     child.on('error', reject);
     child.on('close', (code) => {
       if (code !== 0) {
-        reject(new Error(`edge-tts exited ${code} for ${clip.moduleId}/${clip.sectionId}\n${stderr}`));
+        reject(
+          new Error(`edge-tts exited ${code} for ${clip.moduleId}/${clip.sectionId}\n${stderr}`),
+        );
         return;
       }
       resolve();
@@ -188,7 +190,9 @@ if (stale.length > 0) {
 
   if (failures.length > 0) {
     for (const failure of failures) {
-      console.error(`  ✗ ${failure.item.moduleId}/${failure.item.sectionId}: ${failure.error.message}`);
+      console.error(
+        `  ✗ ${failure.item.moduleId}/${failure.item.sectionId}: ${failure.error.message}`,
+      );
     }
     process.exit(1);
   }

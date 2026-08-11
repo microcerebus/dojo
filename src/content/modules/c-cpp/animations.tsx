@@ -19,11 +19,31 @@ import { fromFrames, type AnimationSpec } from '../../../anim/types';
 /* ------------------------------------------------------------------------ */
 
 const DISPATCH: { key: string; label: string; detail: string }[] = [
-  { key: 'call', label: 'p->aboutMe()', detail: 'p is declared Person*, but actually points at a Student' },
-  { key: 'static', label: 'Not virtual? Resolve now', detail: 'Static binding: the compiler picks by the declared type' },
-  { key: 'vptr', label: 'Virtual? Follow the object\'s vptr', detail: 'Every polymorphic object carries a hidden pointer to its class vtable' },
-  { key: 'vtable', label: 'Read the slot in the vtable', detail: 'One slot per virtual function, filled with the most derived override' },
-  { key: 'run', label: 'Call whatever the slot holds', detail: 'Dynamic binding: the real type decides, at runtime' },
+  {
+    key: 'call',
+    label: 'p->aboutMe()',
+    detail: 'p is declared Person*, but actually points at a Student',
+  },
+  {
+    key: 'static',
+    label: 'Not virtual? Resolve now',
+    detail: 'Static binding: the compiler picks by the declared type',
+  },
+  {
+    key: 'vptr',
+    label: "Virtual? Follow the object's vptr",
+    detail: 'Every polymorphic object carries a hidden pointer to its class vtable',
+  },
+  {
+    key: 'vtable',
+    label: 'Read the slot in the vtable',
+    detail: 'One slot per virtual function, filled with the most derived override',
+  },
+  {
+    key: 'run',
+    label: 'Call whatever the slot holds',
+    detail: 'Dynamic binding: the real type decides, at runtime',
+  },
 ];
 
 interface VtFrame {
@@ -56,7 +76,7 @@ const vtFrames: VtFrame[] = [
     virtual: true,
     prints: null,
     caption:
-      'Mark aboutMe virtual and the machinery appears. The compiler builds one vtable per class - an array of function pointers - and gives every object a hidden vptr pointing at its own class\'s table.',
+      "Mark aboutMe virtual and the machinery appears. The compiler builds one vtable per class - an array of function pointers - and gives every object a hidden vptr pointing at its own class's table.",
     detail: 'Student object → vptr → Student vtable',
   },
   {
@@ -64,7 +84,7 @@ const vtFrames: VtFrame[] = [
     virtual: true,
     prints: null,
     caption:
-      'The Student vtable has the same slot layout as Person\'s. Slot 0 holds Student::aboutMe because Student overrode it; anything Student did not override still points at Person\'s version.',
+      "The Student vtable has the same slot layout as Person's. Slot 0 holds Student::aboutMe because Student overrode it; anything Student did not override still points at Person's version.",
     detail: 'slot 0: Student::aboutMe · slot 1: inherited from Person',
   },
   {
@@ -290,7 +310,7 @@ const refFrames: RefFrame[] = [
     count: 3,
     alive: true,
     caption:
-      'Assignment is the third path in, and it is the one people forget. p3 = p1 must first release whatever p3 already held, then adopt p1\'s object and counter, then increment. Guard against self-assignment first.',
+      "Assignment is the third path in, and it is the one people forget. p3 = p1 must first release whatever p3 already held, then adopt p1's object and counter, then increment. Guard against self-assignment first.",
     detail: 'refCount = 3 · operator= : release old, adopt new, increment',
   },
   {
@@ -308,8 +328,7 @@ const refFrames: RefFrame[] = [
     scopes: [{ label: 'p1', sub: 'ctor', state: 'done' }],
     count: 1,
     alive: true,
-    caption:
-      'p2 leaves scope. Decrement again. Still one handle standing, so the object stays.',
+    caption: 'p2 leaves scope. Decrement again. Still one handle standing, so the object stays.',
     detail: 'refCount = 1',
   },
   {
@@ -462,7 +481,11 @@ function AllocFrameView({ index }: { index: number }) {
       <Readout
         items={[
           { key: 'a', label: 'malloc calls', value: String(frame.allocations) },
-          { key: 'l', label: 'layout', value: frame.mode === 'one' ? 'one contiguous block' : 'scattered rows' },
+          {
+            key: 'l',
+            label: 'layout',
+            value: frame.mode === 'one' ? 'one contiguous block' : 'scattered rows',
+          },
         ]}
       />
       <Cells cells={header} size="sm" label="row pointers" />

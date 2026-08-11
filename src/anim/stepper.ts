@@ -33,9 +33,7 @@ export function stepReducer(state: StepState, action: StepAction, length: number
     case 'prev': {
       const index = clamp(state.index - 1, length);
       // Stepping backwards is an explicit "let me look again" - stop autoplay.
-      return index === state.index && !state.playing
-        ? state
-        : { index, playing: false };
+      return index === state.index && !state.playing ? state : { index, playing: false };
     }
     case 'reset':
       return state.index === 0 && !state.playing ? state : { index: 0, playing: false };

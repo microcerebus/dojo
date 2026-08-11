@@ -89,7 +89,7 @@ const raceFrames: RaceFrame[] = [
     tempA: null,
     tempB: null,
     caption:
-      'B writes back its 1 - overwriting A\'s. Two increments happened and the counter reads 1. That is a lost update, and nothing crashed, nothing warned, and on most runs the interleaving never happens at all.',
+      "B writes back its 1 - overwriting A's. Two increments happened and the counter reads 1. That is a lost update, and nothing crashed, nothing warned, and on most runs the interleaving never happens at all.",
     detail: 'expected 2 · got 1 · this is the bug that only appears in production',
   },
   {
@@ -242,7 +242,11 @@ function DeadlockFrameView({ index }: { index: number }) {
     <Stage>
       <Readout
         items={[
-          { key: 'r', label: 'rule', value: frame.ordered ? 'acquire in increasing order' : 'no ordering rule' },
+          {
+            key: 'r',
+            label: 'rule',
+            value: frame.ordered ? 'acquire in increasing order' : 'no ordering rule',
+          },
           { key: 's', label: 'state', value: frame.cycle ? 'deadlocked' : 'making progress' },
         ]}
       />
@@ -270,7 +274,8 @@ export const tlDeadlock: AnimationSpec = fromFrames(
   {
     id: 'tl-deadlock',
     title: 'Circular wait, then the fix',
-    blurb: 'Two correct threads that together stop forever - and one rule that makes it impossible.',
+    blurb:
+      'Two correct threads that together stop forever - and one rule that makes it impossible.',
   },
   deadlockFrames,
   DeadlockFrameView,
@@ -356,7 +361,9 @@ function OrderFrameView({ index }: { index: number }) {
       />
       <Chips chips={methods} label="methods" />
       <Caption>
-        {frame.ran.length === 3 ? 'ordering achieved' : 'blocked threads wait on a permit, not on a flag'}
+        {frame.ran.length === 3
+          ? 'ordering achieved'
+          : 'blocked threads wait on a permit, not on a flag'}
       </Caption>
       <Legend
         items={[

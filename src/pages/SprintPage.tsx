@@ -15,8 +15,8 @@ export function SprintPage() {
         <p className="eyebrow">Aug 11 - Sep 14</p>
         <h1>Five-week sprint</h1>
         <p className="lede">
-          One week per row. Read the modules listed, take their quizzes, then work the drill lists
-          - Blind 75 problems first.
+          One week per row. Read the modules listed, take their quizzes, then work the drill lists -
+          Blind 75 problems first.
         </p>
       </header>
 

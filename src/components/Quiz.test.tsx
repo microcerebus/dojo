@@ -107,9 +107,7 @@ describe('DrillList component', () => {
     const user = userEvent.setup();
     const drills = [{ slug: 'two-sum', note: 'The hash-map complement pattern.' }];
 
-    const first = render(
-      <DrillList moduleId="demo" drills={drills} done={{}} />,
-    );
+    const first = render(<DrillList moduleId="demo" drills={drills} done={{}} />);
     await user.click(screen.getByRole('checkbox', { name: /Mark Two Sum as done/ }));
     first.unmount();
 
@@ -120,9 +118,10 @@ describe('DrillList component', () => {
     expect(done['two-sum']).toBe(true);
 
     render(<DrillList moduleId="demo" drills={drills} done={done} />);
-    expect(
-      screen.getByRole('checkbox', { name: /Mark Two Sum as not done/ }),
-    ).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('checkbox', { name: /Mark Two Sum as not done/ })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
   });
 
   it('links each drill to LeetCode and tags Blind 75 problems', () => {

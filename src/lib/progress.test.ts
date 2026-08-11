@@ -311,17 +311,13 @@ describe('persistence across a reload', () => {
     // would drop the other tab's drill entirely.
     progressStore.update((state) => toggleDrill(state, 'stacks-queues', 'valid-parentheses'));
 
-    const merged = parseProgress(
-      JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY) as string),
-    );
+    const merged = parseProgress(JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY) as string));
     expect(moduleProgress(merged, 'arrays-strings').drills['two-sum']).toBe(true);
     expect(moduleProgress(merged, 'linked-lists').drills['reverse-linked-list']).toBe(true);
     expect(moduleProgress(merged, 'stacks-queues').drills['valid-parentheses']).toBe(true);
     // And the in-memory snapshot reflects the merge, not just our own write.
     expect(
-      moduleProgress(progressStore.getSnapshot(), 'linked-lists').drills[
-        'reverse-linked-list'
-      ],
+      moduleProgress(progressStore.getSnapshot(), 'linked-lists').drills['reverse-linked-list'],
     ).toBe(true);
   });
 

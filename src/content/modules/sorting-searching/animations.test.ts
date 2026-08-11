@@ -60,7 +60,9 @@ describe('sort-quick-partition', () => {
       expect(settled.array[i], `index ${i} left of boundary`).toBeLessThanOrEqual(settled.pivot);
     }
     for (let i = boundary; i < settled.array.length; i++) {
-      expect(settled.array[i], `index ${i} right of boundary`).toBeGreaterThanOrEqual(settled.pivot);
+      expect(settled.array[i], `index ${i} right of boundary`).toBeGreaterThanOrEqual(
+        settled.pivot,
+      );
     }
     expect(settled.caption).toContain(`index ${boundary}`);
   });

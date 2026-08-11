@@ -28,7 +28,8 @@ export const testing: CourseModule = {
     {
       id: 'what-is-assessed',
       title: 'What is actually being assessed',
-      takeaway: 'Not the length of your list. Priorities, structure, how the pieces connect, and whether the plan is doable.',
+      takeaway:
+        'Not the length of your list. Priorities, structure, how the pieces connect, and whether the plan is doable.',
       audio: true,
       blocks: [
         {
@@ -58,8 +59,14 @@ export const testing: CourseModule = {
           kind: 'table',
           headers: ['Axis', 'Question it answers'],
           rows: [
-            ['Manual vs automated', 'Can a machine check this, or does it need judgement (is this image acceptable? does this feel slow?)'],
-            ['Black box vs white box', 'Do you only get the product, or can you call individual functions and inspect state?'],
+            [
+              'Manual vs automated',
+              'Can a machine check this, or does it need judgement (is this image acceptable? does this feel slow?)',
+            ],
+            [
+              'Black box vs white box',
+              'Do you only get the product, or can you call individual functions and inspect state?',
+            ],
           ],
           caption: 'Settle both early - they change what your test plan can even contain.',
         },
@@ -72,7 +79,8 @@ export const testing: CourseModule = {
     {
       id: 'real-world-object',
       title: 'Testing a physical object',
-      takeaway: 'Ask who uses it and why. The question you were given is almost never the question you thought.',
+      takeaway:
+        'Ask who uses it and why. The question you were given is almost never the question you thought.',
       audio: true,
       blocks: [
         {
@@ -139,10 +147,22 @@ export const testing: CourseModule = {
           rows: [
             ['Functional', 'Does the normal path produce the right result?'],
             ['Boundary', 'What happens at, just below and just above every stated limit?'],
-            ['Invalid input', 'What happens on garbage - and is that a documented behaviour or an accident?'],
-            ['Failure injection', 'Kill the network, the power, the disk mid-operation. What is the state afterwards?'],
-            ['Concurrency', 'Two operations on the same data at once. Can money be created or destroyed?'],
-            ['Performance and load', 'How does it behave at 1x, 10x, 100x expected traffic? Where does it break, and how?'],
+            [
+              'Invalid input',
+              'What happens on garbage - and is that a documented behaviour or an accident?',
+            ],
+            [
+              'Failure injection',
+              'Kill the network, the power, the disk mid-operation. What is the state afterwards?',
+            ],
+            [
+              'Concurrency',
+              'Two operations on the same data at once. Can money be created or destroyed?',
+            ],
+            [
+              'Performance and load',
+              'How does it behave at 1x, 10x, 100x expected traffic? Where does it break, and how?',
+            ],
             ['Security', 'Can a user reach data that is not theirs? Are secrets logged?'],
             ['Usability', 'Can the actual user complete the task? Needs a human.'],
           ],
@@ -214,7 +234,8 @@ export const testing: CourseModule = {
     {
       id: 'troubleshooting',
       title: 'Debugging what you cannot reproduce',
-      takeaway: 'Understand the scenario, break the flow into testable steps, then halve the search space.',
+      takeaway:
+        'Understand the scenario, break the flow into testable steps, then halve the search space.',
       audio: true,
       blocks: [
         {
@@ -243,10 +264,26 @@ export const testing: CourseModule = {
           kind: 'table',
           headers: ['Cause', 'Why it moves around', 'How to test it'],
           rows: [
-            ['Something genuinely varying', 'User input, a random number, the clock, file contents', 'Pin the input; seed the generator; freeze the clock and re-run'],
-            ['Uninitialised variable', 'Reads whatever was in that memory - different each run', 'A memory checker or sanitiser flags it in one run'],
-            ['Memory corruption or exhaustion', 'Heap overflow, stack smashing, or a leak that only sometimes runs out', 'Watch memory over time; run under a sanitiser; shrink the workload'],
-            ['External dependency', 'Another process, machine or resource is not always there or not always fast', 'Close everything else; run on a clean machine; stub the dependency'],
+            [
+              'Something genuinely varying',
+              'User input, a random number, the clock, file contents',
+              'Pin the input; seed the generator; freeze the clock and re-run',
+            ],
+            [
+              'Uninitialised variable',
+              'Reads whatever was in that memory - different each run',
+              'A memory checker or sanitiser flags it in one run',
+            ],
+            [
+              'Memory corruption or exhaustion',
+              'Heap overflow, stack smashing, or a leak that only sometimes runs out',
+              'Watch memory over time; run under a sanitiser; shrink the workload',
+            ],
+            [
+              'External dependency',
+              'Another process, machine or resource is not always there or not always fast',
+              'Close everything else; run on a clean machine; stub the dependency',
+            ],
           ],
         },
         {
@@ -314,7 +351,8 @@ export const testing: CourseModule = {
     {
       id: 'te-4',
       kind: 'concept',
-      prompt: 'What is wrong with `unsigned int i; for (i = 100; i >= 0; --i) printf("%d\\n", i);`?',
+      prompt:
+        'What is wrong with `unsigned int i; for (i = 100; i >= 0; --i) printf("%d\\n", i);`?',
       options: [
         'Nothing - it prints 100 down to 0',
         'An unsigned value is never negative, so the condition never fails and 0 wraps to a huge number - and %d is wrong for unsigned',
@@ -372,7 +410,8 @@ export const testing: CourseModule = {
     {
       id: 'te-8',
       kind: 'technique',
-      prompt: 'A regression appeared somewhere in the last 1024 builds. Bisection finds it in about:',
+      prompt:
+        'A regression appeared somewhere in the last 1024 builds. Bisection finds it in about:',
       options: ['1024 runs', '512 runs', '10 runs', '32 runs'],
       answerIndex: 2,
       explain:
@@ -395,7 +434,8 @@ export const testing: CourseModule = {
     {
       id: 'te-10',
       kind: 'technique',
-      prompt: 'You cannot reproduce a bug that a small fraction of users hit. The best next step is:',
+      prompt:
+        'You cannot reproduce a bug that a small fraction of users hit. The best next step is:',
       options: [
         'Close the report as not reproducible',
         'Instrument: add logging on the suspect path, assertions on states you believe impossible, and telemetry to capture the failure shape',
@@ -408,10 +448,19 @@ export const testing: CourseModule = {
     },
   ],
   drills: [
-    { slug: 'first-bad-version', note: 'Bisection as a debugging technique, made into an algorithm.' },
-    { slug: 'valid-number', note: 'A specification exercise: enumerate every case before writing code.' },
+    {
+      slug: 'first-bad-version',
+      note: 'Bisection as a debugging technique, made into an algorithm.',
+    },
+    {
+      slug: 'valid-number',
+      note: 'A specification exercise: enumerate every case before writing code.',
+    },
     { slug: 'guess-number-higher-or-lower', note: 'Interactive testing against a hidden oracle.' },
-    { slug: 'find-the-index-of-the-first-occurrence-in-a-string', note: 'Small enough to write an exhaustive test list for.' },
+    {
+      slug: 'find-the-index-of-the-first-occurrence-in-a-string',
+      note: 'Small enough to write an exhaustive test list for.',
+    },
   ],
   practice: [
     {

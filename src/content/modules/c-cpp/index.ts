@@ -235,7 +235,7 @@ private:
         },
         {
           kind: 'p',
-          text: '**`volatile`** tells the compiler that this variable can change from outside the program\'s control - hardware, the operating system, another thread - so it must reload it from memory on every read instead of caching it in a register. Without it, a loop like `while (flag == 1) {}` can legally be optimised into an infinite loop, because the compiler can see that nothing in the code changes `flag`.',
+          text: "**`volatile`** tells the compiler that this variable can change from outside the program's control - hardware, the operating system, another thread - so it must reload it from memory on every read instead of caching it in a register. Without it, a loop like `while (flag == 1) {}` can legally be optimised into an infinite loop, because the compiler can see that nothing in the code changes `flag`.",
         },
         {
           kind: 'code',
@@ -350,7 +350,11 @@ void aligned_free(void* p2) {
             ['Lookup / insert', 'O(1) amortised, assuming few collisions', 'O(log n), guaranteed'],
             ['Order', 'None - iteration order is arbitrary', 'Sorted by key'],
             ['Collisions', 'Must be handled, usually by chaining', 'Do not exist'],
-            ['Needs', 'A good hash function, and resizing at a load threshold', 'A comparison operator on the key'],
+            [
+              'Needs',
+              'A good hash function, and resizing at a load threshold',
+              'A comparison operator on the key',
+            ],
           ],
         },
         {
@@ -399,7 +403,8 @@ void aligned_free(void* p2) {
     {
       id: 'cpp-3',
       kind: 'technique',
-      prompt: 'A struct holds a `char* ptr`. You shallow-copy it and both copies go out of scope. What happens?',
+      prompt:
+        'A struct holds a `char* ptr`. You shallow-copy it and both copies go out of scope. What happens?',
       options: [
         'Nothing - the buffer is freed once',
         'The buffer is freed twice: a dangling pointer, then a double free',
@@ -413,7 +418,8 @@ void aligned_free(void* p2) {
     {
       id: 'cpp-4',
       kind: 'concept',
-      prompt: 'In a reference-counted smart pointer, why is the count a *pointer* to an unsigned rather than an unsigned?',
+      prompt:
+        'In a reference-counted smart pointer, why is the count a *pointer* to an unsigned rather than an unsigned?',
       options: [
         'To save memory',
         'So every copy shares one counter - separate counters would never reach zero together',
@@ -512,8 +518,14 @@ void aligned_free(void* p2) {
     },
   ],
   drills: [
-    { slug: 'reverse-string', note: 'CTCI 12.2 - in place, and think about the null terminator in C.' },
-    { slug: 'copy-list-with-random-pointer', note: 'CTCI 12.8 - deep copy with an arbitrary extra pointer.' },
+    {
+      slug: 'reverse-string',
+      note: 'CTCI 12.2 - in place, and think about the null terminator in C.',
+    },
+    {
+      slug: 'copy-list-with-random-pointer',
+      note: 'CTCI 12.8 - deep copy with an arbitrary extra pointer.',
+    },
     { slug: 'reverse-words-in-a-string', note: 'In-place buffer manipulation practice.' },
   ],
   practice: [

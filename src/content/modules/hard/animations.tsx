@@ -402,8 +402,4 @@ export const bidirectionalSearch: AnimationSpec = fromFrames(
   LadderFrameView,
 );
 
-export const hardAnimations: AnimationSpec[] = [
-  trappingWater,
-  unionFind,
-  bidirectionalSearch,
-];
+export const hardAnimations: AnimationSpec[] = [trappingWater, unionFind, bidirectionalSearch];

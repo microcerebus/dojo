@@ -27,8 +27,8 @@ export function VisualizerRow({ visualizers }: { visualizers?: VisualizerLink[] 
       </p>
       {!online ? (
         <p className="vizrow__offline" role="status">
-          Your browser reports no connection right now, so these may not load - that signal is
-          only a hint though, so the links below still open in case it is wrong.
+          Your browser reports no connection right now, so these may not load - that signal is only
+          a hint though, so the links below still open in case it is wrong.
         </p>
       ) : null}
       <ul className="vizrow__list">

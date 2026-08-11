@@ -5,12 +5,7 @@
  */
 export function BrandMark() {
   return (
-    <svg
-      className="header__mark"
-      viewBox="0.7 1 22.6 21"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <svg className="header__mark" viewBox="0.7 1 22.6 21" aria-hidden="true" focusable="false">
       <rect x="2.2" y="2.5" width="19.6" height="3" rx="0.75" />
       <rect x="4" y="5.9" width="16" height="2.2" rx="0.55" />
       <rect x="5.1" y="6.67" width="2.8" height="13.83" rx="0.56" />

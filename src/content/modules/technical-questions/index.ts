@@ -63,14 +63,23 @@ export const technicalQuestions: CourseModule = {
           kind: 'table',
           headers: ['If they say…', 'They are probably telling you…'],
           rows: [
-            ['"the array is sorted"', 'binary search or two pointers - do not throw the order away'],
+            [
+              '"the array is sorted"',
+              'binary search or two pointers - do not throw the order away',
+            ],
             [
               '"this runs repeatedly on a server"',
               'precompute or cache; amortise setup across many queries',
             ],
             ['"the values are all distinct"', 'a set or map key is safe; no duplicate bookkeeping'],
-            ['"the integers are between 0 and 32,000"', 'a bit vector or counting array fits in memory'],
-            ['"you only have 10 MB"', 'chunking, external sort, or a bit vector - this is the real constraint'],
+            [
+              '"the integers are between 0 and 32,000"',
+              'a bit vector or counting array fits in memory',
+            ],
+            [
+              '"you only have 10 MB"',
+              'chunking, external sort, or a bit vector - this is the real constraint',
+            ],
             ['"return any valid answer"', 'stop looking for the lexicographically smallest one'],
           ],
         },
@@ -340,7 +349,12 @@ export const technicalQuestions: CourseModule = {
       id: 'tq-5',
       kind: 'technique',
       prompt: 'You need "have I seen this value before?" inside a loop. Reach for:',
-      options: ['A sorted array with binary search', 'A hash set', 'A stack', 'A second nested loop'],
+      options: [
+        'A sorted array with binary search',
+        'A hash set',
+        'A stack',
+        'A second nested loop',
+      ],
       answerIndex: 1,
       explain:
         'A set turns the O(n) inner search into O(1), which is usually the whole optimisation.',

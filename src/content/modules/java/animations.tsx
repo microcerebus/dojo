@@ -200,9 +200,7 @@ function MapFrameView({ index }: { index: number }) {
   return (
     <Stage tall>
       <Readout
-        items={[
-          { key: 'i', label: 'inserted', value: present.length ? present.join(', ') : '—' },
-        ]}
+        items={[{ key: 'i', label: 'inserted', value: present.length ? present.join(', ') : '—' }]}
       />
       <MapRow
         label="Hash"
@@ -309,9 +307,7 @@ const streamFrames: StreamFrame[] = [
   {
     stage: 'lazy',
     kept: COUNTRIES.map((country) => country.name),
-    values: COUNTRIES.map((country) =>
-      country.continent === 'NA' ? country.population : 0,
-    ),
+    values: COUNTRIES.map((country) => (country.continent === 'NA' ? country.population : 0)),
     total: COUNTRIES.filter((country) => country.continent === 'NA').reduce(
       (sum, country) => sum + country.population,
       0,
@@ -355,7 +351,11 @@ function StreamFrameView({ index }: { index: number }) {
                       ? '.reduce(0, +)'
                       : 'filter-free variant',
           },
-          { key: 'r', label: 'result', value: frame.total === null ? 'nothing run yet' : String(frame.total) },
+          {
+            key: 'r',
+            label: 'result',
+            value: frame.total === null ? 'nothing run yet' : String(frame.total),
+          },
         ]}
       />
       <Cells cells={cells} label="stream elements" />

@@ -56,7 +56,7 @@ export const systemDesign: CourseModule = {
           kind: 'callout',
           tone: 'key',
           title: 'There is no perfect system',
-          text: 'Two strong candidates can produce very different designs and both be excellent under different assumptions. What is being assessed is whether you can scope a problem, assume sensibly, design against those assumptions, and name your own design\'s weaknesses.',
+          text: "Two strong candidates can produce very different designs and both be excellent under different assumptions. What is being assessed is whether you can scope a problem, assume sensibly, design against those assumptions, and name your own design's weaknesses.",
         },
         {
           kind: 'p',
@@ -65,9 +65,9 @@ export const systemDesign: CourseModule = {
         {
           kind: 'bullets',
           items: [
-            '**Communicate and drive.** You are in the driver\'s seat. Silence reads as being stuck; narrating reads as thinking.',
+            "**Communicate and drive.** You are in the driver's seat. Silence reads as being stuck; narrating reads as thinking.",
             '**Go broad before deep.** Do not fall into the one part you find interesting and leave the rest undrawn.',
-            '**Take the interviewer\'s concerns seriously.** When they interrupt with a worry, it is a hint. Validate it and change the design; brushing it off is the worst possible response.',
+            "**Take the interviewer's concerns seriously.** When they interrupt with a worry, it is a hint. Validate it and change the design; brushing it off is the worst possible response.",
             '**Be careful about assumptions, and state them.** "The analytics must be perfectly up to date" versus "may lag ten minutes" is an entirely different system. Say which you assumed, so it can be corrected.',
             '**Estimate when you lack data.** You will not be handed the numbers. Derive them and show the arithmetic.',
           ],
@@ -156,10 +156,18 @@ export const systemDesign: CourseModule = {
           headers: ['', 'Vertical scaling', 'Horizontal scaling'],
           rows: [
             ['What it is', 'A bigger machine', 'More machines'],
-            ['Difficulty', 'Easy - often no code change', 'Harder - requires statelessness and coordination'],
+            [
+              'Difficulty',
+              'Easy - often no code change',
+              'Harder - requires statelessness and coordination',
+            ],
             ['Ceiling', 'Real: RAM, cores and disk run out', 'Effectively none'],
             ['Failure', 'Still a single point of failure', 'Survives losing a node'],
-            ['Use when', 'Early, or the workload genuinely will not partition', 'At scale, and whenever uptime matters'],
+            [
+              'Use when',
+              'Early, or the workload genuinely will not partition',
+              'At scale, and whenever uptime matters',
+            ],
           ],
         },
         {
@@ -212,7 +220,7 @@ export const systemDesign: CourseModule = {
         },
         {
           kind: 'p',
-          text: '**Denormalisation** buys the same thing inside a relational store: copy the teacher\'s name into the courses table and the join disappears from a hot read. You pay in writes (now two places to update), in storage, and in the risk of the copies disagreeing. Large systems almost always use both - normalised where correctness dominates, denormalised where reads dominate.',
+          text: "**Denormalisation** buys the same thing inside a relational store: copy the teacher's name into the courses table and the join disappears from a hot read. You pay in writes (now two places to update), in storage, and in the risk of the copies disagreeing. Large systems almost always use both - normalised where correctness dominates, denormalised where reads dominate.",
         },
         { kind: 'anim', animId: 'sd-sharding' },
         {
@@ -245,7 +253,7 @@ export const systemDesign: CourseModule = {
         },
         {
           kind: 'p',
-          text: '**Replication** is a different axis: keep copies of the same data. The usual shape is one leader taking writes and several followers serving reads, which scales reads and gives you a failover candidate. Followers lag, so a user can write and then immediately read their own stale data - decide whether that matters, and if it does, route that user\'s reads to the leader.',
+          text: "**Replication** is a different axis: keep copies of the same data. The usual shape is one leader taking writes and several followers serving reads, which scales reads and gives you a failover candidate. Followers lag, so a user can write and then immediately read their own stale data - decide whether that matters, and if it does, route that user's reads to the leader.",
         },
         {
           kind: 'p',
@@ -314,7 +322,7 @@ export const systemDesign: CourseModule = {
             ],
             [
               '9.6 Sales rank',
-              'Do not re-aggregate all history hourly. Keep a per-product row of the last seven days as a small circular buffer plus a running total, batch the writes in memory before committing, and sort by category then volume once so one walk yields every category\'s ranking. Accuracy can be tiered: hourly for the top 100, daily for the long tail.',
+              "Do not re-aggregate all history hourly. Keep a per-product row of the last seven days as a small circular buffer plus a running total, batch the writes in memory before committing, and sort by category then volume once so one walk yields every category's ranking. Accuracy can be tiered: hourly for the top 100, daily for the long tail.",
             ],
             [
               '9.7 Personal financial manager',
@@ -378,8 +386,8 @@ export const systemDesign: CourseModule = {
       kind: 'concept',
       prompt: 'You shard with `hash(key) % n` and add one machine. What happens?',
       options: [
-        'Only the new machine\'s share of keys moves',
-        'Nearly every key\'s home changes, forcing a huge data migration',
+        "Only the new machine's share of keys moves",
+        "Nearly every key's home changes, forcing a huge data migration",
         'Nothing - the mapping is stable',
         'Only keys with hash collisions move',
       ],
@@ -456,8 +464,7 @@ export const systemDesign: CourseModule = {
     {
       id: 'sd-10',
       kind: 'technique',
-      prompt:
-        'Ten billion URLs, ~100 characters each. What is the first thing to say?',
+      prompt: 'Ten billion URLs, ~100 characters each. What is the first thing to say?',
       options: [
         'Sort them and scan for adjacent duplicates',
         'That is roughly 4 TB, so it will not fit in memory - split by hash across files or machines',
@@ -470,11 +477,17 @@ export const systemDesign: CourseModule = {
     },
   ],
   drills: [
-    { slug: 'encode-and-decode-tinyurl', note: 'CTCI 9.8 - the coding core of a pastebin/URL shortener.' },
+    {
+      slug: 'encode-and-decode-tinyurl',
+      note: 'CTCI 9.8 - the coding core of a pastebin/URL shortener.',
+    },
     { slug: 'lru-cache', note: 'CTCI 9.5 - the eviction policy behind most cache designs.' },
     { slug: 'lfu-cache', note: 'The harder eviction policy. Know when LFU beats LRU.' },
     { slug: 'design-hit-counter', note: 'Time-window aggregation. Premium.' },
-    { slug: 'web-crawler-multithreaded', note: 'CTCI 9.3 - the concurrency core of a crawler. Premium.' },
+    {
+      slug: 'web-crawler-multithreaded',
+      note: 'CTCI 9.3 - the concurrency core of a crawler. Premium.',
+    },
   ],
   practice: [
     {

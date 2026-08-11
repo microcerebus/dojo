@@ -8,11 +8,28 @@ A Vite + React + TypeScript PWA that teaches the *Cracking the Coding Interview*
 See `README.md` for layout and how to add or finish a module, and `COVERAGE.md` for what is written
 versus outlined.
 
-`pnpm check` (lint + typecheck + tests) is the gate. `pnpm build` also runs
-`scripts/verify-precache.mjs`, which fails the build if the service worker stops precaching the app
-shell, the manifest, the icons, the fonts or any narration MP3.
+`pnpm check` (lint + prettier check + typecheck + tests) is the gate.
+It is enforced by pre-commit/pre-push hooks and mirrored in CI - see README.md's "Testing and CI"
+section for the full pipeline: hooks, CORE-FUNCTIONALITY.md traceability, and the e2e workflow.
+`pnpm build` also runs `scripts/verify-precache.mjs`, which fails the build if the service worker stops
+precaching the app shell, the manifest, the icons, the fonts or any narration MP3.
 
 ## Sharp edges
+
+- **CORE-FUNCTIONALITY.md ids are stable, hand-maintained, and traced.** Add new `CF-<n>` entries
+  rather than renumbering when a flow changes shape - old e2e citations must keep pointing at the
+  right entry.
+  `e2e/core-functionality.test.ts` fails if any id has no citing Playwright test in `e2e/*.spec.ts`.
+- **Prettier formats everything except Markdown.** `.prettierignore` excludes `*.md`: prettier's
+  Markdown formatter rewrites `*italic*` to `_italic_`, which would otherwise silently reformat this
+  file and README.md on every `pnpm run format`.
+- **`pnpm e2e` builds the app and serves it locally itself** (`pnpm build && pnpm preview`, see
+  `playwright.config.ts`'s `webServer`) - it never talks to a deployed preview, so CF-8 (the PWA
+  manifest and service worker) is exercised for real on every run.
+  Locally, `reuseExistingServer: true` means a second `pnpm e2e` run reuses whatever is already
+  listening on port 4173 instead of rebuilding - if you have a stale `vite preview` left over from an
+  earlier run, kill it before re-running e2e after a code change, or the tests will silently exercise
+  the old build.
 
 - **COVERAGE.md is generated.** Never hand-edit it; run `pnpm gen:coverage`.
   `src/data/coverage.test.ts` fails if it disagrees with the content data, and that suite is also

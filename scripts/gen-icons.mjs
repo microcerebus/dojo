@@ -127,9 +127,7 @@ function drawIcon(size, maskable) {
         const qx = Math.abs(px - c) - (size / 2 - radius);
         const qy = Math.abs(py - c) - (size / 2 - radius);
         bgDist =
-          Math.min(Math.max(qx, qy), 0) +
-          Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) -
-          radius;
+          Math.min(Math.max(qx, qy), 0) + Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) - radius;
       }
       const bgA = cover(bgDist, aa);
       if (bgA > 0) {
@@ -143,13 +141,29 @@ function drawIcon(size, maskable) {
       const ly = py - c;
 
       const legRadius = legHalfW * 0.4;
-      const legDistL = roundedBoxDist(lx, ly, -legInsetX, legCenterY, legHalfW, legHalfH, legRadius);
+      const legDistL = roundedBoxDist(
+        lx,
+        ly,
+        -legInsetX,
+        legCenterY,
+        legHalfW,
+        legHalfH,
+        legRadius,
+      );
       const legDistR = roundedBoxDist(lx, ly, legInsetX, legCenterY, legHalfW, legHalfH, legRadius);
       const legA = cover(Math.min(legDistL, legDistR), aa);
       if (legA > 0) mix(rgb, RING, legA);
 
       const kasagiRadius = kasagiHalfH * 0.5;
-      const kasagiDist = roundedBoxDist(lx, ly, 0, kasagiCenterY, kasagiHalfW, kasagiHalfH, kasagiRadius);
+      const kasagiDist = roundedBoxDist(
+        lx,
+        ly,
+        0,
+        kasagiCenterY,
+        kasagiHalfW,
+        kasagiHalfH,
+        kasagiRadius,
+      );
       const kasagiA = cover(kasagiDist, aa);
       if (kasagiA > 0) mix(rgb, RING, kasagiA);
 

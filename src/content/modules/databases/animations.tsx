@@ -36,9 +36,7 @@ interface JoinFrame {
 }
 
 const MATCHED = REGULAR.flatMap((left) =>
-  DIET.filter((right) => right.code === left.code).map(
-    (right) => `${left.name} | ${right.name}`,
-  ),
+  DIET.filter((right) => right.code === left.code).map((right) => `${left.name} | ${right.name}`),
 );
 const LEFT_ONLY = REGULAR.filter((left) => !DIET.some((right) => right.code === left.code)).map(
   (left) => `${left.name} | NULL`,
@@ -347,7 +345,7 @@ const normFrames: NormFrame[] = [
     rowsTouchedByRename: 1,
     inconsistent: false,
     caption:
-      'Normalised: Courses stores a teacherId, and the teacher\'s name lives in exactly one row of Teachers. Redundancy is minimised, so the data cannot contradict itself.',
+      "Normalised: Courses stores a teacherId, and the teacher's name lives in exactly one row of Teachers. Redundancy is minimised, so the data cannot contradict itself.",
     detail: 'Courses(courseId, name, teacherId) · Teachers(teacherId, name)',
   },
   {

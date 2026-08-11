@@ -148,9 +148,21 @@ export const hard: CourseModule = {
           kind: 'table',
           headers: ['Need', 'Tool', 'Cost'],
           rows: [
-            ['The smallest k, offline', 'Max-heap of size k, or quickselect', 'O(n log k) / O(n) expected'],
-            ['The median of a stream', 'A max-heap of the low half, a min-heap of the high half', 'O(log n) insert, O(1) query'],
-            ['The kth item of a generated sequence', 'A min-heap, or one queue per multiplier', 'O(k log k) / O(k)'],
+            [
+              'The smallest k, offline',
+              'Max-heap of size k, or quickselect',
+              'O(n log k) / O(n) expected',
+            ],
+            [
+              'The median of a stream',
+              'A max-heap of the low half, a min-heap of the high half',
+              'O(log n) insert, O(1) query',
+            ],
+            [
+              'The kth item of a generated sequence',
+              'A min-heap, or one queue per multiplier',
+              'O(k log k) / O(k)',
+            ],
           ],
         },
         {
@@ -362,7 +374,7 @@ export const hard: CourseModule = {
         'Finding all pairs of documents with non-zero overlap, when overlaps are known to be rare. What beats comparing every pair?',
       options: [
         'Sort each document and use two pointers',
-        'Build an inverted index from element to documents, then increment a counter for each document pair inside each element\'s list',
+        "Build an inverted index from element to documents, then increment a counter for each document pair inside each element's list",
         'Hash each document and compare the hashes',
         'Sample the documents',
       ],
@@ -387,10 +399,19 @@ export const hard: CourseModule = {
     },
   ],
   drills: [
-    { slug: 'trapping-rain-water', note: 'CTCI 17.21 - do the two-pointer version, not just the DP one.' },
+    {
+      slug: 'trapping-rain-water',
+      note: 'CTCI 17.21 - do the two-pointer version, not just the DP one.',
+    },
     { slug: 'maximal-rectangle', note: 'Histogram per row, then largest rectangle.' },
-    { slug: 'sliding-window-maximum', note: 'A monotonic deque - the window pattern taken further.' },
-    { slug: 'majority-element-ii', note: 'CTCI 17.10 generalised - Boyer-Moore with two candidates.' },
+    {
+      slug: 'sliding-window-maximum',
+      note: 'A monotonic deque - the window pattern taken further.',
+    },
+    {
+      slug: 'majority-element-ii',
+      note: 'CTCI 17.10 generalised - Boyer-Moore with two candidates.',
+    },
     { slug: 'contiguous-array', note: 'CTCI 17.5 - prefix differences in a hash map.' },
     { slug: 'shortest-word-distance-ii', note: 'CTCI 17.11 - preprocess positions. Premium.' },
     { slug: 'redundant-connection', note: 'Union-find, and the cycle it detects.' },

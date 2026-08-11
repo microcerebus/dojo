@@ -70,11 +70,7 @@ describe('quiz engine', () => {
   });
 
   it('advances and clears the selection', () => {
-    const state = run(
-      initialQuizState(),
-      { type: 'answer', optionIndex: 0 },
-      { type: 'next' },
-    );
+    const state = run(initialQuizState(), { type: 'answer', optionIndex: 0 }, { type: 'next' });
     expect(state.index).toBe(1);
     expect(state.selected).toBeNull();
     expect(state.finished).toBe(false);

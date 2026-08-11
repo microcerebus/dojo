@@ -28,7 +28,7 @@ const popcount = (value: number) =>
     .filter((bit) => bit === '1').length;
 
 describe('8-bit lane helpers', () => {
-  it('reads the sign bit the way two\'s complement does', () => {
+  it("reads the sign bit the way two's complement does", () => {
     expect(asSigned(0b00000101)).toBe(5);
     expect(asSigned(0b11111011)).toBe(-5);
     expect(asSigned(0xff)).toBe(-1);
@@ -259,8 +259,10 @@ describe('rendered frames', () => {
         for (const item of readReadout(container)) {
           if (NOT_A_ROW.has(item.label) || item.value === '—') continue;
           const row = rows.find((candidate) => candidate.label === item.label);
-          expect(row, `${spec.id} step ${index}: readout "${item.label}" names no rendered row`)
-            .toBeDefined();
+          expect(
+            row,
+            `${spec.id} step ${index}: readout "${item.label}" names no rendered row`,
+          ).toBeDefined();
           expect(
             String((row as { value: number }).value),
             `${spec.id} step ${index}: readout "${item.label}"`,

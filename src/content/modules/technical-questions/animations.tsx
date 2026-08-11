@@ -18,7 +18,8 @@ import { fromFrames, type AnimationSpec } from '../../../anim/types';
 const LOOP: { label: string; detail: string; say: string }[] = [
   {
     label: 'Listen and clarify',
-    detail: 'Restate the problem. Pin down input types, sizes, duplicates, sortedness, and what to return on empty.',
+    detail:
+      'Restate the problem. Pin down input types, sizes, duplicates, sortedness, and what to return on empty.',
     say: '"Just to confirm: the array can contain negatives, and I return indices not values?"',
   },
   {
@@ -28,27 +29,32 @@ const LOOP: { label: string; detail: string; say: string }[] = [
   },
   {
     label: 'State a brute force',
-    detail: 'Say the obvious solution out loud with its complexity. You now have a baseline you can beat.',
+    detail:
+      'Say the obvious solution out loud with its complexity. You now have a baseline you can beat.',
     say: '"Brute force is compare-every-pair, O(n²) time, O(1) space. Let me improve it."',
   },
   {
     label: 'Optimise',
-    detail: 'Apply BUD, then unused info, DIY on a bigger example, simplify/generalise, base-case-and-build, and the data-structure sweep.',
+    detail:
+      'Apply BUD, then unused info, DIY on a bigger example, simplify/generalise, base-case-and-build, and the data-structure sweep.',
     say: 'This is where the interview is won. Do it out loud.',
   },
   {
     label: 'Walk through it',
-    detail: 'Talk the whole algorithm through before typing. Fixing a design on a whiteboard is cheap; fixing it in half-written code is not.',
+    detail:
+      'Talk the whole algorithm through before typing. Fixing a design on a whiteboard is cheap; fixing it in half-written code is not.',
     say: 'You should know every variable you are about to write.',
   },
   {
     label: 'Implement',
-    detail: 'Clean, modular code. Real names. Push details into helper functions you can define afterwards.',
+    detail:
+      'Clean, modular code. Real names. Push details into helper functions you can define afterwards.',
     say: 'Leave yourself room - start at the top left of the board.',
   },
   {
     label: 'Test',
-    detail: 'Read the code line by line, then run a small case, then edge cases (empty, one element, duplicates, negatives), then fix bugs deliberately.',
+    detail:
+      'Read the code line by line, then run a small case, then edge cases (empty, one element, duplicates, negatives), then fix bugs deliberately.',
     say: 'A bug you find yourself costs far less than one the interviewer finds.',
   },
 ];
@@ -239,9 +245,21 @@ export const budWalkthrough: AnimationSpec = fromFrames(
 
 const BCR_LADDER: { key: string; label: string; note: string }[] = [
   { key: 'n2', label: 'O(n²) - compare every pair', note: 'where the brute force lands' },
-  { key: 'nlogn', label: 'O(n log n) - sort, then scan', note: 'usually the first real improvement' },
-  { key: 'n', label: 'O(n) - one pass with a hash set', note: 'matches the BCR: we are done optimising' },
-  { key: 'logn', label: 'O(log n) - impossible here', note: 'you must at least look at every element once' },
+  {
+    key: 'nlogn',
+    label: 'O(n log n) - sort, then scan',
+    note: 'usually the first real improvement',
+  },
+  {
+    key: 'n',
+    label: 'O(n) - one pass with a hash set',
+    note: 'matches the BCR: we are done optimising',
+  },
+  {
+    key: 'logn',
+    label: 'O(log n) - impossible here',
+    note: 'you must at least look at every element once',
+  },
 ];
 
 const bcrFrames = [
@@ -256,7 +274,8 @@ const bcrFrames = [
     detail: 'BCR = O(n)',
   },
   {
-    caption: 'Our brute force is O(n²). There is a gap between here and the BCR, so keep optimising.',
+    caption:
+      'Our brute force is O(n²). There is a gap between here and the BCR, so keep optimising.',
     detail: 'current O(n²) · BCR O(n) · gap: yes',
   },
   {
@@ -286,8 +305,7 @@ function BcrFrame({ index }: { index: number }) {
     label: rung.label,
     detail: rung.note,
     ...(i === current ? { badge: 'you are here' } : bcrKnown && i === 2 ? { badge: 'BCR' } : {}),
-    state:
-      i === current ? 'active' : bcrKnown && i === 2 ? 'target' : i === 3 ? 'muted' : 'idle',
+    state: i === current ? 'active' : bcrKnown && i === 2 ? 'target' : i === 3 ? 'muted' : 'idle',
   }));
   return (
     <Stage>
