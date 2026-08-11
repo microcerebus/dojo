@@ -1,5 +1,6 @@
 import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { BrandMark } from './components/BrandMark';
+import { ThemeToggle } from './components/ThemeToggle';
 import { HomePage } from './pages/HomePage';
 import { ModulePage } from './pages/ModulePage';
 import { SprintPage } from './pages/SprintPage';
@@ -39,6 +40,7 @@ export function App() {
               </NavLink>
             ))}
           </nav>
+          <ThemeToggle variant="header" />
         </header>
 
         <main className="main">
@@ -51,21 +53,29 @@ export function App() {
           </Routes>
         </main>
 
-        <nav className="tabbar" aria-label="Main">
-          {NAV.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) => `tabbar__link${isActive ? ' is-active' : ''}`}
-            >
-              <span className="tabbar__icon" aria-hidden="true">
-                {item.icon}
-              </span>
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+        {/* The bar carries the nav *and* the theme control: on a phone this
+            strip is the only thumb-reachable chrome, and a theme switch parked
+            in the header at the top of a 6.7" screen is a two-handed control.
+            The <nav> stays wrapped around just the links so the button does not
+            land inside a navigation landmark. */}
+        <div className="tabbar">
+          <nav className="tabbar__nav" aria-label="Main">
+            {NAV.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) => `tabbar__link${isActive ? ' is-active' : ''}`}
+              >
+                <span className="tabbar__icon" aria-hidden="true">
+                  {item.icon}
+                </span>
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <ThemeToggle variant="tabbar" />
+        </div>
       </div>
     </HashRouter>
   );

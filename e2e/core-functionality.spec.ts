@@ -265,3 +265,251 @@ test('CF-12: a module without visualizers shows no VisuAlgo row', async ({ page 
   await page.goto('/#/module/big-o');
   await expect(page.locator('.vizrow')).toHaveCount(0);
 });
+
+/**
+ * WCAG relative luminance of a computed `rgb(r, g, b)` string, 0..1. The
+ * assertions below need "is this actually light" rather than "did the string
+ * change", since a palette shuffle that stayed dark would satisfy the latter.
+ */
+function luminance(computed: string): number {
+  const [r, g, b] = computed
+    .match(/\d+(?:\.\d+)?/g)!
+    .slice(0, 3)
+    .map((value) => {
+      const channel = Number(value) / 255;
+      return channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+    });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+test('CF-13: the light and dark schemes render genuinely distinct palettes', async ({
+  browser,
+}, testInfo) => {
+  const sample = async (colorScheme: 'dark' | 'light') => {
+    const context = await browser.newContext({
+      colorScheme,
+      baseURL: testInfo.project.use.baseURL,
+    });
+    const page = await context.newPage();
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'Curriculum', level: 1 })).toBeVisible();
+    const measured = await page.evaluate(() => {
+      const styles = getComputedStyle(document.body);
+      return {
+        theme: document.documentElement.getAttribute('data-theme'),
+        background: styles.backgroundColor,
+        text: styles.color,
+        themeColor: document.querySelector('meta[name="theme-color"]')?.getAttribute('content'),
+        statusBar: document
+          .querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')
+          ?.getAttribute('content'),
+      };
+    });
+    await context.close();
+    return measured;
+  };
+
+  const dark = await sample('dark');
+  const light = await sample('light');
+
+  expect(dark.theme).toBe('dark');
+  expect(light.theme).toBe('light');
+
+  // The regression: light mode used to render the dark palette, so every one
+  // of these was equal.
+  expect(light.background).not.toBe(dark.background);
+  expect(light.text).not.toBe(dark.text);
+  expect(light.themeColor).not.toBe(dark.themeColor);
+  expect(light.statusBar).not.toBe(dark.statusBar);
+
+  // And not merely different - actually inverted.
+  expect(luminance(dark.background)).toBeLessThan(0.05);
+  expect(luminance(light.background)).toBeGreaterThan(0.7);
+  expect(luminance(dark.text)).toBeGreaterThan(0.5);
+  expect(luminance(light.text)).toBeLessThan(0.15);
+});
+
+test('CF-13: the theme toggle overrides the system scheme and persists', async ({ page }) => {
+  // The context prefers dark (playwright.config.ts), so every step below that
+  // reaches light is the toggle beating the OS, not agreeing with it.
+  await page.goto('/');
+  const toggle = page.locator('.themetoggle:visible');
+  await expect(toggle).toHaveAttribute('data-theme-choice', 'system');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('data-theme-choice', 'dark');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('data-theme-choice', 'light');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  expect(
+    luminance(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)),
+  ).toBeGreaterThan(0.7);
+
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('.themetoggle:visible')).toHaveAttribute('data-theme-choice', 'light');
+
+  await page.locator('.themetoggle:visible').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+});
+
+test('CF-13: an explicit choice survives navigation across every route', async ({ page }) => {
+  await page.goto('/');
+  const toggle = () => page.locator('.themetoggle:visible');
+  // system -> dark -> light.
+  await toggle().click();
+  await toggle().click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+
+  // The router is a hash router and the shell never unmounts, so the risk here
+  // is the opposite of a reload: a route change that re-runs an effect and
+  // resolves the theme afresh against the OS, quietly discarding the choice.
+  for (const route of ['/#/sprint', '/#/coverage', '/#/module/big-o', '/#/nope', '/']) {
+    await page.goto(route);
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await expect(toggle()).toHaveAttribute('data-theme-choice', 'light');
+    expect(
+      luminance(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)),
+    ).toBeGreaterThan(0.7);
+  }
+
+  // And in-app navigation, which does not reload the document at all.
+  await page.getByRole('link', { name: 'Sprint' }).first().click();
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(toggle()).toHaveAttribute('data-theme-choice', 'light');
+});
+
+test('CF-13: `system` tracks an OS scheme change live, an explicit choice ignores it', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const html = page.locator('html');
+  const toggle = () => page.locator('.themetoggle:visible');
+
+  // Still on `system`, and the context prefers dark.
+  await expect(toggle()).toHaveAttribute('data-theme-choice', 'system');
+  await expect(html).toHaveAttribute('data-theme', 'dark');
+
+  // The OS flips while the page is open. No reload - this is the live
+  // matchMedia listener, and it is the only path that repaints without input.
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(html).toHaveAttribute('data-theme', 'light');
+  expect(
+    luminance(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)),
+  ).toBeGreaterThan(0.7);
+
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(html).toHaveAttribute('data-theme', 'dark');
+
+  // Now pin it to dark explicitly. The OS flipping must no longer move it -
+  // an explicit choice that silently reverts is the same class of lie as the
+  // rate control in CF-11.
+  await toggle().click();
+  await expect(toggle()).toHaveAttribute('data-theme-choice', 'dark');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(html).toHaveAttribute('data-theme', 'dark');
+  expect(
+    luminance(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)),
+  ).toBeLessThan(0.05);
+
+  // Back to `system` and it starts following again, immediately.
+  await toggle().click();
+  await toggle().click();
+  await expect(toggle()).toHaveAttribute('data-theme-choice', 'system');
+  await expect(html).toHaveAttribute('data-theme', 'light');
+});
+
+/**
+ * A cold load with every bundle request aborted: whatever paints is what the
+ * reader sees on the very first frame, before React exists. If the pre-paint
+ * script in index.html ever stops running, or moves below the module script,
+ * this is what catches it.
+ */
+for (const scheme of ['dark', 'light'] as const) {
+  const isLight = scheme === 'light';
+
+  test(`CF-13: a cold ${scheme} load paints ${scheme} with no bundle, so there is no flash`, async ({
+    browser,
+  }, testInfo) => {
+    const context = await browser.newContext({
+      colorScheme: scheme,
+      baseURL: testInfo.project.use.baseURL,
+    });
+    const page = await context.newPage();
+    await page.route('**/*.js', (route) => route.abort());
+    await page.goto('/');
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
+    await expect(page.locator('#root')).toBeEmpty();
+
+    const background = luminance(
+      await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+    );
+    if (isLight) expect(background).toBeGreaterThan(0.7);
+    else expect(background).toBeLessThan(0.05);
+
+    // The chrome has to be right on that first frame too, or the notch area
+    // flashes the other palette even when the page itself does not.
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
+      'content',
+      isLight ? '#e6e9ef' : '#181825',
+    );
+    await expect(
+      page.locator('meta[name="apple-mobile-web-app-status-bar-style"]'),
+    ).toHaveAttribute('content', isLight ? 'default' : 'black-translucent');
+
+    await context.close();
+  });
+
+  test(`CF-13: a cold load honours a stored ${scheme} choice against the opposite OS`, async ({
+    browser,
+  }, testInfo) => {
+    // The hardest flash case: the stored choice and the OS disagree, so a
+    // resolution that happens even one frame late paints the wrong palette
+    // first. Seed storage before any document script runs.
+    const context = await browser.newContext({
+      colorScheme: isLight ? 'dark' : 'light',
+      baseURL: testInfo.project.use.baseURL,
+    });
+    await context.addInitScript(
+      (choice) => localStorage.setItem('dojo:theme', choice),
+      scheme as string,
+    );
+    const page = await context.newPage();
+    await page.route('**/*.js', (route) => route.abort());
+    await page.goto('/');
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
+    await expect(page.locator('#root')).toBeEmpty();
+    const background = luminance(
+      await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+    );
+    if (isLight) expect(background).toBeGreaterThan(0.7);
+    else expect(background).toBeLessThan(0.05);
+
+    await context.close();
+  });
+}
+
+test('CF-13: the theme control is a 44px thumb target in the bottom bar on a phone', async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== 'Mobile Chrome', 'the bottom bar is the phone layout');
+
+  await page.goto('/');
+  const toggle = page.locator('.tabbar .themetoggle');
+  await expect(toggle).toBeVisible();
+
+  const box = (await toggle.boundingBox())!;
+  expect(box.height).toBeGreaterThanOrEqual(44);
+  expect(box.width).toBeGreaterThanOrEqual(44);
+
+  // It sits in the bar with the nav, not stranded in the header out of reach.
+  const bar = (await page.locator('.tabbar').boundingBox())!;
+  expect(box.y).toBeGreaterThanOrEqual(bar.y - 1);
+  expect(page.viewportSize()!.height - (box.y + box.height)).toBeLessThan(60);
+});

@@ -21,6 +21,11 @@ export default defineConfig({
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
     baseURL: BASE_URL,
+    // Playwright's default is `light`; pin it to `dark` so every test that is
+    // not about theming exercises the app's primary scheme, and so the CF-13
+    // tests that force light are forcing it against a contrary system
+    // preference rather than agreeing with one.
+    colorScheme: 'dark',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },

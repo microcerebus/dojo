@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <!-- viewport-fit=cover is what lets env(safe-area-inset-*) return real values on iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#1e1e2e" />
+    <!-- Both of these are rewritten before first paint by the theme boot
+         script below; the values here are the dark defaults it falls back to. -->
+    <meta name="theme-color" content="#181825" />
     <meta name="color-scheme" content="dark light" />
     <meta
       name="description"
@@ -18,6 +20,46 @@
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
     <title>dojo</title>
+    <!--
+      Theme, applied before first paint.
+
+      This has to be a blocking inline script, not part of the bundle: a module
+      script is deferred, so the page would paint the default dark palette for a
+      frame before React ever ran and only then flip to light. It is the same
+      contract as src/lib/theme.ts - storage key, attribute, and both chrome
+      values - and src/lib/theme.test.ts fails if the two drift apart.
+
+      It must also stay below the two meta tags it rewrites, since it reads them
+      out of the DOM as it is parsed.
+    -->
+    <script>
+      (function () {
+        var scheme = 'dark';
+        try {
+          var choice = localStorage.getItem('dojo:theme');
+          if (choice !== 'dark' && choice !== 'light') choice = 'system';
+          scheme =
+            choice === 'system'
+              ? window.matchMedia('(prefers-color-scheme: light)').matches
+                ? 'light'
+                : 'dark'
+              : choice;
+        } catch (error) {
+          // Blocked storage or no matchMedia: fall back to the dark default.
+        }
+        var chrome =
+          scheme === 'light'
+            ? { themeColor: '#e6e9ef', statusBar: 'default' }
+            : { themeColor: '#181825', statusBar: 'black-translucent' };
+        document.documentElement.setAttribute('data-theme', scheme);
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.setAttribute('content', chrome.themeColor);
+        var statusBar = document.querySelector(
+          'meta[name="apple-mobile-web-app-status-bar-style"]',
+        );
+        if (statusBar) statusBar.setAttribute('content', chrome.statusBar);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -134,3 +134,22 @@ reports it is offline.
 **Verify:** open a module that has visualizers (e.g. `arrays-strings`), confirm the "Visualize it live"
 row appears on the Lesson tab with working external links to visualgo.net, and confirm a module without
 visualizers (e.g. `big-o`) shows no such row.
+
+## CF-13: Dark and light are two genuinely different palettes, chosen in-app
+
+The app ships both Catppuccin schemes over one token set - Mocha dark and Latte light - and a
+system/dark/light control in the bottom bar (in the header from 860px up) picks between them.
+"System" follows the OS and keeps following it if the OS flips mid-session; an explicit dark or light
+overrides the OS and persists across reloads in `localStorage` (`dojo:theme`).
+The resolved scheme is stamped onto `<html data-theme>` by a blocking inline script in `index.html`
+before first paint, so the page never renders one palette and then swaps, and the same script updates
+the `theme-color` meta tag and the iOS status-bar style to match the scheme.
+
+The regression this guards is specific: the two schemes must render *different* pixels. Light mode
+previously resolved to the dark palette, because only one palette was ever authored - so a test that
+merely checks a light-mode page loads would have passed throughout.
+
+**Verify:** with the OS set to light, open the app and confirm it renders light (a pale background and
+dark text), not the dark palette; tap the theme control through Dark and Light and confirm each one
+overrides the OS immediately; reload and confirm the choice survived; return it to System and confirm
+it tracks the OS again.

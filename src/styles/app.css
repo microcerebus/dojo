@@ -239,7 +239,7 @@
   --fade-w: 20px;
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .tabs .scrollx__viewport {
@@ -264,7 +264,7 @@
   min-width: 0;
   min-height: var(--tap);
   padding: 0 var(--space-3);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-size: var(--fs-body);
   font-weight: 560;
   color: var(--text-dim);
@@ -275,7 +275,7 @@
 .tabs__tab.is-active {
   background: var(--bg-elev-2);
   color: var(--text);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-1);
 }
 
 /* A tab that carries a running count stacks it under the label instead of
@@ -351,7 +351,7 @@
   gap: 7px;
   min-height: var(--tap);
   padding: 0 var(--space-3);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--border);
   background: var(--bg-elev);
   color: var(--text-dim);
@@ -448,7 +448,10 @@
 .lesson__takeaway {
   margin-top: 4px;
   font-size: var(--fs-body);
-  color: var(--accent);
+  /* A sentence, not a label - see `--accent-quiet`. Every other accent-on-text
+     rule in the app paints a badge, an id or a single word, where the full
+     accent is right. */
+  color: var(--accent-quiet);
 }
 
 .lesson__p {
@@ -719,7 +722,7 @@
   min-width: var(--tap);
   min-height: var(--tap);
   padding: 0 var(--space-3);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--border-strong);
   font-size: var(--fs-meta);
   font-weight: 600;
