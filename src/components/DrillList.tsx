@@ -61,6 +61,9 @@ export function DrillList({
                     <span aria-hidden="true">{isDone ? '✓' : ''}</span>
                   </button>
 
+                  {/* Title, note and chips all stack inside one full-width
+                      column. Letting the chips share the title's line squeezed
+                      the note to about twenty characters at 390px. */}
                   <div className="drill__body">
                     <a
                       className="drill__title"
@@ -74,14 +77,13 @@ export function DrillList({
                       </span>
                     </a>
                     {drill.note ? <p className="drill__note">{drill.note}</p> : null}
-                  </div>
-
-                  <div className="drill__tags">
-                    {problem.blind75 ? <span className="chip chip--accent">B75</span> : null}
-                    {problem.premium ? <span className="chip">premium</span> : null}
-                    <span className={`chip chip--${difficultyTone(problem.difficulty)}`}>
-                      {problem.difficulty}
-                    </span>
+                    <div className="drill__tags">
+                      {problem.blind75 ? <span className="chip chip--accent">B75</span> : null}
+                      {problem.premium ? <span className="chip">premium</span> : null}
+                      <span className={`chip chip--${difficultyTone(problem.difficulty)}`}>
+                        {problem.difficulty}
+                      </span>
+                    </div>
                   </div>
                 </li>
               );

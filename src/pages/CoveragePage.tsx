@@ -6,6 +6,8 @@ import { BLIND_75, getProblem, leetcodeUrl } from '../data/problems';
 import { VISUALGO_CATALOG } from '../data/visualgo';
 import { formatStudySummary, moduleProgress, moduleStudySummary } from '../lib/progress';
 import { useProgressState } from '../lib/store';
+import { ScrollX } from '../components/ScrollX';
+import { Tabs } from '../components/Tabs';
 
 type View = 'questions' | 'blind75' | 'modules' | 'visualgo';
 
@@ -50,27 +52,19 @@ export function CoveragePage() {
         </p>
       </header>
 
-      <div className="tabs" role="tablist" aria-label="Coverage views">
-        {(
-          [
-            ['questions', `189 questions`],
-            ['blind75', `Blind 75 · ${blindDone}/75`],
-            ['modules', `${MODULES.length} modules`],
-            ['visualgo', `VisuAlgo · ${VISUALGO_CATALOG.length}`],
-          ] as const
-        ).map(([value, label]) => (
-          <button
-            key={value}
-            type="button"
-            role="tab"
-            aria-selected={view === value}
-            className={`tabs__tab${view === value ? ' is-active' : ''}`}
-            onClick={() => setView(value)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {/* The counts sit under the labels: as one line, "Blind 75 · 0/75" wrapped
+          inside its pill at 390px and pushed the row out of the container. */}
+      <Tabs
+        items={[
+          { value: 'questions', label: 'Questions', count: String(BOOK_QUESTIONS.length) },
+          { value: 'blind75', label: 'Blind 75', count: `${blindDone}/75` },
+          { value: 'modules', label: 'Modules', count: String(MODULES.length) },
+          { value: 'visualgo', label: 'VisuAlgo', count: String(VISUALGO_CATALOG.length) },
+        ]}
+        value={view}
+        onChange={setView}
+        label="Coverage views"
+      />
 
       {view === 'questions' ? (
         <>
@@ -81,8 +75,11 @@ export function CoveragePage() {
             name="coverage-filter"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Filter by id, title, chapter or LeetCode name"
-            aria-label="Filter questions"
+            /* Short enough to survive a 320px field: a placeholder is clipped,
+               not ellipsised, and the old one broke off mid-phrase at every
+               phone width. What it searches is spelled out in the label. */
+            placeholder="Filter by id or title"
+            aria-label="Filter questions by id, title, chapter or LeetCode name"
           />
           <p className="lede">
             Showing {filteredQuestions.length} of {BOOK_QUESTIONS.length}.
@@ -134,12 +131,15 @@ export function CoveragePage() {
             {blindDone} of 75 checked off. Ticking a problem here is the same checkbox as in its
             module.
           </p>
-          <div className="tablewrap">
-            <table>
+          {/* One table at every width: below 720px `table--stack` restacks each
+              row as a card and promotes the header cells to per-value labels,
+              because four columns at 390px is a wall of two-word lines. */}
+          <ScrollX className="tablewrap table--stack__wrap" label="Blind 75 problems">
+            <table className="table--stack">
               <thead>
                 <tr>
-                  <th>Done</th>
                   <th>Problem</th>
+                  <th>Done</th>
                   <th>Difficulty</th>
                   <th>Module</th>
                 </tr>
@@ -153,8 +153,7 @@ export function CoveragePage() {
                     : false;
                   return (
                     <tr key={problem.slug} className={done ? 'is-done' : ''}>
-                      <td aria-label={done ? 'Done' : 'Not done'}>{done ? '✓' : ''}</td>
-                      <td>
+                      <td data-label="Problem">
                         <a
                           href={leetcodeUrl(problem.slug)}
                           target="_blank"
@@ -164,20 +163,29 @@ export function CoveragePage() {
                         </a>
                         {problem.premium ? <span className="chip">premium</span> : null}
                       </td>
-                      <td>{problem.difficulty}</td>
-                      <td>{owner ? <Link to={`/module/${owner.id}`}>{owner.title}</Link> : '—'}</td>
+                      <td
+                        className="donecell"
+                        data-label="Done"
+                        aria-label={done ? 'Done' : 'Not done'}
+                      >
+                        {done ? '✓ done' : 'not yet'}
+                      </td>
+                      <td data-label="Difficulty">{problem.difficulty}</td>
+                      <td data-label="Module">
+                        {owner ? <Link to={`/module/${owner.id}`}>{owner.title}</Link> : '—'}
+                      </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
-          </div>
+          </ScrollX>
         </>
       ) : null}
 
       {view === 'modules' ? (
-        <div className="tablewrap">
-          <table>
+        <ScrollX className="tablewrap table--stack__wrap" label="Modules">
+          <table className="table--stack">
             <thead>
               <tr>
                 <th>Module</th>
@@ -195,17 +203,21 @@ export function CoveragePage() {
                 );
                 return (
                   <tr key={courseModule.id}>
-                    <td>
+                    <td data-label="Module">
                       <Link to={`/module/${courseModule.id}`}>{courseModule.title}</Link>
                     </td>
-                    <td className="muted">{courseModule.source}</td>
-                    <td>
+                    <td className="muted" data-label="Source">
+                      {courseModule.source}
+                    </td>
+                    <td data-label="Progress">
                       <span className={`chip${summary.started ? ' chip--accent' : ''}`}>
                         {formatStudySummary(summary)}
                       </span>
                     </td>
-                    <td>{BOOK_QUESTIONS.filter((q) => q.moduleId === courseModule.id).length}</td>
-                    <td>
+                    <td data-label="Questions">
+                      {BOOK_QUESTIONS.filter((q) => q.moduleId === courseModule.id).length}
+                    </td>
+                    <td data-label="Drills">
                       {courseModule.drills.length +
                         (courseModule.practice ? courseModule.practice.length : 0)}
                     </td>
@@ -214,7 +226,7 @@ export function CoveragePage() {
               })}
             </tbody>
           </table>
-        </div>
+        </ScrollX>
       ) : null}
 
       {view === 'visualgo' ? (
@@ -228,8 +240,8 @@ export function CoveragePage() {
             "everything from VisuAlgo" is verifiable, not just claimed. Links only: dojo never
             copies or embeds VisuAlgo's visualizations.
           </p>
-          <div className="tablewrap">
-            <table>
+          <ScrollX className="tablewrap table--stack__wrap" label="VisuAlgo catalog">
+            <table className="table--stack">
               <thead>
                 <tr>
                   <th>Visualizer</th>
@@ -240,13 +252,15 @@ export function CoveragePage() {
               <tbody>
                 {VISUALGO_CATALOG.map((entry) => (
                   <tr key={entry.id}>
-                    <td>
+                    <td data-label="Visualizer">
                       <a href={entry.url} target="_blank" rel="noreferrer noopener">
                         {entry.title} ↗
                       </a>
                     </td>
-                    <td className="muted">{entry.category}</td>
-                    <td>
+                    <td className="muted" data-label="Category">
+                      {entry.category}
+                    </td>
+                    <td data-label="Modules">
                       {entry.moduleIds.length > 0 ? (
                         entry.moduleIds.map((moduleId, index) => {
                           const owner = getModule(moduleId);
@@ -269,7 +283,7 @@ export function CoveragePage() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </ScrollX>
         </>
       ) : null}
     </div>

@@ -162,6 +162,27 @@ export function AudioBite({
         onError={() => dispatch({ type: 'error' })}
       />
 
+      {/* Label and time, then the track, then the transport - stacked rather
+          than crammed into one wrapping row, which put the transport at the top
+          of the card and left the progress track as a hairline. */}
+      <div className="bite__meta">
+        {/* Just "Audio recap": the section title sits directly above this
+            player, and repeating it wrapped the label onto four lines. The
+            button's accessible name still carries the title. */}
+        <p className="bite__label">
+          {state.status === 'error' ? 'Audio unavailable - tap to retry' : 'Audio recap'}
+        </p>
+        <span className="bite__time" aria-hidden="true">
+          {state.duration > 0
+            ? `${formatTime(state.position)} / ${formatTime(state.duration)}`
+            : '–:––'}
+        </span>
+      </div>
+
+      <div className="bite__track" aria-hidden="true">
+        <div className="bite__fill" style={{ transform: `scaleX(${progress})` }} />
+      </div>
+
       <div className="bite__controls">
         <button
           type="button"
@@ -197,45 +218,29 @@ export function AudioBite({
         >
           <span aria-hidden="true">10»</span>
         </button>
-      </div>
 
-      <div className="bite__body">
-        {/* Just "Audio recap": the section title sits directly above this
-            player, and repeating it wrapped the label onto four lines. The
-            button's accessible name still carries the title. */}
-        <p className="bite__label">
-          {state.status === 'error' ? 'Audio unavailable - tap to retry' : 'Audio recap'}
-        </p>
-        <div className="bite__track" aria-hidden="true">
-          <div className="bite__fill" style={{ transform: `scaleX(${progress})` }} />
-        </div>
-      </div>
+        <span className="bite__spacer" />
 
-      <span className="bite__time" aria-hidden="true">
-        {state.duration > 0
-          ? `${formatTime(state.position)} / ${formatTime(state.duration)}`
-          : '–:––'}
-      </span>
-
-      <button
-        type="button"
-        className="bite__rate"
-        onClick={onCycleRate}
-        aria-label={`Playback speed, currently ${state.rate}x. Tap to change.`}
-      >
-        {state.rate}x
-      </button>
-
-      {script ? (
         <button
           type="button"
-          className="bite__transcript"
-          onClick={() => setShowTranscript((open) => !open)}
-          aria-expanded={showTranscript}
+          className="bite__rate"
+          onClick={onCycleRate}
+          aria-label={`Playback speed, currently ${state.rate}x. Tap to change.`}
         >
-          {showTranscript ? 'Hide text' : 'Text'}
+          {state.rate}x
         </button>
-      ) : null}
+
+        {script ? (
+          <button
+            type="button"
+            className="bite__transcript"
+            onClick={() => setShowTranscript((open) => !open)}
+            aria-expanded={showTranscript}
+          >
+            {showTranscript ? 'Hide text' : 'Text'}
+          </button>
+        ) : null}
+      </div>
 
       {showTranscript && script ? <p className="bite__script">{script}</p> : null}
     </div>

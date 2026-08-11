@@ -2,6 +2,7 @@ import type { Block } from '../content/types';
 import { getAnimation } from '../anim/registry';
 import { AnimationPlayer } from '../anim/AnimationPlayer';
 import { RichText } from './RichText';
+import { ScrollX } from './ScrollX';
 
 const TONE_LABEL: Record<'key' | 'tip' | 'warn', string> = {
   key: 'Key idea',
@@ -58,9 +59,11 @@ function BlockView({ block }: { block: Block }) {
     case 'code':
       return (
         <figure className="lesson__code">
-          <pre>
-            <code>{block.code}</code>
-          </pre>
+          <ScrollX className="codeblock" label={block.caption ?? 'Code sample'}>
+            <pre>
+              <code>{block.code}</code>
+            </pre>
+          </ScrollX>
           {block.caption ? <figcaption>{block.caption}</figcaption> : null}
         </figure>
       );
@@ -84,7 +87,7 @@ function BlockView({ block }: { block: Block }) {
     case 'table':
       return (
         <figure className="lesson__table">
-          <div className="tablewrap">
+          <ScrollX className="tablewrap" label={block.caption ?? 'Table'}>
             <table>
               <thead>
                 <tr>
@@ -105,7 +108,7 @@ function BlockView({ block }: { block: Block }) {
                 ))}
               </tbody>
             </table>
-          </div>
+          </ScrollX>
           {block.caption ? <figcaption>{block.caption}</figcaption> : null}
         </figure>
       );

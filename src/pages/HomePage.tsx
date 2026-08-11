@@ -106,7 +106,7 @@ function ModuleCard({
 
       <ProgressBars lesson={completion.lesson} quiz={completion.quiz} drills={completion.drills} />
 
-      <div className="modulecard__tags">
+      <div className="chiprow">
         {courseModule.status === 'outline' ? (
           <span className="chip">content coming</span>
         ) : (

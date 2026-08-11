@@ -5,6 +5,7 @@ import {
   Pointers,
   Readout,
   Stage,
+  Track,
   type CellSpec,
   type FlowStepSpec,
   type PointerSpec,
@@ -208,8 +209,10 @@ function BudFrameView({ index }: { index: number }) {
           { key: 'c', label: 'steps', value: String(frame.comparisons) },
         ]}
       />
-      <Pointers pointers={pointers} count={ARR.length} />
-      <Cells cells={cells} label="input array" />
+      <Track>
+        <Pointers pointers={pointers} count={ARR.length} />
+        <Cells cells={cells} label="input array" />
+      </Track>
       {frame.phase === 'hash' ? (
         <div className="viz__readout">
           <div className="viz__readoutItem">

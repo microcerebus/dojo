@@ -75,9 +75,13 @@ export function SprintPage() {
         <ul className="floatlist">
           {MODULES.filter((courseModule) => !SCHEDULED_MODULE_IDS.has(courseModule.id)).map(
             (courseModule) => (
+              // Meta lives inside the link so the whole row is one target,
+              // rather than a 20px-tall run of underlined text.
               <li key={courseModule.id}>
-                <Link to={`/module/${courseModule.id}`}>{courseModule.title}</Link>
-                <span className="floatlist__meta">{courseModule.source}</span>
+                <Link to={`/module/${courseModule.id}`}>
+                  <span>{courseModule.title}</span>
+                  <span className="floatlist__meta">{courseModule.source}</span>
+                </Link>
               </li>
             ),
           )}

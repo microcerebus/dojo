@@ -5,6 +5,7 @@ import {
   Pointers,
   Readout,
   Stage,
+  Track,
   type CellSpec,
   type CellState,
 } from '../../../anim/primitives';
@@ -150,27 +151,31 @@ function MergeFrameView({ index }: { index: number }) {
   }));
   return (
     <Stage>
-      <Cells cells={cells} label="array" />
-      <Pointers
-        count={frame.array.length}
-        below
-        pointers={
-          frame.write === null ? [] : [{ key: 'w', at: frame.write, label: 'write', tone: 'c' }]
-        }
-      />
-      <Cells cells={helperCells} label="helper" />
-      <Pointers
-        count={frame.helper.length}
-        below
-        pointers={[
-          ...(frame.left === null
-            ? []
-            : [{ key: 'l', at: frame.left, label: 'L', tone: 'a' as const }]),
-          ...(frame.right === null
-            ? []
-            : [{ key: 'r', at: frame.right, label: 'R', tone: 'b' as const }]),
-        ]}
-      />
+      <Track>
+        <Cells cells={cells} label="array" />
+        <Pointers
+          count={frame.array.length}
+          below
+          pointers={
+            frame.write === null ? [] : [{ key: 'w', at: frame.write, label: 'write', tone: 'c' }]
+          }
+        />
+      </Track>
+      <Track>
+        <Cells cells={helperCells} label="helper" />
+        <Pointers
+          count={frame.helper.length}
+          below
+          pointers={[
+            ...(frame.left === null
+              ? []
+              : [{ key: 'l', at: frame.left, label: 'L', tone: 'a' as const }]),
+            ...(frame.right === null
+              ? []
+              : [{ key: 'r', at: frame.right, label: 'R', tone: 'b' as const }]),
+          ]}
+        />
+      </Track>
       <Readout items={[{ key: 'c', label: 'helper copies', value: String(frame.copies) }]} />
     </Stage>
   );
@@ -280,15 +285,17 @@ function PartitionFrameView({ index }: { index: number }) {
   });
   return (
     <Stage>
-      <Cells cells={cells} label="array" />
-      <Pointers
-        count={frame.array.length}
-        below
-        pointers={[
-          { key: 'l', at: frame.left, label: 'left', tone: 'a' },
-          { key: 'r', at: frame.right, label: 'right', tone: 'b' },
-        ]}
-      />
+      <Track>
+        <Cells cells={cells} label="array" />
+        <Pointers
+          count={frame.array.length}
+          below
+          pointers={[
+            { key: 'l', at: frame.left, label: 'left', tone: 'a' },
+            { key: 'r', at: frame.right, label: 'right', tone: 'b' },
+          ]}
+        />
+      </Track>
       <Readout items={[{ key: 'p', label: 'pivot', value: String(frame.pivot) }]} />
       <Legend
         items={[

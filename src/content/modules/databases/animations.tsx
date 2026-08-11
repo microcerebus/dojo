@@ -6,6 +6,7 @@ import {
   Pointers,
   Readout,
   Stage,
+  Track,
   type CellSpec,
   type ChipSpec,
   type PointerSpec,
@@ -308,9 +309,11 @@ function IndexFrameView({ index }: { index: number }) {
           },
         ]}
       />
-      <Cells cells={tableCells} size="sm" label="table, in insertion order" />
-      <Pointers pointers={pointers} count={SORTED.length} />
-      <Cells cells={indexCells} size="sm" label="index on name, sorted" />
+      <Track>
+        <Cells cells={tableCells} size="sm" label="table, in insertion order" />
+        <Pointers pointers={pointers} count={SORTED.length} />
+        <Cells cells={indexCells} size="sm" label="index on name, sorted" />
+      </Track>
     </Stage>
   );
 }

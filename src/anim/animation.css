@@ -18,18 +18,21 @@
 }
 
 .anim__title {
-  font-size: 15px;
+  font-size: var(--fs-lead);
   font-weight: 640;
 }
 
 .anim__blurb {
   margin-top: 3px;
-  font-size: 13px;
+  font-size: var(--fs-small);
   color: var(--text-dim);
 }
 
 .anim__stage {
   padding: var(--space-4) var(--space-3);
+  /* A frame is drawn to fit; if one ever is not, it must not take the page
+     sideways with it. */
+  overflow-x: hidden;
   background: var(--bg-inset);
   min-height: 180px;
   display: flex;
@@ -51,13 +54,13 @@
 }
 
 .anim__captionText {
-  font-size: 14px;
+  font-size: var(--fs-body);
   line-height: 1.5;
 }
 
 .anim__detail {
   margin-top: 4px;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   color: var(--text-dim);
   font-family: var(--mono);
 }
@@ -76,7 +79,7 @@
   border: 1px solid var(--border-strong);
   background: var(--bg-elev-2);
   color: var(--text);
-  font-size: 14px;
+  font-size: var(--fs-body);
 }
 
 .anim__btn:disabled {
@@ -91,7 +94,7 @@
 }
 
 .anim__count {
-  font-size: 12px;
+  font-size: var(--fs-meta);
   font-variant-numeric: tabular-nums;
   color: var(--text-faint);
   min-width: 42px;
@@ -106,15 +109,30 @@
 
 .anim__ticks li {
   flex: 1;
+  min-width: 0;
 }
 
+/*
+ * The bar stays 5px because a row of full-height buttons would read as a
+ * second control strip, but the button around it reaches up into the padding
+ * above so the target is 44px tall. A step rail cannot also be 44px wide -
+ * eight steps do not fit across 358px - and it does not need to be: the
+ * prev/next/play row above is the primary transport, this is the shortcut.
+ */
 .anim__tick {
+  position: relative;
   display: block;
   width: 100%;
-  height: 4px;
-  border-radius: 2px;
+  height: 5px;
+  border-radius: 3px;
   background: var(--bg-elev-2);
   transition: background-color 0.18s ease;
+}
+
+.anim__tick::after {
+  content: '';
+  position: absolute;
+  inset: -20px 0 -19px;
 }
 
 .anim__tick.is-past {
@@ -161,6 +179,27 @@
   flex-wrap: wrap;
 }
 
+/*
+ * A `Track` is the one place inside a stage that may move sideways.
+ *
+ * `max-content` is what stops a row wrapping out of alignment with the pointer
+ * grid above it, and `min-width: 100%` is what keeps the common case looking
+ * untouched: while the diagram fits, the track is exactly the stage width and
+ * its rows centre themselves in it as before, so only a diagram that genuinely
+ * cannot fit ever scrolls.
+ */
+.viz__track {
+  width: 100%;
+}
+
+.viz__trackInner {
+  width: max-content;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
 .viz__cell {
   width: var(--cell-size);
   height: var(--cell-size);
@@ -191,39 +230,48 @@
   line-height: 1;
 }
 
-/* Shared state colours for every primitive. */
-.is-active {
+/*
+ * Shared state colours for every primitive.
+ *
+ * Scoped to the stage on purpose. Unqualified, `.is-active` and `.is-done` are
+ * the same class names the shell uses for the bottom tab bar, the module tabs
+ * and a ticked drill, and this block was quietly painting a tinted rectangle
+ * behind the active tab and nudging it up two pixels. Every element that
+ * carries an `is-*` state is rendered by `primitives.tsx` inside `.anim__stage`,
+ * so the prefix costs nothing and stops the vocabulary escaping.
+ */
+.anim__stage .is-active {
   border-color: var(--accent);
   background: color-mix(in srgb, var(--accent) 18%, var(--bg-elev));
   color: var(--ctp-lavender);
   transform: translateY(-2px);
 }
 
-.is-compare {
+.anim__stage .is-compare {
   border-color: var(--accent-2);
   background: color-mix(in srgb, var(--accent-2) 16%, var(--bg-elev));
   color: var(--accent-2);
 }
 
-.is-done {
+.anim__stage .is-done {
   border-color: color-mix(in srgb, var(--good) 55%, transparent);
   background: color-mix(in srgb, var(--good) 14%, var(--bg-elev));
   color: var(--good);
 }
 
-.is-bad {
+.anim__stage .is-bad {
   border-color: color-mix(in srgb, var(--bad) 55%, transparent);
   background: color-mix(in srgb, var(--bad) 14%, var(--bg-elev));
   color: var(--bad);
 }
 
-.is-target {
+.anim__stage .is-target {
   border-color: var(--warn);
   background: color-mix(in srgb, var(--warn) 16%, var(--bg-elev));
   color: var(--warn);
 }
 
-.is-muted {
+.anim__stage .is-muted {
   opacity: 0.35;
 }
 
@@ -317,6 +365,9 @@
 
 .viz__node {
   position: relative;
+  /* A flex item by default shrinks; a node narrower than its own label spills
+     its text over the neighbouring arrow. */
+  flex: none;
   min-width: 38px;
   height: 36px;
   padding: 0 8px;
@@ -571,7 +622,8 @@
 
 .viz__bars {
   display: flex;
-  gap: var(--space-2);
+  /* Eight columns plus a fixed 8px gap overflowed the stage at 390px. */
+  gap: clamp(3px, 1.6vw, 8px);
   align-items: flex-end;
   justify-content: center;
   width: 100%;
@@ -636,13 +688,12 @@
 
 /* matrix ----------------------------------------------------------------- */
 
+/* The sideways scrolling belongs to the enclosing `Track`, not here. */
 .viz__matrixWrap {
   display: flex;
   flex-direction: column;
   gap: 3px;
   align-items: center;
-  max-width: 100%;
-  overflow-x: auto;
 }
 
 .viz__matrixCols,

@@ -3,6 +3,7 @@ import type { QuizQuestion } from '../content/types';
 import { recordQuizResult } from '../lib/progress';
 import { useProgressUpdate } from '../lib/store';
 import { RichText } from './RichText';
+import { ScrollX } from './ScrollX';
 import {
   initialQuizState,
   isAnswered,
@@ -117,9 +118,11 @@ export function Quiz({
       </p>
 
       {question.context ? (
-        <pre className="quiz__context">
-          <code>{question.context}</code>
-        </pre>
+        <ScrollX className="codeblock quiz__context" label="Question context">
+          <pre>
+            <code>{question.context}</code>
+          </pre>
+        </ScrollX>
       ) : null}
 
       <ul className="quiz__options">
