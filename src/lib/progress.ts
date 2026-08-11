@@ -142,6 +142,64 @@ export function moduleCompletion(
   };
 }
 
+/**
+ * The counts behind a module's study progress - what the coverage page shows
+ * instead of the content-authoring `status`. Authoring status ("Complete" /
+ * "Outline") describes whether the lesson has been written; this describes
+ * whether the reader has actually studied it, which is a different axis and
+ * starts at zero for every module regardless of how finished its content is.
+ */
+export interface ModuleStudySummary {
+  started: boolean;
+  lessonRead: number;
+  lessonTotal: number;
+  quizBest: QuizResult | null;
+  drillsDone: number;
+  drillsTotal: number;
+}
+
+export function moduleStudySummary(
+  courseModule: Pick<CourseModule, 'sections' | 'quiz' | 'drills'>,
+  progress: ModuleProgress,
+): ModuleStudySummary {
+  const sectionIds = new Set(courseModule.sections.map((section) => section.id));
+  const lessonRead = progress.readSections.filter((id) => sectionIds.has(id)).length;
+  const drillSlugs = courseModule.drills.map((drill) => drill.slug);
+  const drillsDone = drillSlugs.filter((slug) => progress.drills[slug]).length;
+
+  return {
+    lessonRead,
+    lessonTotal: sectionIds.size,
+    quizBest: progress.quizBest,
+    drillsDone,
+    drillsTotal: drillSlugs.length,
+    started: lessonRead > 0 || drillsDone > 0 || progress.quizBest !== null,
+  };
+}
+
+/**
+ * The compact string the coverage page shows per module, e.g.
+ * "3/12 drills · quiz 80%" - only the dimensions the module actually has are
+ * included, and an untouched module reads plainly as "Not started" rather
+ * than a row of zeroes.
+ */
+export function formatStudySummary(summary: ModuleStudySummary): string {
+  if (!summary.started) return 'Not started';
+
+  const parts: string[] = [];
+  if (summary.lessonTotal > 0) {
+    parts.push(`${summary.lessonRead}/${summary.lessonTotal} sections`);
+  }
+  if (summary.quizBest) {
+    const pct = Math.round((summary.quizBest.correct / summary.quizBest.total) * 100);
+    parts.push(`quiz ${pct}%`);
+  }
+  if (summary.drillsTotal > 0) {
+    parts.push(`${summary.drillsDone}/${summary.drillsTotal} drills`);
+  }
+  return parts.length > 0 ? parts.join(' · ') : 'Not started';
+}
+
 /* ------------------------------------------------------------------ merge */
 
 /** The better of two attempts; ties go to the later one. */

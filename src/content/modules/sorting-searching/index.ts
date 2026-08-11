@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const sortingSearching: CourseModule = {
   id: 'sorting-searching',
@@ -464,5 +465,11 @@ export const sortingSearching: CourseModule = {
     { slug: 'count-of-smaller-numbers-after-self', note: 'CTCI 10.10 - augmented BST or merge sort.' },
     { slug: 'wiggle-sort', note: 'CTCI 10.11 - local swaps, no full sort needed. Premium.' },
     { slug: 'search-in-rotated-sorted-array-ii', note: 'The duplicate case that breaks the clean O(log n).' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('sorting'),
+      note: 'Race merge sort against quicksort on the same near-sorted input to see when the worst case shows up.',
+    },
   ],
 };

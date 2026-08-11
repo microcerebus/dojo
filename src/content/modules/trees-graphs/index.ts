@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const treesGraphs: CourseModule = {
   id: 'trees-graphs',
@@ -748,5 +749,27 @@ function bfs(start: Node) {
     { slug: 'word-ladder', note: 'CTCI 17.22 - BFS over word transformations.' },
     { slug: 'max-area-of-island', note: 'CTCI 16.19 - flood fill returning a size.' },
     { slug: 'convert-binary-search-tree-to-sorted-doubly-linked-list', note: 'CTCI 17.12. Premium.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('bst'),
+      note: 'Insert values yourself and predict the shape before it draws - then flip to AVL to see rotations fix it.',
+    },
+    {
+      url: visualgoUrl('graphds'),
+      note: 'Toggle between adjacency list and adjacency matrix on the same graph to feel the space tradeoff.',
+    },
+    {
+      url: visualgoUrl('dfsbfs'),
+      note: 'Run DFS and BFS on the same graph side by side and watch the visited order diverge.',
+    },
+    {
+      url: visualgoUrl('ufds'),
+      note: 'Union components and watch path compression flatten the tree on the very next find.',
+    },
+    {
+      url: visualgoUrl('cyclefinding'),
+      note: 'Add a back edge mid-traversal and see exactly which DFS state catches the cycle.',
+    },
   ],
 };

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { MODULES, getModule } from '../content';
 import { BOOK_QUESTIONS } from '../data/questions';
 import { BLIND_75, getProblem, leetcodeUrl } from '../data/problems';
-import { moduleProgress } from '../lib/progress';
+import { VISUALGO_CATALOG } from '../data/visualgo';
+import { formatStudySummary, moduleProgress, moduleStudySummary } from '../lib/progress';
 import { useProgressState } from '../lib/store';
 
-type View = 'questions' | 'blind75' | 'modules';
+type View = 'questions' | 'blind75' | 'modules' | 'visualgo';
 
 export function CoveragePage() {
   const [view, setView] = useState<View>('questions');
@@ -55,6 +56,7 @@ export function CoveragePage() {
             ['questions', `189 questions`],
             ['blind75', `Blind 75 · ${blindDone}/75`],
             ['modules', `${MODULES.length} modules`],
+            ['visualgo', `VisuAlgo · ${VISUALGO_CATALOG.length}`],
           ] as const
         ).map(([value, label]) => (
           <button
@@ -182,37 +184,97 @@ export function CoveragePage() {
               <tr>
                 <th>Module</th>
                 <th>Source</th>
-                <th>Status</th>
+                <th>Your progress</th>
                 <th>Questions</th>
                 <th>Drills</th>
               </tr>
             </thead>
             <tbody>
-              {MODULES.map((courseModule) => (
-                <tr key={courseModule.id}>
-                  <td>
-                    <Link to={`/module/${courseModule.id}`}>{courseModule.title}</Link>
-                  </td>
-                  <td className="muted">{courseModule.source}</td>
-                  <td>
-                    {courseModule.status === 'complete' ? (
-                      <span className="chip chip--good">complete</span>
-                    ) : (
-                      <span className="chip">outline</span>
-                    )}
-                  </td>
-                  <td>
-                    {BOOK_QUESTIONS.filter((q) => q.moduleId === courseModule.id).length}
-                  </td>
-                  <td>
-                    {courseModule.drills.length +
-                      (courseModule.practice ? courseModule.practice.length : 0)}
-                  </td>
-                </tr>
-              ))}
+              {MODULES.map((courseModule) => {
+                const summary = moduleStudySummary(
+                  courseModule,
+                  moduleProgress(progress, courseModule.id),
+                );
+                return (
+                  <tr key={courseModule.id}>
+                    <td>
+                      <Link to={`/module/${courseModule.id}`}>{courseModule.title}</Link>
+                    </td>
+                    <td className="muted">{courseModule.source}</td>
+                    <td>
+                      <span className={`chip${summary.started ? ' chip--accent' : ''}`}>
+                        {formatStudySummary(summary)}
+                      </span>
+                    </td>
+                    <td>
+                      {BOOK_QUESTIONS.filter((q) => q.moduleId === courseModule.id).length}
+                    </td>
+                    <td>
+                      {courseModule.drills.length +
+                        (courseModule.practice ? courseModule.practice.length : 0)}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
+      ) : null}
+
+      {view === 'visualgo' ? (
+        <>
+          <p className="lede">
+            Every visualizer{' '}
+            <a href="https://visualgo.net/en" target="_blank" rel="noreferrer noopener">
+              VisuAlgo
+            </a>{' '}
+            (by Steven Halim et al.) currently offers, and which dojo module links to it - so
+            "everything from VisuAlgo" is verifiable, not just claimed. Links only: dojo never
+            copies or embeds VisuAlgo's visualizations.
+          </p>
+          <div className="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Visualizer</th>
+                  <th>Category</th>
+                  <th>Dojo modules</th>
+                </tr>
+              </thead>
+              <tbody>
+                {VISUALGO_CATALOG.map((entry) => (
+                  <tr key={entry.id}>
+                    <td>
+                      <a href={entry.url} target="_blank" rel="noreferrer noopener">
+                        {entry.title} ↗
+                      </a>
+                    </td>
+                    <td className="muted">{entry.category}</td>
+                    <td>
+                      {entry.moduleIds.length > 0 ? (
+                        entry.moduleIds.map((moduleId, index) => {
+                          const owner = getModule(moduleId);
+                          return (
+                            <span key={moduleId}>
+                              {index > 0 ? ', ' : ''}
+                              {owner ? (
+                                <Link to={`/module/${owner.id}`}>{owner.title}</Link>
+                              ) : (
+                                moduleId
+                              )}
+                            </span>
+                          );
+                        })
+                      ) : (
+                        <span className="muted">no matching module</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       ) : null}
     </div>
   );

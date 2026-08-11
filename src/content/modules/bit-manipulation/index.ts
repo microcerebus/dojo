@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const bitManipulation: CourseModule = {
   id: 'bit-manipulation',
@@ -476,5 +477,11 @@ const updateBit = (n: number, i: number, v: 0 | 1) => (n & ~(1 << i)) | (v << i)
     { slug: 'max-consecutive-ones-iii', note: 'CTCI 5.3 - flip-one-zero as a sliding window.' },
     { slug: 'hamming-distance', note: 'CTCI 5.6 - XOR then popcount.' },
     { slug: 'divide-two-integers', note: 'CTCI 16.9 - division by shifting.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('bitmask'),
+      note: 'Step a bitmask through every subset of a small set and match each bit pattern to its subset.',
+    },
   ],
 };

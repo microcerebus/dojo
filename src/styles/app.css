@@ -877,6 +877,91 @@
   padding-top: 6px;
 }
 
+/* -------------------------------------------------------------- vizrow */
+
+.vizrow {
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+}
+
+.vizrow__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.vizrow__title {
+  font-size: 15px;
+  margin: 0;
+}
+
+.vizrow__attrib {
+  margin-top: var(--space-2);
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.vizrow__attrib a {
+  color: var(--text-dim);
+}
+
+.vizrow__offline {
+  margin-top: var(--space-2);
+  font-size: 12px;
+  color: var(--warn);
+}
+
+.vizrow__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.vizrow__item {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-inset);
+}
+
+.vizrow__item.is-disabled {
+  opacity: 0.5;
+}
+
+.vizrow__link {
+  display: block;
+  min-height: var(--tap);
+  padding: var(--space-3);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.vizrow__item:not(.is-disabled) .vizrow__link:hover {
+  color: var(--accent);
+}
+
+.vizrow__item.is-disabled .vizrow__link {
+  cursor: not-allowed;
+}
+
+.vizrow__linkTitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 560;
+}
+
+.vizrow__note {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
 /* -------------------------------------------------------------- sprint */
 
 .weeks {

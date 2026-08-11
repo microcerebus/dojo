@@ -2,9 +2,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   PROGRESS_STORAGE_KEY,
   emptyProgress,
+  formatStudySummary,
   mergeProgress,
   moduleCompletion,
   moduleProgress,
+  moduleStudySummary,
   parseProgress,
   recordQuizResult,
   resetModule,
@@ -101,6 +103,49 @@ describe('moduleCompletion', () => {
     >[0];
     const state = toggleDrill(emptyProgress(), 'm', 'x');
     expect(moduleCompletion(outline, moduleProgress(state, 'm')).overall).toBe(1);
+  });
+});
+
+describe('moduleStudySummary / formatStudySummary', () => {
+  it('reports Not started for an untouched module', () => {
+    const summary = moduleStudySummary(courseModule, moduleProgress(emptyProgress(), 'm'));
+    expect(summary.started).toBe(false);
+    expect(formatStudySummary(summary)).toBe('Not started');
+  });
+
+  it('counts sections read, drills done and the best quiz score', () => {
+    let state = emptyProgress();
+    state = setSectionRead(state, 'm', 'a', true);
+    state = setSectionRead(state, 'm', 'b', true);
+    state = recordQuizResult(state, 'm', { correct: 4, total: 5, at: 0 });
+    state = toggleDrill(state, 'm', 'x');
+
+    const summary = moduleStudySummary(courseModule, moduleProgress(state, 'm'));
+    expect(summary).toMatchObject({
+      started: true,
+      lessonRead: 2,
+      lessonTotal: 3,
+      drillsDone: 1,
+      drillsTotal: 2,
+    });
+    expect(summary.quizBest).toMatchObject({ correct: 4, total: 5 });
+    expect(formatStudySummary(summary)).toBe('2/3 sections · quiz 80% · 1/2 drills');
+  });
+
+  it('omits dimensions the module does not have', () => {
+    const outline = { sections: [], quiz: [], drills: [{ slug: 'x' }] } as unknown as Parameters<
+      typeof moduleStudySummary
+    >[0];
+    const state = toggleDrill(emptyProgress(), 'm', 'x');
+    const summary = moduleStudySummary(outline, moduleProgress(state, 'm'));
+    expect(formatStudySummary(summary)).toBe('1/1 drills');
+  });
+
+  it('ignores read sections that no longer exist, same as moduleCompletion', () => {
+    const state = setSectionRead(emptyProgress(), 'm', 'deleted-section', true);
+    const summary = moduleStudySummary(courseModule, moduleProgress(state, 'm'));
+    expect(summary.lessonRead).toBe(0);
+    expect(summary.started).toBe(false);
   });
 });
 

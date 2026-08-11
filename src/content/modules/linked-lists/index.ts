@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const linkedLists: CourseModule = {
   id: 'linked-lists',
@@ -411,5 +412,11 @@ export const linkedLists: CourseModule = {
     { slug: 'swap-nodes-in-pairs', note: 'Pointer surgery where a dummy head really pays off.' },
     { slug: 'odd-even-linked-list', note: 'Another two-chains-then-splice problem.' },
     { slug: 'lru-cache', note: 'CTCI 16.25 - hash map for lookup, doubly linked list for recency.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('list'),
+      note: 'Step through insert/delete/reverse pointer-by-pointer before you write the surgery in code.',
+    },
   ],
 };

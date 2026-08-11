@@ -1,4 +1,5 @@
 import type { CourseModule } from '../../types';
+import { visualgoUrl } from '../../../data/visualgo';
 
 export const hard: CourseModule = {
   id: 'hard',
@@ -394,5 +395,11 @@ export const hard: CourseModule = {
     { slug: 'shortest-word-distance-ii', note: 'CTCI 17.11 - preprocess positions. Premium.' },
     { slug: 'redundant-connection', note: 'Union-find, and the cycle it detects.' },
     { slug: 'word-ladder', note: 'CTCI 17.22 - then do it bidirectionally.' },
+  ],
+  visualizers: [
+    {
+      url: visualgoUrl('ufds'),
+      note: 'Union a batch of "these are equivalent" pairs and watch path compression collapse the chains.',
+    },
   ],
 };

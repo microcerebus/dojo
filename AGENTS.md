@@ -87,6 +87,16 @@ shell, the manifest, the icons, the fonts or any narration MP3.
   mid-transition silently contradicts the row beside it. `animations.test.ts(x)` beside a module
   pins these by recomputing each claim from an independent reference and by reading the rendered
   DOM back out. Captions bypass `RichText`, so `**bold**` markup shows up literally.
+- External live tools (currently VisuAlgo, `src/data/visualgo.ts`) are LINKS ONLY - the app never
+  embeds or copies a third party's copyrighted visualizations, only links out with clear attribution.
+  A module's `visualizers` field references catalog entries by id via `visualgoUrl()`, never a
+  hand-typed URL, so a typo throws in dev instead of shipping a dead link.
+  `src/data/visualgo.test.ts` pins the catalog against a recorded, HTTP-verified enumeration -
+  re-verify against the live site before editing it, rather than just updating the recorded list.
+- The coverage page's "modules" tab shows the reader's own study progress (`moduleStudySummary` /
+  `formatStudySummary` in `lib/progress.ts`), not the content-authoring `status`. `COVERAGE.md` and
+  its generator still use authoring status - that file is for contributors, not readers - so the two
+  never claim to agree.
 
 ## Mobile and iOS constraints
 
